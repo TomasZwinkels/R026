@@ -260,6 +260,8 @@
 		#	ELLIBUCOMP <- ELLIBU[which(ELLIBU$sumcheck == 0),]
 		ELLIBUCOMP <- ELLIBU[which(ELLIBU$sumcheck > -6),]
 			nrow(ELLIBUCOMP)
+			
+			nrow(ELLIBU) / (nrow(ELLIBUCOMP)+nrow(ELLIBU)) # using about 60% of the currently available cases (which are all list for CH, but only some of the main parties for NL and only 2017 for DE?)
 		
 		boxplot(ELLIBUCOMP$ratio~ELLIBUCOMP$country)
 		table(is.na(ELLIBUCOMP$ratio),ELLIBUCOMP$country)
