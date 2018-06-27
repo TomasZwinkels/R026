@@ -215,7 +215,12 @@
 			hist(GCELLI$ratio)
 
 		# merge into an ELLI level data-frame
-			ELLIBU <- sqldf("SELECT list_id, list_name, parliament_id, list_length
+			
+			nrow(ELLI)
+			ELLI$country <- substr(ELLI$list_id,1,2)
+			table(ELLI$country)
+		
+			ELLIBU <- sqldf("SELECT list_id, list_name, parliament_id, list_length, country
 						FROM ELLI
 						")
 			head(ELLIBU)
@@ -229,5 +234,44 @@
 			head(ELLIBU)
 			ELLIBU[30:50,]
 			tail(ELLIBU)
-	
 		
+		# get a count of the number of people in each faction
+			MemVec <- as.matrix(table(ELENBU$list_id))
+			MEMCOUNT <- data.frame(rownames(MemVec),unlist(MemVec))
+			colnames(MEMCOUNT) <- c("list_id","list_member_count")
+			head(MEMCOUNT)
+			
+			ELLIBU <- sqldf("SELECT ELLIBU.*, MEMCOUNT.list_member_count
+						FROM ELLIBU LEFT JOIN MEMCOUNT
+						ON
+						ELLIBU.list_id = MEMCOUNT.list_id
+						")
+		
+			head(ELLIBU)
+			ELLIBU[30:50,]
+			tail(ELLIBU)
+			
+			ELLIBU$sumcheck <- (ELLIBU$f+ELLIBU$m) - ELLIBU$list_member_count
+			table(ELLIBU$sumcheck)
+			
+		# lets select the 'complete cases'
+			nrow(ELLIBU)
+			ELLIBUCOMP <- ELLIBU
+		#	ELLIBUCOMP <- ELLIBU[which(ELLIBU$sumcheck == 0),]
+		ELLIBUCOMP <- ELLIBU[which(ELLIBU$sumcheck > -6),]
+			nrow(ELLIBUCOMP)
+		
+		boxplot(ELLIBUCOMP$ratio~ELLIBUCOMP$country)
+		table(is.na(ELLIBUCOMP$ratio),ELLIBUCOMP$country)
+		
+			EDE <- ELLIBUCOMP[which(ELLIBUCOMP$country == "DE"),]
+			nrow(EDE)
+			boxplot(EDE$ratio~droplevels(EDE$parliament_id))
+			
+			ENL <- ELLIBUCOMP[which(ELLIBUCOMP$country == "NL"),]
+			nrow(ENL)
+			boxplot(ENL$ratio~droplevels(ENL$parliament_id)) # carefull, there are only very few lists where we actually have the full gender composition!
+			
+			ECH <- ELLIBUCOMP[which(ELLIBUCOMP$country == "CH"),]
+			nrow(ECH)
+			boxplot(ECH$ratio~droplevels(ECH$parliament_id))
