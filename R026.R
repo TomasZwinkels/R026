@@ -139,7 +139,7 @@
 							ON ELENBU.pers_id = MEME.pers_id AND ELENBU.leg_period_start_twoweekslater_posoxctformat BETWEEN MEME.memep_startdate_posoxctformat and MEME.memep_enddate_posoxctformat")
 		nrow(ELENBU)
 		head(ELENBU)
-
+		
 
 	############ gender guessing (if necessary) e.t.c. ##############
 	
@@ -199,12 +199,85 @@
 		
 		table(is.na(ELENBU$gender))
 		table(is.na(ELENBU$genderguesses))
+	
+		## find out which of these people entered parliament_id
+	
+		# get an 'in parliament'
 		
+			# make a fictional parliament id
+			ELENBU$fictional_parl_episode_id<- paste(ELENBU$pers_id,ELENBU$parliament_id,sep="__")
+			head(ELENBU)
+			
+			ELENBU$in_parliament <- ifelse(ELENBU$fictional_parl_episode_id %in% PARE$parl_episode_id,"yes","no") 
+			table(ELENBU$in_parliament) # is roughly one third
+			
+		# and reduce this to the people that where in parliament straight after the election  (taken from R019!)
+					
+					# tranform the dates
+					RESE$res_entry_start_posoxctformat <- as.POSIXct(as.character(RESE$res_entry_start),format=c("%d%b%Y"))
+					RESE$res_entry_end_posoxctformat <- as.POSIXct(as.character(RESE$res_entry_end),format=c("%d%b%Y"))
+					
+					RESEMPENT <- sqldf("SELECT RESE.res_entry_id, RESE.pers_id, RESE.res_entry_start, RESE.res_entry_end, RESE.res_entry_start_posoxctformat, RESE.res_entry_end_posoxctformat, RESE.parliament_id
+							FROM RESE
+							WHERE RESE.political_function = 'NT_LE_T3_NA_01'")
+					nrow(RESEMPENT) 
+					
+				# update PARL to have the startdate in useable format
+						PARL$leg_period_start_posoxctformat <- as.POSIXct(as.character(PARL$leg_period_start),format=c("%d%b%Y"))
+					
+			# make a dataframe that contains all the people that entered within 'x' weeks of the start of when the faction started
+			
+					# set the range
+						ELENBU$leg_period_start_weeklater_posoxctformat <- ELENBU$leg_period_start_posoxctformat + weeks(1)
+
+					# moving these dates one day to fix overlap issues (on day of transition matching now)
+						RESEMPENT$res_entry_start_posoxctformat =  RESEMPENT$res_entry_start_posoxctformat + days(1)
+						RESEMPENT$res_entry_end_posoxctformat = RESEMPENT$res_entry_end_posoxctformat - days(1)
+			
+				# first, a query that checks for each PARE of each politician if according to this MP its RESE episodes that specific parliaments, this MP was in this parliament in the first week
+			
+					ELENBURED <- sqldf("SELECT ELENBU.*
+									   FROM 
+									   ELENBU, RESEMPENT
+									   WHERE
+									   (
+										   ELENBU.pers_id = RESEMPENT.pers_id
+										   AND
+										   RESEMPENT.parliament_id LIKE '%'||ELENBU.parliament_id||'%'
+										   AND
+										   (
+											   (
+													RESEMPENT.res_entry_start_posoxctformat >= ELENBU.leg_period_start_posoxctformat
+													AND
+													RESEMPENT.res_entry_start_posoxctformat <= ELENBU.leg_period_start_weeklater_posoxctformat
+												)
+												OR
+												(
+													RESEMPENT.res_entry_end_posoxctformat >= ELENBU.leg_period_start_posoxctformat
+													AND
+													RESEMPENT.res_entry_end_posoxctformat <= ELENBU.leg_period_start_weeklater_posoxctformat
+												)
+												OR
+												(
+													RESEMPENT.res_entry_start_posoxctformat <= ELENBU.leg_period_start_posoxctformat
+													AND
+													RESEMPENT.res_entry_end_posoxctformat >= ELENBU.leg_period_start_weeklater_posoxctformat
+												)
+											)
+										)
+										")
+					nrow(ELENBURED)
+					table(ELENBURED$in_parliament) # looks good in general, I should follow up these 75 people, these are people that we know where in parliament but that are somehow not in PARE?
+					
+
+	
+	
+	
 	##################################################################################################
 	###################################### aggregation here ##########################################
 	##################################################################################################
 	
-		# aggregation on the ELLI level
+	##### aggregation on the ELLI level ######
 			GCELLI <- as.data.frame.matrix(table(ELENBU$list_id,ELENBU$genderguesses))
 			GCELLI$list_id <- rownames(GCELLI)
 			head(GCELLI)
