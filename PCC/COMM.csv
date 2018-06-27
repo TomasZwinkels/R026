@@ -1,0 +1,910 @@
+comm_id;parliament_id;comm_name;comm_maintype;comm_subtype;comm_maintype_abb;comm_subtype_abb;seats;comm_start;comm_end
+CH_NT-NR_1947__CH_NT-SR_1947__CO|ALK--SD|Alkoholdelegation;"CH_NT-NR_1947;CH_NT-SR_1947";Alkoholdelegation ;CO;SD;ALK;Alkoholdelegation;6;01dec1947;03oct1951
+CH_NT-NR_1947__CH_NT-SR_1947__DL|FinDel;"CH_NT-NR_1947;CH_NT-SR_1947";Finanzdelegation (FinDel) ;DL;NA;FinDel;NA;6;01dec1947;03oct1951
+CH_NT-NR_1947__CO|AAK;CH_NT-NR_1947;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;13;01dec1947;03oct1951
+CH_NT-NR_1947__CO|ALK;CH_NT-NR_1947;Alkoholkommission (ALK) ;CO;NA;ALK;NA;11;01dec1947;03oct1951
+CH_NT-NR_1947__CH_NT-SR_1947__CO|BeK;"CH_NT-NR_1947;CH_NT-SR_1947";Begnadigungskommission (BeK) ;CO;NA;BeK;NA;13;01dec1947;03oct1951
+CH_NT-NR_1947__CO|EBKk;CH_NT-NR_1947;Eisenbahnkonzessionskommission ;CO;NA;EBKk;NA;11;01dec1947;03oct1951
+CH_NT-NR_1947__CO|FK;CH_NT-NR_1947;Finanzkommission (FK) ;CO;NA;FK;NA;13;01dec1947;03oct1951
+CH_NT-NR_1947__CO|GPK;CH_NT-NR_1947;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;17;01dec1947;03oct1951
+CH_NT-NR_1947__CO|MK;CH_NT-NR_1947;Militärkommission (MK) ;CO;NA;MK;NA;13;01dec1947;03oct1951
+CH_NT-NR_1947__CO|PK;CH_NT-NR_1947;Petitionskommission (PK) ;CO;NA;PK;NA;9;01dec1947;03oct1951
+CH_NT-NR_1947__CO|PTT;CH_NT-NR_1947;Kommission für die Post-, Telegraphen- und Telephonverwaltung ;CO;NA;PTT;NA;13;07jun1949;03oct1951
+CH_NT-NR_1947__CO|SBBK;CH_NT-NR_1947;Bundesbahnkommission (SBBK) ;CO;NA;SBBK;NA;13;01dec1947;03oct1951
+CH_NT-NR_1947__CO|VmK;CH_NT-NR_1947;VollmachtenKommission ;CO;NA;VmK;NA;19;01dec1947;03oct1951
+CH_NT-NR_1947__CO|WPK;CH_NT-NR_1947;Wahlprüfungskommission (WPK) ;CO;NA;WPK;NA;9;01dec1947;03oct1951
+CH_NT-NR_1947__CO|ZtK;CH_NT-NR_1947;Zolltarifkommission ;CO;NA;ZtK;NA;29;01dec1947;03oct1951
+CH_NT-NR_1951__CH_NT-SR_1951__CO|ALK--SD|Alkoholdelegation;"CH_NT-NR_1951;CH_NT-SR_1951";Alkoholdelegation ;CO;SD;ALK;Alkoholdelegation;"1;6";03dec1951;30sep1955
+CH_NT-NR_1951__CH_NT-SR_1951__DL|FinDel;"CH_NT-NR_1951;CH_NT-SR_1951";Finanzdelegation (FinDel) ;DL;NA;FinDel;NA;6;03dec1951;30sep1955
+CH_NT-NR_1951__CO|AAK;CH_NT-NR_1951;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;13;03dec1951;30sep1955
+CH_NT-NR_1951__CO|ALK;CH_NT-NR_1951;Alkoholkommission (ALK) ;CO;NA;ALK;NA;11;03dec1951;30sep1955
+CH_NT-NR_1951__CH_NT-SR_1951__CO|BeK;"CH_NT-NR_1951;CH_NT-SR_1951";Begnadigungskommission (BeK) ;CO;NA;BeK;NA;13;03dec1951;30sep1955
+CH_NT-NR_1951__CO|EBKk;CH_NT-NR_1951;Eisenbahnkonzessionskommission ;CO;NA;EBKk;NA;11;03dec1951;30sep1955
+CH_NT-NR_1951__CO|FK;CH_NT-NR_1951;Finanzkommission (FK) ;CO;NA;FK;NA;15;03dec1951;30sep1955
+CH_NT-NR_1951__CO|GPK;CH_NT-NR_1951;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;17;03dec1951;30sep1955
+CH_NT-NR_1951__CO|MK;CH_NT-NR_1951;Militärkommission (MK) ;CO;NA;MK;NA;15;03dec1951;30sep1955
+CH_NT-NR_1951__CO|PK;CH_NT-NR_1951;Petitionskommission (PK) ;CO;NA;PK;NA;9;03dec1951;30sep1955
+CH_NT-NR_1951__CO|PTT;CH_NT-NR_1951;Kommission für die Post-, Telegraphen- und Telephonverwaltung ;CO;NA;PTT;NA;13;03dec1951;30sep1955
+CH_NT-NR_1951__CO|SBBK;CH_NT-NR_1951;Bundesbahnkommission (SBBK) ;CO;NA;SBBK;NA;15;03dec1951;30sep1955
+CH_NT-NR_1951__CO|VmK;CH_NT-NR_1951;VollmachtenKommission ;CO;NA;VmK;NA;19;03dec1951;01oct1952
+CH_NT-NR_1951__CO|WPK;CH_NT-NR_1951;Wahlprüfungskommission (WPK) ;CO;NA;WPK;NA;9;03dec1951;30sep1955
+CH_NT-NR_1951__CO|ZtK;CH_NT-NR_1951;Zolltarifkommission ;CO;NA;ZtK;NA;29;03dec1951;30sep1955
+CH_NT-NR_1955__CH_NT-SR_1955__CO|ALK--SD|Alkoholdelegation;"CH_NT-NR_1955;CH_NT-SR_1955";Alkoholdelegation ;CO;SD;ALK;Alkoholdelegation;6;05dec1955;07oct1959
+CH_NT-NR_1955__CH_NT-SR_1955__DL|FinDel;"CH_NT-NR_1955;CH_NT-SR_1955";Finanzdelegation (FinDel) ;DL;NA;FinDel;NA;6;05dec1955;07oct1959
+CH_NT-NR_1955__CO|AAK;CH_NT-NR_1955;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;13;05dec1955;07oct1959
+CH_NT-NR_1955__CO|ALK;CH_NT-NR_1955;Alkoholkommission (ALK) ;CO;NA;ALK;NA;11;05dec1955;07oct1959
+CH_NT-NR_1955__CH_NT-SR_1955__CO|BeK;"CH_NT-NR_1955;CH_NT-SR_1955";Begnadigungskommission (BeK) ;CO;NA;BeK;NA;13;05dec1955;07oct1959
+CH_NT-NR_1955__CO|EBKk;CH_NT-NR_1955;Eisenbahnkonzessionskommission ;CO;NA;EBKk;NA;11;05dec1955;07oct1959
+CH_NT-NR_1955__CO|FK;CH_NT-NR_1955;Finanzkommission (FK) ;CO;NA;FK;NA;15;05dec1955;07oct1959
+CH_NT-NR_1955__CO|GPK;CH_NT-NR_1955;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;17;05dec1955;07oct1959
+CH_NT-NR_1955__CO|MK;CH_NT-NR_1955;Militärkommission (MK) ;CO;NA;MK;NA;15;05dec1955;07oct1959
+CH_NT-NR_1955__CO|PK;CH_NT-NR_1955;Petitionskommission (PK) ;CO;NA;PK;NA;9;05dec1955;07oct1959
+CH_NT-NR_1955__CO|PTT;CH_NT-NR_1955;Kommission für die Post-, Telegraphen- und Telephonverwaltung ;CO;NA;PTT;NA;13;05dec1955;07oct1959
+CH_NT-NR_1955__CO|SBBK;CH_NT-NR_1955;Bundesbahnkommission (SBBK) ;CO;NA;SBBK;NA;15;05dec1955;07oct1959
+CH_NT-NR_1955__CO|WPK;CH_NT-NR_1955;Wahlprüfungskommission (WPK) ;CO;NA;WPK;NA;9;05dec1955;07oct1959
+CH_NT-NR_1955__CO|ZtK;CH_NT-NR_1955;Zolltarifkommission ;CO;NA;ZtK;NA;29;05dec1955;07oct1959
+CH_NT-NR_1959__CH_NT-SR_1959__CO|ALK--SD|Alkoholdelegation;"CH_NT-NR_1959;CH_NT-SR_1959";Alkoholdelegation ;CO;SD;ALK;Alkoholdelegation;6;07dec1959;04oct1963
+CH_NT-NR_1959__CH_NT-SR_1959__DL|ERD;"CH_NT-NR_1959;CH_NT-SR_1959";Delegation beim Europarat (ERD) ;DL;NA;ERD;NA;6;05dec1960;16sep1963
+CH_NT-NR_1959__CH_NT-SR_1959__DL|FinDel;"CH_NT-NR_1959;CH_NT-SR_1959";Finanzdelegation (FinDel) ;DL;NA;FinDel;NA;6;07dec1959;04oct1963
+CH_NT-NR_1959__CO|AAK;CH_NT-NR_1959;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;13;07dec1959;04oct1963
+CH_NT-NR_1959__CO|ALK;CH_NT-NR_1959;Alkoholkommission (ALK) ;CO;NA;ALK;NA;11;07dec1959;04oct1963
+CH_NT-NR_1959__CH_NT-SR_1959__CO|BeK;"CH_NT-NR_1959;CH_NT-SR_1959";Begnadigungskommission (BeK) ;CO;NA;BeK;NA;13;07dec1959;04oct1963
+CH_NT-NR_1959__CO|EBKk;CH_NT-NR_1959;Eisenbahnkonzessionskommission ;CO;NA;EBKk;NA;11;07dec1959;04oct1963
+CH_NT-NR_1959__CO|FK;CH_NT-NR_1959;Finanzkommission (FK) ;CO;NA;FK;NA;15;07dec1959;04oct1963
+CH_NT-NR_1959__CO|GPK;CH_NT-NR_1959;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;17;07dec1959;04oct1963
+CH_NT-NR_1959__CO|MK;CH_NT-NR_1959;Militärkommission (MK) ;CO;NA;MK;NA;"15;19";07dec1959;04oct1963
+CH_NT-NR_1959__CO|PK;CH_NT-NR_1959;Petitionskommission (PK) ;CO;NA;PK;NA;9;07dec1959;04oct1963
+CH_NT-NR_1959__CO|PTT;CH_NT-NR_1959;Kommission für die Post-, Telegraphen- und Telephonverwaltung ;CO;NA;PTT;NA;13;07dec1959;04oct1963
+CH_NT-NR_1959__CO|SBBK;CH_NT-NR_1959;Bundesbahnkommission (SBBK) ;CO;NA;SBBK;NA;15;07dec1959;04oct1963
+CH_NT-NR_1959__CO|WPK;CH_NT-NR_1959;Wahlprüfungskommission (WPK) ;CO;NA;WPK;NA;9;07dec1959;04oct1963
+CH_NT-NR_1959__CO|ZtK;CH_NT-NR_1959;Zolltarifkommission ;CO;NA;ZtK;NA;29;07dec1959;04oct1963
+CH_NT-NR_1963__CH_NT-SR_1963__CO|ALK--SD|Alkoholdelegation;"CH_NT-NR_1963;CH_NT-SR_1963";Alkoholdelegation ;CO;SD;ALK;Alkoholdelegation;"5;6";02dec1963;05oct1967
+CH_NT-NR_1963__CH_NT-SR_1963__DL|ERD;"CH_NT-NR_1963;CH_NT-SR_1963";Delegation beim Europarat (ERD) ;DL;NA;ERD;NA;6;02dec1963;18sep1967
+CH_NT-NR_1963__CH_NT-SR_1963__DL|FinDel;"CH_NT-NR_1963;CH_NT-SR_1963";Finanzdelegation (FinDel) ;DL;NA;FinDel;NA;6;02dec1963;05oct1967
+CH_NT-NR_1963__CO|AAK;CH_NT-NR_1963;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;19;02dec1963;05oct1967
+CH_NT-NR_1963__CO|ALK;CH_NT-NR_1963;Alkoholkommission (ALK) ;CO;NA;ALK;NA;11;02dec1963;05oct1967
+CH_NT-NR_1963__CO|AWK;CH_NT-NR_1963;Kommission für Aussenwirtschaft ;CO;NA;AWK;NA;29;20sep1965;05oct1967
+CH_NT-NR_1963__CH_NT-SR_1963__CO|BeK;"CH_NT-NR_1963;CH_NT-SR_1963";Begnadigungskommission (BeK) ;CO;NA;BeK;NA;13;02dec1963;05oct1967
+CH_NT-NR_1963__CO|EBKk;CH_NT-NR_1963;Eisenbahnkonzessionskommission ;CO;NA;EBKk;NA;11;02dec1963;05oct1967
+CH_NT-NR_1963__CO|FK;CH_NT-NR_1963;Finanzkommission (FK) ;CO;NA;FK;NA;19;02dec1963;05oct1967
+CH_NT-NR_1963__CO|GPK;CH_NT-NR_1963;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;19;02dec1963;05oct1967
+CH_NT-NR_1963__CO|MK;CH_NT-NR_1963;Militärkommission (MK) ;CO;NA;MK;NA;19;02dec1963;05oct1967
+CH_NT-NR_1963__CO|PK;CH_NT-NR_1963;Petitionskommission (PK) ;CO;NA;PK;NA;9;02dec1963;05oct1967
+CH_NT-NR_1963__CO|PTT;CH_NT-NR_1963;Kommission für die Post-, Telegraphen- und Telephonverwaltung ;CO;NA;PTT;NA;13;02dec1963;05oct1967
+CH_NT-NR_1963__CO|SBBK;CH_NT-NR_1963;Bundesbahnkommission (SBBK) ;CO;NA;SBBK;NA;17;02dec1963;05oct1967
+CH_NT-NR_1963__CO|WPK;CH_NT-NR_1963;Wahlprüfungskommission (WPK) ;CO;NA;WPK;NA;9;02dec1963;05oct1967
+CH_NT-NR_1963__CO|ZtK;CH_NT-NR_1963;Zolltarifkommission ;CO;NA;ZtK;NA;29;02dec1963;25jun1965
+CH_NT-NR_1967__CH_NT-SR_1967__CO|ALK--SD|Alkoholdelegation;"CH_NT-NR_1967;CH_NT-SR_1967";Alkoholdelegation ;CO;SD;ALK;Alkoholdelegation;"5;6";04dec1967;08oct1971
+CH_NT-NR_1967__CH_NT-SR_1967__DL|ERD;"CH_NT-NR_1967;CH_NT-SR_1967";Delegation beim Europarat (ERD) ;DL;NA;ERD;NA;6;04dec1967;20sep1971
+CH_NT-NR_1967__CH_NT-SR_1967__DL|FinDel;"CH_NT-NR_1967;CH_NT-SR_1967";Finanzdelegation (FinDel) ;DL;NA;FinDel;NA;6;04dec1967;08oct1971
+CH_NT-NR_1967__CO|AAK;CH_NT-NR_1967;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;19;04dec1967;08oct1971
+CH_NT-NR_1967__CO|ALK;CH_NT-NR_1967;Alkoholkommission (ALK) ;CO;NA;ALK;NA;"11;17";04dec1967;08oct1971
+CH_NT-NR_1967__CO|AWK;CH_NT-NR_1967;Kommission für Aussenwirtschaft ;CO;NA;AWK;NA;29;04dec1967;08oct1971
+CH_NT-NR_1967__CH_NT-SR_1967__CO|BeK;"CH_NT-NR_1967;CH_NT-SR_1967";Begnadigungskommission (BeK) ;CO;NA;BeK;NA;13;04dec1967;08oct1971
+CH_NT-NR_1967__CO|DK;CH_NT-NR_1967;Dokumentationskommission (DK) ;CO;NA;DK;NA;5;04dec1967;08oct1971
+CH_NT-NR_1967__CO|EBKk;CH_NT-NR_1967;Eisenbahnkonzessionskommission ;CO;NA;EBKk;NA;11;04dec1967;08oct1971
+CH_NT-NR_1967__CO|FK;CH_NT-NR_1967;Finanzkommission (FK) ;CO;NA;FK;NA;19;04dec1967;08oct1971
+CH_NT-NR_1967__CO|GPK;CH_NT-NR_1967;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;"19;23";04dec1967;08oct1971
+CH_NT-NR_1967__CO|MK;CH_NT-NR_1967;Militärkommission (MK) ;CO;NA;MK;NA;19;04dec1967;08oct1971
+CH_NT-NR_1967__CO|PK;CH_NT-NR_1967;Petitionskommission (PK) ;CO;NA;PK;NA;9;04dec1967;08oct1971
+CH_NT-NR_1967__CO|PTT;CH_NT-NR_1967;Kommission für die Post-, Telegraphen- und Telephonverwaltung ;CO;NA;PTT;NA;"13;15";04dec1967;09oct1970
+CH_NT-NR_1967__CO|SBBK;CH_NT-NR_1967;Bundesbahnkommission (SBBK) ;CO;NA;SBBK;NA;17;04dec1967;08oct1971
+CH_NT-NR_1967__CO|WFK;CH_NT-NR_1967;Kommission für Wissenschaft und Forschung (WFK) ;CO;NA;WFK;NA;19;04mar1968;08oct1971
+CH_NT-NR_1967__CO|WPK;CH_NT-NR_1967;Wahlprüfungskommission (WPK) ;CO;NA;WPK;NA;9;04dec1967;08oct1971
+CH_NT-NR_1971__CH_NT-SR_1971__CO|ALK--SD|Alkoholdelegation;"CH_NT-NR_1971;CH_NT-SR_1971";Alkoholdelegation ;CO;SD;ALK;Alkoholdelegation;6;29nov1971;03oct1975
+CH_NT-NR_1971__CH_NT-SR_1971__CO|FPK;"CH_NT-NR_1971;CH_NT-SR_1971";Fraktionspräsidentenkonferenz (FPK) ;CO;NA;FPK;NA;10;04jun1973;03oct1975
+CH_NT-NR_1971__CH_NT-SR_1971__DL|ERD;"CH_NT-NR_1971;CH_NT-SR_1971";Delegation beim Europarat (ERD) ;DL;NA;ERD;NA;6;29nov1971;15sep1975
+CH_NT-NR_1971__CH_NT-SR_1971__DL|FinDel;"CH_NT-NR_1971;CH_NT-SR_1971";Finanzdelegation (FinDel) ;DL;NA;FinDel;NA;6;29nov1971;03oct1975
+CH_NT-NR_1971__CO|AAK;CH_NT-NR_1971;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;19;29nov1971;03oct1975
+CH_NT-NR_1971__CO|ALK;CH_NT-NR_1971;Alkoholkommission (ALK) ;CO;NA;ALK;NA;17;29nov1971;03oct1975
+CH_NT-NR_1971__CO|AWK;CH_NT-NR_1971;Kommission für Aussenwirtschaft ;CO;NA;AWK;NA;29;29nov1971;03oct1975
+CH_NT-NR_1971__CH_NT-SR_1971__CO|BeK;"CH_NT-NR_1971;CH_NT-SR_1971";Begnadigungskommission (BeK) ;CO;NA;BeK;NA;13;29nov1971;03oct1975
+CH_NT-NR_1971__CO|Bue;CH_NT-NR_1971;Ratsbüro NR;CO;NA;Bue;NA;10;04jun1973;03oct1975
+CH_NT-NR_1971__CO|DK;CH_NT-NR_1971;Dokumentationskommission (DK) ;CO;NA;DK;NA;5;29nov1971;03oct1975
+CH_NT-NR_1971__CO|EBKk;CH_NT-NR_1971;Eisenbahnkonzessionskommission ;CO;NA;EBKk;NA;11;29nov1971;04oct1974
+CH_NT-NR_1971__CO|FK;CH_NT-NR_1971;Finanzkommission (FK) ;CO;NA;FK;NA;19;29nov1971;03oct1975
+CH_NT-NR_1971__CO|GPK;CH_NT-NR_1971;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;23;29nov1971;03oct1975
+CH_NT-NR_1971__CO|MK;CH_NT-NR_1971;Militärkommission (MK) ;CO;NA;MK;NA;19;29nov1971;03oct1975
+CH_NT-NR_1971__CO|PK;CH_NT-NR_1971;Petitionskommission (PK) ;CO;NA;PK;NA;9;29nov1971;03oct1975
+CH_NT-NR_1971__CO|RedK;CH_NT-NR_1971;Redaktionskommission ;CO;NA;RedK;NA;6;10jun1974;03oct1975
+CH_NT-NR_1971__CO|RedK--SC|I;CH_NT-NR_1971;Redaktionskommission für die italienische Sprache ;CO;SC;RedK;I;2;29nov1971;22mar1974
+CH_NT-NR_1971__CO|SBBK;CH_NT-NR_1971;Bundesbahnkommission (SBBK) ;CO;NA;SBBK;NA;17;29nov1971;03oct1975
+CH_NT-NR_1971__CO|WFK;CH_NT-NR_1971;Kommission für Wissenschaft und Forschung (WFK) ;CO;NA;WFK;NA;19;29nov1971;03oct1975
+CH_NT-NR_1971__CO|WPK;CH_NT-NR_1971;Wahlprüfungskommission (WPK) ;CO;NA;WPK;NA;9;29nov1971;03oct1975
+CH_NT-NR_1975__CH_NT-SR_1975__CO|ALK--SD|Alkoholdelegation;"CH_NT-NR_1975;CH_NT-SR_1975";Alkoholdelegation ;CO;SD;ALK;Alkoholdelegation;"5;6";01dec1975;05oct1979
+CH_NT-NR_1975__CH_NT-SR_1975__CO|FPK;"CH_NT-NR_1975;CH_NT-SR_1975";Fraktionspräsidentenkonferenz (FPK) ;CO;NA;FPK;NA;"8;9";01dec1975;05oct1979
+CH_NT-NR_1975__CH_NT-SR_1975__DL|EFTA;"CH_NT-NR_1975;CH_NT-SR_1975";Delegation bei der EFTA ;DL;NA;EFTA;NA;5;16jan1978;17sep1979
+CH_NT-NR_1975__CH_NT-SR_1975__DL|ERD;"CH_NT-NR_1975;CH_NT-SR_1975";Delegation beim Europarat (ERD) ;DL;NA;ERD;NA;6;01dec1975;17sep1979
+CH_NT-NR_1975__CH_NT-SR_1975__DL|FinDel;"CH_NT-NR_1975;CH_NT-SR_1975";Finanzdelegation (FinDel) ;DL;NA;FinDel;NA;6;01dec1975;05oct1979
+CH_NT-NR_1975__CO|AAK;CH_NT-NR_1975;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;23;01dec1975;05oct1979
+CH_NT-NR_1975__CO|ALK;CH_NT-NR_1975;Alkoholkommission (ALK) ;CO;NA;ALK;NA;17;01dec1975;05oct1979
+CH_NT-NR_1975__CO|AWK;CH_NT-NR_1975;Kommission für Aussenwirtschaft ;CO;NA;AWK;NA;"23;24";01dec1975;05oct1979
+CH_NT-NR_1975__CH_NT-SR_1975__CO|BeK;"CH_NT-NR_1975;CH_NT-SR_1975";Begnadigungskommission (BeK) ;CO;NA;BeK;NA;"13;14";01dec1975;05oct1979
+CH_NT-NR_1975__CO|BGr;CH_NT-NR_1975;Bau- und Investitionen-Kommission (BIK) ;CO;NA;BGr;NA;5;07mar1977;05oct1979
+CH_NT-NR_1975__CO|Bue;CH_NT-NR_1975;Ratsbüro NR;CO;NA;Bue;NA;10;01dec1975;05oct1979
+CH_NT-NR_1975__CO|DK;CH_NT-NR_1975;Dokumentationskommission (DK) ;CO;NA;DK;NA;5;01dec1975;05oct1979
+CH_NT-NR_1975__CO|FK;CH_NT-NR_1975;Finanzkommission (FK) ;CO;NA;FK;NA;23;01dec1975;05oct1979
+CH_NT-NR_1975__CO|GPK;CH_NT-NR_1975;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;23;01dec1975;05oct1979
+CH_NT-NR_1975__CO|MK;CH_NT-NR_1975;Militärkommission (MK) ;CO;NA;MK;NA;23;01dec1975;05oct1979
+CH_NT-NR_1975__CO|PK;CH_NT-NR_1975;Petitionskommission (PK) ;CO;NA;PK;NA;9;01dec1975;05oct1979
+CH_NT-NR_1975__CO|RedK;CH_NT-NR_1975;Redaktionskommission ;CO;NA;RedK;NA;6;01dec1975;05oct1979
+CH_NT-NR_1975__CO|SBBK;CH_NT-NR_1975;Bundesbahnkommission (SBBK) ;CO;NA;SBBK;NA;17;01dec1975;05oct1979
+CH_NT-NR_1975__CO|WFK;CH_NT-NR_1975;Kommission für Wissenschaft und Forschung (WFK) ;CO;NA;WFK;NA;23;01dec1975;05oct1979
+CH_NT-NR_1975__CO|WPK;CH_NT-NR_1975;Wahlprüfungskommission (WPK) ;CO;NA;WPK;NA;9;01dec1975;05oct1979
+CH_NT-NR_1979__CH_NT-SR_1979__CO|ALK--SD|Alkoholdelegation;"CH_NT-NR_1979;CH_NT-SR_1979";Alkoholdelegation ;CO;SD;ALK;Alkoholdelegation;6;26nov1979;19sep1983
+CH_NT-NR_1979__CH_NT-SR_1979__CO|BeK;"CH_NT-NR_1979;CH_NT-SR_1979";Begnadigungskommission (BeK) ;CO;NA;BeK;NA;13;26nov1979;19sep1983
+CH_NT-NR_1979__CH_NT-SR_1979__CO|DK;"CH_NT-NR_1979;CH_NT-SR_1979";Dokumentationskommission (DK) ;CO;NA;DK;NA;10;26nov1979;19sep1983
+CH_NT-NR_1979__CH_NT-SR_1979__CO|FPK;"CH_NT-NR_1979;CH_NT-SR_1979";Fraktionspräsidentenkonferenz (FPK) ;CO;NA;FPK;NA;"8;9";26nov1979;07oct1983
+CH_NT-NR_1979__CH_NT-SR_1979__CO|RedK;"CH_NT-NR_1979;CH_NT-SR_1979";Redaktionskommission ;CO;NA;RedK;NA;12;26nov1979;19sep1983
+CH_NT-NR_1979__CH_NT-SR_1979__DL|Del-EU;"CH_NT-NR_1979;CH_NT-SR_1979";Delegation für die Beziehungen zum Europäischen Parlament ;DL;NA;Del-EU;NA;10;30nov1981;19sep1983
+CH_NT-NR_1979__CH_NT-SR_1979__DL|EFTA;"CH_NT-NR_1979;CH_NT-SR_1979";Delegation bei der EFTA ;DL;NA;EFTA;NA;5;26nov1979;19sep1983
+CH_NT-NR_1979__CH_NT-SR_1979__DL|ERD;"CH_NT-NR_1979;CH_NT-SR_1979";Delegation beim Europarat (ERD) ;DL;NA;ERD;NA;6;26nov1979;19sep1983
+CH_NT-NR_1979__CH_NT-SR_1979__DL|FinDel;"CH_NT-NR_1979;CH_NT-SR_1979";Finanzdelegation (FinDel) ;DL;NA;FinDel;NA;6;26nov1979;19sep1983
+CH_NT-NR_1979__CO|AAK;CH_NT-NR_1979;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;23;26nov1979;07oct1983
+CH_NT-NR_1979__CO|BGr;CH_NT-NR_1979;Bau- und Investitionen-Kommission (BIK) ;CO;NA;BGr;NA;5;26nov1979;07oct1983
+CH_NT-NR_1979__CO|Bue;CH_NT-NR_1979;Ratsbüro NR;CO;NA;Bue;NA;10;26nov1979;07oct1983
+CH_NT-NR_1979__CO|EK;CH_NT-NR_1979;Energiekommission (EK) ;CO;NA;EK;NA;19;26nov1979;07oct1983
+CH_NT-NR_1979__CO|FK;CH_NT-NR_1979;Finanzkommission (FK) ;CO;NA;FK;NA;23;26nov1979;07oct1983
+CH_NT-NR_1979__CO|GPK;CH_NT-NR_1979;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;23;26nov1979;07oct1983
+CH_NT-NR_1979__CO|GUK;CH_NT-NR_1979;Kommission für Gesundheit und Umwelt (GUK) ;CO;NA;GUK;NA;17;26nov1979;07oct1983
+CH_NT-NR_1979__CO|MK;CH_NT-NR_1979;Militärkommission (MK) ;CO;NA;MK;NA;23;26nov1979;07oct1983
+CH_NT-NR_1979__CO|PGK;CH_NT-NR_1979;Petitions- und Gewährleistungskommission (PGK) ;CO;NA;PGK;NA;17;26nov1979;07oct1983
+CH_NT-NR_1979__CO|SSK;CH_NT-NR_1979;Kommission für soziale Sicherheit (SSK) ;CO;NA;SSK;NA;19;26nov1979;07oct1983
+CH_NT-NR_1979__CO|VK;CH_NT-NR_1979;Verkehrskommission (VK) ;CO;NA;VK;NA;19;26nov1979;07oct1983
+CH_NT-NR_1979__CO|WFK;CH_NT-NR_1979;Kommission für Wissenschaft und Forschung (WFK) ;CO;NA;WFK;NA;23;26nov1979;07oct1983
+CH_NT-NR_1979__CO|WK;CH_NT-NR_1979;Wirtschaftskommission (WK) ;CO;NA;WK;NA;23;26nov1979;07oct1983
+CH_NT-NR_1983__CH_NT-SR_1983__CO|ALK--SD|Alkoholdelegation;"CH_NT-NR_1983;CH_NT-SR_1983";Alkoholdelegation ;CO;SD;ALK;Alkoholdelegation;6;28nov1983;21sep1987
+CH_NT-NR_1983__CH_NT-SR_1983__CO|BeK;"CH_NT-NR_1983;CH_NT-SR_1983";Begnadigungskommission (BeK) ;CO;NA;BeK;NA;13;28nov1983;21sep1987
+CH_NT-NR_1983__CH_NT-SR_1983__CO|DK;"CH_NT-NR_1983;CH_NT-SR_1983";Dokumentationskommission (DK) ;CO;NA;DK;NA;10;28nov1983;21sep1987
+CH_NT-NR_1983__CH_NT-SR_1983__CO|FPK;"CH_NT-NR_1983;CH_NT-SR_1983";Fraktionspräsidentenkonferenz (FPK) ;CO;NA;FPK;NA;"9;10";28nov1983;09oct1987
+CH_NT-NR_1983__CH_NT-SR_1983__CO|RedK;"CH_NT-NR_1983;CH_NT-SR_1983";Redaktionskommission ;CO;NA;RedK;NA;12;28nov1983;21sep1987
+CH_NT-NR_1983__CH_NT-SR_1983__DL|Del-EU;"CH_NT-NR_1983;CH_NT-SR_1983";Delegation für die Beziehungen zum Europäischen Parlament ;DL;NA;Del-EU;NA;10;28nov1983;21sep1987
+CH_NT-NR_1983__CH_NT-SR_1983__DL|EFTA;"CH_NT-NR_1983;CH_NT-SR_1983";Delegation bei der EFTA ;DL;NA;EFTA;NA;5;28nov1983;21sep1987
+CH_NT-NR_1983__CH_NT-SR_1983__DL|ERD;"CH_NT-NR_1983;CH_NT-SR_1983";Delegation beim Europarat (ERD) ;DL;NA;ERD;NA;6;28nov1983;21sep1987
+CH_NT-NR_1983__CH_NT-SR_1983__DL|FinDel;"CH_NT-NR_1983;CH_NT-SR_1983";Finanzdelegation (FinDel) ;DL;NA;FinDel;NA;6;28nov1983;21sep1987
+CH_NT-NR_1983__CH_NT-SR_1983__DL|IPU;"CH_NT-NR_1983;CH_NT-SR_1983";Delegation bei der Interparlamentarischen Union ;DL;NA;IPU;NA;8;01jun1987;21sep1987
+CH_NT-NR_1983__CO|AAK;CH_NT-NR_1983;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;23;28nov1983;09oct1987
+CH_NT-NR_1983__CO|BGr;CH_NT-NR_1983;Bau- und Investitionen-Kommission (BIK) ;CO;NA;BGr;NA;5;28nov1983;09oct1987
+CH_NT-NR_1983__CO|Bue;CH_NT-NR_1983;Ratsbüro NR;CO;NA;Bue;NA;10;28nov1983;09oct1987
+CH_NT-NR_1983__CO|EK;CH_NT-NR_1983;Energiekommission (EK) ;CO;NA;EK;NA;21;28nov1983;09oct1987
+CH_NT-NR_1983__CO|FK;CH_NT-NR_1983;Finanzkommission (FK) ;CO;NA;FK;NA;23;28nov1983;09oct1987
+CH_NT-NR_1983__CO|GPK;CH_NT-NR_1983;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;23;28nov1983;09oct1987
+CH_NT-NR_1983__CO|GUK;CH_NT-NR_1983;Kommission für Gesundheit und Umwelt (GUK) ;CO;NA;GUK;NA;"17;23";28nov1983;09oct1987
+CH_NT-NR_1983__CO|MK;CH_NT-NR_1983;Militärkommission (MK) ;CO;NA;MK;NA;23;28nov1983;09oct1987
+CH_NT-NR_1983__CO|PGK;CH_NT-NR_1983;Petitions- und Gewährleistungskommission (PGK) ;CO;NA;PGK;NA;23;28nov1983;09oct1987
+CH_NT-NR_1983__CO|SSK;CH_NT-NR_1983;Kommission für soziale Sicherheit (SSK) ;CO;NA;SSK;NA;"19;21";28nov1983;09oct1987
+CH_NT-NR_1983__CO|VK;CH_NT-NR_1983;Verkehrskommission (VK) ;CO;NA;VK;NA;23;28nov1983;09oct1987
+CH_NT-NR_1983__CO|WFK;CH_NT-NR_1983;Kommission für Wissenschaft und Forschung (WFK) ;CO;NA;WFK;NA;23;28nov1983;09oct1987
+CH_NT-NR_1983__CO|WK;CH_NT-NR_1983;Wirtschaftskommission (WK) ;CO;NA;WK;NA;23;28nov1983;09oct1987
+CH_NT-NR_1987__CH_NT-SR_1987__CO|ALK--SD|Alkoholdelegation;"CH_NT-NR_1987;CH_NT-SR_1987";Alkoholdelegation ;CO;SD;ALK;Alkoholdelegation;6;30nov1987;17sep1990
+CH_NT-NR_1987__CH_NT-SR_1987__CO|BeK;"CH_NT-NR_1987;CH_NT-SR_1987";Begnadigungskommission (BeK) ;CO;NA;BeK;NA;13;30nov1987;16sep1991
+CH_NT-NR_1987__CH_NT-SR_1987__CO|DK;"CH_NT-NR_1987;CH_NT-SR_1987";Dokumentationskommission (DK) ;CO;NA;DK;NA;10;30nov1987;19sep1988
+CH_NT-NR_1987__CH_NT-SR_1987__CO|EWR;"CH_NT-NR_1987;CH_NT-SR_1987";Arbeitsgruppe EWR ;CO;NA;EWR;NA;14;04mar1991;16sep1991
+CH_NT-NR_1987__CH_NT-SR_1987__CO|FPK;"CH_NT-NR_1987;CH_NT-SR_1987";Fraktionspräsidentenkonferenz (FPK) ;CO;NA;FPK;NA;9;30nov1987;16sep1991
+CH_NT-NR_1987__CH_NT-SR_1987__CO|IAgVR;"CH_NT-NR_1987;CH_NT-SR_1987";Interfraktionelle Arbeitsgruppe für die Vorbereitung der Richterwahlen ;CO;NA;IAgVR;NA;6;29feb1988;16sep1991
+CH_NT-NR_1987__CH_NT-SR_1987__CO|RedK;"CH_NT-NR_1987;CH_NT-SR_1987";Redaktionskommission ;CO;NA;RedK;NA;6;30nov1987;18dec1987
+CH_NT-NR_1987__CH_NT-SR_1987__CO|RedK--SC|D;"CH_NT-NR_1987;CH_NT-SR_1987";Redaktionskommission für die deutsche Sprache ;CO;SC;RedK;D;"4;3";29feb1988;16sep1991
+CH_NT-NR_1987__CH_NT-SR_1987__CO|RedK--SC|F;"CH_NT-NR_1987;CH_NT-SR_1987";Redaktionskommission für die französische Sprache ;CO;SC;RedK;F;4;29feb1988;16sep1991
+CH_NT-NR_1987__CH_NT-SR_1987__CO|RedK--SC|I;"CH_NT-NR_1987;CH_NT-SR_1987";Redaktionskommission für die italienische Sprache ;CO;SC;RedK;I;4;29feb1988;16sep1991
+CH_NT-NR_1987__CH_NT-SR_1987__CO|VwK;"CH_NT-NR_1987;CH_NT-SR_1987";Verwaltungskommission ;CO;NA;VwK;NA;6;28nov1988;16sep1991
+CH_NT-NR_1987__CH_NT-SR_1987__DL|APF;"CH_NT-NR_1987;CH_NT-SR_1987";Schweizerische Gruppe der Internationalen Versammlung der Parlamentarier französischer Sprache ;DL;NA;APF;NA;5;27nov1989;16sep1991
+CH_NT-NR_1987__CH_NT-SR_1987__DL|Del-EU;"CH_NT-NR_1987;CH_NT-SR_1987";Delegation für die Beziehungen zum Europäischen Parlament ;DL;NA;Del-EU;NA;10;30nov1987;16sep1991
+CH_NT-NR_1987__CH_NT-SR_1987__DL|EFTA;"CH_NT-NR_1987;CH_NT-SR_1987";Delegation bei der EFTA ;DL;NA;EFTA;NA;5;30nov1987;16sep1991
+CH_NT-NR_1987__CH_NT-SR_1987__DL|ERD;"CH_NT-NR_1987;CH_NT-SR_1987";Delegation beim Europarat (ERD) ;DL;NA;ERD;NA;6;30nov1987;16sep1991
+CH_NT-NR_1987__CH_NT-SR_1987__DL|FinDel;"CH_NT-NR_1987;CH_NT-SR_1987";Finanzdelegation (FinDel) ;DL;NA;FinDel;NA;6;30nov1987;16sep1991
+CH_NT-NR_1987__CH_NT-SR_1987__DL|IPU;"CH_NT-NR_1987;CH_NT-SR_1987";Delegation bei der Interparlamentarischen Union ;DL;NA;IPU;NA;8;30nov1987;16sep1991
+CH_NT-NR_1987__CO|AAK;CH_NT-NR_1987;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;23;30nov1987;16sep1991
+CH_NT-NR_1987__CO|BGr;CH_NT-NR_1987;Bau- und Investitionen-Kommission (BIK) ;CO;NA;BGr;NA;5;30nov1987;16sep1991
+CH_NT-NR_1987__CO|Bue;CH_NT-NR_1987;Ratsbüro NR;CO;NA;Bue;NA;10;30nov1987;16sep1991
+CH_NT-NR_1987__CO|EK;CH_NT-NR_1987;Energiekommission (EK) ;CO;NA;EK;NA;21;30nov1987;16sep1991
+CH_NT-NR_1987__CO|FK;CH_NT-NR_1987;Finanzkommission (FK) ;CO;NA;FK;NA;23;30nov1987;16sep1991
+CH_NT-NR_1987__CO|GPK;CH_NT-NR_1987;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;23;30nov1987;16sep1991
+CH_NT-NR_1987__CO|GUK;CH_NT-NR_1987;Kommission für Gesundheit und Umwelt (GUK) ;CO;NA;GUK;NA;23;30nov1987;16sep1991
+CH_NT-NR_1987__CO|MK;CH_NT-NR_1987;Militärkommission (MK) ;CO;NA;MK;NA;23;30nov1987;16sep1991
+CH_NT-NR_1987__CO|PGK;CH_NT-NR_1987;Petitions- und Gewährleistungskommission (PGK) ;CO;NA;PGK;NA;23;01dec1958;16sep1991
+CH_NT-NR_1987__CO|SSK;CH_NT-NR_1987;Kommission für soziale Sicherheit (SSK) ;CO;NA;SSK;NA;21;30nov1987;16sep1991
+CH_NT-NR_1987__CO|VK;CH_NT-NR_1987;Verkehrskommission (VK) ;CO;NA;VK;NA;23;30nov1987;16sep1991
+CH_NT-NR_1987__CO|WFK;CH_NT-NR_1987;Kommission für Wissenschaft und Forschung (WFK) ;CO;NA;WFK;NA;23;30nov1987;16sep1991
+CH_NT-NR_1987__CO|WK;CH_NT-NR_1987;Wirtschaftskommission (WK) ;CO;NA;WK;NA;23;30nov1987;16sep1991
+CH_NT-NR_1991__CH_NT-SR_1991__CO|BeK;"CH_NT-NR_1991;CH_NT-SR_1991";Begnadigungskommission (BeK) ;CO;NA;BeK;NA;13;25nov1991;18sep1995
+CH_NT-NR_1991__CH_NT-SR_1991__CO|IAgVR;"CH_NT-NR_1991;CH_NT-SR_1991";Interfraktionelle Arbeitsgruppe für die Vorbereitung der Richterwahlen ;CO;NA;IAgVR;NA;6;25nov1991;18sep1995
+CH_NT-NR_1991__CH_NT-SR_1991__CO|RedK--SC|D;"CH_NT-NR_1991;CH_NT-SR_1991";Redaktionskommission für die deutsche Sprache ;CO;SC;RedK;D;4;25nov1991;18sep1995
+CH_NT-NR_1991__CH_NT-SR_1991__CO|RedK--SC|F;"CH_NT-NR_1991;CH_NT-SR_1991";Redaktionskommission für die französische Sprache ;CO;SC;RedK;F;4;25nov1991;18sep1995
+CH_NT-NR_1991__CH_NT-SR_1991__CO|RedK--SC|I;"CH_NT-NR_1991;CH_NT-SR_1991";Redaktionskommission für die italienische Sprache ;CO;SC;RedK;I;4;25nov1991;18sep1995
+CH_NT-NR_1991__CH_NT-SR_1991__CO|VwK;"CH_NT-NR_1991;CH_NT-SR_1991";Verwaltungskommission ;CO;NA;VwK;NA;6;25nov1991;24aug1992
+CH_NT-NR_1991__CH_NT-SR_1991__DL|APF;"CH_NT-NR_1991;CH_NT-SR_1991";Schweizerische Gruppe der Internationalen Versammlung der Parlamentarier französischer Sprache ;DL;NA;APF;NA;5;25nov1991;18sep1995
+CH_NT-NR_1991__CH_NT-SR_1991__DL|EFTA/EU;"CH_NT-NR_1991;CH_NT-SR_1991";Delegation EFTA/Europäisches Parlament ;DL;NA;EFTA/EU;NA;15;25nov1991;18sep1995
+CH_NT-NR_1991__CH_NT-SR_1991__DL|EFTA/EU--SD|EFTA;"CH_NT-NR_1991;CH_NT-SR_1991";Delegation bei der EFTA ;DL;SD;EFTA/EU;EFTA;6;25nov1991;18sep1995
+CH_NT-NR_1991__CH_NT-SR_1991__DL|EFTA/EU--SD|EU;"CH_NT-NR_1991;CH_NT-SR_1991";Delegation beim Europäischen Parlament ;DL;SD;EFTA/EU;EU;9;25nov1991;18sep1995
+CH_NT-NR_1991__CH_NT-SR_1991__DL|ERD;"CH_NT-NR_1991;CH_NT-SR_1991";Delegation beim Europarat (ERD) ;DL;NA;ERD;NA;6;25nov1991;18sep1995
+CH_NT-NR_1991__CH_NT-SR_1991__DL|FinDel;"CH_NT-NR_1991;CH_NT-SR_1991";Finanzdelegation (FinDel) ;DL;NA;FinDel;NA;6;25nov1991;18sep1995
+CH_NT-NR_1991__CH_NT-SR_1991__DL|GPDel;"CH_NT-NR_1991;CH_NT-SR_1991";Geschäftsprüfungsdelegation ;DL;NA;GPDel;NA;6;26apr1993;18sep1995
+CH_NT-NR_1991__CH_NT-SR_1991__DL|IPU;"CH_NT-NR_1991;CH_NT-SR_1991";Delegation bei der Interparlamentarischen Union ;DL;NA;IPU;NA;8;25nov1991;18sep1995
+CH_NT-NR_1991__CH_NT-SR_1991__DL|PV-OSZE;"CH_NT-NR_1991;CH_NT-SR_1991";Delegation bei der parlamentarischen Versammlung der KSZE ;DL;NA;PV-OSZE;NA;"5;6";27jan1992;18sep1995
+CH_NT-NR_1991__CH_NT-SR_1991__DL|VwD;"CH_NT-NR_1991;CH_NT-SR_1991";Verwaltungsdelegation ;DL;NA;VwD;NA;6;30nov1992;18sep1995
+CH_NT-NR_1991__CO|APK;CH_NT-NR_1991;Aussenpolitische Kommission (APK) ;CO;NA;APK;NA;27;25nov1991;06oct1995
+CH_NT-NR_1991__CO|Bue;CH_NT-NR_1991;Ratsbüro NR;CO;NA;Bue;NA;15;25nov1991;18sep1995
+CH_NT-NR_1991__CO|FK;CH_NT-NR_1991;Finanzkommission (FK) ;CO;NA;FK;NA;25;25nov1991;06oct1995
+CH_NT-NR_1991__CO|FK--SC|B+G EDA;CH_NT-NR_1991;Subkommission 2 (B + G, EDA) der Finanzkommission (FK) ;CO;SC;FK;B+G EDA;5;29nov1993;06oct1995
+CH_NT-NR_1991__CO|FK--SC|B+G EDA EVED;CH_NT-NR_1991;Subkommission 2 (B + G, EDA, EVED) der Finanzkommission (FK) ;CO;SC;FK;B+G EDA EVED;7;24aug1992;08oct1993
+CH_NT-NR_1991__CO|FK--SC|Bauten Strassen;CH_NT-NR_1991;Subkommission 7 (Bauten Strassen) der Finanzkommission (FK) ;CO;SC;FK;Bauten Strassen;6;24aug1992;08oct1993
+CH_NT-NR_1991__CO|FK--SC|EDI;CH_NT-NR_1991;Subkommission 3 (EDI) der Finanzkommission (FK) ;CO;SC;FK;EDI;6;29nov1993;06oct1995
+CH_NT-NR_1991__CO|FK--SC|EDI EJPD;CH_NT-NR_1991;Subkommission 1 (EDI, EJPD) der Finanzkommission (FK) ;CO;SC;FK;EDI EJPD;7;24aug1992;08oct1993
+CH_NT-NR_1991__CO|FK--SC|EFD;CH_NT-NR_1991;Subkommission 4 (EFD) der Finanzkommission (FK) ;CO;SC;FK;EFD;8;24aug1992;08oct1993
+CH_NT-NR_1991__CO|FK--SC|EFD AW;CH_NT-NR_1991;Subkommission 6 (EFD, AW) der Finanzkommission (FK) ;CO;SC;FK;EFD AW;8;29nov1993;23jun1995
+CH_NT-NR_1991__CO|FK--SC|EFD EAV;CH_NT-NR_1991;Subkommission 6 (EFD, EAV) der Finanzkommission (FK) ;CO;SC;FK;EFD EAV;8;18sep1995;06oct1995
+CH_NT-NR_1991__CO|FK--SC|EJPD;CH_NT-NR_1991;Subkommission 4 (EJPD) der Finanzkommission (FK) ;CO;SC;FK;EJPD;5;29nov1993;06oct1995
+CH_NT-NR_1991__CO|FK--SC|EMD;CH_NT-NR_1991;Subkommission 3 (EMD) der Finanzkommission (FK) ;CO;SC;FK;EMD;"5;7";24aug1992;06oct1995
+CH_NT-NR_1991__CO|FK--SC|EVD;CH_NT-NR_1991;Subkommission 5 (EVD) der Finanzkommission (FK) ;CO;SC;FK;EVD;"6;7";24aug1992;06oct1995
+CH_NT-NR_1991__CO|FK--SC|EVED;CH_NT-NR_1991;Subkommission 8 (EVED) der Finanzkommission (FK) ;CO;SC;FK;EVED;5;29nov1993;06oct1995
+CH_NT-NR_1991__CO|FK--SC|PTT;CH_NT-NR_1991;Subkommission 1 (PTT) der Finanzkommission (FK) ;CO;SC;FK;PTT;5;29nov1993;06oct1995
+CH_NT-NR_1991__CO|FK--SC|PTT SBB;CH_NT-NR_1991;Subkommission 6 (PTT, SBB) der Finanzkommission (FK) ;CO;SC;FK;PTT SBB;8;24aug1992;08oct1993
+CH_NT-NR_1991__CO|FK--SC|SBB;CH_NT-NR_1991;Subkommission 9 (SBB) der Finanzkommission (FK) ;CO;SC;FK;SBB;5;29nov1993;06oct1995
+CH_NT-NR_1991__CO|GPK;CH_NT-NR_1991;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;25;25nov1991;06oct1995
+CH_NT-NR_1991__CO|GPK--SC|Fuehrung;CH_NT-NR_1991;Horizontale Sektion 1 (Führung) der Geschäftsprüfungskommission (GPK) ;CO;SC;GPK;Fuehrung;6;24aug1992;06oct1995
+CH_NT-NR_1991__CO|GPK--SC|Information;CH_NT-NR_1991;Horizontale Sektion 2 (Information) der Geschäftsprüfungskommission (GPK) ;CO;SC;GPK;Information;5;24aug1992;06oct1995
+CH_NT-NR_1991__CO|GPK--SC|Kultur;CH_NT-NR_1991;Vertikale Sektion 4 (Kultur) der Geschäftsprüfungskommission (GPK) ;CO;SC;GPK;Kultur;5;24aug1992;06oct1995
+CH_NT-NR_1991__CO|GPK--SC|Leistung;CH_NT-NR_1991;Vertikale Sektion 3 (Leistung) der Geschäftsprüfungskommission (GPK) ;CO;SC;GPK;Leistung;"6;7";24aug1992;06oct1995
+CH_NT-NR_1991__CO|GPK--SC|Mittel;CH_NT-NR_1991;Horizontale Sektion 3 (Mittel) der Geschäftsprüfungskommission (GPK) ;CO;SC;GPK;Mittel;6;24aug1992;06oct1995
+CH_NT-NR_1991__CO|GPK--SC|Staat;CH_NT-NR_1991;Vertikale Sektion 1 (Staat) der Geschäftsprüfungskommission (GPK) ;CO;SC;GPK;Staat;"6;7";24aug1992;06oct1995
+CH_NT-NR_1991__CO|GPK--SC|Wirkung;CH_NT-NR_1991;Horizontale Sektion 4 (Wirkung) der Geschäftsprüfungskommission (GPK) ;CO;SC;GPK;Wirkung;5;24aug1992;06oct1995
+CH_NT-NR_1991__CO|GPK--SC|Wirtschaft;CH_NT-NR_1991;Vertikale Sektion 2 (Wirtschaft) der Geschäftsprüfungskommission (GPK) ;CO;SC;GPK;Wirtschaft;7;24aug1992;06oct1995
+CH_NT-NR_1991__CO|GPK--SD|GPDel;CH_NT-NR_1991;Geschäftsprüfungsdelegation ;CO;SD;GPK;GPDel;3;24aug1992;19mar1993
+CH_NT-NR_1991__CO|KoeB;CH_NT-NR_1991;Kommission für öffentliche Bauten (KöB) ;CO;NA;KoeB;NA;11;25nov1991;06oct1995
+CH_NT-NR_1991__CO|KVF;CH_NT-NR_1991;Kommission für Verkehr und Fernmeldewesen (KVF) ;CO;NA;KVF;NA;25;25nov1991;06oct1995
+CH_NT-NR_1991__CO|RK;CH_NT-NR_1991;Kommission für Rechtsfragen (RK) ;CO;NA;RK;NA;25;25nov1991;06oct1995
+CH_NT-NR_1991__CO|SGK;CH_NT-NR_1991;Kommission für soziale Sicherheit und Gesundheit (SGK) ;CO;NA;SGK;NA;25;25nov1991;06oct1995
+CH_NT-NR_1991__CO|SiK;CH_NT-NR_1991;Sicherheitspolitische Kommission (SiK) ;CO;NA;SiK;NA;25;25nov1991;06oct1995
+CH_NT-NR_1991__CO|SPK;CH_NT-NR_1991;Staatspolitische Kommission (SPK) ;CO;NA;SPK;NA;25;25nov1991;06oct1995
+CH_NT-NR_1991__CO|UREK;CH_NT-NR_1991;Kommission für Umwelt, Raumplanung und Energie (UREK) ;CO;NA;UREK;NA;25;25nov1991;06oct1995
+CH_NT-NR_1991__CO|WAK;CH_NT-NR_1991;Kommission für Wirtschaft und Abgaben (WAK) ;CO;NA;WAK;NA;25;25nov1991;06oct1995
+CH_NT-NR_1991__CO|WBK;CH_NT-NR_1991;Kommission für Wissenschaft, Bildung und Kultur (WBK) ;CO;NA;WBK;NA;25;25nov1991;06oct1995
+CH_NT-SR_1947__CO|AAK;CH_NT-SR_1947;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;11;01dec1947;03oct1951
+CH_NT-SR_1947__CO|ALK;CH_NT-SR_1947;Alkoholkommission (ALK) ;CO;NA;ALK;NA;9;01dec1947;03oct1951
+CH_NT-SR_1947__CO|EBKk;CH_NT-SR_1947;Eisenbahnkonzessionskommission ;CO;NA;EBKk;NA;9;01dec1947;03oct1951
+CH_NT-SR_1947__CO|FK;CH_NT-SR_1947;Finanzkommission (FK) ;CO;NA;FK;NA;"9;11";01dec1947;03oct1951
+CH_NT-SR_1947__CO|GPK;CH_NT-SR_1947;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;9;01dec1947;03oct1951
+CH_NT-SR_1947__CO|MK;CH_NT-SR_1947;Militärkommission (MK) ;CO;NA;MK;NA;9;01dec1947;03oct1951
+CH_NT-SR_1947__CO|PK;CH_NT-SR_1947;Petitionskommission (PK) ;CO;NA;PK;NA;5;01dec1947;03oct1951
+CH_NT-SR_1947__CO|SBBK;CH_NT-SR_1947;Bundesbahnkommission (SBBK) ;CO;NA;SBBK;NA;9;01dec1947;03oct1951
+CH_NT-SR_1947__CO|VmK;CH_NT-SR_1947;VollmachtenKommission ;CO;NA;VmK;NA;13;01dec1947;03oct1951
+CH_NT-SR_1947__CO|ZtK;CH_NT-SR_1947;Zolltarifkommission ;CO;NA;ZtK;NA;15;01dec1947;03oct1951
+CH_NT-SR_1951__CO|AAK;CH_NT-SR_1951;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;11;03dec1951;30sep1955
+CH_NT-SR_1951__CO|ALK;CH_NT-SR_1951;Alkoholkommission (ALK) ;CO;NA;ALK;NA;9;03dec1951;30sep1955
+CH_NT-SR_1951__CO|EBKk;CH_NT-SR_1951;Eisenbahnkonzessionskommission ;CO;NA;EBKk;NA;9;03dec1951;30sep1955
+CH_NT-SR_1951__CO|FK;CH_NT-SR_1951;Finanzkommission (FK) ;CO;NA;FK;NA;11;03dec1951;30sep1955
+CH_NT-SR_1951__CO|GPK;CH_NT-SR_1951;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;9;03dec1951;30sep1955
+CH_NT-SR_1951__CO|MK;CH_NT-SR_1951;Militärkommission (MK) ;CO;NA;MK;NA;9;03dec1951;30sep1955
+CH_NT-SR_1951__CO|PK;CH_NT-SR_1951;Petitionskommission (PK) ;CO;NA;PK;NA;5;03dec1951;30sep1955
+CH_NT-SR_1951__CO|SBBK;CH_NT-SR_1951;Bundesbahnkommission (SBBK) ;CO;NA;SBBK;NA;9;03dec1951;30sep1955
+CH_NT-SR_1951__CO|VmK;CH_NT-SR_1951;VollmachtenKommission ;CO;NA;VmK;NA;13;03dec1951;01oct1952
+CH_NT-SR_1951__CO|ZtK;CH_NT-SR_1951;Zolltarifkommission ;CO;NA;ZtK;NA;15;03dec1951;30sep1955
+CH_NT-SR_1955__CO|AAK;CH_NT-SR_1955;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;11;05dec1955;07oct1959
+CH_NT-SR_1955__CO|ALK;CH_NT-SR_1955;Alkoholkommission (ALK) ;CO;NA;ALK;NA;9;05dec1955;07oct1959
+CH_NT-SR_1955__CO|EBKk;CH_NT-SR_1955;Eisenbahnkonzessionskommission ;CO;NA;EBKk;NA;9;05dec1955;07oct1959
+CH_NT-SR_1955__CO|FK;CH_NT-SR_1955;Finanzkommission (FK) ;CO;NA;FK;NA;11;05dec1955;07oct1959
+CH_NT-SR_1955__CO|GPK;CH_NT-SR_1955;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;9;05dec1955;07oct1959
+CH_NT-SR_1955__CO|MK;CH_NT-SR_1955;Militärkommission (MK) ;CO;NA;MK;NA;9;05dec1955;07oct1959
+CH_NT-SR_1955__CO|PK;CH_NT-SR_1955;Petitionskommission (PK) ;CO;NA;PK;NA;5;05dec1955;07oct1959
+CH_NT-SR_1955__CO|SBBK;CH_NT-SR_1955;Bundesbahnkommission (SBBK) ;CO;NA;SBBK;NA;9;05dec1955;07oct1959
+CH_NT-SR_1955__CO|ZtK;CH_NT-SR_1955;Zolltarifkommission ;CO;NA;ZtK;NA;15;05dec1955;07oct1959
+CH_NT-SR_1959__CO|AAK;CH_NT-SR_1959;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;11;07dec1959;04oct1963
+CH_NT-SR_1959__CO|ALK;CH_NT-SR_1959;Alkoholkommission (ALK) ;CO;NA;ALK;NA;9;07dec1959;04oct1963
+CH_NT-SR_1959__CO|EBKk;CH_NT-SR_1959;Eisenbahnkonzessionskommission ;CO;NA;EBKk;NA;9;07dec1959;04oct1963
+CH_NT-SR_1959__CO|FK;CH_NT-SR_1959;Finanzkommission (FK) ;CO;NA;FK;NA;11;07dec1959;04oct1963
+CH_NT-SR_1959__CO|GPK;CH_NT-SR_1959;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;9;07dec1959;04oct1963
+CH_NT-SR_1959__CO|MK;CH_NT-SR_1959;Militärkommission (MK) ;CO;NA;MK;NA;9;07dec1959;04oct1963
+CH_NT-SR_1959__CO|PK;CH_NT-SR_1959;Petitionskommission (PK) ;CO;NA;PK;NA;5;07dec1959;04oct1963
+CH_NT-SR_1959__CO|PTT;CH_NT-SR_1959;Kommission für die Post-, Telegraphen- und Telephonverwaltung ;CO;NA;PTT;NA;9;06mar1961;04oct1963
+CH_NT-SR_1959__CO|SBBK;CH_NT-SR_1959;Bundesbahnkommission (SBBK) ;CO;NA;SBBK;NA;9;07dec1959;04oct1963
+CH_NT-SR_1959__CO|ZtK;CH_NT-SR_1959;Zolltarifkommission ;CO;NA;ZtK;NA;15;07dec1959;04oct1963
+CH_NT-SR_1963__CO|AAK;CH_NT-SR_1963;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;11;02dec1963;05oct1967
+CH_NT-SR_1963__CO|ALK;CH_NT-SR_1963;Alkoholkommission (ALK) ;CO;NA;ALK;NA;9;02dec1963;05oct1967
+CH_NT-SR_1963__CO|AWK;CH_NT-SR_1963;Kommission für Aussenwirtschaft und Zolltarif ;CO;NA;AWK;NA;15;29nov1965;05oct1967
+CH_NT-SR_1963__CO|EBKk;CH_NT-SR_1963;Eisenbahnkonzessionskommission ;CO;NA;EBKk;NA;9;02dec1963;05oct1967
+CH_NT-SR_1963__CO|FK;CH_NT-SR_1963;Finanzkommission (FK) ;CO;NA;FK;NA;11;02dec1963;05oct1967
+CH_NT-SR_1963__CO|GPK;CH_NT-SR_1963;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;"9;11";02dec1963;05oct1967
+CH_NT-SR_1963__CO|MK;CH_NT-SR_1963;Militärkommission (MK) ;CO;NA;MK;NA;"9;11";02dec1963;05oct1967
+CH_NT-SR_1963__CO|PK;CH_NT-SR_1963;Petitionskommission (PK) ;CO;NA;PK;NA;5;02dec1963;05oct1967
+CH_NT-SR_1963__CO|PTT;CH_NT-SR_1963;Kommission für die Post-, Telegraphen- und Telephonverwaltung ;CO;NA;PTT;NA;9;02dec1963;05oct1967
+CH_NT-SR_1963__CO|SBBK;CH_NT-SR_1963;Bundesbahnkommission (SBBK) ;CO;NA;SBBK;NA;9;02dec1963;05oct1967
+CH_NT-SR_1963__CO|ZtK;CH_NT-SR_1963;Zolltarifkommission ;CO;NA;ZtK;NA;15;02dec1963;13oct1965
+CH_NT-SR_1967__CO|AAK;CH_NT-SR_1967;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;11;04dec1967;08oct1971
+CH_NT-SR_1967__CO|ALK;CH_NT-SR_1967;Alkoholkommission (ALK) ;CO;NA;ALK;NA;9;04dec1967;08oct1971
+CH_NT-SR_1967__CO|AWK;CH_NT-SR_1967;Kommission für Aussenwirtschaft und Zolltarif ;CO;NA;AWK;NA;15;04dec1967;08oct1971
+CH_NT-SR_1967__CO|DK;CH_NT-SR_1967;Dokumentationskommission (DK) ;CO;NA;DK;NA;5;04dec1967;08oct1971
+CH_NT-SR_1967__CO|EBKk;CH_NT-SR_1967;Eisenbahnkonzessionskommission ;CO;NA;EBKk;NA;9;04dec1967;08oct1971
+CH_NT-SR_1967__CO|FK;CH_NT-SR_1967;Finanzkommission (FK) ;CO;NA;FK;NA;11;04dec1967;08oct1971
+CH_NT-SR_1967__CO|GPK;CH_NT-SR_1967;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;"11;13";04dec1967;08oct1971
+CH_NT-SR_1967__CO|MK;CH_NT-SR_1967;Militärkommission (MK) ;CO;NA;MK;NA;11;04dec1967;08oct1971
+CH_NT-SR_1967__CO|PK;CH_NT-SR_1967;Petitionskommission (PK) ;CO;NA;PK;NA;5;04dec1967;08oct1971
+CH_NT-SR_1967__CO|PTT;CH_NT-SR_1967;Kommission für die Post-, Telegraphen- und Telephonverwaltung ;CO;NA;PTT;NA;9;04dec1967;08oct1971
+CH_NT-SR_1967__CO|SBBK;CH_NT-SR_1967;Bundesbahnkommission (SBBK) ;CO;NA;SBBK;NA;9;04dec1967;08oct1971
+CH_NT-SR_1967__CO|WFK;CH_NT-SR_1967;Kommission für Wissenschaft und Forschung (WFK) ;CO;NA;WFK;NA;9;04mar1968;08oct1971
+CH_NT-SR_1971__CO|AAK;CH_NT-SR_1971;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;11;29nov1971;03oct1975
+CH_NT-SR_1971__CO|ALK;CH_NT-SR_1971;Alkoholkommission (ALK) ;CO;NA;ALK;NA;9;29nov1971;03oct1975
+CH_NT-SR_1971__CO|AWK;CH_NT-SR_1971;Kommission für Aussenwirtschaft und Zolltarif ;CO;NA;AWK;NA;15;29nov1971;03oct1975
+CH_NT-SR_1971__CO|Bue;CH_NT-SR_1971;Ratsbüro SR;CO;NA;Bue;NA;5;04jun1973;03oct1975
+CH_NT-SR_1971__CO|DK;CH_NT-SR_1971;Dokumentationskommission (DK) ;CO;NA;DK;NA;5;29nov1971;03oct1975
+CH_NT-SR_1971__CO|EBKk;CH_NT-SR_1971;Eisenbahnkonzessionskommission ;CO;NA;EBKk;NA;9;29nov1971;20jun1975
+CH_NT-SR_1971__CO|FK;CH_NT-SR_1971;Finanzkommission (FK) ;CO;NA;FK;NA;11;29nov1971;03oct1975
+CH_NT-SR_1971__CO|GK;CH_NT-SR_1971;Gewährleistungskommission (GK) ;CO;NA;GK;NA;1;15sep1975;03oct1975
+CH_NT-SR_1971__CO|GPK;CH_NT-SR_1971;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;13;29nov1971;03oct1975
+CH_NT-SR_1971__CO|MK;CH_NT-SR_1971;Militärkommission (MK) ;CO;NA;MK;NA;11;29nov1971;03oct1975
+CH_NT-SR_1971__CO|PK;CH_NT-SR_1971;Petitionskommission (PK) ;CO;NA;PK;NA;5;29nov1971;03oct1975
+CH_NT-SR_1971__CO|PTT;CH_NT-SR_1971;Kommission für die Post-, Telegraphen- und Telephonverwaltung ;CO;NA;PTT;NA;9;29nov1971;20jun1975
+CH_NT-SR_1971__CO|RedK;CH_NT-SR_1971;Redaktionskommission ;CO;NA;RedK;NA;6;10jun1974;03oct1975
+CH_NT-SR_1971__CO|RedK--SC|I;CH_NT-SR_1971;Redaktionskommission für die italienische Sprache ;CO;SC;RedK;I;2;29nov1971;22mar1974
+CH_NT-SR_1971__CO|SBBK;CH_NT-SR_1971;Bundesbahnkommission (SBBK) ;CO;NA;SBBK;NA;9;29nov1971;03oct1975
+CH_NT-SR_1971__CO|WFK;CH_NT-SR_1971;Kommission für Wissenschaft und Forschung (WFK) ;CO;NA;WFK;NA;9;29nov1971;03oct1975
+CH_NT-SR_1975__CO|AAK;CH_NT-SR_1975;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;11;01dec1975;05oct1979
+CH_NT-SR_1975__CO|ALK;CH_NT-SR_1975;Alkoholkommission (ALK) ;CO;NA;ALK;NA;9;01dec1975;05oct1979
+CH_NT-SR_1975__CO|AWK;CH_NT-SR_1975;Kommission für Aussenwirtschaft und Zolltarif ;CO;NA;AWK;NA;15;01dec1975;05oct1979
+CH_NT-SR_1975__CO|Bue;CH_NT-SR_1975;Ratsbüro SR;CO;NA;Bue;NA;5;01dec1975;05oct1979
+CH_NT-SR_1975__CO|DK;CH_NT-SR_1975;Dokumentationskommission (DK) ;CO;NA;DK;NA;5;01dec1975;05oct1979
+CH_NT-SR_1975__CO|FK;CH_NT-SR_1975;Finanzkommission (FK) ;CO;NA;FK;NA;11;01dec1975;05oct1979
+CH_NT-SR_1975__CO|GK;CH_NT-SR_1975;Gewährleistungskommission (GK) ;CO;NA;GK;NA;"3;5";01dec1975;05oct1979
+CH_NT-SR_1975__CO|GPK;CH_NT-SR_1975;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;13;01dec1975;05oct1979
+CH_NT-SR_1975__CO|MK;CH_NT-SR_1975;Militärkommission (MK) ;CO;NA;MK;NA;11;01dec1975;05oct1979
+CH_NT-SR_1975__CO|PK;CH_NT-SR_1975;Petitionskommission (PK) ;CO;NA;PK;NA;5;01dec1975;05oct1979
+CH_NT-SR_1975__CO|RedK;CH_NT-SR_1975;Redaktionskommission ;CO;NA;RedK;NA;6;01dec1975;05oct1979
+CH_NT-SR_1975__CO|SBBK;CH_NT-SR_1975;Bundesbahnkommission (SBBK) ;CO;NA;SBBK;NA;9;01dec1975;05oct1979
+CH_NT-SR_1975__CO|WFK;CH_NT-SR_1975;Kommission für Wissenschaft und Forschung (WFK) ;CO;NA;WFK;NA;9;01dec1975;05oct1979
+CH_NT-SR_1979__CO|AAK;CH_NT-SR_1979;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;11;26nov1979;07oct1983
+CH_NT-SR_1979__CO|ALK;CH_NT-SR_1979;Alkoholkommission (ALK) ;CO;NA;ALK;NA;9;26nov1979;07oct1983
+CH_NT-SR_1979__CO|AWK;CH_NT-SR_1979;Kommission für Aussenwirtschaft und Zolltarif ;CO;NA;AWK;NA;15;26nov1979;07oct1983
+CH_NT-SR_1979__CO|Bue;CH_NT-SR_1979;Ratsbüro SR;CO;NA;Bue;NA;5;26nov1979;07oct1983
+CH_NT-SR_1979__CO|FK;CH_NT-SR_1979;Finanzkommission (FK) ;CO;NA;FK;NA;11;26nov1979;07oct1983
+CH_NT-SR_1979__CO|GK;CH_NT-SR_1979;Gewährleistungskommission (GK) ;CO;NA;GK;NA;5;26nov1979;19sep1983
+CH_NT-SR_1979__CO|GPK;CH_NT-SR_1979;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;13;26nov1979;07oct1983
+CH_NT-SR_1979__CO|MK;CH_NT-SR_1979;Militärkommission (MK) ;CO;NA;MK;NA;11;26nov1979;07oct1983
+CH_NT-SR_1979__CO|PK;CH_NT-SR_1979;Petitionskommission (PK) ;CO;NA;PK;NA;5;26nov1979;07oct1983
+CH_NT-SR_1979__CO|SBBK;CH_NT-SR_1979;Bundesbahnkommission (SBBK) ;CO;NA;SBBK;NA;9;26nov1979;19jun1981
+CH_NT-SR_1979__CO|VK;CH_NT-SR_1979;Verkehrskommission (VK) ;CO;NA;VK;NA;"9;13";21sep1981;07oct1983
+CH_NT-SR_1979__CO|WFK;CH_NT-SR_1979;Kommission für Wissenschaft und Forschung (WFK) ;CO;NA;WFK;NA;9;26nov1979;07oct1983
+CH_NT-SR_1983__CO|AAK;CH_NT-SR_1983;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;11;28nov1983;09oct1987
+CH_NT-SR_1983__CO|ALK;CH_NT-SR_1983;Alkoholkommission (ALK) ;CO;NA;ALK;NA;9;28nov1983;09oct1987
+CH_NT-SR_1983__CO|AWK;CH_NT-SR_1983;Kommission für Aussenwirtschaft und Zolltarif ;CO;NA;AWK;NA;15;28nov1983;09oct1987
+CH_NT-SR_1983__CO|Bue;CH_NT-SR_1983;Ratsbüro SR;CO;NA;Bue;NA;5;28nov1983;09oct1987
+CH_NT-SR_1983__CO|FK;CH_NT-SR_1983;Finanzkommission (FK) ;CO;NA;FK;NA;11;28nov1983;09oct1987
+CH_NT-SR_1983__CO|GK;CH_NT-SR_1983;Gewährleistungskommission (GK) ;CO;NA;GK;NA;5;28nov1983;09oct1987
+CH_NT-SR_1983__CO|GPK;CH_NT-SR_1983;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;13;28nov1983;09oct1987
+CH_NT-SR_1983__CO|MK;CH_NT-SR_1983;Militärkommission (MK) ;CO;NA;MK;NA;11;28nov1983;09oct1987
+CH_NT-SR_1983__CO|PK;CH_NT-SR_1983;Petitionskommission (PK) ;CO;NA;PK;NA;5;28nov1983;09oct1987
+CH_NT-SR_1983__CO|VK;CH_NT-SR_1983;Verkehrskommission (VK) ;CO;NA;VK;NA;13;28nov1983;09oct1987
+CH_NT-SR_1983__CO|WFK;CH_NT-SR_1983;Kommission für Wissenschaft und Forschung (WFK) ;CO;NA;WFK;NA;9;28nov1983;09oct1987
+CH_NT-SR_1987__CO|AAK;CH_NT-SR_1987;Kommission für auswärtige Angelegenheiten (AAK) ;CO;NA;AAK;NA;11;30nov1987;16sep1991
+CH_NT-SR_1987__CO|AWK;CH_NT-SR_1987;Kommission für Aussenwirtschaft und Zolltarif ;CO;NA;AWK;NA;11;30nov1987;16sep1991
+CH_NT-SR_1987__CO|Bue;CH_NT-SR_1987;Ratsbüro SR;CO;NA;Bue;NA;5;30nov1987;16sep1991
+CH_NT-SR_1987__CO|FK;CH_NT-SR_1987;Finanzkommission (FK) ;CO;NA;FK;NA;13;30nov1987;16sep1991
+CH_NT-SR_1987__CO|GPK;CH_NT-SR_1987;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;"12;13";30nov1987;04oct1991
+CH_NT-SR_1987__CO|GUK;CH_NT-SR_1987;Kommission für Gesundheit und Umwelt (GUK) ;CO;NA;GUK;NA;11;29feb1988;16sep1991
+CH_NT-SR_1987__CO|MK;CH_NT-SR_1987;Militärkommission (MK) ;CO;NA;MK;NA;11;30nov1987;16sep1991
+CH_NT-SR_1987__CO|PGK;CH_NT-SR_1987;Petitions- und Gewährleistungskommission (PGK) ;CO;NA;PGK;NA;9;30nov1987;16sep1991
+CH_NT-SR_1987__CO|VK;CH_NT-SR_1987;Verkehrskommission (VK) ;CO;NA;VK;NA;11;30nov1987;16sep1991
+CH_NT-SR_1987__CO|WFK;CH_NT-SR_1987;Kommission für Wissenschaft und Forschung (WFK) ;CO;NA;WFK;NA;11;30nov1987;16sep1991
+CH_NT-SR_1991__CO|APK;CH_NT-SR_1991;Aussenpolitische Kommission (APK) ;CO;NA;APK;NA;13;25nov1991;06oct1995
+CH_NT-SR_1991__CO|Bue;CH_NT-SR_1991;Ratsbüro SR;CO;NA;Bue;NA;5;25nov1991;06oct1995
+CH_NT-SR_1991__CO|FK;CH_NT-SR_1991;Finanzkommission (FK) ;CO;NA;FK;NA;13;25nov1991;06oct1995
+CH_NT-SR_1991__CO|FK--SC|B + G EFD EVD;CH_NT-SR_1991;Subkommission 1 (B + G, EFD, EVD) der Finanzkommission (FK) ;CO;SC;FK;B + G EFD EVD;3;24aug1992;06oct1995
+CH_NT-SR_1991__CO|FK--SC|EDA EJPD EVED;CH_NT-SR_1991;Subkommission 2 (EDA, EJPD, EVED) der Finanzkommission (FK) ;CO;SC;FK;EDA EJPD EVED;"3;4";24aug1992;06oct1995
+CH_NT-SR_1991__CO|FK--SC|EDI EMD;CH_NT-SR_1991;Subkommission 3 (EDI, EMD) der Finanzkommission (FK) ;CO;SC;FK;EDI EMD;3;24aug1992;06oct1995
+CH_NT-SR_1991__CO|FK--SC|PTT SBB;CH_NT-SR_1991;Subkommission 4 (PTT, SBB) der Finanzkommission (FK) ;CO;SC;FK;PTT SBB;"3;4";24aug1992;06oct1995
+CH_NT-SR_1991__CO|GPK;CH_NT-SR_1991;Geschäftsprüfungskommission (GPK) ;CO;NA;GPK;NA;13;25nov1991;06oct1995
+CH_NT-SR_1991__CO|GPK--SC|Fuehrung/Information;CH_NT-SR_1991;Horizontale Sektion 1 (Führung/Information) der Geschäftsprüfungskommission (GPK) ;CO;SC;GPK;Fuehrung/Information;4;24aug1992;06oct1995
+CH_NT-SR_1991__CO|GPK--SC|Leistung/Kultur;CH_NT-SR_1991;Vertikale Sektion 3 (Leistung/Kultur) der Geschäftsprüfungskommission (GPK) ;CO;SC;GPK;Leistung/Kultur;4;24aug1992;06oct1995
+CH_NT-SR_1991__CO|GPK--SC|Mittel;CH_NT-SR_1991;Horizontale Sektion 2 (Mittel) der Geschäftsprüfungskommission (GPK) ;CO;SC;GPK;Mittel;3;24aug1992;06oct1995
+CH_NT-SR_1991__CO|GPK--SC|Staat;CH_NT-SR_1991;Vertikale Sektion 1 (Staat) der Geschäftsprüfungskommission (GPK) ;CO;SC;GPK;Staat;5;24aug1992;06oct1995
+CH_NT-SR_1991__CO|GPK--SC|Wirkung;CH_NT-SR_1991;Horizontale Sektion 3 (Wirkung) der Geschäftsprüfungskommission (GPK) ;CO;SC;GPK;Wirkung;3;24aug1992;06oct1995
+CH_NT-SR_1991__CO|GPK--SC|Wirtschaft;CH_NT-SR_1991;Vertikale Sektion 2 (Wirtschaft) der Geschäftsprüfungskommission (GPK) ;CO;SC;GPK;Wirtschaft;4;24aug1992;06oct1995
+CH_NT-SR_1991__CO|GPK--SD|GPDel;CH_NT-SR_1991;Geschäftsprüfungsdelegation ;CO;SD;GPK;GPDel;3;24aug1992;19mar1993
+CH_NT-SR_1991__CO|KoeB;CH_NT-SR_1991;Kommission für öffentliche Bauten (KöB) ;CO;NA;KoeB;NA;5;25nov1991;18sep1995
+CH_NT-SR_1991__CO|KVF;CH_NT-SR_1991;Kommission für Verkehr und Fernmeldewesen (KVF) ;CO;NA;KVF;NA;13;25nov1991;06oct1995
+CH_NT-SR_1991__CO|RK;CH_NT-SR_1991;Kommission für Rechtsfragen (RK) ;CO;NA;RK;NA;13;25nov1991;06oct1995
+CH_NT-SR_1991__CO|SGK;CH_NT-SR_1991;Kommission für soziale Sicherheit und Gesundheit (SGK) ;CO;NA;SGK;NA;13;25nov1991;06oct1995
+CH_NT-SR_1991__CO|SiK;CH_NT-SR_1991;Sicherheitspolitische Kommission (SiK) ;CO;NA;SiK;NA;13;25nov1991;06oct1995
+CH_NT-SR_1991__CO|SPK;CH_NT-SR_1991;Staatspolitische Kommission (SPK) ;CO;NA;SPK;NA;13;25nov1991;06oct1995
+CH_NT-SR_1991__CO|UREK;CH_NT-SR_1991;Kommission für Umwelt, Raumplanung und Energie (UREK) ;CO;NA;UREK;NA;13;25nov1991;06oct1995
+CH_NT-SR_1991__CO|WAK;CH_NT-SR_1991;Kommission für Wirtschaft und Abgaben (WAK) ;CO;NA;WAK;NA;13;25nov1991;06oct1995
+CH_NT-SR_1991__CO|WBK;CH_NT-SR_1991;Kommission für Wissenschaft, Bildung und Kultur (WBK) ;CO;NA;WBK;NA;13;25nov1991;06oct1995
+CH_NT-NR_1919__CO|Bue;CH_NT-NR_1919;Büro NR;CO;NA;Bue;NA;NA;01dec1919;03dec1922
+CH_NT-NR_1931__CO|Bue;CH_NT-NR_1931;Büro NR;CO;NA;Bue;NA;NA;07dec1931;01dec1935
+CH_NT-NR_1935__CO|Bue;CH_NT-NR_1935;Büro NR;CO;NA;Bue;NA;NA;02dec1935;03dec1939
+CH_NT-NR_1939__CO|Bue;CH_NT-NR_1939;Büro NR;CO;NA;Bue;NA;NA;04dec1939;05dec1943
+CH_NT-NR_1943__CO|Bue;CH_NT-NR_1943;Büro NR;CO;NA;Bue;NA;NA;06dec1943;30nov1947
+CH_NT-NR_1947__CO|Bue;CH_NT-NR_1947;Büro NR;CO;NA;Bue;NA;NA;01dec1947;02dec1951
+CH_NT-NR_1951__CO|Bue;CH_NT-NR_1951;Büro NR;CO;NA;Bue;NA;NA;03dec1951;04dec1955
+CH_NT-NR_1955__CO|Bue;CH_NT-NR_1955;Büro NR;CO;NA;Bue;NA;NA;05dec1955;06dec1959
+CH_NT-NR_1959__CO|Bue;CH_NT-NR_1959;Büro NR;CO;NA;Bue;NA;NA;07dec1959;01dec1963
+CH_NT-NR_1963__CO|Bue;CH_NT-NR_1963;Büro NR;CO;NA;Bue;NA;NA;02dec1963;03dec1967
+CH_NT-NR_1967__CO|Bue;CH_NT-NR_1967;Büro NR;CO;NA;Bue;NA;NA;04dec1967;28nov1971
+CH_NT-NR_1995__CH_NT-SR_1995__CO|BeK;"CH_NT-NR_1995;CH_NT-SR_1995";Begnadigungskommission (BeK) ;CO;NA;BeK;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CH_NT-SR_1995__CO|RedK;"CH_NT-NR_1995;CH_NT-SR_1995";Redaktionskommission;CO;NA;RedK;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CH_NT-SR_1995__CO|RedK--SC|F;"CH_NT-NR_1995;CH_NT-SR_1995";Redaktionskommission für die französische Sprache;CO;SC;RedK;F;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CH_NT-SR_1995__CO|RedK--SC|I;"CH_NT-NR_1995;CH_NT-SR_1995";Redaktionskommission für die italienische Sprache;CO;SC;RedK;I;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CH_NT-SR_1995__DL|APF;"CH_NT-NR_1995;CH_NT-SR_1995";Schweizerische Gruppe der Internationalen Versammlung der Parlamentarier französischer Sprache;DL;NA;APF;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CH_NT-SR_1995__DL|EFTA/EU;"CH_NT-NR_1995;CH_NT-SR_1995";Delegation EFTA / Europäisches Parlament;DL;NA;EFTA/EU;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CH_NT-SR_1995__DL|ERD;"CH_NT-NR_1995;CH_NT-SR_1995";Delegation beim Europarat;DL;NA;ERD;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CH_NT-SR_1995__DL|FinDel;"CH_NT-NR_1995;CH_NT-SR_1995";Finanzdelegation;DL;NA;FinDel;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CH_NT-SR_1995__DL|GPDel;"CH_NT-NR_1995;CH_NT-SR_1995";Geschäftsprüfungsdelegation;DL;NA;GPDel;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CH_NT-SR_1995__DL|IPU;"CH_NT-NR_1995;CH_NT-SR_1995";Delegation bei der Interparlamentarischen Union;DL;NA;IPU;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CH_NT-SR_1995__DL|NAD;"CH_NT-NR_1995;CH_NT-SR_1995";Neat-Aufsichtsdelegation;DL;NA;NAD;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CH_NT-SR_1995__DL|PV-OSZE;"CH_NT-NR_1995;CH_NT-SR_1995";Delegation bei der parlamentarischen Versammlung der OSZE;DL;NA;PV-OSZE;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CH_NT-SR_1995__DL|VwD;"CH_NT-NR_1995;CH_NT-SR_1995";Verwaltungsdelegation;DL;NA;VwD;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CO|APK;CH_NT-NR_1995;Aussenpolitische Kommission NR;CO;NA;APK;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CO|Bue;CH_NT-NR_1995;Büro NR;CO;NA;Bue;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CO|FK;CH_NT-NR_1995;Finanzkommission NR;CO;NA;FK;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CO|GPK;CH_NT-NR_1995;Geschäftsprüfungskommission NR;CO;NA;GPK;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CO|KVF;CH_NT-NR_1995;Kommission für Verkehr und Fernmeldewesen NR;CO;NA;KVF;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CO|RF;CH_NT-NR_1995;Kommission für Rechtsfragen NR;CO;NA;RF;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CO|SGK;CH_NT-NR_1995;Kommission für soziale Sicherheit und Gesundheit NR;CO;NA;SGK;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CO|SiK;CH_NT-NR_1995;Sicherheitspolitische Kommission NR;CO;NA;SiK;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CO|SPK;CH_NT-NR_1995;Staatspolitische Kommission NR;CO;NA;SPK;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CO|UREK;CH_NT-NR_1995;Kommission für Umwelt, Raumplanung und Energie NR;CO;NA;UREK;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CO|WAK;CH_NT-NR_1995;Kommission für Wirtschaft und Abgaben NR;CO;NA;WAK;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1995__CO|WBK;CH_NT-NR_1995;Kommission für Wissenschaft, Bildung und Kultur NR;CO;NA;WBK;NA;NA;04dec1995;05dec1999
+CH_NT-NR_1999__CH_NT-SR_1999__CO|BeK;"CH_NT-NR_1999;CH_NT-SR_1999";Begnadigungskommission (BeK) ;CO;NA;BeK;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CH_NT-SR_1999__CO|GK;"CH_NT-NR_1999;CH_NT-SR_1999";Gerichtskommission;CO;NA;GK;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CH_NT-SR_1999__CO|RedK;"CH_NT-NR_1999;CH_NT-SR_1999";Redaktionskommission;CO;NA;RedK;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CH_NT-SR_1999__CO|RedK--SC|D;"CH_NT-NR_1999;CH_NT-SR_1999";Redaktionskommission für die deutsche Sprache;CO;SC;RedK;D;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CH_NT-SR_1999__CO|RedK--SC|F;"CH_NT-NR_1999;CH_NT-SR_1999";Redaktionskommission für die französische Sprache;CO;SC;RedK;F;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CH_NT-SR_1999__CO|RedK--SC|I;"CH_NT-NR_1999;CH_NT-SR_1999";Redaktionskommission für die italienische Sprache;CO;SC;RedK;I;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CH_NT-SR_1999__DL|APF;"CH_NT-NR_1999;CH_NT-SR_1999";Delegation bei der parlamentarischen Versammlung der Frankophonie;DL;NA;APF;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CH_NT-SR_1999__DL|EFTA/EU;"CH_NT-NR_1999;CH_NT-SR_1999";Delegation EFTA / Europäisches Parlament;DL;NA;EFTA/EU;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CH_NT-SR_1999__DL|ERD;"CH_NT-NR_1999;CH_NT-SR_1999";Delegation beim Europarat;DL;NA;ERD;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CH_NT-SR_1999__DL|FinDel;"CH_NT-NR_1999;CH_NT-SR_1999";Finanzdelegation;DL;NA;FinDel;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CH_NT-SR_1999__DL|GPDel;"CH_NT-NR_1999;CH_NT-SR_1999";Geschäftsprüfungsdelegation;DL;NA;GPDel;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CH_NT-SR_1999__DL|IPU;"CH_NT-NR_1999;CH_NT-SR_1999";Delegation bei der Interparlamentarischen Union;DL;NA;IPU;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CH_NT-SR_1999__DL|NAD;"CH_NT-NR_1999;CH_NT-SR_1999";Neat-Aufsichtsdelegation;DL;NA;NAD;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CH_NT-SR_1999__DL|PV-NATO;"CH_NT-NR_1999;CH_NT-SR_1999";Delegation bei der parlamentarischen Versammlung des nordatlantischen Verteidigungsbündnisses (NATO);DL;NA;PV-NATO;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CH_NT-SR_1999__DL|PV-OSZE;"CH_NT-NR_1999;CH_NT-SR_1999";Delegation bei der parlamentarischen Versammlung der OSZE;DL;NA;PV-OSZE;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CH_NT-SR_1999__DL|VwD;"CH_NT-NR_1999;CH_NT-SR_1999";Verwaltungsdelegation;DL;NA;VwD;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CO|APK;CH_NT-NR_1999;Aussenpolitische Kommission NR;CO;NA;APK;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CO|Bue;CH_NT-NR_1999;Büro NR;CO;NA;Bue;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CO|FK;CH_NT-NR_1999;Finanzkommission NR;CO;NA;FK;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CO|GPK;CH_NT-NR_1999;Geschäftsprüfungskommission NR;CO;NA;GPK;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CO|GPK--SC|EDA/VBS;CH_NT-NR_1999;Geschäftsprüfungskommission/EDA/VBSNR;CO;SC;GPK;EDA/VBS;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CO|GPK--SC|EDI/UVEK;CH_NT-NR_1999;Geschäftsprüfungskommission/EDI/UVEKNR;CO;SC;GPK;EDI/UVEK;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CO|GPK--SC|EFD/WBF;CH_NT-NR_1999;Geschäftsprüfungskommission/EFD/EVDNR;CO;SC;GPK;EFD/WBF;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CO|KVF;CH_NT-NR_1999;Kommission für Verkehr und Fernmeldewesen NR;CO;NA;KVF;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CO|RF;CH_NT-NR_1999;Kommission für Rechtsfragen NR;CO;NA;RF;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CO|SGK;CH_NT-NR_1999;Kommission für soziale Sicherheit und Gesundheit NR;CO;NA;SGK;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CO|SiK;CH_NT-NR_1999;Sicherheitspolitische Kommission NR;CO;NA;SiK;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CO|SPK;CH_NT-NR_1999;Staatspolitische Kommission NR;CO;NA;SPK;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CO|UREK;CH_NT-NR_1999;Kommission für Umwelt, Raumplanung und Energie NR;CO;NA;UREK;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CO|WAK;CH_NT-NR_1999;Kommission für Wirtschaft und Abgaben NR;CO;NA;WAK;NA;NA;06dec1999;01dec2003
+CH_NT-NR_1999__CO|WBK;CH_NT-NR_1999;Kommission für Wissenschaft, Bildung und Kultur NR;CO;NA;WBK;NA;NA;06dec1999;01dec2003
+CH_NT-NR_2003__CH_NT-SR_2003__CO|BeK;"CH_NT-NR_2003;CH_NT-SR_2003";Begnadigungskommission (BeK) ;CO;NA;BeK;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CH_NT-SR_2003__CO|GK;"CH_NT-NR_2003;CH_NT-SR_2003";Gerichtskommission;CO;NA;GK;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CH_NT-SR_2003__CO|RedK;"CH_NT-NR_2003;CH_NT-SR_2003";Redaktionskommission;CO;NA;RedK;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CH_NT-SR_2003__CO|RedK--SC|F;"CH_NT-NR_2003;CH_NT-SR_2003";Redaktionskommission für die französische Sprache;CO;SC;RedK;F;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CH_NT-SR_2003__DL|APF;"CH_NT-NR_2003;CH_NT-SR_2003";Delegation bei der parlamentarischen Versammlung der Frankophonie;DL;NA;APF;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CH_NT-SR_2003__DL|EFTA/EU;"CH_NT-NR_2003;CH_NT-SR_2003";Delegation EFTA / Europäisches Parlament;DL;NA;EFTA/EU;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CH_NT-SR_2003__DL|ERD;"CH_NT-NR_2003;CH_NT-SR_2003";Delegation beim Europarat;DL;NA;ERD;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CH_NT-SR_2003__DL|FinDel;"CH_NT-NR_2003;CH_NT-SR_2003";Finanzdelegation;DL;NA;FinDel;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CH_NT-SR_2003__DL|GPDel;"CH_NT-NR_2003;CH_NT-SR_2003";Geschäftsprüfungsdelegation;DL;NA;GPDel;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CH_NT-SR_2003__DL|IPU;"CH_NT-NR_2003;CH_NT-SR_2003";Delegation bei der Interparlamentarischen Union;DL;NA;IPU;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CH_NT-SR_2003__DL|NAD;"CH_NT-NR_2003;CH_NT-SR_2003";Neat-Aufsichtsdelegation;DL;NA;NAD;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CH_NT-SR_2003__DL|PV-NATO;"CH_NT-NR_2003;CH_NT-SR_2003";Delegation bei der parlamentarischen Versammlung des nordatlantischen Verteidigungsbündnisses (NATO);DL;NA;PV-NATO;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CH_NT-SR_2003__DL|PV-OSZE;"CH_NT-NR_2003;CH_NT-SR_2003";Delegation bei der parlamentarischen Versammlung der OSZE;DL;NA;PV-OSZE;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CH_NT-SR_2003__DL|VwD;"CH_NT-NR_2003;CH_NT-SR_2003";Verwaltungsdelegation;DL;NA;VwD;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CO|APK;CH_NT-NR_2003;Aussenpolitische Kommission NR;CO;NA;APK;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CO|Bue;CH_NT-NR_2003;Büro NR;CO;NA;Bue;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CO|FK;CH_NT-NR_2003;Finanzkommission NR;CO;NA;FK;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CO|GPK;CH_NT-NR_2003;Geschäftsprüfungskommission NR;CO;NA;GPK;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CO|GPK--SC|EDA/VBS;CH_NT-NR_2003;Geschäftsprüfungskommission/EDA/VBSNR;CO;SC;GPK;EDA/VBS;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CO|GPK--SC|EDI/UVEK;CH_NT-NR_2003;Geschäftsprüfungskommission/EDI/UVEKNR;CO;SC;GPK;EDI/UVEK;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CO|GPK--SC|EFD/WBF;CH_NT-NR_2003;Geschäftsprüfungskommission/EFD/EVDNR;CO;SC;GPK;EFD/WBF;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CO|KVF;CH_NT-NR_2003;Kommission für Verkehr und Fernmeldewesen NR;CO;NA;KVF;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CO|RF;CH_NT-NR_2003;Kommission für Rechtsfragen NR;CO;NA;RF;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CO|SGK;CH_NT-NR_2003;Kommission für soziale Sicherheit und Gesundheit NR;CO;NA;SGK;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CO|SiK;CH_NT-NR_2003;Sicherheitspolitische Kommission NR;CO;NA;SiK;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CO|SPK;CH_NT-NR_2003;Staatspolitische Kommission NR;CO;NA;SPK;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CO|UREK;CH_NT-NR_2003;Kommission für Umwelt, Raumplanung und Energie NR;CO;NA;UREK;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CO|WAK;CH_NT-NR_2003;Kommission für Wirtschaft und Abgaben NR;CO;NA;WAK;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2003__CO|WBK;CH_NT-NR_2003;Kommission für Wissenschaft, Bildung und Kultur NR;CO;NA;WBK;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2007__CH_NT-SR_2007__CO|BeK;"CH_NT-NR_2007;CH_NT-SR_2007";Begnadigungskommission (BeK) ;CO;NA;BeK;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CH_NT-SR_2007__CO|GK;"CH_NT-NR_2007;CH_NT-SR_2007";Gerichtskommission;CO;NA;GK;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CH_NT-SR_2007__CO|RedK;"CH_NT-NR_2007;CH_NT-SR_2007";Redaktionskommission;CO;NA;RedK;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CH_NT-SR_2007__CO|RedK--SC|D;"CH_NT-NR_2007;CH_NT-SR_2007";Redaktionskommission für die deutsche Sprache;CO;SC;RedK;D;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CH_NT-SR_2007__CO|RedK--SC|F;"CH_NT-NR_2007;CH_NT-SR_2007";Redaktionskommission für die französische Sprache;CO;SC;RedK;F;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CH_NT-SR_2007__CO|RedK--SC|I;"CH_NT-NR_2007;CH_NT-SR_2007";Redaktionskommission für die italienische Sprache;CO;SC;RedK;I;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CH_NT-SR_2007__DL|APF;"CH_NT-NR_2007;CH_NT-SR_2007";Delegation bei der parlamentarischen Versammlung der Frankophonie;DL;NA;APF;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CH_NT-SR_2007__DL|Del-A;"CH_NT-NR_2007;CH_NT-SR_2007";Delegation für die Beziehungen zum Österreichischen Parlament;DL;NA;Del-A;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CH_NT-SR_2007__DL|Del-D;"CH_NT-NR_2007;CH_NT-SR_2007";Delegation für die Beziehungen zum Deutschen Bundestag;DL;NA;Del-D;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CH_NT-SR_2007__DL|Del-F;"CH_NT-NR_2007;CH_NT-SR_2007";Delegation für die Beziehungen zum Französischen Parlament;DL;NA;Del-F;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CH_NT-SR_2007__DL|Del-FL;"CH_NT-NR_2007;CH_NT-SR_2007";Delegation für die Beziehungen zum Landtag des Fürstentums Liechtenstein;DL;NA;Del-FL;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CH_NT-SR_2007__DL|Del-I;"CH_NT-NR_2007;CH_NT-SR_2007";Delegation für die Beziehungen zum Italienischen Parlament;DL;NA;Del-I;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CH_NT-SR_2007__DL|EFTA/EU;"CH_NT-NR_2007;CH_NT-SR_2007";Delegation EFTA / Europäisches Parlament;DL;NA;EFTA/EU;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CH_NT-SR_2007__DL|ERD;"CH_NT-NR_2007;CH_NT-SR_2007";Delegation beim Europarat;DL;NA;ERD;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CH_NT-SR_2007__DL|FinDel;"CH_NT-NR_2007;CH_NT-SR_2007";Finanzdelegation;DL;NA;FinDel;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CH_NT-SR_2007__DL|GPDel;"CH_NT-NR_2007;CH_NT-SR_2007";Geschäftsprüfungsdelegation;DL;NA;GPDel;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CH_NT-SR_2007__DL|IPU;"CH_NT-NR_2007;CH_NT-SR_2007";Delegation bei der Interparlamentarischen Union;DL;NA;IPU;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CH_NT-SR_2007__DL|NAD;"CH_NT-NR_2007;CH_NT-SR_2007";Neat-Aufsichtsdelegation;DL;NA;NAD;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CH_NT-SR_2007__DL|PV-NATO;"CH_NT-NR_2007;CH_NT-SR_2007";Delegation bei der parlamentarischen Versammlung des nordatlantischen Verteidigungsbündnisses (NATO);DL;NA;PV-NATO;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CH_NT-SR_2007__DL|PV-OSZE;"CH_NT-NR_2007;CH_NT-SR_2007";Delegation bei der parlamentarischen Versammlung der OSZE;DL;NA;PV-OSZE;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CH_NT-SR_2007__DL|VwD;"CH_NT-NR_2007;CH_NT-SR_2007";Verwaltungsdelegation;DL;NA;VwD;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CO|APK;CH_NT-NR_2007;Aussenpolitische Kommission NR;CO;NA;APK;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CO|Bue;CH_NT-NR_2007;Büro NR;CO;NA;Bue;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CO|FK;CH_NT-NR_2007;Finanzkommission NR;CO;NA;FK;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CO|GPK;CH_NT-NR_2007;Geschäftsprüfungskommission NR;CO;NA;GPK;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CO|GPK--SC|EDA/VBS;CH_NT-NR_2007;Geschäftsprüfungskommission/EDA/VBSNR;CO;SC;GPK;EDA/VBS;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CO|GPK--SC|EDI/UVEK;CH_NT-NR_2007;Geschäftsprüfungskommission/EDI/UVEKNR;CO;SC;GPK;EDI/UVEK;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CO|GPK--SC|EFD/WBF;CH_NT-NR_2007;Geschäftsprüfungskommission/EFD/EVDNR;CO;SC;GPK;EFD/WBF;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CO|GPK--SC|EJPD/BK;CH_NT-NR_2007;Geschäftsprüfungskommission/EJPD/BKNR;CO;SC;GPK;EJPD/BK;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CO|GPK--SC|Gerichte;CH_NT-NR_2007;Geschäftsprüfungskommission/GerichteNR;CO;SC;GPK;Gerichte;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CO|GPK--SC|Gerichte/BA;CH_NT-NR_2007;Geschäftsprüfungskommission/Subkommission Gerichte/BANR;CO;SC;GPK;Gerichte/BA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CO|KVF;CH_NT-NR_2007;Kommission für Verkehr und Fernmeldewesen NR;CO;NA;KVF;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CO|RF;CH_NT-NR_2007;Kommission für Rechtsfragen NR;CO;NA;RF;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CO|SGK;CH_NT-NR_2007;Kommission für soziale Sicherheit und Gesundheit NR;CO;NA;SGK;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CO|SiK;CH_NT-NR_2007;Sicherheitspolitische Kommission NR;CO;NA;SiK;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CO|SPK;CH_NT-NR_2007;Staatspolitische Kommission NR;CO;NA;SPK;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CO|UREK;CH_NT-NR_2007;Kommission für Umwelt, Raumplanung und Energie NR;CO;NA;UREK;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CO|WAK;CH_NT-NR_2007;Kommission für Wirtschaft und Abgaben NR;CO;NA;WAK;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2007__CO|WBK;CH_NT-NR_2007;Kommission für Wissenschaft, Bildung und Kultur NR;CO;NA;WBK;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2011__CH_NT-SR_2011__CO|BeK;"CH_NT-NR_2011;CH_NT-SR_2011";Begnadigungskommission (BeK) ;CO;NA;BeK;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__CO|GK;"CH_NT-NR_2011;CH_NT-SR_2011";Gerichtskommission;CO;NA;GK;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__CO|GPK--SC|AgrRisikorep;"CH_NT-NR_2011;CH_NT-SR_2011";Arbeitsgruppe Risikoreporting Bundesrat der Geschäftsprüfungskommissionen;CO;SC;GPK;AgrRisikorep;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__CO|RedK;"CH_NT-NR_2011;CH_NT-SR_2011";Redaktionskommission;CO;NA;RedK;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__CO|RedK--SC|D;"CH_NT-NR_2011;CH_NT-SR_2011";Redaktionskommission für die deutsche Sprache;CO;SC;RedK;D;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__CO|RedK--SC|F;"CH_NT-NR_2011;CH_NT-SR_2011";Redaktionskommission für die französische Sprache;CO;SC;RedK;F;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__CO|RedK--SC|I;"CH_NT-NR_2011;CH_NT-SR_2011";Redaktionskommission für die italienische Sprache;CO;SC;RedK;I;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__DL|APF;"CH_NT-NR_2011;CH_NT-SR_2011";Delegation bei der parlamentarischen Versammlung der Frankophonie;DL;NA;APF;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__DL|Del-A;"CH_NT-NR_2011;CH_NT-SR_2011";Delegation für die Beziehungen zum Österreichischen Parlament;DL;NA;Del-A;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__DL|Del-D;"CH_NT-NR_2011;CH_NT-SR_2011";Delegation für die Beziehungen zum Deutschen Bundestag;DL;NA;Del-D;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__DL|Del-F;"CH_NT-NR_2011;CH_NT-SR_2011";Delegation für die Beziehungen zum Französischen Parlament;DL;NA;Del-F;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__DL|Del-FL;"CH_NT-NR_2011;CH_NT-SR_2011";Delegation für die Beziehungen zum Landtag des Fürstentums Liechtenstein;DL;NA;Del-FL;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__DL|Del-I;"CH_NT-NR_2011;CH_NT-SR_2011";Delegation für die Beziehungen zum Italienischen Parlament;DL;NA;Del-I;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__DL|EFTA/EU;"CH_NT-NR_2011;CH_NT-SR_2011";Delegation EFTA / Europäisches Parlament;DL;NA;EFTA/EU;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__DL|ERD;"CH_NT-NR_2011;CH_NT-SR_2011";Delegation beim Europarat;DL;NA;ERD;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__DL|FinDel;"CH_NT-NR_2011;CH_NT-SR_2011";Finanzdelegation;DL;NA;FinDel;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__DL|GPDel;"CH_NT-NR_2011;CH_NT-SR_2011";Geschäftsprüfungsdelegation;DL;NA;GPDel;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__DL|IPU;"CH_NT-NR_2011;CH_NT-SR_2011";Delegation bei der Interparlamentarischen Union;DL;NA;IPU;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__DL|NAD;"CH_NT-NR_2011;CH_NT-SR_2011";Neat-Aufsichtsdelegation;DL;NA;NAD;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__DL|PV-NATO;"CH_NT-NR_2011;CH_NT-SR_2011";Delegation bei der parlamentarischen Versammlung des nordatlantischen Verteidigungsbündnisses (NATO);DL;NA;PV-NATO;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__DL|PV-OSZE;"CH_NT-NR_2011;CH_NT-SR_2011";Delegation bei der parlamentarischen Versammlung der OSZE;DL;NA;PV-OSZE;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__DL|VwD;"CH_NT-NR_2011;CH_NT-SR_2011";Verwaltungsdelegation;DL;NA;VwD;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|APK;CH_NT-NR_2011;Aussenpolitische Kommission NR;CO;NA;APK;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|Bue;CH_NT-NR_2011;Büro NR;CO;NA;Bue;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|FK;CH_NT-NR_2011;Finanzkommission NR;CO;NA;FK;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|FK--SC|B+G/EFD/EAV;CH_NT-NR_2011;Finanzkommission-NR Subko 1 (B+G/EFD/EAV);CO;SC;FK;B+G/EFD/EAV;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|FK--SC|EDA/WBF;CH_NT-NR_2011;Finanzkommission-NR Subko 2 (EDA/WBF);CO;SC;FK;EDA/WBF;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|FK--SC|EDI/VBS;CH_NT-NR_2011;Finanzkommission-NR Subko 3 (EDI/VBS);CO;SC;FK;EDI/VBS;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|FK--SC|EJPD/UVEK;CH_NT-NR_2011;Finanzkommission-NR Subko 4 (EJPD/UVEK);CO;SC;FK;EJPD/UVEK;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|GPK;CH_NT-NR_2011;Geschäftsprüfungskommission NR;CO;NA;GPK;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|GPK--SC|EDA/VBS;CH_NT-NR_2011;Geschäftsprüfungskommission/EDA/VBSNR;CO;SC;GPK;EDA/VBS;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|GPK--SC|EDI/UVEK;CH_NT-NR_2011;Geschäftsprüfungskommission/EDI/UVEKNR;CO;SC;GPK;EDI/UVEK;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|GPK--SC|EFD/WBF;CH_NT-NR_2011;Geschäftsprüfungskommission-NR EFD/WBF;CO;SC;GPK;EFD/WBF;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|GPK--SC|EJPD/BK;CH_NT-NR_2011;Geschäftsprüfungskommission/EJPD/BKNR;CO;SC;GPK;EJPD/BK;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|GPK--SC|Gerichte/BA;CH_NT-NR_2011;Geschäftsprüfungskommission/Subkommission Gerichte/BANR;CO;SC;GPK;Gerichte/BA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|IK;CH_NT-NR_2011;Immunitätskommission NR;CO;NA;IK;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|KVF;CH_NT-NR_2011;Kommission für Verkehr und Fernmeldewesen NR;CO;NA;KVF;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|RF;CH_NT-NR_2011;Kommission für Rechtsfragen NR;CO;NA;RF;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|SGK;CH_NT-NR_2011;Kommission für soziale Sicherheit und Gesundheit NR;CO;NA;SGK;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|SiK;CH_NT-NR_2011;Sicherheitspolitische Kommission NR;CO;NA;SiK;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|SPK;CH_NT-NR_2011;Staatspolitische Kommission NR;CO;NA;SPK;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|UREK;CH_NT-NR_2011;Kommission für Umwelt, Raumplanung und Energie NR;CO;NA;UREK;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|WAK;CH_NT-NR_2011;Kommission für Wirtschaft und Abgaben NR;CO;NA;WAK;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CO|WBK;CH_NT-NR_2011;Kommission für Wissenschaft, Bildung und Kultur NR;CO;NA;WBK;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2015__CH_NT-SR_2015__CO|BeK;"CH_NT-NR_2015;CH_NT-SR_2015";Begnadigungskommission (BeK) ;CO;NA;BeK;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__CO|GK;"CH_NT-NR_2015;CH_NT-SR_2015";Gerichtskommission;CO;NA;GK;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__CO|GPK--SC|AgrRisikorep;"CH_NT-NR_2015;CH_NT-SR_2015";Arbeitsgruppe Risikoreporting Bundesrat der Geschäftsprüfungskommissionen;CO;SC;GPK;AgrRisikorep;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__CO|RedK;"CH_NT-NR_2015;CH_NT-SR_2015";Redaktionskommission;CO;NA;RedK;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__CO|RedK--SC|D;"CH_NT-NR_2015;CH_NT-SR_2015";Redaktionskommission für die deutsche Sprache;CO;SC;RedK;D;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__CO|RedK--SC|F;"CH_NT-NR_2015;CH_NT-SR_2015";Redaktionskommission für die französische Sprache;CO;SC;RedK;F;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__CO|RedK--SC|I;"CH_NT-NR_2015;CH_NT-SR_2015";Redaktionskommission für die italienische Sprache;CO;SC;RedK;I;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__DL|APF;"CH_NT-NR_2015;CH_NT-SR_2015";Delegation bei der parlamentarischen Versammlung der Frankophonie;DL;NA;APF;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__DL|Del-A;"CH_NT-NR_2015;CH_NT-SR_2015";Delegation für die Beziehungen zum Österreichischen Parlament;DL;NA;Del-A;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__DL|Del-D;"CH_NT-NR_2015;CH_NT-SR_2015";Delegation für die Beziehungen zum Deutschen Bundestag;DL;NA;Del-D;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__DL|Del-F;"CH_NT-NR_2015;CH_NT-SR_2015";Delegation für die Beziehungen zum Französischen Parlament;DL;NA;Del-F;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__DL|Del-FL;"CH_NT-NR_2015;CH_NT-SR_2015";Delegation für die Beziehungen zum Landtag des Fürstentums Liechtenstein;DL;NA;Del-FL;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__DL|Del-I;"CH_NT-NR_2015;CH_NT-SR_2015";Delegation für die Beziehungen zum Italienischen Parlament;DL;NA;Del-I;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__DL|EFTA/EU;"CH_NT-NR_2015;CH_NT-SR_2015";Delegation EFTA / Europäisches Parlament;DL;NA;EFTA/EU;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__DL|ERD;"CH_NT-NR_2015;CH_NT-SR_2015";Delegation beim Europarat;DL;NA;ERD;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__DL|FinDel;"CH_NT-NR_2015;CH_NT-SR_2015";Finanzdelegation;DL;NA;FinDel;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__DL|GPDel;"CH_NT-NR_2015;CH_NT-SR_2015";Geschäftsprüfungsdelegation;DL;NA;GPDel;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__DL|IPU;"CH_NT-NR_2015;CH_NT-SR_2015";Delegation bei der Interparlamentarischen Union;DL;NA;IPU;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__DL|NAD;"CH_NT-NR_2015;CH_NT-SR_2015";Neat-Aufsichtsdelegation;DL;NA;NAD;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__DL|PV-NATO;"CH_NT-NR_2015;CH_NT-SR_2015";Delegation bei der parlamentarischen Versammlung des nordatlantischen Verteidigungsbündnisses (NATO);DL;NA;PV-NATO;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__DL|PV-OSZE;"CH_NT-NR_2015;CH_NT-SR_2015";Delegation bei der parlamentarischen Versammlung der OSZE;DL;NA;PV-OSZE;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__DL|VwD;"CH_NT-NR_2015;CH_NT-SR_2015";Verwaltungsdelegation;DL;NA;VwD;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|APK;CH_NT-NR_2015;Aussenpolitische Kommission NR;CO;NA;APK;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|Bue;CH_NT-NR_2015;Büro NR;CO;NA;Bue;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|FK;CH_NT-NR_2015;Finanzkommission NR;CO;NA;FK;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|FK--SC|B+G/EFD/EAV;CH_NT-NR_2015;Finanzkommission-NR Subko 1 (B+G/EFD/EAV);CO;SC;FK;B+G/EFD/EAV;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|FK--SC|EDA/WBF;CH_NT-NR_2015;Finanzkommission-NR Subko 2 (EDA/WBF);CO;SC;FK;EDA/WBF;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|FK--SC|EDI/VBS;CH_NT-NR_2015;Finanzkommission-NR Subko 3 (EDI/VBS);CO;SC;FK;EDI/VBS;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|FK--SC|EJPD/UVEK;CH_NT-NR_2015;Finanzkommission-NR Subko 4 (EJPD/UVEK);CO;SC;FK;EJPD/UVEK;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|GPK;CH_NT-NR_2015;Geschäftsprüfungskommission NR;CO;NA;GPK;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|GPK--SC|EDA/VBS;CH_NT-NR_2015;Geschäftsprüfungskommission/EDA/VBSNR;CO;SC;GPK;EDA/VBS;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|GPK--SC|EDI/UVEK;CH_NT-NR_2015;Geschäftsprüfungskommission/EDI/UVEKNR;CO;SC;GPK;EDI/UVEK;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|GPK--SC|EFD/WBF;CH_NT-NR_2015;Geschäftsprüfungskommission-NR EFD/WBF;CO;SC;GPK;EFD/WBF;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|GPK--SC|EJPD/BK;CH_NT-NR_2015;Geschäftsprüfungskommission/EJPD/BKNR;CO;SC;GPK;EJPD/BK;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|GPK--SC|Gerichte/BA;CH_NT-NR_2015;Geschäftsprüfungskommission/Subkommission Gerichte/BANR;CO;SC;GPK;Gerichte/BA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|IK;CH_NT-NR_2015;Immunitätskommission NR;CO;NA;IK;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|KVF;CH_NT-NR_2015;Kommission für Verkehr und Fernmeldewesen NR;CO;NA;KVF;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|LPK;CH_NT-NR_2015;Kommission 16.016-NR;CO;NA;LPK;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|RF;CH_NT-NR_2015;Kommission für Rechtsfragen NR;CO;NA;RF;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|SGK;CH_NT-NR_2015;Kommission für soziale Sicherheit und Gesundheit NR;CO;NA;SGK;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|SiK;CH_NT-NR_2015;Sicherheitspolitische Kommission NR;CO;NA;SiK;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|SPK;CH_NT-NR_2015;Staatspolitische Kommission NR;CO;NA;SPK;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|UREK;CH_NT-NR_2015;Kommission für Umwelt, Raumplanung und Energie NR;CO;NA;UREK;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|WAK;CH_NT-NR_2015;Kommission für Wirtschaft und Abgaben NR;CO;NA;WAK;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CO|WBK;CH_NT-NR_2015;Kommission für Wissenschaft, Bildung und Kultur NR;CO;NA;WBK;NA;NA;30nov2015;31dec2100
+CH_NT-SR_1935__CO|Bue;CH_NT-SR_1935;Büro SR;CO;NA;Bue;NA;NA;02dec1935;03dec1939
+CH_NT-SR_1939__CO|Bue;CH_NT-SR_1939;Büro SR;CO;NA;Bue;NA;NA;04dec1939;05dec1943
+CH_NT-SR_1943__CO|Bue;CH_NT-SR_1943;Büro SR;CO;NA;Bue;NA;NA;06dec1943;30nov1947
+CH_NT-SR_1947__CO|Bue;CH_NT-SR_1947;Büro SR;CO;NA;Bue;NA;NA;01dec1947;02dec1951
+CH_NT-SR_1951__CO|Bue;CH_NT-SR_1951;Büro SR;CO;NA;Bue;NA;NA;03dec1951;04dec1955
+CH_NT-SR_1955__CO|Bue;CH_NT-SR_1955;Büro SR;CO;NA;Bue;NA;NA;05dec1955;06dec1959
+CH_NT-SR_1959__CO|Bue;CH_NT-SR_1959;Büro SR;CO;NA;Bue;NA;NA;07dec1959;01dec1963
+CH_NT-SR_1963__CO|Bue;CH_NT-SR_1963;Büro SR;CO;NA;Bue;NA;NA;02dec1963;03dec1967
+CH_NT-SR_1967__CO|Bue;CH_NT-SR_1967;Büro SR;CO;NA;Bue;NA;NA;04dec1967;28nov1971
+CH_NT-SR_1995__CO|APK;CH_NT-SR_1995;Aussenpolitische Kommission SR;CO;NA;APK;NA;NA;04dec1995;05dec1999
+CH_NT-SR_1995__CO|Bue;CH_NT-SR_1995;Büro SR;CO;NA;Bue;NA;NA;04dec1995;05dec1999
+CH_NT-SR_1995__CO|FK;CH_NT-SR_1995;Finanzkommission SR;CO;NA;FK;NA;NA;04dec1995;05dec1999
+CH_NT-SR_1995__CO|GPK;CH_NT-SR_1995;Geschäftsprüfungskommission SR;CO;NA;GPK;NA;NA;04dec1995;05dec1999
+CH_NT-SR_1995__CO|KVF;CH_NT-SR_1995;Kommission für Verkehr und Fernmeldewesen SR;CO;NA;KVF;NA;NA;04dec1995;05dec1999
+CH_NT-SR_1995__CO|RF;CH_NT-SR_1995;Kommission für Rechtsfragen SR;CO;NA;RF;NA;NA;04dec1995;05dec1999
+CH_NT-SR_1995__CO|SGK;CH_NT-SR_1995;Kommission für soziale Sicherheit und Gesundheit SR;CO;NA;SGK;NA;NA;04dec1995;05dec1999
+CH_NT-SR_1995__CO|SiK;CH_NT-SR_1995;Sicherheitspolitische Kommission SR;CO;NA;SiK;NA;NA;04dec1995;05dec1999
+CH_NT-SR_1995__CO|SPK;CH_NT-SR_1995;Staatspolitische Kommission SR;CO;NA;SPK;NA;NA;04dec1995;05dec1999
+CH_NT-SR_1995__CO|UREK;CH_NT-SR_1995;Kommission für Umwelt, Raumplanung und Energie SR;CO;NA;UREK;NA;NA;04dec1995;05dec1999
+CH_NT-SR_1995__CO|WAK;CH_NT-SR_1995;Kommission für Wirtschaft und Abgaben SR;CO;NA;WAK;NA;NA;04dec1995;05dec1999
+CH_NT-SR_1995__CO|WBK;CH_NT-SR_1995;Kommission für Wissenschaft, Bildung und Kultur SR;CO;NA;WBK;NA;NA;04dec1995;05dec1999
+CH_NT-SR_1999__CO|APK;CH_NT-SR_1999;Aussenpolitische Kommission SR;CO;NA;APK;NA;NA;06dec1999;01dec2003
+CH_NT-SR_1999__CO|Bue;CH_NT-SR_1999;Büro SR;CO;NA;Bue;NA;NA;06dec1999;01dec2003
+CH_NT-SR_1999__CO|FK;CH_NT-SR_1999;Finanzkommission SR;CO;NA;FK;NA;NA;06dec1999;01dec2003
+CH_NT-SR_1999__CO|FK--SC|B+G/EFD/EAV;CH_NT-SR_1999;Finanzkommission/Subkommission 1 (Behörden und Gerichte/EFD)SR;CO;SC;FK;B+G/EFD/EAV;NA;06dec1999;01dec2003
+CH_NT-SR_1999__CO|FK--SC|EDA/WBF;CH_NT-SR_1999;Finanzkommission-SR Subko 2 (EDA/EVD);CO;SC;FK;EDA/WBF;NA;06dec1999;01dec2003
+CH_NT-SR_1999__CO|FK--SC|EDI/VBS;CH_NT-SR_1999;Finanzkommission/Subkommission 3 (EDI/VBS)SR;CO;SC;FK;EDI/VBS;NA;06dec1999;01dec2003
+CH_NT-SR_1999__CO|FK--SC|EJPD/UVEK;CH_NT-SR_1999;Finanzkommission/Subkommission 4 (EJPD/UVEK)SR;CO;SC;FK;EJPD/UVEK;NA;06dec1999;01dec2003
+CH_NT-SR_1999__CO|GPK;CH_NT-SR_1999;Geschäftsprüfungskommission SR;CO;NA;GPK;NA;NA;06dec1999;01dec2003
+CH_NT-SR_1999__CO|GPK--SC|EDA/VBS;CH_NT-SR_1999;Geschäftsprüfungskommission-SR EDA/VBS;CO;SC;GPK;EDA/VBS;NA;06dec1999;01dec2003
+CH_NT-SR_1999__CO|GPK--SC|EDI/UVEK;CH_NT-SR_1999;Geschäftsprüfungskommission-SR EDI/UVEK;CO;SC;GPK;EDI/UVEK;NA;06dec1999;01dec2003
+CH_NT-SR_1999__CO|GPK--SC|EFD/WBF;CH_NT-SR_1999;Geschäftsprüfungskommission-SR EFD/EVD;CO;SC;GPK;EFD/WBF;NA;06dec1999;01dec2003
+CH_NT-SR_1999__CO|GPK--SC|EJPD/BK;CH_NT-SR_1999;Geschäftsprüfungskommission-SR EJPD/BK;CO;SC;GPK;EJPD/BK;NA;06dec1999;01dec2003
+CH_NT-SR_1999__CO|GPK--SC|Gerichte;CH_NT-SR_1999;Geschäftsprüfungskommission/GerichteSR;CO;SC;GPK;Gerichte;NA;06dec1999;01dec2003
+CH_NT-SR_1999__CO|KVF;CH_NT-SR_1999;Kommission für Verkehr und Fernmeldewesen SR;CO;NA;KVF;NA;NA;06dec1999;01dec2003
+CH_NT-SR_1999__CO|RF;CH_NT-SR_1999;Kommission für Rechtsfragen SR;CO;NA;RF;NA;NA;06dec1999;01dec2003
+CH_NT-SR_1999__CO|SGK;CH_NT-SR_1999;Kommission für soziale Sicherheit und Gesundheit SR;CO;NA;SGK;NA;NA;06dec1999;01dec2003
+CH_NT-SR_1999__CO|SiK;CH_NT-SR_1999;Sicherheitspolitische Kommission SR;CO;NA;SiK;NA;NA;06dec1999;01dec2003
+CH_NT-SR_1999__CO|SPK;CH_NT-SR_1999;Staatspolitische Kommission SR;CO;NA;SPK;NA;NA;06dec1999;01dec2003
+CH_NT-SR_1999__CO|UREK;CH_NT-SR_1999;Kommission für Umwelt, Raumplanung und Energie SR;CO;NA;UREK;NA;NA;06dec1999;01dec2003
+CH_NT-SR_1999__CO|WAK;CH_NT-SR_1999;Kommission für Wirtschaft und Abgaben SR;CO;NA;WAK;NA;NA;06dec1999;01dec2003
+CH_NT-SR_1999__CO|WBK;CH_NT-SR_1999;Kommission für Wissenschaft, Bildung und Kultur SR;CO;NA;WBK;NA;NA;06dec1999;01dec2003
+CH_NT-SR_2003__CO|APK;CH_NT-SR_2003;Aussenpolitische Kommission SR;CO;NA;APK;NA;NA;02dec2003;02dec2007
+CH_NT-SR_2003__CO|Bue;CH_NT-SR_2003;Büro SR;CO;NA;Bue;NA;NA;02dec2003;02dec2007
+CH_NT-SR_2003__CO|FK;CH_NT-SR_2003;Finanzkommission SR;CO;NA;FK;NA;NA;02dec2003;02dec2007
+CH_NT-SR_2003__CO|FK--SC|B+G/EFD/EAV;CH_NT-SR_2003;Finanzkommission/Subkommission 1 (Behörden und Gerichte/EFD)SR;CO;SC;FK;B+G/EFD/EAV;NA;02dec2003;02dec2007
+CH_NT-SR_2003__CO|FK--SC|EDA/WBF;CH_NT-SR_2003;Finanzkommission-SR Subko 2 (EDA/EVD);CO;SC;FK;EDA/WBF;NA;02dec2003;02dec2007
+CH_NT-SR_2003__CO|FK--SC|EDI/VBS;CH_NT-SR_2003;Finanzkommission/Subkommission 3 (EDI/VBS)SR;CO;SC;FK;EDI/VBS;NA;02dec2003;02dec2007
+CH_NT-SR_2003__CO|FK--SC|EJPD/UVEK;CH_NT-SR_2003;Finanzkommission/Subkommission 4 (EJPD/UVEK)SR;CO;SC;FK;EJPD/UVEK;NA;02dec2003;02dec2007
+CH_NT-SR_2003__CO|GPK;CH_NT-SR_2003;Geschäftsprüfungskommission SR;CO;NA;GPK;NA;NA;02dec2003;02dec2007
+CH_NT-SR_2003__CO|GPK--SC|EDI/UVEK;CH_NT-SR_2003;Geschäftsprüfungskommission-SR EDI/UVEK;CO;SC;GPK;EDI/UVEK;NA;02dec2003;02dec2007
+CH_NT-SR_2003__CO|GPK--SC|EFD/WBF;CH_NT-SR_2003;Geschäftsprüfungskommission-SR EFD/EVD;CO;SC;GPK;EFD/WBF;NA;02dec2003;02dec2007
+CH_NT-SR_2003__CO|GPK--SC|EJPD/BK;CH_NT-SR_2003;Geschäftsprüfungskommission-SR EJPD/BK;CO;SC;GPK;EJPD/BK;NA;02dec2003;02dec2007
+CH_NT-SR_2003__CO|GPK--SC|Gerichte;CH_NT-SR_2003;Geschäftsprüfungskommission/GerichteSR;CO;SC;GPK;Gerichte;NA;02dec2003;02dec2007
+CH_NT-SR_2003__CO|KVF;CH_NT-SR_2003;Kommission für Verkehr und Fernmeldewesen SR;CO;NA;KVF;NA;NA;02dec2003;02dec2007
+CH_NT-SR_2003__CO|RF;CH_NT-SR_2003;Kommission für Rechtsfragen SR;CO;NA;RF;NA;NA;02dec2003;02dec2007
+CH_NT-SR_2003__CO|SGK;CH_NT-SR_2003;Kommission für soziale Sicherheit und Gesundheit SR;CO;NA;SGK;NA;NA;02dec2003;02dec2007
+CH_NT-SR_2003__CO|SiK;CH_NT-SR_2003;Sicherheitspolitische Kommission SR;CO;NA;SiK;NA;NA;02dec2003;02dec2007
+CH_NT-SR_2003__CO|SPK;CH_NT-SR_2003;Staatspolitische Kommission SR;CO;NA;SPK;NA;NA;02dec2003;02dec2007
+CH_NT-SR_2003__CO|UREK;CH_NT-SR_2003;Kommission für Umwelt, Raumplanung und Energie SR;CO;NA;UREK;NA;NA;02dec2003;02dec2007
+CH_NT-SR_2003__CO|WAK;CH_NT-SR_2003;Kommission für Wirtschaft und Abgaben SR;CO;NA;WAK;NA;NA;02dec2003;02dec2007
+CH_NT-SR_2003__CO|WBK;CH_NT-SR_2003;Kommission für Wissenschaft, Bildung und Kultur SR;CO;NA;WBK;NA;NA;02dec2003;02dec2007
+CH_NT-SR_2007__CO|APK;CH_NT-SR_2007;Aussenpolitische Kommission SR;CO;NA;APK;NA;NA;03dec2007;05dec2011
+CH_NT-SR_2007__CO|Bue;CH_NT-SR_2007;Büro SR;CO;NA;Bue;NA;NA;03dec2007;05dec2011
+CH_NT-SR_2007__CO|FK;CH_NT-SR_2007;Finanzkommission SR;CO;NA;FK;NA;NA;03dec2007;05dec2011
+CH_NT-SR_2007__CO|FK--SC|B+G/EFD/EAV;CH_NT-SR_2007;Finanzkommission/Subkommission 1 (Behörden und Gerichte/EFD)SR;CO;SC;FK;B+G/EFD/EAV;NA;03dec2007;05dec2011
+CH_NT-SR_2007__CO|FK--SC|EDA/WBF;CH_NT-SR_2007;Finanzkommission-SR Subko 2 (EDA/EVD);CO;SC;FK;EDA/WBF;NA;03dec2007;05dec2011
+CH_NT-SR_2007__CO|FK--SC|EDI/VBS;CH_NT-SR_2007;Finanzkommission/Subkommission 3 (EDI/VBS)SR;CO;SC;FK;EDI/VBS;NA;03dec2007;05dec2011
+CH_NT-SR_2007__CO|FK--SC|EJPD/UVEK;CH_NT-SR_2007;Finanzkommission/Subkommission 4 (EJPD/UVEK)SR;CO;SC;FK;EJPD/UVEK;NA;03dec2007;05dec2011
+CH_NT-SR_2007__CO|GPK;CH_NT-SR_2007;Geschäftsprüfungskommission SR;CO;NA;GPK;NA;NA;03dec2007;05dec2011
+CH_NT-SR_2007__CO|GPK--SC|EDA/VBS;CH_NT-SR_2007;Geschäftsprüfungskommission-SR EDA/VBS;CO;SC;GPK;EDA/VBS;NA;03dec2007;05dec2011
+CH_NT-SR_2007__CO|GPK--SC|EDI/UVEK;CH_NT-SR_2007;Geschäftsprüfungskommission-SR EDI/UVEK;CO;SC;GPK;EDI/UVEK;NA;03dec2007;05dec2011
+CH_NT-SR_2007__CO|GPK--SC|EFD/WBF;CH_NT-SR_2007;Geschäftsprüfungskommission-SR EFD/EVD;CO;SC;GPK;EFD/WBF;NA;03dec2007;05dec2011
+CH_NT-SR_2007__CO|GPK--SC|EJPD/BK;CH_NT-SR_2007;Geschäftsprüfungskommission-SR EJPD/BK;CO;SC;GPK;EJPD/BK;NA;03dec2007;05dec2011
+CH_NT-SR_2007__CO|GPK--SC|Gerichte;CH_NT-SR_2007;Geschäftsprüfungskommission/GerichteSR;CO;SC;GPK;Gerichte;NA;03dec2007;05dec2011
+CH_NT-SR_2007__CO|KVF;CH_NT-SR_2007;Kommission für Verkehr und Fernmeldewesen SR;CO;NA;KVF;NA;NA;03dec2007;05dec2011
+CH_NT-SR_2007__CO|RF;CH_NT-SR_2007;Kommission für Rechtsfragen SR;CO;NA;RF;NA;NA;03dec2007;05dec2011
+CH_NT-SR_2007__CO|SGK;CH_NT-SR_2007;Kommission für soziale Sicherheit und Gesundheit SR;CO;NA;SGK;NA;NA;03dec2007;05dec2011
+CH_NT-SR_2007__CO|SiK;CH_NT-SR_2007;Sicherheitspolitische Kommission SR;CO;NA;SiK;NA;NA;03dec2007;05dec2011
+CH_NT-SR_2007__CO|SPK;CH_NT-SR_2007;Staatspolitische Kommission SR;CO;NA;SPK;NA;NA;03dec2007;05dec2011
+CH_NT-SR_2007__CO|UREK;CH_NT-SR_2007;Kommission für Umwelt, Raumplanung und Energie SR;CO;NA;UREK;NA;NA;03dec2007;05dec2011
+CH_NT-SR_2007__CO|WAK;CH_NT-SR_2007;Kommission für Wirtschaft und Abgaben SR;CO;NA;WAK;NA;NA;03dec2007;05dec2011
+CH_NT-SR_2007__CO|WBK;CH_NT-SR_2007;Kommission für Wissenschaft, Bildung und Kultur SR;CO;NA;WBK;NA;NA;03dec2007;05dec2011
+CH_NT-SR_2011__CO|APK;CH_NT-SR_2011;Aussenpolitische Kommission SR;CO;NA;APK;NA;NA;05dec2011;29nov2015
+CH_NT-SR_2011__CO|Bue;CH_NT-SR_2011;Büro SR;CO;NA;Bue;NA;NA;05dec2011;29nov2015
+CH_NT-SR_2011__CO|FK;CH_NT-SR_2011;Finanzkommission SR;CO;NA;FK;NA;NA;05dec2011;29nov2015
+CH_NT-SR_2011__CO|FK--SC|B+G/EFD/EAV;CH_NT-SR_2011;Finanzkommission-SR Subko 1 (B+G/EFD/EAV);CO;SC;FK;B+G/EFD/EAV;NA;05dec2011;29nov2015
+CH_NT-SR_2011__CO|FK--SC|EDA/WBF;CH_NT-SR_2011;Finanzkommission-SR Subko 2 (EDA/WBF);CO;SC;FK;EDA/WBF;NA;05dec2011;29nov2015
+CH_NT-SR_2011__CO|FK--SC|EDI/VBS;CH_NT-SR_2011;Finanzkommission-SR Subko 3 (EDI/VBS);CO;SC;FK;EDI/VBS;NA;05dec2011;29nov2015
+CH_NT-SR_2011__CO|FK--SC|EJPD/UVEK;CH_NT-SR_2011;Finanzkommission-SR Subko 4 (EJPD/UVEK);CO;SC;FK;EJPD/UVEK;NA;05dec2011;29nov2015
+CH_NT-SR_2011__CO|GPK;CH_NT-SR_2011;Geschäftsprüfungskommission SR;CO;NA;GPK;NA;NA;05dec2011;29nov2015
+CH_NT-SR_2011__CO|GPK--SC|EDA/VBS;CH_NT-SR_2011;Geschäftsprüfungskommission-SR EDA/VBS;CO;SC;GPK;EDA/VBS;NA;05dec2011;29nov2015
+CH_NT-SR_2011__CO|GPK--SC|EDI/UVEK;CH_NT-SR_2011;Geschäftsprüfungskommission-SR EDI/UVEK;CO;SC;GPK;EDI/UVEK;NA;05dec2011;29nov2015
+CH_NT-SR_2011__CO|GPK--SC|EFD/WBF;CH_NT-SR_2011;Geschäftsprüfungskommission-SR EFD/WBF;CO;SC;GPK;EFD/WBF;NA;05dec2011;29nov2015
+CH_NT-SR_2011__CO|GPK--SC|EJPD/BK;CH_NT-SR_2011;Geschäftsprüfungskommission-SR EJPD/BK;CO;SC;GPK;EJPD/BK;NA;05dec2011;29nov2015
+CH_NT-SR_2011__CO|GPK--SC|Gerichte/BA;CH_NT-SR_2011;Geschäftsprüfungskommission/Subkommission Gerichte/BASR;CO;SC;GPK;Gerichte/BA;NA;05dec2011;29nov2015
+CH_NT-SR_2011__CO|KVF;CH_NT-SR_2011;Kommission für Verkehr und Fernmeldewesen SR;CO;NA;KVF;NA;NA;05dec2011;29nov2015
+CH_NT-SR_2011__CO|RF;CH_NT-SR_2011;Kommission für Rechtsfragen SR;CO;NA;RF;NA;NA;05dec2011;29nov2015
+CH_NT-SR_2011__CO|SGK;CH_NT-SR_2011;Kommission für soziale Sicherheit und Gesundheit SR;CO;NA;SGK;NA;NA;05dec2011;29nov2015
+CH_NT-SR_2011__CO|SiK;CH_NT-SR_2011;Sicherheitspolitische Kommission SR;CO;NA;SiK;NA;NA;05dec2011;29nov2015
+CH_NT-SR_2011__CO|SPK;CH_NT-SR_2011;Staatspolitische Kommission SR;CO;NA;SPK;NA;NA;05dec2011;29nov2015
+CH_NT-SR_2011__CO|UREK;CH_NT-SR_2011;Kommission für Umwelt, Raumplanung und Energie SR;CO;NA;UREK;NA;NA;05dec2011;29nov2015
+CH_NT-SR_2011__CO|WAK;CH_NT-SR_2011;Kommission für Wirtschaft und Abgaben SR;CO;NA;WAK;NA;NA;05dec2011;29nov2015
+CH_NT-SR_2011__CO|WBK;CH_NT-SR_2011;Kommission für Wissenschaft, Bildung und Kultur SR;CO;NA;WBK;NA;NA;05dec2011;29nov2015
+CH_NT-SR_2015__CO|APK;CH_NT-SR_2015;Aussenpolitische Kommission SR;CO;NA;APK;NA;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|Bue;CH_NT-SR_2015;Büro SR;CO;NA;Bue;NA;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|FK;CH_NT-SR_2015;Finanzkommission SR;CO;NA;FK;NA;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|FK--SC|B+G/EFD/EAV;CH_NT-SR_2015;Finanzkommission-SR Subko 1 (B+G/EFD/EAV);CO;SC;FK;B+G/EFD/EAV;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|FK--SC|EDA/WBF;CH_NT-SR_2015;Finanzkommission-SR Subko 2 (EDA/WBF);CO;SC;FK;EDA/WBF;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|FK--SC|EDI/VBS;CH_NT-SR_2015;Finanzkommission-SR Subko 3 (EDI/VBS);CO;SC;FK;EDI/VBS;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|FK--SC|EJPD/UVEK;CH_NT-SR_2015;Finanzkommission-SR Subko 4 (EJPD/UVEK);CO;SC;FK;EJPD/UVEK;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|GPK;CH_NT-SR_2015;Geschäftsprüfungskommission SR;CO;NA;GPK;NA;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|GPK--SC|EDA/VBS;CH_NT-SR_2015;Geschäftsprüfungskommission-SR EDA/VBS;CO;SC;GPK;EDA/VBS;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|GPK--SC|EDI/UVEK;CH_NT-SR_2015;Geschäftsprüfungskommission-SR EDI/UVEK;CO;SC;GPK;EDI/UVEK;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|GPK--SC|EFD/WBF;CH_NT-SR_2015;Geschäftsprüfungskommission-SR EFD/WBF;CO;SC;GPK;EFD/WBF;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|GPK--SC|EJPD/BK;CH_NT-SR_2015;Geschäftsprüfungskommission-SR EJPD/BK;CO;SC;GPK;EJPD/BK;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|GPK--SC|Gerichte/BA;CH_NT-SR_2015;Geschäftsprüfungskommission/Subkommission Gerichte/BASR;CO;SC;GPK;Gerichte/BA;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|KVF;CH_NT-SR_2015;Kommission für Verkehr und Fernmeldewesen SR;CO;NA;KVF;NA;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|LPK;CH_NT-SR_2015;Kommission 16.016-SR;CO;NA;LPK;NA;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|RF;CH_NT-SR_2015;Kommission für Rechtsfragen SR;CO;NA;RF;NA;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|SGK;CH_NT-SR_2015;Kommission für soziale Sicherheit und Gesundheit SR;CO;NA;SGK;NA;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|SiK;CH_NT-SR_2015;Sicherheitspolitische Kommission SR;CO;NA;SiK;NA;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|SPK;CH_NT-SR_2015;Staatspolitische Kommission SR;CO;NA;SPK;NA;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|UREK;CH_NT-SR_2015;Kommission für Umwelt, Raumplanung und Energie SR;CO;NA;UREK;NA;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|WAK;CH_NT-SR_2015;Kommission für Wirtschaft und Abgaben SR;CO;NA;WAK;NA;NA;30nov2015;31dec2100
+CH_NT-SR_2015__CO|WBK;CH_NT-SR_2015;Kommission für Wissenschaft, Bildung und Kultur SR;CO;NA;WBK;NA;NA;30nov2015;31dec2100
+CH_NT-NR_1971__CH_NT-SR_1971__CO|RedK--SC|Kord;"CH_NT-NR_1971;CH_NT-SR_1971";Koordinationsausschuss der Redaktionskommission;CO;SC;RedK;Kord;3;25nov1974;03oct1975
+CH_NT-NR_1991__CH_NT-SR_1991__CO|RedK;"CH_NT-NR_1991;CH_NT-SR_1991";Redaktionskommission;CO;NA;RedK;NA;NA;25nov1991;06oct1995
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Migration;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Migration;AG;NA;Migration;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Tuerkei;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Tuerkei;AG;NA;Schweiz-Tuerkei;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Vietnam;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Vietnam;AG;NA;Schweiz-Vietnam;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Taiwan;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Taiwan;AG;NA;Schweiz-Taiwan;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Rumaenien;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Rumaenien;AG;NA;Schweiz-Rumaenien;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Inlandbanken;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Inlandbanken;AG;NA;Inlandbanken;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Weinbau;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Weinbau;AG;NA;Weinbau;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Katalonien;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Katalonien;AG;NA;Schweiz-Katalonien;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Cleantech;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe cleantech;AG;NA;cleantech;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Italianita;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Italianita;AG;NA;Italianita;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Mehrsprachigkeit;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Mehrsprachigkeit;AG;NA;Mehrsprachigkeit;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Afrika;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Afrika;AG;NA;Schweiz-Afrika;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|MINT-Foerderung_als_Beitrag_zur_Behebung_des_Fachkraeftemangels;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe MINT-Foerderung als Beitrag zur Behebung des Fachkraeftemangels;AG;NA;MINT-Foerderung als Beitrag zur Behebung des Fachkraeftemangels;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Tierschutz;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Tierschutz;AG;NA;Tierschutz;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Menschenrechte;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Menschenrechte;AG;NA;Menschenrechte;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Genuss;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Genuss;AG;NA;Genuss;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Libanon;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Libanon;AG;NA;Schweiz-Libanon;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Transport;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Transport;AG;NA;Transport;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Armenien;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Armenien;AG;NA;Schweiz-Armenien;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Lateinische_Konsumfragen;"CH_NT-NR_2015;CH_NT-SR_2015";Lateinische parlamentarische Gruppe Konsumfragen;AG;NA;Lateinische Konsumfragen;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Tourismus;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Tourismus;AG;NA;Tourismus;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-ALBA;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-ALBA;AG;NA;Schweiz-ALBA;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Start-up;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Start-up;AG;NA;Start-up;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Journalismus_und_Demokratie;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Journalismus und Demokratie;AG;NA;Journalismus und Demokratie;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2011__CH_NT-SR_2011__AG|Weinbau;"CH_NT-NR_2011;CH_NT-SR_2011";Parlamentarische Gruppe Weinbau;AG;NA;Weinbau;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Wohn-_und_Grundeigentum;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Wohn- und Grundeigentum;AG;NA;Wohn- und Grundeigentum;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Luft-_und_Raumfahrt;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Luft- und Raumfahrt;AG;NA;Luft- und Raumfahrt;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Griechenland;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Griechenland;AG;NA;Schweiz-Griechenland;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Digitale_Nachhaltigkeit;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Digitale Nachhaltigkeit;AG;NA;Digitale Nachhaltigkeit;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Algerien;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Algerien;AG;NA;Schweiz-Algerien;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2011__CH_NT-SR_2011__AG|Schweiz-Lateinamerika;"CH_NT-NR_2011;CH_NT-SR_2011";Parlamentarische Gruppe Schweiz-Lateinamerika;AG;NA;Schweiz-Lateinamerika;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Westsahara;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Westsahara;AG;NA;Westsahara;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Volkskultur_und_Volksmusik;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Volkskultur und Volksmusik;AG;NA;Volkskultur und Volksmusik;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Ukraine;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Ukraine;AG;NA;Schweiz-Ukraine;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Russland;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Russland;AG;NA;Schweiz-Russland;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Lateinamerika;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Lateinamerika;AG;NA;Schweiz-Lateinamerika;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Aserbeidschan;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Aserbeidschan;AG;NA;Schweiz-Aserbeidschan;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Medien_und_Kommerzielle_Kommunikation_GMK;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Medien und Kommerzielle Kommunikation (GMK);AG;NA;Medien und Kommerzielle Kommunikation GMK;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Kasachstan;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Kasachstan;AG;NA;Schweiz-Kasachstan;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Georgien;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Georgien;AG;NA;Schweiz-Georgien;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Berufsbildung;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Berufsbildung (PGfB);AG;NA;Berufsbildung;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Suchtpolitik;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Suchtpolitik;AG;NA;Suchtpolitik;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|globale_Gesundheit;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe globale Gesundheit;AG;NA;globale Gesundheit;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|PHILANTHROPIE/Stiftungen;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe PHILANTHROPIE/Stiftungen;AG;NA;PHILANTHROPIE/Stiftungen;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2011__CH_NT-SR_2011__AG|Gastgewerbe;"CH_NT-NR_2011;CH_NT-SR_2011";Parlamentarische Gruppe Gastgewerbe;AG;NA;Gastgewerbe;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Gastgewerbe;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Gastgewerbe;AG;NA;Gastgewerbe;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Familienpolitik;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Familienpolitik;AG;NA;Familienpolitik;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Behindertenfragen;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Behindertenfragen;AG;NA;Behindertenfragen;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Kinder_und_Jugend;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Kinder und Jugend;AG;NA;Kinder und Jugend;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Drogenpolitik;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Drogenpolitik;AG;NA;Drogenpolitik;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Elektromobilitaet;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Elektromobilitaet;AG;NA;Elektromobilitaet;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Rassismus_und_Fremdenfeindlichkeit;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe gegen Rassismus und Fremdenfeindlichkeit;AG;NA;Rassismus und Fremdenfeindlichkeit;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Arbeit;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Arbeit;AG;NA;Arbeit;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Groupe_Suisse_-_Solidarite_internationale;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Groupe Suisse SRolidarité internationale;AG;NA;Groupe Suisse - Solidarite internationale;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Auslandschweizer;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Auslandschweizer;AG;NA;Auslandschweizer;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Naher_Osten;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Naher Osten;AG;NA;Schweiz-Naher Osten;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Beziehungen_zum_kurdischen_Volk;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Beziehungen zum kurdischen Volk;AG;NA;Beziehungen zum kurdischen Volk;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Beziehungen_Schweiz-Suedafrika;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Beziehungen Schweiz-Suedafrika;AG;NA;Beziehungen Schweiz-Suedafrika;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Internationales_Genf;"CH_NT-NR_2015;CH_NT-SR_2015";"Parlamentarische Gruppe ""Internationales Genf""";AG;NA;"""Internationales Genf""";NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Langsamverkehr;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Langsamverkehr;AG;NA;Langsamverkehr;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Biodiversitaet_und_Artenschutz;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Biodiversitaet und Artenschutz;AG;NA;Biodiversitaet und Artenschutz;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Kroatien;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Kroatien;AG;NA;Schweiz-Kroatien;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Sport;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Sport;AG;NA;Sport;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Fanpolitik_in_der_Schweiz;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Fanpolitik in der Schweiz;AG;NA;Fanpolitik in der Schweiz;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-ASEAN;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-ASEAN;AG;NA;Schweiz-ASEAN;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Treuhand;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Treuhand;AG;NA;Treuhand;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Friedensfoerderung;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Friedensfoerderung;AG;NA;Friedensfoerderung;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Rotes_Kreuz;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Rotes Kreuz;AG;NA;Rotes Kreuz;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Glasfasernetz_Schweiz;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Glasfasernetz Schweiz;AG;NA;Glasfasernetz Schweiz;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Wohn-_und_Immobilienpolitik;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Wohn- und Immobilienpolitik;AG;NA;Wohn- und Immobilienpolitik;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Green_Cross;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Green Cross;AG;NA;Green Cross;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Wirtschaftsraum_Rhein-Reuss;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Wirtschaftsraum Rhein-Reuss;AG;NA;Wirtschaftsraum Rhein-Reuss;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Damensport;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Damensportgruppe;AG;NA;Damensport;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Wald_und_Holz;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Wald und Holz;AG;NA;Wald und Holz;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Pflege;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Pflege;AG;NA;Pflege;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Altersfragen;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Altersfragen;AG;NA;Altersfragen;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2007__CH_NT-SR_2007__AG|Schweiz-USA;"CH_NT-NR_2007;CH_NT-SR_2007";Parlamentarischer Verein Schweiz – USA;AG;NA;Schweiz – USA;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2011__CH_NT-SR_2011__AG|Schweiz-USA;"CH_NT-NR_2011;CH_NT-SR_2011";Parlamentarischer Verein Schweiz – USA;AG;NA;Schweiz – USA;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-USA;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarischer Verein Schweiz – USA;AG;NA;Schweiz – USA;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Gebaerdensprache;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Gebaerdensprache;AG;NA;Gebaerdensprache;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Christ+Politik;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Christ+Politik;AG;NA;Christ+Politik;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Suryoye;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Suryoye;AG;NA;Schweiz-Suryoye;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|lingua_e_cultura_rumantscha;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe lingua e cultura rumantscha;AG;NA;lingua e cultura rumantscha;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Bundeshaus-Band;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Bundeshaus-Band;AG;NA;Bundeshaus-Band;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Ostschweiz;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Ostschweiz;AG;NA;Ostschweiz;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Polizei-_und_Sicherheitsfragen;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Polizei- und Sicherheitsfragen;AG;NA;Polizei- und Sicherheitsfragen;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Angestellte;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Angestellten-Gruppe;AG;NA;Angestellte;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|AHV/IV-Fragen;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe AHV/IV-Fragen;AG;NA;AHV/IV-Fragen;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Komplementaermedizin;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Komplementaermedizin;AG;NA;Komplementaermedizin;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Pfadibewegung_Schweiz;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Pfadibewegung Schweiz;AG;NA;Pfadibewegung Schweiz;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Psychische_Gesundheit;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Psychische Gesundheit;AG;NA;Psychische Gesundheit;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|nichtuebertragbare_Krankheiten_NCD;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe nichtuebertragbare Krankheiten NCD;AG;NA;nichtuebertragbare Krankheiten NCD;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Feuerwehr;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Kerngruppe Feuerwehr;AG;NA;Feuerwehr;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-China;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-China;AG;NA;Schweiz-China;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Print;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Print;AG;NA;Print;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Bergbevoelkerung;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Bergbevoelkerung;AG;NA;Bergbevoelkerung;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Jagd_und_Biodiversitaet;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Jagd und Biodiversitaet;AG;NA;Jagd und Biodiversitaet;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Slowakei;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Slowakei;AG;NA;Schweiz-Slowakei;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2011__CH_NT-SR_2011__AG|Schweiz-Armenien;"CH_NT-NR_2011;CH_NT-SR_2011";Parlamentarische Gruppe Schweiz-Armenien;AG;NA;Schweiz-Armenien;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2015__CH_NT-SR_2015__AG|KAIRO+;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe KAIRO+;AG;NA;KAIRO+;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Frauen;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Frauengruppe;AG;NA;Frauen;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-EU;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-EU;AG;NA;Schweiz-EU;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Kommunalpolitik;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Kommunalpolitik;AG;NA;Kommunalpolitik;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Raumentwicklung;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Raumentwicklung;AG;NA;Raumentwicklung;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Kultur;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Kultur;AG;NA;Kultur;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Hauptstadtregion_Schweiz;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Hauptstadtregion Schweiz;AG;NA;Hauptstadtregion Schweiz;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Natur-_und_Heimatschutz;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Natur- und Heimatschutz;AG;NA;Natur- und Heimatschutz;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Fuersorgerische_Zwangsmassnahmen;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Fuersorgerische Zwangsmassnahmen;AG;NA;Fuersorgerische Zwangsmassnahmen;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Region_Basel;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Region Basel;AG;NA;Region Basel;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Polen;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Polen;AG;NA;Schweiz-Polen;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2011__CH_NT-SR_2011__AG|Klimaaenderung;"CH_NT-NR_2011;CH_NT-SR_2011";Parlamentarische Gruppe Klimaaenderung;AG;NA;Klimaaenderung;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Kuba;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Kuba;AG;NA;Schweiz-Kuba;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Nachhaltiges_Wirtschaften;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarisches Forum nachhaltiges Wirtschaften;AG;NA;Nachhaltiges Wirtschaften;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Parlamentarians_for_global_Action;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Parlamentarians for global Action;AG;NA;Parlamentarians for global Action;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Ernaehrungssouveraenitaet;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Ernaehrungssouveraenitaet;AG;NA;Ernaehrungssouveraenitaet;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|ePower;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe ePower;AG;NA;ePower;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Tibet;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Tibet;AG;NA;Schweiz-Tibet;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|GebaeudeTechnik;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe GebaeudeTechnik;AG;NA;GebaeudeTechnik;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Japan;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Japan;AG;NA;Schweiz-Japan;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Freiwilligenarbeit_und_Ehrenamt;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Freiwilligenarbeit und Ehrenamt;AG;NA;Freiwilligenarbeit und Ehrenamt;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Gesundheitspolitik_der_Bundesversammlung;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Gesundheitspolitik der Bundesversammlung;AG;NA;Gesundheitspolitik der Bundesversammlung;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|BVG;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe BVG;AG;NA;BVG;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2011__CH_NT-SR_2011__AG|Rassismus_und_Fremdenfeindlichkeit;"CH_NT-NR_2011;CH_NT-SR_2011";Parlamentarische Gruppe gegen Rassismus und Fremdenfeindlichkeit;AG;NA;Rassismus und Fremdenfeindlichkeit;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schifffahrt;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schifffahrt;AG;NA;Schifffahrt;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Menschen_mit_Hoerbehinderungen;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Menschen mit Hoerbehinderungen;AG;NA;Menschen mit Hoerbehinderungen;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2011__CH_NT-SR_2011__AG|Schweiz-Republik_Korea;"CH_NT-NR_2011;CH_NT-SR_2011";Parlamentarische Gruppe Schweiz-Republik Korea;AG;NA;Schweiz-Republik Korea;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2011__CH_NT-SR_2011__AG|Wirtschafts-_und_waehrungspolitischen_Arbeitskreises_WPA;"CH_NT-NR_2011;CH_NT-SR_2011";Wirtschafts- und waehrungspolitischer Arbeitskreis (WPA);AG;NA;Wirtschafts- und währungspolitischen Arbeitskreises (WPA);NA;NA;05dec2011;29nov2015
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Textilwirtschaft;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Textilwirtschaft;AG;NA;Textilwirtschaft;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2011__CH_NT-SR_2011__AG|Medien_und_Kommerzielle_Kommunikation_GMK;"CH_NT-NR_2011;CH_NT-SR_2011";Parlamentarische Gruppe Medien und Kommerzielle Kommunikation (GMK);AG;NA;Medien und Kommerzielle Kommunikation GMK;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Israel;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Israel;AG;NA;Schweiz-Israel;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Erneuerbare_Energien;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Erneuerbare Energien;AG;NA;Erneuerbare Energien;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2007__CH_NT-SR_2007__AG|Schweiz-Kasachstan;"CH_NT-NR_2007;CH_NT-SR_2007";Parlamentarische Gruppe Schweiz-Kasachstan;AG;NA;Schweiz-Kasachstan;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2011__CH_NT-SR_2011__AG|Schweiz-Kasachstan;"CH_NT-NR_2011;CH_NT-SR_2011";Parlamentarische Gruppe Schweiz-Kasachstan;AG;NA;Schweiz-Kasachstan;NA;NA;05dec2011;29nov2015
+CH_NT-NR_1979__CH_NT-SR_1979__AG|Kultur;"CH_NT-NR_1979;CH_NT-SR_1979";Parlamentarische Gruppe Kultur;AG;NA;Kultur;NA;NA;26nov1979;27nov1983
+CH_NT-NR_1983__CH_NT-SR_1983__AG|Kultur;"CH_NT-NR_1983;CH_NT-SR_1983";Parlamentarische Gruppe Kultur;AG;NA;Kultur;NA;NA;28nov1983;29nov1987
+CH_NT-NR_1987__CH_NT-SR_1987__AG|Kultur;"CH_NT-NR_1987;CH_NT-SR_1987";Parlamentarische Gruppe Kultur;AG;NA;Kultur;NA;NA;30nov1987;24nov1991
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Peak_Oil;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Peak Oil;AG;NA;Peak Oil;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Schweiz-Republik_Korea;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Schweiz-Republik Korea;AG;NA;Schweiz-Republik Korea;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Musik_PGM;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Musik PGM;AG;NA;Musik PGM;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2011__CH_NT-SR_2011__AG|Rock/Pop_im_Bundeshaus;"CH_NT-NR_2011;CH_NT-SR_2011";Parlamentarische Gruppe Rock/Pop im Bundeshaus;AG;NA;Rock/Pop im Bundeshaus;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Rock/Pop_im_Bundeshaus;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Rock/Pop im Bundeshaus;AG;NA;Rock/Pop im Bundeshaus;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Bosnien_Herzegowina;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Bosnien Herzegowina;AG;NA;Bosnien Herzegowina;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2003__CH_NT-SR_2003__AG|ePower;"CH_NT-NR_2003;CH_NT-SR_2003";Parlamentarische Gruppe ePower;AG;NA;ePower;NA;NA;02dec2003;02dec2007
+CH_NT-NR_2007__CH_NT-SR_2007__AG|ePower;"CH_NT-NR_2007;CH_NT-SR_2007";Parlamentarische Gruppe ePower;AG;NA;ePower;NA;NA;03dec2007;05dec2011
+CH_NT-NR_2011__CH_NT-SR_2011__AG|ePower;"CH_NT-NR_2011;CH_NT-SR_2011";Parlamentarische Gruppe ePower;AG;NA;ePower;NA;NA;05dec2011;29nov2015
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Bildung;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Bildung;AG;NA;Bildung;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|Boden_und_Raumordnung;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe Boden und Raumordnung;AG;NA;Boden und Raumordnung;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2015__CH_NT-SR_2015__AG|oeffentlichprivate_Partnerschaften_PPP;"CH_NT-NR_2015;CH_NT-SR_2015";Parlamentarische Gruppe oeffentlichprivate Partnerschaften PPP;AG;NA;oeffentlichprivate Partnerschaften PPP;NA;NA;30nov2015;31dec2100
+CH_NT-NR_2011__CH_NT-SR_2011__AG|Schweiz-Tuerkei;"CH_NT-NR_2011;CH_NT-SR_2011";Parlamentarische Gruppe Schweiz-Tuerkei;AG;NA;Schweiz-Tuerkei;NA;NA;05dec2011;29nov2015
