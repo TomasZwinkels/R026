@@ -210,12 +210,24 @@
 			head(GCELLI)
 			GCELLI[30:50,]
 			tail(GCELLI)
+			
+			GCELLI$ratio <- GCELLI$f / (GCELLI$f+GCELLI$m)
+			hist(GCELLI$ratio)
 
 		# merge into an ELLI level data-frame
 			ELLIBU <- sqldf("SELECT list_id, list_name, parliament_id, list_length
 						FROM ELLI
 						")
-			head()
+			head(ELLIBU)
+			
+			ELLIBU <- sqldf("SELECT ELLIBU.*, GCELLI.f, GCELLI.m, GCELLI.ratio
+						FROM ELLIBU LEFT JOIN GCELLI
+						ON
+						ELLIBU.list_id = GCELLI.list_id
+						")
 		
+			head(ELLIBU)
+			ELLIBU[30:50,]
+			tail(ELLIBU)
 	
 		
