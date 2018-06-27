@@ -15,6 +15,7 @@
 		library(sqldf)
 		library(stringr)
 		library(lubridate)
+		library(ggplot2)
 		
 	# import and inspect all the PCC data-frames
 				
@@ -269,10 +270,6 @@
 					nrow(ELENBURED)
 					table(ELENBURED$in_parliament) # looks good in general, I should follow up these 75 people, these are people that we know where in parliament but that are somehow not in PARE?
 					
-
-	
-	
-	
 	##################################################################################################
 	###################################### aggregation here ##########################################
 	##################################################################################################
@@ -298,7 +295,7 @@
 						")
 			head(ELLIBU)
 			
-			ELLIBU <- sqldf("SELECT ELLIBU.*, GCELLI.f, GCELLI.m, GCELLI.ratio
+			ELLIBU <- sqldf("SELECT ELLIBU.*, GCELLI.f, GCELLI.m, GCELLI.ratio as 'ratio_on_list'
 						FROM ELLIBU LEFT JOIN GCELLI
 						ON
 						ELLIBU.list_id = GCELLI.list_id
@@ -336,17 +333,65 @@
 			
 			nrow(ELLIBU) / (nrow(ELLIBUCOMP)+nrow(ELLIBU)) # using about 60% of the currently available cases (which are all list for CH, but only some of the main parties for NL and only 2017 for DE?)
 		
-		boxplot(ELLIBUCOMP$ratio~ELLIBUCOMP$country)
-		table(is.na(ELLIBUCOMP$ratio),ELLIBUCOMP$country)
+		boxplot(ELLIBUCOMP$ratio_on_list~ELLIBUCOMP$country)
+		table(is.na(ELLIBUCOMP$ratio_on_list),ELLIBUCOMP$country)
 		
 			EDE <- ELLIBUCOMP[which(ELLIBUCOMP$country == "DE"),]
 			nrow(EDE)
-			boxplot(EDE$ratio~droplevels(EDE$parliament_id))
+			boxplot(EDE$ratio_on_list~droplevels(EDE$parliament_id))
 			
 			ENL <- ELLIBUCOMP[which(ELLIBUCOMP$country == "NL"),]
 			nrow(ENL)
-			boxplot(ENL$ratio~droplevels(ENL$parliament_id)) # carefull, there are only very few lists where we actually have the full gender composition!
+			boxplot(ENL$ratio_on_list~droplevels(ENL$parliament_id)) # carefull, there are only very few lists where we actually have the full gender composition!
 			
 			ECH <- ELLIBUCOMP[which(ELLIBUCOMP$country == "CH"),]
 			nrow(ECH)
-			boxplot(ECH$ratio~droplevels(ECH$parliament_id))
+			boxplot(ECH$ratio_on_list~droplevels(ECH$parliament_id))
+	
+	###### gender aggregations on the reduced data! #######
+	
+			GCPARE <- as.data.frame.matrix(table(ELENBURED$list_id,ELENBURED$genderguesses))
+			GCPARE$list_id <- rownames(GCPARE)
+			head(GCPARE)
+			GCPARE[30:50,]
+			tail(GCPARE)
+			
+			GCPARE$ratio <- GCPARE$f / (GCPARE$f+GCPARE$m)
+			hist(GCPARE$ratio)
+			
+		# now merge this in into the ELLI data we made above
+		
+		ELLIBU <- sqldf("SELECT ELLIBU.*, GCPARE.f as 'f_elected', GCPARE.m as 'm_elected', GCPARE.ratio as 'ratio_elected'
+						FROM ELLIBU LEFT JOIN GCPARE
+						ON
+						ELLIBU.list_id = GCPARE.list_id
+						")
+		
+			head(ELLIBU)
+			ELLIBU[30:50,]
+			ELLIBU[4030:4050,]
+			tail(ELLIBU)
+		
+				ggplot(ELLIBU, aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
+				geom_point() + 
+				geom_smooth() +
+				scale_x_continuous(limits = c(0, 0.6)) +
+				geom_abline()
+		
+				ggplot(subset(ELLIBU, country == "NL"), aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
+				geom_point() + 
+				geom_smooth() +
+				scale_x_continuous(limits = c(0, 0.6)) +
+				geom_abline()
+				
+				ggplot(subset(ELLIBU, country == "CH"), aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
+				geom_point() + 
+				geom_smooth() +
+				scale_x_continuous(limits = c(0, 0.6)) +
+				geom_abline()
+				
+				ggplot(subset(ELLIBU, country == "DE"), aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
+				geom_point() + 
+				geom_smooth() +
+				scale_x_continuous(limits = c(0, 0.6)) +
+				geom_abline()
