@@ -201,15 +201,24 @@
 		table(is.na(ELENBU$gender))
 		table(is.na(ELENBU$genderguesses))
 	
-		## find out which of these people entered parliament_id
+	
+	
+	
+	
+	
+	#### find out which of these people entered parliament_id ####
 	
 		# get an 'in parliament'
 		
+			nrow(PARE)
+			PARERED <- PARE[which(PARE$member_ofthisparliament_atsomepoint == "yes"),]
+			nrow(PARERED)
+			
 			# make a fictional parliament id
 			ELENBU$fictional_parl_episode_id<- paste(ELENBU$pers_id,ELENBU$parliament_id,sep="__")
 			head(ELENBU)
 			
-			ELENBU$in_parliament <- ifelse(ELENBU$fictional_parl_episode_id %in% PARE$parl_episode_id,"yes","no") 
+			ELENBU$in_parliament <- ifelse(ELENBU$fictional_parl_episode_id %in% PARERED$parl_episode_id,"yes","no") 
 			table(ELENBU$in_parliament) # is roughly one third
 			
 		# and reduce this to the people that where in parliament straight after the election  (taken from R019!)
@@ -290,7 +299,7 @@
 			ELLI$country <- substr(ELLI$list_id,1,2)
 			table(ELLI$country)
 		
-			ELLIBU <- sqldf("SELECT list_id, list_name, parliament_id, list_length, country
+			ELLIBU <- sqldf("SELECT list_id, list_name, parliament_id, list_length, country, party_id, district_id
 						FROM ELLI
 						")
 			head(ELLIBU)
@@ -304,6 +313,29 @@
 			head(ELLIBU)
 			ELLIBU[30:50,]
 			tail(ELLIBU)
+			
+		# if the party id is not a national party, get the mother party id
+		
+			ELLIBU[500:520,]
+			i = 500
+			resvec <- vector()
+			for(i in 1:nrow(ELLIBU))
+			{
+				if(grepl(ELLIBU$party_id[i],"_NT"))
+				{
+					resvec <- as.character(ELLIBU$party_id)
+				}else{
+					
+					mymotherpartyid <- as.character(PART$mother_party_id[which(as.character(PART$party_id) == as.character(ELLIBU$party_id[i]))])
+					if(length(mymotherpartyid) > 0 )
+					{
+						resvec[i] <- mymotherpartyid
+					}else{
+						resvec[i] <- NA
+					}
+				}
+			}
+			ELLIBU$nat_party_id <- resvec
 		
 		# get a count of the number of people in each faction
 			MemVec <- as.matrix(table(ELENBU$list_id))
@@ -371,7 +403,47 @@
 			ELLIBU[30:50,]
 			ELLIBU[4030:4050,]
 			tail(ELLIBU)
+			
+			
+		# get district magnitude in (for now just number of people that got elected from this district in this parliament)
 		
+			mydistrict <- ELLIBU$district_id[9993]
+		
+			resvec <- vector()
+			for(i in 1:nrow(ELLIBU))
+			{
+				mydistrict <- ELLIBU$district_id[i]	
+				resvec[i] <- nrow(ELENBURED[which(ELENBURED$district_id == mydistrict),])
+			}
+			resvec
+			
+			ELLIBU$district_magnitude <- resvec
+			tail(ELLIBU)
+			head(ELLIBU)
+			
+		# get party size in (for now just number of people from this party that got elected in the parliament)
+
+			i = 1
+			resvec <- vector()
+			for(i in 1:nrow(ELLIBU))
+			{
+				mypartyid <- ELLIBU$party_id[i]
+				myparliamentid <- ELLIBU$parliament_id[i]		
+				resvec[i] <- nrow(ELENBURED[which(ELENBURED$district_id == mydistrict),])
+			}
+			resvec
+			
+			ELLIBU$district_magnitude <- resvec
+			tail(ELLIBU)
+			head(ELLIBU)
+
+
+
+		
+######################################################################################
+############################### DESCRIPTIVE RESULTS ##################################
+######################################################################################			
+
 				ggplot(ELLIBU, aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
 				geom_point() + 
 				geom_smooth() +
@@ -395,3 +467,12 @@
 				geom_smooth() +
 				scale_x_continuous(limits = c(0, 0.6)) +
 				geom_abline()
+				
+######################################################################################
+###################################### MODELS ########################################
+######################################################################################
+
+	names(ELLIBU)
+	table(ELLIBU$party_id)
+	
+	# if the party is not a primary (national) party already, get the mother party id of this party
