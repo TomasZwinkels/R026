@@ -2008,38 +2008,38 @@ DE_DRP_NT;NT;NA;none;none;DRP;"German Reich Party; Deutsche Reichspartei";187;;r
 DE_none_NT;NT;;;;none;NA;none;;NA;;
 DE_AL_RE-BE;RE;BE;;;AL;Alternative Liste;none;;;;
 DE_ADD_RE-NW;RE;NW;lookup;lookup;ADD;"Alliance of German Democrates;Allianz Deutscher Demokraten";none;;NA;none;none
-DE_AfD_RE-BB;RE;BB;lookup;lookup;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
-DE_AfD_RE-BE;RE;BE;lookup;lookup;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
-DE_AfD_RE-BW;RE;BW;lookup;lookup;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
-DE_AfD_RE-BY;RE;BY;lookup;lookup;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
-DE_AfD_RE-HB;RE;HB;lookup;lookup;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
-DE_AfD_RE-HE;RE;HE;lookup;lookup;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
-DE_AfD_RE-HH;RE;HH;lookup;lookup;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
-DE_AfD_RE-MV;RE;MV;lookup;lookup;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
-DE_AfD_RE-NI;RE;NI;lookup;lookup;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
-DE_AfD_RE-NW;RE;NW;lookup;lookup;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
-DE_AfD_RE-RP;RE;RP;lookup;lookup;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
-DE_AfD_RE-SH;RE;SH;lookup;lookup;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
-DE_AfD_RE-SL;RE;SL;lookup;lookup;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
-DE_AfD_RE-SN;RE;SN;lookup;lookup;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
-DE_AfD_RE-ST;RE;ST;lookup;lookup;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
-DE_AfD_RE-TH;RE;TH;lookup;lookup;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
-DE_B90|Gru_RE-BB;RE;BB;lookup;lookup;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
-DE_B90|Gru_RE-BE;RE;BE;lookup;lookup;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
-DE_B90|Gru_RE-BW;RE;BW;lookup;lookup;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
-DE_B90|Gru_RE-BY;RE;BY;lookup;lookup;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
-DE_B90|Gru_RE-HB;RE;HB;lookup;lookup;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
-DE_B90|Gru_RE-HE;RE;HE;lookup;lookup;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
-DE_B90|Gru_RE-HH;RE;HH;lookup;lookup;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
-DE_B90|Gru_RE-MV;RE;MV;lookup;lookup;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
-DE_B90|Gru_RE-NI;RE;NI;lookup;lookup;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
-DE_B90|Gru_RE-NW;RE;NW;lookup;lookup;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
-DE_B90|Gru_RE-RP;RE;RP;lookup;lookup;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
-DE_B90|Gru_RE-SH;RE;SH;lookup;lookup;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
-DE_B90|Gru_RE-SL;RE;SL;lookup;lookup;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
-DE_B90|Gru_RE-SN;RE;SN;lookup;lookup;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
-DE_B90|Gru_RE-ST;RE;ST;lookup;lookup;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
-DE_B90|Gru_RE-TH;RE;TH;lookup;lookup;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
+DE_AfD_RE-BB;RE;BB;lookup;DE_AfD_NT;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
+DE_AfD_RE-BE;RE;BE;lookup;DE_AfD_NT;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
+DE_AfD_RE-BW;RE;BW;lookup;DE_AfD_NT;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
+DE_AfD_RE-BY;RE;BY;lookup;DE_AfD_NT;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
+DE_AfD_RE-HB;RE;HB;lookup;DE_AfD_NT;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
+DE_AfD_RE-HE;RE;HE;lookup;DE_AfD_NT;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
+DE_AfD_RE-HH;RE;HH;lookup;DE_AfD_NT;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
+DE_AfD_RE-MV;RE;MV;lookup;DE_AfD_NT;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
+DE_AfD_RE-NI;RE;NI;lookup;DE_AfD_NT;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
+DE_AfD_RE-NW;RE;NW;lookup;DE_AfD_NT;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
+DE_AfD_RE-RP;RE;RP;lookup;DE_AfD_NT;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
+DE_AfD_RE-SH;RE;SH;lookup;DE_AfD_NT;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
+DE_AfD_RE-SL;RE;SL;lookup;DE_AfD_NT;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
+DE_AfD_RE-SN;RE;SN;lookup;DE_AfD_NT;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
+DE_AfD_RE-ST;RE;ST;lookup;DE_AfD_NT;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
+DE_AfD_RE-TH;RE;TH;lookup;DE_AfD_NT;AfD;"Alternative for Germany;Alternative für Deutschland";2253;;right;none;none
+DE_B90|Gru_RE-BB;RE;BB;lookup;DE_B90|Gru_NT;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
+DE_B90|Gru_RE-BE;RE;BE;lookup;DE_B90|Gru_NT;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
+DE_B90|Gru_RE-BW;RE;BW;lookup;DE_B90|Gru_NT;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
+DE_B90|Gru_RE-BY;RE;BY;lookup;DE_B90|Gru_NT;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
+DE_B90|Gru_RE-HB;RE;HB;lookup;DE_B90|Gru_NT;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
+DE_B90|Gru_RE-HE;RE;HE;lookup;DE_B90|Gru_NT;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
+DE_B90|Gru_RE-HH;RE;HH;lookup;DE_B90|Gru_NT;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
+DE_B90|Gru_RE-MV;RE;MV;lookup;DE_B90|Gru_NT;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
+DE_B90|Gru_RE-NI;RE;NI;lookup;DE_B90|Gru_NT;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
+DE_B90|Gru_RE-NW;RE;NW;lookup;DE_B90|Gru_NT;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
+DE_B90|Gru_RE-RP;RE;RP;lookup;DE_B90|Gru_NT;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
+DE_B90|Gru_RE-SH;RE;SH;lookup;DE_B90|Gru_NT;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
+DE_B90|Gru_RE-SL;RE;SL;lookup;DE_B90|Gru_NT;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
+DE_B90|Gru_RE-SN;RE;SN;lookup;DE_B90|Gru_NT;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
+DE_B90|Gru_RE-ST;RE;ST;lookup;DE_B90|Gru_NT;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
+DE_B90|Gru_RE-TH;RE;TH;lookup;DE_B90|Gru_NT;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;none;none
 DE_BGE_RE-BB;RE;BB;lookup;lookup;BGE;"Alliance Basic Income;Bündnis Grundeinkommen";none;;NA;none;none
 DE_BGE_RE-BE;RE;BE;lookup;lookup;BGE;"Alliance Basic Income;Bündnis Grundeinkommen";none;;NA;none;none
 DE_BGE_RE-BW;RE;BW;lookup;lookup;BGE;"Alliance Basic Income;Bündnis Grundeinkommen";none;;NA;none;none
@@ -2065,22 +2065,22 @@ DE_BueSo_RE-BW;RE;BW;lookup;lookup;BueSo;"Civil-rights movement solidarity;Bürge
 DE_BueSo_RE-BY;RE;BY;lookup;lookup;BueSo;"Civil-rights movement solidarity;Bürgerrechtsbewegung Solidarität";none;;NA;none;none
 DE_BueSo_RE-HE;RE;HE;lookup;lookup;BueSo;"Civil-rights movement solidarity;Bürgerrechtsbewegung Solidarität";none;;NA;none;none
 DE_BueSo_RE-SN;RE;SN;lookup;lookup;BueSo;"Civil-rights movement solidarity;Bürgerrechtsbewegung Solidarität";none;;NA;none;none
-DE_CDU_RE-BB;RE;BB;lookup;lookup;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
-DE_CDU_RE-BE;RE;BE;lookup;lookup;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
-DE_CDU_RE-BW;RE;BW;lookup;lookup;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
-DE_CDU_RE-HB;RE;HB;lookup;lookup;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
-DE_CDU_RE-HE;RE;HE;lookup;lookup;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
-DE_CDU_RE-HH;RE;HH;lookup;lookup;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
-DE_CDU_RE-MV;RE;MV;lookup;lookup;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
-DE_CDU_RE-NI;RE;NI;lookup;lookup;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
-DE_CDU_RE-NW;RE;NW;lookup;lookup;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
-DE_CDU_RE-RP;RE;RP;lookup;lookup;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
-DE_CDU_RE-SH;RE;SH;lookup;lookup;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
-DE_CDU_RE-SL;RE;SL;lookup;lookup;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
-DE_CDU_RE-SN;RE;SN;lookup;lookup;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
-DE_CDU_RE-ST;RE;ST;lookup;lookup;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
-DE_CDU_RE-TH;RE;TH;lookup;lookup;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
-DE_CSU_RE-BY;RE;BY;lookup;lookup;CSU;"Christian Social Union; Christlich Soziale Union";1180;;chr;none;none
+DE_CDU_RE-BB;RE;BB;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
+DE_CDU_RE-BE;RE;BE;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
+DE_CDU_RE-BW;RE;BW;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
+DE_CDU_RE-HB;RE;HB;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
+DE_CDU_RE-HE;RE;HE;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
+DE_CDU_RE-HH;RE;HH;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
+DE_CDU_RE-MV;RE;MV;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
+DE_CDU_RE-NI;RE;NI;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
+DE_CDU_RE-NW;RE;NW;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
+DE_CDU_RE-RP;RE;RP;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
+DE_CDU_RE-SH;RE;SH;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
+DE_CDU_RE-SL;RE;SL;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
+DE_CDU_RE-SN;RE;SN;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
+DE_CDU_RE-ST;RE;ST;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
+DE_CDU_RE-TH;RE;TH;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
+DE_CSU_RE-BY;RE;BY;lookup;DE_CDU_NT;CSU;"Christian Social Union; Christlich Soziale Union";1180;;chr;none;none
 DE_DiB_RE-BE;RE;BE;lookup;lookup;DiB;"Democracy in Movement;DEMOKRATIE IN BEWEGUNG";none;;NA;none;none
 DE_DiB_RE-BW;RE;BW;lookup;lookup;DiB;"Democracy in Movement;DEMOKRATIE IN BEWEGUNG";none;;NA;none;none
 DE_DiB_RE-BY;RE;BY;lookup;lookup;DiB;"Democracy in Movement;DEMOKRATIE IN BEWEGUNG";none;;NA;none;none
@@ -2111,22 +2111,22 @@ DE_DM_RE-TH;RE;TH;lookup;lookup;DM;"German Center;Deutsche Mitte";none;;NA;none;
 DE_du_RE-BE;RE;BE;lookup;lookup;du;"The Urban HipHop Party;Die Urbane Eine HipHop Partei";none;;NA;none;none
 DE_Einh_RE-RP;RE;RP;lookup;lookup;Einh;"The Unity;DIE EINHEIT";none;;NA;none;none
 DE_FAMILIE_RE-SH;RE;SH;lookup;lookup;FAMILIE;"Family Party of Germany;Familien-Partei Deutschlands";1235;;con;none;none
-DE_FDP_RE-BB;RE;BB;lookup;lookup;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
-DE_FDP_RE-BE;RE;BE;lookup;lookup;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
-DE_FDP_RE-BW;RE;BW;lookup;lookup;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
-DE_FDP_RE-BY;RE;BY;lookup;lookup;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
-DE_FDP_RE-HB;RE;HB;lookup;lookup;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
-DE_FDP_RE-HE;RE;HE;lookup;lookup;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
-DE_FDP_RE-HH;RE;HH;lookup;lookup;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
-DE_FDP_RE-MV;RE;MV;lookup;lookup;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
-DE_FDP_RE-NI;RE;NI;lookup;lookup;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
-DE_FDP_RE-NW;RE;NW;lookup;lookup;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
-DE_FDP_RE-RP;RE;RP;lookup;lookup;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
-DE_FDP_RE-SH;RE;SH;lookup;lookup;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
-DE_FDP_RE-SL;RE;SL;lookup;lookup;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
-DE_FDP_RE-SN;RE;SN;lookup;lookup;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
-DE_FDP_RE-ST;RE;ST;lookup;lookup;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
-DE_FDP_RE-TH;RE;TH;lookup;lookup;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
+DE_FDP_RE-BB;RE;BB;lookup;DE_FDP_NT;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
+DE_FDP_RE-BE;RE;BE;lookup;DE_FDP_NT;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
+DE_FDP_RE-BW;RE;BW;lookup;DE_FDP_NT;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
+DE_FDP_RE-BY;RE;BY;lookup;DE_FDP_NT;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
+DE_FDP_RE-HB;RE;HB;lookup;DE_FDP_NT;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
+DE_FDP_RE-HE;RE;HE;lookup;DE_FDP_NT;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
+DE_FDP_RE-HH;RE;HH;lookup;DE_FDP_NT;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
+DE_FDP_RE-MV;RE;MV;lookup;DE_FDP_NT;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
+DE_FDP_RE-NI;RE;NI;lookup;DE_FDP_NT;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
+DE_FDP_RE-NW;RE;NW;lookup;DE_FDP_NT;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
+DE_FDP_RE-RP;RE;RP;lookup;DE_FDP_NT;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
+DE_FDP_RE-SH;RE;SH;lookup;DE_FDP_NT;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
+DE_FDP_RE-SL;RE;SL;lookup;DE_FDP_NT;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
+DE_FDP_RE-SN;RE;SN;lookup;DE_FDP_NT;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
+DE_FDP_RE-ST;RE;ST;lookup;DE_FDP_NT;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
+DE_FDP_RE-TH;RE;TH;lookup;DE_FDP_NT;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
 DE_Frau_RE-BE;RE;BE;lookup;lookup;Frau;"Feminist Party THE WOMEN;Feministische Partei DIE FRAUEN";none;;NA;none;none
 DE_FW_RE-BB;RE;BB;lookup;lookup;FW;"Free Voters;Freie Wähler";41;;con;none;none
 DE_FW_RE-BE;RE;BE;lookup;lookup;FW;"Free Voters;Freie Wähler";41;;con;none;none
@@ -2149,22 +2149,22 @@ DE_Gesund_RE-BY;RE;BY;lookup;lookup;Gesund;"Party for health science;Partei für 
 DE_Gesund_RE-NW;RE;NW;lookup;lookup;Gesund;"Party for health science;Partei für Gesundheitsforschung";none;;NA;none;none
 DE_Grau_RE-BE;RE;BE;lookup;lookup;Grau;"The Grays;Die Grauen – Für alle Generationen";292;;spec;none;none
 DE_Human_RE-NW;RE;NW;lookup;lookup;Human;"Party of Humanists;Partei der Humanisten";none;;NA;none;none
-DE_Li|PDS_RE-BB;RE;BB;lookup;lookup;Li|PDS;"The Left;Die Linke";791;;com;none;none
-DE_Li|PDS_RE-BE;RE;BE;lookup;lookup;Li|PDS;"The Left;Die Linke";791;;com;none;none
-DE_Li|PDS_RE-BW;RE;BW;lookup;lookup;Li|PDS;"The Left;Die Linke";791;;com;none;none
-DE_Li|PDS_RE-BY;RE;BY;lookup;lookup;Li|PDS;"The Left;Die Linke";791;;com;none;none
-DE_Li|PDS_RE-HB;RE;HB;lookup;lookup;Li|PDS;"The Left;Die Linke";791;;com;none;none
-DE_Li|PDS_RE-HE;RE;HE;lookup;lookup;Li|PDS;"The Left;Die Linke";791;;com;none;none
-DE_Li|PDS_RE-HH;RE;HH;lookup;lookup;Li|PDS;"The Left;Die Linke";791;;com;none;none
-DE_Li|PDS_RE-MV;RE;MV;lookup;lookup;Li|PDS;"The Left;Die Linke";791;;com;none;none
-DE_Li|PDS_RE-NI;RE;NI;lookup;lookup;Li|PDS;"The Left;Die Linke";791;;com;none;none
-DE_Li|PDS_RE-NW;RE;NW;lookup;lookup;Li|PDS;"The Left;Die Linke";791;;com;none;none
-DE_Li|PDS_RE-RP;RE;RP;lookup;lookup;Li|PDS;"The Left;Die Linke";791;;com;none;none
-DE_Li|PDS_RE-SH;RE;SH;lookup;lookup;Li|PDS;"The Left;Die Linke";791;;com;none;none
-DE_Li|PDS_RE-SL;RE;SL;lookup;lookup;Li|PDS;"The Left;Die Linke";791;;com;none;none
-DE_Li|PDS_RE-SN;RE;SN;lookup;lookup;Li|PDS;"The Left;Die Linke";791;;com;none;none
-DE_Li|PDS_RE-ST;RE;ST;lookup;lookup;Li|PDS;"The Left;Die Linke";791;;com;none;none
-DE_Li|PDS_RE-TH;RE;TH;lookup;lookup;Li|PDS;"The Left;Die Linke";791;;com;none;none
+DE_Li|PDS_RE-BB;RE;BB;lookup;DE_Li|PDS_NT;Li|PDS;"The Left;Die Linke";791;;com;none;none
+DE_Li|PDS_RE-BE;RE;BE;lookup;DE_Li|PDS_NT;Li|PDS;"The Left;Die Linke";791;;com;none;none
+DE_Li|PDS_RE-BW;RE;BW;lookup;DE_Li|PDS_NT;Li|PDS;"The Left;Die Linke";791;;com;none;none
+DE_Li|PDS_RE-BY;RE;BY;lookup;DE_Li|PDS_NT;Li|PDS;"The Left;Die Linke";791;;com;none;none
+DE_Li|PDS_RE-HB;RE;HB;lookup;DE_Li|PDS_NT;Li|PDS;"The Left;Die Linke";791;;com;none;none
+DE_Li|PDS_RE-HE;RE;HE;lookup;DE_Li|PDS_NT;Li|PDS;"The Left;Die Linke";791;;com;none;none
+DE_Li|PDS_RE-HH;RE;HH;lookup;DE_Li|PDS_NT;Li|PDS;"The Left;Die Linke";791;;com;none;none
+DE_Li|PDS_RE-MV;RE;MV;lookup;DE_Li|PDS_NT;Li|PDS;"The Left;Die Linke";791;;com;none;none
+DE_Li|PDS_RE-NI;RE;NI;lookup;DE_Li|PDS_NT;Li|PDS;"The Left;Die Linke";791;;com;none;none
+DE_Li|PDS_RE-NW;RE;NW;lookup;DE_Li|PDS_NT;Li|PDS;"The Left;Die Linke";791;;com;none;none
+DE_Li|PDS_RE-RP;RE;RP;lookup;DE_Li|PDS_NT;Li|PDS;"The Left;Die Linke";791;;com;none;none
+DE_Li|PDS_RE-SH;RE;SH;lookup;DE_Li|PDS_NT;Li|PDS;"The Left;Die Linke";791;;com;none;none
+DE_Li|PDS_RE-SL;RE;SL;lookup;DE_Li|PDS_NT;Li|PDS;"The Left;Die Linke";791;;com;none;none
+DE_Li|PDS_RE-SN;RE;SN;lookup;DE_Li|PDS_NT;Li|PDS;"The Left;Die Linke";791;;com;none;none
+DE_Li|PDS_RE-ST;RE;ST;lookup;DE_Li|PDS_NT;Li|PDS;"The Left;Die Linke";791;;com;none;none
+DE_Li|PDS_RE-TH;RE;TH;lookup;DE_Li|PDS_NT;Li|PDS;"The Left;Die Linke";791;;com;none;none
 DE_MG_RE-ST;RE;ST;lookup;lookup;MG;Madgeburger Gartenpartei;none;;NA;none;none
 DE_Miet_RE-BE;RE;BE;lookup;lookup;Miet;Mieterpartei;none;;NA;none;none
 DE_MLPD_RE-BB;RE;BB;lookup;lookup;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
@@ -2265,22 +2265,22 @@ DE_SGP_RE-BE;RE;BE;lookup;lookup;SGP;"Socialist Equality Party;Sozialistische Gl
 DE_SGP_RE-HE;RE;HE;lookup;lookup;SGP;"Socialist Equality Party;Sozialistische Gleichheitspartei, Vierte Internationale";none;;NA;none;none
 DE_SGP_RE-NW;RE;NW;lookup;lookup;SGP;"Socialist Equality Party;Sozialistische Gleichheitspartei, Vierte Internationale";none;;NA;none;none
 DE_SGP_RE-SN;RE;SN;lookup;lookup;SGP;"Socialist Equality Party;Sozialistische Gleichheitspartei, Vierte Internationale";none;;NA;none;none
-DE_SPD_RE-BB;RE;BB;lookup;lookup;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
-DE_SPD_RE-BE;RE;BE;lookup;lookup;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
-DE_SPD_RE-BW;RE;BW;lookup;lookup;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
-DE_SPD_RE-BY;RE;BY;lookup;lookup;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
-DE_SPD_RE-HB;RE;HB;lookup;lookup;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
-DE_SPD_RE-HE;RE;HE;lookup;lookup;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
-DE_SPD_RE-HH;RE;HH;lookup;lookup;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
-DE_SPD_RE-MV;RE;MV;lookup;lookup;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
-DE_SPD_RE-NI;RE;NI;lookup;lookup;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
-DE_SPD_RE-NW;RE;NW;lookup;lookup;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
-DE_SPD_RE-RP;RE;RP;lookup;lookup;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
-DE_SPD_RE-SH;RE;SH;lookup;lookup;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
-DE_SPD_RE-SL;RE;SL;lookup;lookup;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
-DE_SPD_RE-SN;RE;SN;lookup;lookup;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
-DE_SPD_RE-ST;RE;ST;lookup;lookup;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
-DE_SPD_RE-TH;RE;TH;lookup;lookup;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
+DE_SPD_RE-BB;RE;BB;lookup;DE_SPD_NT;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
+DE_SPD_RE-BE;RE;BE;lookup;DE_SPD_NT;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
+DE_SPD_RE-BW;RE;BW;lookup;DE_SPD_NT;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
+DE_SPD_RE-BY;RE;BY;lookup;DE_SPD_NT;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
+DE_SPD_RE-HB;RE;HB;lookup;DE_SPD_NT;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
+DE_SPD_RE-HE;RE;HE;lookup;DE_SPD_NT;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
+DE_SPD_RE-HH;RE;HH;lookup;DE_SPD_NT;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
+DE_SPD_RE-MV;RE;MV;lookup;DE_SPD_NT;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
+DE_SPD_RE-NI;RE;NI;lookup;DE_SPD_NT;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
+DE_SPD_RE-NW;RE;NW;lookup;DE_SPD_NT;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
+DE_SPD_RE-RP;RE;RP;lookup;DE_SPD_NT;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
+DE_SPD_RE-SH;RE;SH;lookup;DE_SPD_NT;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
+DE_SPD_RE-SL;RE;SL;lookup;DE_SPD_NT;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
+DE_SPD_RE-SN;RE;SN;lookup;DE_SPD_NT;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
+DE_SPD_RE-ST;RE;ST;lookup;DE_SPD_NT;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
+DE_SPD_RE-TH;RE;TH;lookup;DE_SPD_NT;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
 DE_Tier_RE-BB;RE;BB;lookup;lookup;Tier;"Animal Protection Party;Tierschutzpartei,PARTEI MENSCH UMWELT TIERSCHUTZ";301;;spec;none;none
 DE_Tier_RE-BE;RE;BE;lookup;lookup;Tier;"Animal Protection Party;Tierschutzpartei,PARTEI MENSCH UMWELT TIERSCHUTZ";301;;spec;none;none
 DE_Tier_RE-BW;RE;BW;lookup;lookup;Tier;"Animal Protection Party;Tierschutzpartei,PARTEI MENSCH UMWELT TIERSCHUTZ";301;;spec;none;none

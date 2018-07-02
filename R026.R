@@ -203,7 +203,6 @@
 		
 		table(is.na(ELENBU$genderguesses),ELENBU$country)
 	
-	
 	#### find out which of these people entered parliament_id ####
 	
 		# get an 'in parliament'
@@ -311,35 +310,6 @@
 			head(ELLIBU)
 			ELLIBU[30:50,]
 			tail(ELLIBU)
-			
-		# if the party id is not a national party, get the mother party id
-		
-			ELLIBU[4500:4520,]
-			i = 4500
-			resvec <- vector()
-			for(i in 1:nrow(ELLIBU))
-			{
-				if(grepl("_NT",as.character(ELLIBU$party_id[i])))
-				{
-					resvec[i] <- as.character(ELLIBU$party_id[i])
-				} else {
-					
-					mymotherpartyid <- as.character(PART$mother_party_id[which(as.character(PART$party_id) == as.character(ELLIBU$party_id[i]))])
-					
-					if(length(mymotherpartyid) > 0)
-					{
-						resvec[i] <- mymotherpartyid
-					}else{
-						resvec[i] <- NA
-					}
-				}
-			}
-			ELLIBU$nat_party_id <- resvec
-			head(ELLIBU)
-			table(ELLIBU$nat_party_id)
-			
-			ELLIBU$nat_party_id <- ifelse(ELLIBU$nat_party_id == "lookup",NA,ELLIBU$nat_party_id)
-			table(ELLIBU$nat_party_id)
 		
 		# get a count of the number of people in each faction
 			MemVec <- as.matrix(table(ELENBU$list_id))
@@ -383,6 +353,34 @@
 			ECH <- ELLIBUCOMP[which(ELLIBUCOMP$country == "CH"),]
 			nrow(ECH)
 			boxplot(ECH$ratio_on_list~droplevels(ECH$parliament_id))
+	
+	##### if the party id is not a national party, get the mother party id ###
+		
+			ELLIBU[4500:4520,]
+			i = 4500
+			resvec <- vector()
+			for(i in 1:nrow(ELLIBU))
+			{
+				if(grepl("_NT",as.character(ELLIBU$party_id[i])))
+				{
+					resvec[i] <- as.character(ELLIBU$party_id[i])
+				} else {
+					
+					mymotherpartyid <- as.character(PART$mother_party_id[which(as.character(PART$party_id) == as.character(ELLIBU$party_id[i]))])
+					
+					if(length(mymotherpartyid) > 0)
+					{
+						resvec[i] <- mymotherpartyid
+					}else{
+						resvec[i] <- NA
+					}
+				}
+			}
+			ELLIBU$nat_party_id <- resvec
+			head(ELLIBU)
+			table(ELLIBU$nat_party_id)
+			ELLIBU$nat_party_id <- ifelse(ELLIBU$nat_party_id == "lookup",NA,ELLIBU$nat_party_id)
+			table(ELLIBU$nat_party_id)
 	
 	###### gender aggregations on the reduced data! #######
 	
@@ -429,21 +427,49 @@
 			
 		# get party size in (for now just number of people from this party that got elected in the parliament)
 
-			i = 1
+			# also here, get the national party versions
+			resvec <- vector()
+			for(i in 1:nrow(ELENBURED))
+			{
+				if(grepl("_NT",as.character(ELENBURED$party_id[i])))
+				{
+					resvec[i] <- as.character(ELENBURED$party_id[i])
+				} else {
+					
+					mymotherpartyid <- as.character(PART$mother_party_id[which(as.character(PART$party_id) == as.character(ELENBURED$party_id[i]))])
+					
+					if(length(mymotherpartyid) > 0)
+					{
+						resvec[i] <- mymotherpartyid
+					}else{
+						resvec[i] <- NA
+					}
+				}
+			}
+			ELENBURED$nat_party_id <- resvec
+			head(ELENBURED)
+			table(ELENBURED$nat_party_id)
+		
+			i = 2790
 			resvec <- vector()
 			for(i in 1:nrow(ELLIBU))
 			{
 				mypartyid <- ELLIBU$nat_party_id[i]
 				myparliamentid <- ELLIBU$parliament_id[i]		
-				resvec[i] <- nrow(ELENBURED[which(ELENBURED$nat_party_id == mypartyid & ELLIBU$parliament_id == myparliamentid),])
+				resvec[i] <- length(unique(ELENBURED$pers_id[which(ELENBURED$nat_party_id == mypartyid & ELENBURED$parliament_id == myparliamentid)]))
 			}
 			resvec
 			
 			ELLIBU$party_size <- resvec
+			hist(ELLIBU$party_size)
 			tail(ELLIBU)
 			head(ELLIBU)
+			
+			boxplot(ELLIBU$party_size~ELLIBU$country)
+			
+			head(ELLIBU[which(ELLIBU$party_size == 0 & ELLIBU$country == "CH"),])
+			tail(ELLIBU[which(ELLIBU$party_size == 0 & ELLIBU$country == "CH"),])
 
-##################################################################################################
 ######################################## reduction here ##########################################
 ##################################################################################################
 
@@ -461,7 +487,7 @@
 	
 				ggplot(ELLIBU, aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
 				geom_point() + 
-				geom_smooth() +
+				geom_smooth(method='lm') +
 				scale_x_continuous(limits = c(0, 0.6)) +
 				geom_abline()
 		
@@ -517,7 +543,37 @@
 		# creating categories
 		
 			# for NL 
-			hist(ELLIBU$district_magnitude[which(ELLIBU$country == "NL")])  # (not very meaningful for later years?)
+				hist(ELLIBU$party_size[which(ELLIBU$country == "NL")]) 
+				ELLIBU$party_size_cat <- ELLIBU$party_size
+				
+				cut(ELLIBU$party_size[which(ELLIBU$country=="NL")], 3)
+				
+				ELLIBU$party_size_cat[ELLIBU$country == "NL" & ELLIBU$party_size > 0 & ELLIBU$party_size < 16] <- "small"
+				ELLIBU$party_size_cat[ELLIBU$country == "NL" &ELLIBU$party_size > 15 & ELLIBU$party_size < 33] <- "medium"
+				ELLIBU$party_size_cat[ELLIBU$country == "NL" &ELLIBU$party_size > 34] <- "large"
+				table(ELLIBU$party_size_cat)
+			
+			# for DE 
+				hist(ELLIBU$party_size[which(ELLIBU$country == "DE")]) 
+				cut(ELLIBU$party_size[which(ELLIBU$country=="DE")], 3)
+				ELLIBU$party_size_cat[ELLIBU$country == "DE" & ELLIBU$party_size > 0 & ELLIBU$party_size < 110] <- "small"
+				ELLIBU$party_size_cat[ELLIBU$country == "DE" &ELLIBU$party_size > 109 & ELLIBU$party_size < 156] <- "medium"
+				ELLIBU$party_size_cat[ELLIBU$country == "DE" &ELLIBU$party_size > 155] <- "large"
+				table(ELLIBU$party_size_cat)
+			
+			# for CH 
+				hist(ELLIBU$party_size[which(ELLIBU$country == "CH")]) 
+				cut(ELLIBU$party_size[which(ELLIBU$country=="CH")], 3)
+				ELLIBU$party_size_cat[ELLIBU$country == "CH" & ELLIBU$party_size > 0 & ELLIBU$party_size < 21] <- "small"
+				ELLIBU$party_size_cat[ELLIBU$country == "CH" &ELLIBU$party_size > 20 & ELLIBU$party_size < 43] <- "medium"
+				ELLIBU$party_size_cat[ELLIBU$country == "CH" &ELLIBU$party_size > 42] <- "large"
+				table(ELLIBU$party_size_cat) 
+				
+				ggplot(ELLIBU, aes(x=ratio_on_list, y=ratio_elected,color=party_size_cat)) + 
+				geom_point() + 
+				geom_smooth(method='lm',formula=y~x) +
+				scale_x_continuous(limits = c(0, 0.49)) +
+				geom_abline()
 				
 ######################################################################################
 ###################################### MODELS ########################################
@@ -527,3 +583,4 @@
 	table(ELLIBU$party_id)
 	
 	# if the party is not a primary (national) party already, get the mother party id of this party
+	
