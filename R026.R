@@ -200,10 +200,8 @@
 		
 		table(is.na(ELENBU$gender))
 		table(is.na(ELENBU$genderguesses))
-	
-	
-	
-	
+		
+		table(is.na(ELENBU$genderguesses),ELENBU$country)
 	
 	
 	#### find out which of these people entered parliament_id ####
@@ -339,6 +337,9 @@
 			ELLIBU$nat_party_id <- resvec
 			head(ELLIBU)
 			table(ELLIBU$nat_party_id)
+			
+			ELLIBU$nat_party_id <- ifelse(ELLIBU$nat_party_id == "lookup",NA,ELLIBU$nat_party_id)
+			table(ELLIBU$nat_party_id)
 		
 		# get a count of the number of people in each faction
 			MemVec <- as.matrix(table(ELENBU$list_id))
@@ -405,6 +406,7 @@
 			head(ELLIBU)
 			ELLIBU[30:50,]
 			ELLIBU[4030:4050,]
+			ELLIBU[9030:9050,]
 			tail(ELLIBU)
 			
 			
@@ -412,6 +414,7 @@
 		
 			mydistrict <- ELLIBU$district_id[9993]
 		
+			i = 9031
 			resvec <- vector()
 			for(i in 1:nrow(ELLIBU))
 			{
@@ -430,23 +433,32 @@
 			resvec <- vector()
 			for(i in 1:nrow(ELLIBU))
 			{
-				mypartyid <- ELLIBU$party_id[i]
+				mypartyid <- ELLIBU$nat_party_id[i]
 				myparliamentid <- ELLIBU$parliament_id[i]		
-				resvec[i] <- nrow(ELENBURED[which(ELENBURED$district_id == mydistrict),])
+				resvec[i] <- nrow(ELENBURED[which(ELENBURED$nat_party_id == mypartyid & ELLIBU$parliament_id == myparliamentid),])
 			}
 			resvec
 			
-			ELLIBU$district_magnitude <- resvec
+			ELLIBU$party_size <- resvec
 			tail(ELLIBU)
 			head(ELLIBU)
 
+##################################################################################################
+######################################## reduction here ##########################################
+##################################################################################################
 
-
+	# exclude those cases in which nobody got elected
+	
+	nrow(ELLIBU)
+	ELLIBU <- ELLIBU[which(!is.na(ELLIBU$f_elected)),] # we loose about 2/3 of cases
+	nrow(ELLIBU)
 		
 ######################################################################################
 ############################### DESCRIPTIVE RESULTS ##################################
 ######################################################################################			
 
+	# country differences
+	
 				ggplot(ELLIBU, aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
 				geom_point() + 
 				geom_smooth() +
@@ -470,6 +482,42 @@
 				geom_smooth() +
 				scale_x_continuous(limits = c(0, 0.6)) +
 				geom_abline()
+				
+	# district size
+	
+		# creating categories (country specific?)
+		
+	
+			# for NL 
+				hist(ELLIBU$district_magnitude[which(ELLIBU$country == "NL")])  # (not very meaningful for later years?)
+			
+			# for DE
+				hist(ELLIBU$district_magnitude[which(ELLIBU$country == "DE")])
+				hist(ELLIBU$district_magnitude[which(ELLIBU$country == "DE" & ELLIBU$district_magnitude < 5)]) # so lots of value 2 here, which is incorrect (LD issue?)				hist(ELLIBU$district_magnitude[which(ELLIBU$country == "DE" & ELLIBU$district_magnitude < 5)]) # so lots of value 2 here, which is incorrect (LD issue?)
+				
+			
+			# for CH
+			hist(ELLIBU$district_magnitude[which(ELLIBU$country == "CH")]) # only country with some actual proper variantion, lets for now only do this for CH!
+				ELLIBU$district_magnitude_cat <- ELLIBU$district_magnitude
+				ELLIBU$district_magnitude_cat[ELLIBU$district_magnitude > 0 & ELLIBU$district_magnitude < 11] <- "00-10"
+				ELLIBU$district_magnitude_cat[ELLIBU$district_magnitude > 10 & ELLIBU$district_magnitude < 21] <- "11-20"
+				ELLIBU$district_magnitude_cat[ELLIBU$district_magnitude > 20 & ELLIBU$district_magnitude < 31] <- "21-30"
+				ELLIBU$district_magnitude_cat[ELLIBU$district_magnitude > 30] <- "30+"
+			
+			table(ELLIBU$district_magnitude_cat)
+	
+				ggplot(ELLIBU, aes(x=ratio_on_list, y=ratio_elected,color=district_magnitude_cat)) + 
+				geom_point() + 
+				geom_smooth(method='lm',formula=y~x) +
+				scale_x_continuous(limits = c(0, 0.49)) +
+				geom_abline()
+	
+	# party size
+	
+		# creating categories
+		
+			# for NL 
+			hist(ELLIBU$district_magnitude[which(ELLIBU$country == "NL")])  # (not very meaningful for later years?)
 				
 ######################################################################################
 ###################################### MODELS ########################################
