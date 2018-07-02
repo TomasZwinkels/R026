@@ -18,6 +18,11 @@
 		library(ggplot2)
 		library(stargazer)
 		
+	substrRight <- function(x, n)
+	{
+		substr(x, nchar(x)-n+1, nchar(x))
+	}
+		
 	# import and inspect all the PCC data-frames
 				
 			# core
@@ -479,7 +484,7 @@
 	nrow(ELLIBU)
 	ELLIBU <- ELLIBU[which(!is.na(ELLIBU$f_elected)),] # we loose about 2/3 of cases
 	nrow(ELLIBU)
-		
+
 ######################################################################################
 ############################### DESCRIPTIVE RESULTS ##################################
 ######################################################################################			
@@ -549,15 +554,15 @@
 				
 				cut(ELLIBU$party_size[which(ELLIBU$country=="NL")], 3)
 				
-				ELLIBU$party_size_cat[ELLIBU$country == "NL" & ELLIBU$party_size > 0 & ELLIBU$party_size < 16] <- "small"
+				ELLIBU$party_size_cat[ELLIBU$country == "NL" & ELLIBU$party_size >= 0 & ELLIBU$party_size < 16] <- "small"
 				ELLIBU$party_size_cat[ELLIBU$country == "NL" &ELLIBU$party_size > 15 & ELLIBU$party_size < 33] <- "medium"
-				ELLIBU$party_size_cat[ELLIBU$country == "NL" &ELLIBU$party_size > 34] <- "large"
+				ELLIBU$party_size_cat[ELLIBU$country == "NL" &ELLIBU$party_size > 32] <- "large"
 				table(ELLIBU$party_size_cat)
 			
 			# for DE 
 				hist(ELLIBU$party_size[which(ELLIBU$country == "DE")]) 
 				cut(ELLIBU$party_size[which(ELLIBU$country=="DE")], 3)
-				ELLIBU$party_size_cat[ELLIBU$country == "DE" & ELLIBU$party_size > 0 & ELLIBU$party_size < 110] <- "small"
+				ELLIBU$party_size_cat[ELLIBU$country == "DE" & ELLIBU$party_size >= 0 & ELLIBU$party_size < 110] <- "small"
 				ELLIBU$party_size_cat[ELLIBU$country == "DE" &ELLIBU$party_size > 109 & ELLIBU$party_size < 156] <- "medium"
 				ELLIBU$party_size_cat[ELLIBU$country == "DE" &ELLIBU$party_size > 155] <- "large"
 				table(ELLIBU$party_size_cat)
@@ -565,7 +570,7 @@
 			# for CH 
 				hist(ELLIBU$party_size[which(ELLIBU$country == "CH")]) 
 				cut(ELLIBU$party_size[which(ELLIBU$country=="CH")], 3)
-				ELLIBU$party_size_cat[ELLIBU$country == "CH" & ELLIBU$party_size > 0 & ELLIBU$party_size < 21] <- "small"
+				ELLIBU$party_size_cat[ELLIBU$country == "CH" & ELLIBU$party_size >= 0 & ELLIBU$party_size < 21] <- "small"
 				ELLIBU$party_size_cat[ELLIBU$country == "CH" &ELLIBU$party_size > 20 & ELLIBU$party_size < 43] <- "medium"
 				ELLIBU$party_size_cat[ELLIBU$country == "CH" &ELLIBU$party_size > 42] <- "large"
 				table(ELLIBU$party_size_cat) 
@@ -575,6 +580,15 @@
 				geom_smooth(method='lm',formula=y~x) +
 				scale_x_continuous(limits = c(0, 0.49)) +
 				geom_abline()
+				
+	# time effects
+	
+		ELLIBU$election_year <- as.numeric(substrRight(as.character(ELLIBU$parliament_id),4))
+		table(ELLIBU$election_year)
+		ELLIBU$election_year_cent <-ELLIBU$election_year - round(mean(ELLIBU$election_year,na.rm=T),0) # not that the German 2017 sample is pulling this value up still at this stage
+		table(ELLIBU$election_year_cent)
+		
+		stargazer(ELLIBU)
 				
 ######################################################################################
 ###################################### MODELS ########################################
@@ -593,12 +607,12 @@
 		CHm <- mean(ELLIBU$district_magnitude[ELLIBU$country =="CH"],na.rm=TRUE)
 		CHsd <- sd(ELLIBU$district_magnitude[ELLIBU$country =="CH"],na.rm=TRUE)
 		
-		ELLIBU$district_magnitude_gmcent <- ifelse(ELLIBU$country=="NL",((ELLIBU$district_magnitude - NLm)/NLsd),NA)
-		ELLIBU$district_magnitude_gmcent <- ifelse(ELLIBU$country=="DE",((ELLIBU$district_magnitude - DEm)/DEsd),ELLIBU$district_magnitude_gmcent)
-		ELLIBU$district_magnitude_gmcent <- ifelse(ELLIBU$country=="CH",((ELLIBU$district_magnitude - CHm)/CHsd),ELLIBU$district_magnitude_gmcent)
-		hist(ELLIBU$district_magnitude_gmcent)
-		mean(ELLIBU$district_magnitude_gmcent,na.rm=T)
-		sd(ELLIBU$district_magnitude_gmcent,na.rm=T)
+		ELLIBU$district_mag_gmcent <- ifelse(ELLIBU$country=="NL",((ELLIBU$district_magnitude - NLm)/NLsd),NA)
+		ELLIBU$district_mag_gmcent <- ifelse(ELLIBU$country=="DE",((ELLIBU$district_magnitude - DEm)/DEsd),ELLIBU$district_mag_gmcent)
+		ELLIBU$district_mag_gmcent <- ifelse(ELLIBU$country=="CH",((ELLIBU$district_magnitude - CHm)/CHsd),ELLIBU$district_mag_gmcent)
+		hist(ELLIBU$district_mag_gmcent)
+		mean(ELLIBU$district_mag_gmcent,na.rm=T)
+		sd(ELLIBU$district_mag_gmcent,na.rm=T)
 		
 	# party size
 		NLmps <- mean(ELLIBU$party_size[ELLIBU$country =="NL"],na.rm=TRUE)
@@ -635,43 +649,76 @@
 				 data=ELLIBU)
 	summary(m1)
 	
+	m1a <- lm(ratio_elected~ratio_on_list_cent +
+				 election_year_cent
+				 ,data=ELLIBU)
+	summary(m1a)
+	
 	m2 <- lm(ratio_elected~ratio_on_list_cent +
-				district_magnitude_gmcent
+				 election_year_cent +
+				district_mag_gmcent
 				,data=ELLIBU)
 	summary(m2)
 	
 	m2a <- lm(ratio_elected~ratio_on_list_cent +
-				district_magnitude_gmcent * ratio_on_list_cent 
+				election_year_cent +
+				district_mag_gmcent * ratio_on_list_cent 
 				,data=ELLIBU)
 	summary(m2a)
 	
 	m3 <- lm(ratio_elected~ratio_on_list_cent +
-				district_magnitude_gmcent * ratio_on_list_cent +
+				election_year_cent +
+				district_mag_gmcent * ratio_on_list_cent +
 				party_size_gmcent
 				,data=ELLIBU)
 	summary(m3)
 	
 	m3a <- lm(ratio_elected~ratio_on_list_cent +
-				district_magnitude_gmcent * ratio_on_list_cent +
+				election_year_cent +
+				district_mag_gmcent * ratio_on_list_cent +
 				party_size_gmcent * ratio_on_list_cent
 				,data=ELLIBU)
 	summary(m3a)
 	
 	m4 <- lm(ratio_elected~ratio_on_list_cent +
-				district_magnitude_gmcent * ratio_on_list_cent +
+				election_year_cent +
+				district_mag_gmcent * ratio_on_list_cent +
 				party_size_gmcent * ratio_on_list_cent +
 				country
 				,data=ELLIBU)
 	summary(m4)
 	
 	m4a <- lm(ratio_elected~ratio_on_list_cent +
-				district_magnitude_gmcent * ratio_on_list_cent +
+				election_year_cent +
+				district_mag_gmcent * ratio_on_list_cent +
 				party_size_gmcent * ratio_on_list_cent +
 				country * ratio_on_list_cent
 				,data=ELLIBU)
 	summary(m4a)
 	
-	stargazer(mempty,m1,m2,m2a,m3,m3a,m4,m4a,type="text",intercept.bottom=F,omit.stat=c("aic","bic"))
+	
+		# building up the stargazer output
+			
+			dirtynames <- names(coef(m4a))
+			
+			specificnamecleaning <- function(dirtynamesloc)
+			{
+				cleanernames <- gsub("ratio_on_list_cent","ratio on list",dirtynamesloc,fixed=TRUE)
+				cleanernames <- gsub("election_year_cent","election year",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("district_mag_gmcent","district magnitude gmcent",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("party_size_gmcent","party size gmcent",cleanernames,fixed=TRUE)
+				return(cleanernames)
+				
+			}
+			specificnamecleaning(dirtynames)
+			
+			labelsinthisorder <- specificnamecleaning(names(coef(m4a)))
+	
+	stargazer(mempty,m1,m1a,m2,m2a,m3,m3a,m4,m4a,
+			type="latex",
+			covariate.labels = labelsinthisorder,
+			intercept.bottom=F,
+			omit.stat=c("f","ser"))
 
 
 
