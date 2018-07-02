@@ -316,18 +316,19 @@
 			
 		# if the party id is not a national party, get the mother party id
 		
-			ELLIBU[500:520,]
-			i = 500
+			ELLIBU[4500:4520,]
+			i = 4500
 			resvec <- vector()
 			for(i in 1:nrow(ELLIBU))
 			{
-				if(grepl(ELLIBU$party_id[i],"_NT"))
+				if(grepl("_NT",as.character(ELLIBU$party_id[i])))
 				{
-					resvec <- as.character(ELLIBU$party_id)
-				}else{
+					resvec[i] <- as.character(ELLIBU$party_id[i])
+				} else {
 					
 					mymotherpartyid <- as.character(PART$mother_party_id[which(as.character(PART$party_id) == as.character(ELLIBU$party_id[i]))])
-					if(length(mymotherpartyid) > 0 )
+					
+					if(length(mymotherpartyid) > 0)
 					{
 						resvec[i] <- mymotherpartyid
 					}else{
@@ -336,6 +337,8 @@
 				}
 			}
 			ELLIBU$nat_party_id <- resvec
+			head(ELLIBU)
+			table(ELLIBU$nat_party_id)
 		
 		# get a count of the number of people in each faction
 			MemVec <- as.matrix(table(ELENBU$list_id))
