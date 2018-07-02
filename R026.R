@@ -16,6 +16,7 @@
 		library(stringr)
 		library(lubridate)
 		library(ggplot2)
+		library(stargazer)
 		
 	# import and inspect all the PCC data-frames
 				
@@ -412,7 +413,7 @@
 		
 			mydistrict <- ELLIBU$district_id[9993]
 		
-			i = 9031
+			i = 2000
 			resvec <- vector()
 			for(i in 1:nrow(ELLIBU))
 			{
@@ -579,8 +580,116 @@
 ###################################### MODELS ########################################
 ######################################################################################
 
+
+	# group mean centering district size and party size
+	
+		# district magnitude
+		NLm <- mean(ELLIBU$district_magnitude[ELLIBU$country =="NL"],na.rm=TRUE)
+		NLsd <- sd(ELLIBU$district_magnitude[ELLIBU$country =="NL"],na.rm=TRUE)
+		
+		DEm <- mean(ELLIBU$district_magnitude[ELLIBU$country =="DE"],na.rm=TRUE)
+		DEsd <- sd(ELLIBU$district_magnitude[ELLIBU$country =="DE"],na.rm=TRUE)
+		
+		CHm <- mean(ELLIBU$district_magnitude[ELLIBU$country =="CH"],na.rm=TRUE)
+		CHsd <- sd(ELLIBU$district_magnitude[ELLIBU$country =="CH"],na.rm=TRUE)
+		
+		ELLIBU$district_magnitude_gmcent <- ifelse(ELLIBU$country=="NL",((ELLIBU$district_magnitude - NLm)/NLsd),NA)
+		ELLIBU$district_magnitude_gmcent <- ifelse(ELLIBU$country=="DE",((ELLIBU$district_magnitude - DEm)/DEsd),ELLIBU$district_magnitude_gmcent)
+		ELLIBU$district_magnitude_gmcent <- ifelse(ELLIBU$country=="CH",((ELLIBU$district_magnitude - CHm)/CHsd),ELLIBU$district_magnitude_gmcent)
+		hist(ELLIBU$district_magnitude_gmcent)
+		mean(ELLIBU$district_magnitude_gmcent,na.rm=T)
+		sd(ELLIBU$district_magnitude_gmcent,na.rm=T)
+		
+	# party size
+		NLmps <- mean(ELLIBU$party_size[ELLIBU$country =="NL"],na.rm=TRUE)
+		NLsdps <- sd(ELLIBU$party_size[ELLIBU$country =="NL"],na.rm=TRUE)
+		
+		DEmps <- mean(ELLIBU$party_size[ELLIBU$country =="DE"],na.rm=TRUE)
+		DEsdps <- sd(ELLIBU$party_size[ELLIBU$country =="DE"],na.rm=TRUE)
+		
+		CHmps <- mean(ELLIBU$party_size[ELLIBU$country =="CH"],na.rm=TRUE)
+		CHsdps <- sd(ELLIBU$party_size[ELLIBU$country =="CH"],na.rm=TRUE)
+		
+		ELLIBU$party_size_gmcent <- ifelse(ELLIBU$country=="NL",((ELLIBU$party_size - NLmps)/NLsdps),NA)
+		ELLIBU$party_size_gmcent <- ifelse(ELLIBU$country=="DE",((ELLIBU$party_size - DEmps)/DEsdps),ELLIBU$party_size_gmcent)
+		ELLIBU$party_size_gmcent <- ifelse(ELLIBU$country=="CH",((ELLIBU$party_size - CHmps)/CHsdps),ELLIBU$party_size_gmcent)
+		hist(ELLIBU$party_size_gmcent)
+		mean(ELLIBU$party_size_gmcent,na.rm=T)
+		sd(ELLIBU$party_size_gmcent,na.rm=T)
+
+		
+	# ratio on list
+		ELLIBU$ratio_on_list_cent <- scale(ELLIBU$ratio_on_list,center=TRUE,scale=FALSE)
+		hist(ELLIBU$ratio_on_list_cent)
+	
 	names(ELLIBU)
 	table(ELLIBU$party_id)
 	
-	# if the party is not a primary (national) party already, get the mother party id of this party
+
+	mempty <- lm(ratio_elected~1,
+				 data=ELLIBU)
+	summary(mempty)
+
+
+	m1 <- lm(ratio_elected~ratio_on_list_cent,
+				 data=ELLIBU)
+	summary(m1)
+	
+	m2 <- lm(ratio_elected~ratio_on_list_cent +
+				district_magnitude_gmcent
+				,data=ELLIBU)
+	summary(m2)
+	
+	m2a <- lm(ratio_elected~ratio_on_list_cent +
+				district_magnitude_gmcent * ratio_on_list_cent 
+				,data=ELLIBU)
+	summary(m2a)
+	
+	m3 <- lm(ratio_elected~ratio_on_list_cent +
+				district_magnitude_gmcent * ratio_on_list_cent +
+				party_size_gmcent
+				,data=ELLIBU)
+	summary(m3)
+	
+	m3a <- lm(ratio_elected~ratio_on_list_cent +
+				district_magnitude_gmcent * ratio_on_list_cent +
+				party_size_gmcent * ratio_on_list_cent
+				,data=ELLIBU)
+	summary(m3a)
+	
+	m4 <- lm(ratio_elected~ratio_on_list_cent +
+				district_magnitude_gmcent * ratio_on_list_cent +
+				party_size_gmcent * ratio_on_list_cent +
+				country
+				,data=ELLIBU)
+	summary(m4)
+	
+	m4a <- lm(ratio_elected~ratio_on_list_cent +
+				district_magnitude_gmcent * ratio_on_list_cent +
+				party_size_gmcent * ratio_on_list_cent +
+				country * ratio_on_list_cent
+				,data=ELLIBU)
+	summary(m4a)
+	
+	stargazer(mempty,m1,m2,m2a,m3,m3a,m4,m4a,type="text",intercept.bottom=F,omit.stat=c("aic","bic"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
