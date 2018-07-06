@@ -612,7 +612,7 @@
 		ELLIBU$district_mag_gmcent <- ifelse(ELLIBU$country=="CH",((ELLIBU$district_magnitude - CHm)/CHsd),ELLIBU$district_mag_gmcent)
 		hist(ELLIBU$district_mag_gmcent)
 		mean(ELLIBU$district_mag_gmcent,na.rm=T)
-		sd(ELLIBU$district_mag_gmcent,na.rm=T)
+		sd(ELLIBU$ ,na.rm=T)
 		
 	# party size
 		NLmps <- mean(ELLIBU$party_size[ELLIBU$country =="NL"],na.rm=TRUE)
