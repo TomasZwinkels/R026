@@ -23,6 +23,8 @@
 		substr(x, nchar(x)-n+1, nchar(x))
 	}
 		
+	# welll this is fun!	
+	
 	# import and inspect all the PCC data-frames
 				
 			# core
