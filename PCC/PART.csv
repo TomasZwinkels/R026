@@ -2056,15 +2056,15 @@ DE_BGE_RE-SL;RE;SL;lookup;lookup;BGE;"Alliance Basic Income;Bündnis Grundeinkomm
 DE_BGE_RE-SN;RE;SN;lookup;lookup;BGE;"Alliance Basic Income;Bündnis Grundeinkommen";none;;NA;none;none
 DE_BGE_RE-ST;RE;ST;lookup;lookup;BGE;"Alliance Basic Income;Bündnis Grundeinkommen";none;;NA;none;none
 DE_BGE_RE-TH;RE;TH;lookup;lookup;BGE;"Alliance Basic Income;Bündnis Grundeinkommen";none;;NA;none;none
-DE_BP_RE-BY;RE;BY;lookup;lookup;BP;"Bavarian Party;Bayernpartei";1131;;con;none;none
+DE_BP_RE-BY;RE;BY;lookup;DE_BP_NT;BP;"Bavarian Party;Bayernpartei";1131;;con;none;none
 DE_BueC_RE-BW;RE;BW;lookup;lookup;BueC;"Alliance C - Christians for Germany;Bündnis C - Christen für Deutschland";none;;NA;none;none
 DE_BueC_RE-BY;RE;BY;lookup;lookup;BueC;"Alliance C - Christians for Germany;Bündnis C - Christen für Deutschland";none;;NA;none;none
 DE_BueC_RE-NI;RE;NI;lookup;lookup;BueC;"Alliance C - Christians for Germany;Bündnis C - Christen für Deutschland";none;;NA;none;none
-DE_BueSo_RE-BE;RE;BE;lookup;lookup;BueSo;"Civil-rights movement solidarity;Bürgerrechtsbewegung Solidarität";none;;NA;none;none
-DE_BueSo_RE-BW;RE;BW;lookup;lookup;BueSo;"Civil-rights movement solidarity;Bürgerrechtsbewegung Solidarität";none;;NA;none;none
-DE_BueSo_RE-BY;RE;BY;lookup;lookup;BueSo;"Civil-rights movement solidarity;Bürgerrechtsbewegung Solidarität";none;;NA;none;none
-DE_BueSo_RE-HE;RE;HE;lookup;lookup;BueSo;"Civil-rights movement solidarity;Bürgerrechtsbewegung Solidarität";none;;NA;none;none
-DE_BueSo_RE-SN;RE;SN;lookup;lookup;BueSo;"Civil-rights movement solidarity;Bürgerrechtsbewegung Solidarität";none;;NA;none;none
+DE_BueSo_RE-BE;RE;BE;lookup;DE_BueSo_NT;BueSo;"Civil-rights movement solidarity;Bürgerrechtsbewegung Solidarität";none;;NA;none;none
+DE_BueSo_RE-BW;RE;BW;lookup;DE_BueSo_NT;BueSo;"Civil-rights movement solidarity;Bürgerrechtsbewegung Solidarität";none;;NA;none;none
+DE_BueSo_RE-BY;RE;BY;lookup;DE_BueSo_NT;BueSo;"Civil-rights movement solidarity;Bürgerrechtsbewegung Solidarität";none;;NA;none;none
+DE_BueSo_RE-HE;RE;HE;lookup;DE_BueSo_NT;BueSo;"Civil-rights movement solidarity;Bürgerrechtsbewegung Solidarität";none;;NA;none;none
+DE_BueSo_RE-SN;RE;SN;lookup;DE_BueSo_NT;BueSo;"Civil-rights movement solidarity;Bürgerrechtsbewegung Solidarität";none;;NA;none;none
 DE_CDU_RE-BB;RE;BB;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
 DE_CDU_RE-BE;RE;BE;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
 DE_CDU_RE-BW;RE;BW;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
@@ -2080,7 +2080,7 @@ DE_CDU_RE-SL;RE;SL;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich D
 DE_CDU_RE-SN;RE;SN;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
 DE_CDU_RE-ST;RE;ST;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
 DE_CDU_RE-TH;RE;TH;lookup;DE_CDU_NT;CDU;"Christian Democratic Union;Christlich Demokratische Union Deutschlands";808;;chr;none;none
-DE_CSU_RE-BY;RE;BY;lookup;DE_CDU_NT;CSU;"Christian Social Union; Christlich Soziale Union";1180;;chr;none;none
+DE_CSU_RE-BY;RE;BY;lookup;DE_CSU_NT;CSU;"Christian Social Union; Christlich Soziale Union";1180;;chr;none;none
 DE_DiB_RE-BE;RE;BE;lookup;lookup;DiB;"Democracy in Movement;DEMOKRATIE IN BEWEGUNG";none;;NA;none;none
 DE_DiB_RE-BW;RE;BW;lookup;lookup;DiB;"Democracy in Movement;DEMOKRATIE IN BEWEGUNG";none;;NA;none;none
 DE_DiB_RE-BY;RE;BY;lookup;lookup;DiB;"Democracy in Movement;DEMOKRATIE IN BEWEGUNG";none;;NA;none;none
@@ -2128,22 +2128,22 @@ DE_FDP_RE-SN;RE;SN;lookup;DE_FDP_NT;FDP;"Free Democratic Party;Freie Demokratisc
 DE_FDP_RE-ST;RE;ST;lookup;DE_FDP_NT;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
 DE_FDP_RE-TH;RE;TH;lookup;DE_FDP_NT;FDP;"Free Democratic Party;Freie Demokratische Partei";543;;lib;none;none
 DE_Frau_RE-BE;RE;BE;lookup;lookup;Frau;"Feminist Party THE WOMEN;Feministische Partei DIE FRAUEN";none;;NA;none;none
-DE_FW_RE-BB;RE;BB;lookup;lookup;FW;"Free Voters;Freie Wähler";41;;con;none;none
-DE_FW_RE-BE;RE;BE;lookup;lookup;FW;"Free Voters;Freie Wähler";41;;con;none;none
-DE_FW_RE-BW;RE;BW;lookup;lookup;FW;"Free Voters;Freie Wähler";41;;con;none;none
-DE_FW_RE-BY;RE;BY;lookup;lookup;FW;"Free Voters;Freie Wähler";41;;con;none;none
-DE_FW_RE-HB;RE;HB;lookup;lookup;FW;"Free Voters;Freie Wähler";41;;con;none;none
-DE_FW_RE-HE;RE;HE;lookup;lookup;FW;"Free Voters;Freie Wähler";41;;con;none;none
-DE_FW_RE-HH;RE;HH;lookup;lookup;FW;"Free Voters;Freie Wähler";41;;con;none;none
-DE_FW_RE-MV;RE;MV;lookup;lookup;FW;"Free Voters;Freie Wähler";41;;con;none;none
-DE_FW_RE-NI;RE;NI;lookup;lookup;FW;"Free Voters;Freie Wähler";41;;con;none;none
-DE_FW_RE-NW;RE;NW;lookup;lookup;FW;"Free Voters;Freie Wähler";41;;con;none;none
-DE_FW_RE-RP;RE;RP;lookup;lookup;FW;"Free Voters;Freie Wähler";41;;con;none;none
-DE_FW_RE-SH;RE;SH;lookup;lookup;FW;"Free Voters;Freie Wähler";41;;con;none;none
-DE_FW_RE-SL;RE;SL;lookup;lookup;FW;"Free Voters;Freie Wähler";41;;con;none;none
-DE_FW_RE-SN;RE;SN;lookup;lookup;FW;"Free Voters;Freie Wähler";41;;con;none;none
-DE_FW_RE-ST;RE;ST;lookup;lookup;FW;"Free Voters;Freie Wähler";41;;con;none;none
-DE_FW_RE-TH;RE;TH;lookup;lookup;FW;"Free Voters;Freie Wähler";41;;con;none;none
+DE_FW_RE-BB;RE;BB;lookup;DE_FW_NT;FW;"Free Voters;Freie Wähler";41;;con;none;none
+DE_FW_RE-BE;RE;BE;lookup;DE_FW_NT;FW;"Free Voters;Freie Wähler";41;;con;none;none
+DE_FW_RE-BW;RE;BW;lookup;DE_FW_NT;FW;"Free Voters;Freie Wähler";41;;con;none;none
+DE_FW_RE-BY;RE;BY;lookup;DE_FW_NT;FW;"Free Voters;Freie Wähler";41;;con;none;none
+DE_FW_RE-HB;RE;HB;lookup;DE_FW_NT;FW;"Free Voters;Freie Wähler";41;;con;none;none
+DE_FW_RE-HE;RE;HE;lookup;DE_FW_NT;FW;"Free Voters;Freie Wähler";41;;con;none;none
+DE_FW_RE-HH;RE;HH;lookup;DE_FW_NT;FW;"Free Voters;Freie Wähler";41;;con;none;none
+DE_FW_RE-MV;RE;MV;lookup;DE_FW_NT;FW;"Free Voters;Freie Wähler";41;;con;none;none
+DE_FW_RE-NI;RE;NI;lookup;DE_FW_NT;FW;"Free Voters;Freie Wähler";41;;con;none;none
+DE_FW_RE-NW;RE;NW;lookup;DE_FW_NT;FW;"Free Voters;Freie Wähler";41;;con;none;none
+DE_FW_RE-RP;RE;RP;lookup;DE_FW_NT;FW;"Free Voters;Freie Wähler";41;;con;none;none
+DE_FW_RE-SH;RE;SH;lookup;DE_FW_NT;FW;"Free Voters;Freie Wähler";41;;con;none;none
+DE_FW_RE-SL;RE;SL;lookup;DE_FW_NT;FW;"Free Voters;Freie Wähler";41;;con;none;none
+DE_FW_RE-SN;RE;SN;lookup;DE_FW_NT;FW;"Free Voters;Freie Wähler";41;;con;none;none
+DE_FW_RE-ST;RE;ST;lookup;DE_FW_NT;FW;"Free Voters;Freie Wähler";41;;con;none;none
+DE_FW_RE-TH;RE;TH;lookup;DE_FW_NT;FW;"Free Voters;Freie Wähler";41;;con;none;none
 DE_Gesund_RE-BE;RE;BE;lookup;lookup;Gesund;"Party for health science;Partei für Gesundheitsforschung";none;;NA;none;none
 DE_Gesund_RE-BY;RE;BY;lookup;lookup;Gesund;"Party for health science;Partei für Gesundheitsforschung";none;;NA;none;none
 DE_Gesund_RE-NW;RE;NW;lookup;lookup;Gesund;"Party for health science;Partei für Gesundheitsforschung";none;;NA;none;none
@@ -2167,22 +2167,22 @@ DE_Li|PDS_RE-ST;RE;ST;lookup;DE_Li|PDS_NT;Li|PDS;"The Left;Die Linke";791;;com;n
 DE_Li|PDS_RE-TH;RE;TH;lookup;DE_Li|PDS_NT;Li|PDS;"The Left;Die Linke";791;;com;none;none
 DE_MG_RE-ST;RE;ST;lookup;lookup;MG;Madgeburger Gartenpartei;none;;NA;none;none
 DE_Miet_RE-BE;RE;BE;lookup;lookup;Miet;Mieterpartei;none;;NA;none;none
-DE_MLPD_RE-BB;RE;BB;lookup;lookup;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
-DE_MLPD_RE-BE;RE;BE;lookup;lookup;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
-DE_MLPD_RE-BW;RE;BW;lookup;lookup;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
-DE_MLPD_RE-BY;RE;BY;lookup;lookup;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
-DE_MLPD_RE-HB;RE;HB;lookup;lookup;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
-DE_MLPD_RE-HE;RE;HE;lookup;lookup;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
-DE_MLPD_RE-HH;RE;HH;lookup;lookup;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
-DE_MLPD_RE-MV;RE;MV;lookup;lookup;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
-DE_MLPD_RE-NI;RE;NI;lookup;lookup;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
-DE_MLPD_RE-NW;RE;NW;lookup;lookup;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
-DE_MLPD_RE-RP;RE;RP;lookup;lookup;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
-DE_MLPD_RE-SH;RE;SH;lookup;lookup;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
-DE_MLPD_RE-SL;RE;SL;lookup;lookup;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
-DE_MLPD_RE-SN;RE;SN;lookup;lookup;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
-DE_MLPD_RE-ST;RE;ST;lookup;lookup;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
-DE_MLPD_RE-TH;RE;TH;lookup;lookup;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
+DE_MLPD_RE-BB;RE;BB;lookup;DE_MLPD_NT;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
+DE_MLPD_RE-BE;RE;BE;lookup;DE_MLPD_NT;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
+DE_MLPD_RE-BW;RE;BW;lookup;DE_MLPD_NT;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
+DE_MLPD_RE-BY;RE;BY;lookup;DE_MLPD_NT;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
+DE_MLPD_RE-HB;RE;HB;lookup;DE_MLPD_NT;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
+DE_MLPD_RE-HE;RE;HE;lookup;DE_MLPD_NT;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
+DE_MLPD_RE-HH;RE;HH;lookup;DE_MLPD_NT;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
+DE_MLPD_RE-MV;RE;MV;lookup;DE_MLPD_NT;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
+DE_MLPD_RE-NI;RE;NI;lookup;DE_MLPD_NT;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
+DE_MLPD_RE-NW;RE;NW;lookup;DE_MLPD_NT;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
+DE_MLPD_RE-RP;RE;RP;lookup;DE_MLPD_NT;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
+DE_MLPD_RE-SH;RE;SH;lookup;DE_MLPD_NT;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
+DE_MLPD_RE-SL;RE;SL;lookup;DE_MLPD_NT;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
+DE_MLPD_RE-SN;RE;SN;lookup;DE_MLPD_NT;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
+DE_MLPD_RE-ST;RE;ST;lookup;DE_MLPD_NT;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
+DE_MLPD_RE-TH;RE;TH;lookup;DE_MLPD_NT;MLPD;"Marxist-Leninist Party of Germany;Marxistisch-Leninistische Partei Deutschlands";none;;NA;none;none
 DE_MW_RE-BE;RE;BE;lookup;lookup;MW;"Humane Welt;Menschliche Welt";none;;NA;none;none
 DE_MW_RE-BW;RE;BW;lookup;lookup;MW;"Humane Welt;Menschliche Welt";none;;NA;none;none
 DE_MW_RE-HB;RE;HB;lookup;lookup;MW;"Humane Welt;Menschliche Welt";none;;NA;none;none
@@ -2202,64 +2202,64 @@ DE_none_RE-SH;RE;SH;lookup;lookup;none;independent candidates;none;;NA;none;none
 DE_none_RE-SN;RE;SN;lookup;lookup;none;independent candidates;none;;NA;none;none
 DE_none_RE-ST;RE;ST;lookup;lookup;none;independent candidates;none;;NA;none;none
 DE_none_RE-TH;RE;TH;lookup;lookup;none;independent candidates;none;;NA;none;none
-DE_NPD_RE-BB;RE;BB;lookup;lookup;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
-DE_NPD_RE-BE;RE;BE;lookup;lookup;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
-DE_NPD_RE-BW;RE;BW;lookup;lookup;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
-DE_NPD_RE-BY;RE;BY;lookup;lookup;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
-DE_NPD_RE-HB;RE;HB;lookup;lookup;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
-DE_NPD_RE-HE;RE;HE;lookup;lookup;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
-DE_NPD_RE-HH;RE;HH;lookup;lookup;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
-DE_NPD_RE-MV;RE;MV;lookup;lookup;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
-DE_NPD_RE-NI;RE;NI;lookup;lookup;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
-DE_NPD_RE-NW;RE;NW;lookup;lookup;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
-DE_NPD_RE-RP;RE;RP;lookup;lookup;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
-DE_NPD_RE-SH;RE;SH;lookup;lookup;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
-DE_NPD_RE-SL;RE;SL;lookup;lookup;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
-DE_NPD_RE-SN;RE;SN;lookup;lookup;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
-DE_NPD_RE-ST;RE;ST;lookup;lookup;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
-DE_NPD_RE-TH;RE;TH;lookup;lookup;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
+DE_NPD_RE-BB;RE;BB;lookup;DE_NPD_NT;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
+DE_NPD_RE-BE;RE;BE;lookup;DE_NPD_NT;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
+DE_NPD_RE-BW;RE;BW;lookup;DE_NPD_NT;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
+DE_NPD_RE-BY;RE;BY;lookup;DE_NPD_NT;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
+DE_NPD_RE-HB;RE;HB;lookup;DE_NPD_NT;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
+DE_NPD_RE-HE;RE;HE;lookup;DE_NPD_NT;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
+DE_NPD_RE-HH;RE;HH;lookup;DE_NPD_NT;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
+DE_NPD_RE-MV;RE;MV;lookup;DE_NPD_NT;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
+DE_NPD_RE-NI;RE;NI;lookup;DE_NPD_NT;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
+DE_NPD_RE-NW;RE;NW;lookup;DE_NPD_NT;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
+DE_NPD_RE-RP;RE;RP;lookup;DE_NPD_NT;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
+DE_NPD_RE-SH;RE;SH;lookup;DE_NPD_NT;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
+DE_NPD_RE-SL;RE;SL;lookup;DE_NPD_NT;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
+DE_NPD_RE-SN;RE;SN;lookup;DE_NPD_NT;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
+DE_NPD_RE-ST;RE;ST;lookup;DE_NPD_NT;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
+DE_NPD_RE-TH;RE;TH;lookup;DE_NPD_NT;NPD;"National Democratic Party;Nationaldemokratische Partei Deutschlands";1537;;right;none;none
 DE_OEDP_RE-BB;RE;BB;lookup;lookup;OEDP;"Ecologic-Democratic Party;Ökologisch-Demokratische Partei";none;;NA;none;none
-DE_OEDP_RE-BE;RE;BE;lookup;lookup;OEDP;"Ecologic-Democratic Party;Ökologisch-Demokratische Partei";none;;NA;none;none
-DE_OEDP_RE-BW;RE;BW;lookup;lookup;OEDP;"Ecologic-Democratic Party;Ökologisch-Demokratische Partei";none;;NA;none;none
-DE_OEDP_RE-BY;RE;BY;lookup;lookup;OEDP;"Ecologic-Democratic Party;Ökologisch-Demokratische Partei";none;;NA;none;none
+DE_OEDP_RE-BE;RE;BE;lookup;DE_OEDP_NT;OEDP;"Ecologic-Democratic Party;Ökologisch-Demokratische Partei";none;;NA;none;none
+DE_OEDP_RE-BW;RE;BW;lookup;DE_OEDP_NT;OEDP;"Ecologic-Democratic Party;Ökologisch-Demokratische Partei";none;;NA;none;none
+DE_OEDP_RE-BY;RE;BY;lookup;DE_OEDP_NT;OEDP;"Ecologic-Democratic Party;Ökologisch-Demokratische Partei";none;;NA;none;none
 DE_OEDP_RE-HE;RE;HE;lookup;lookup;OEDP;"Ecologic-Democratic Party;Ökologisch-Demokratische Partei";none;;NA;none;none
-DE_OEDP_RE-HH;RE;HH;lookup;lookup;OEDP;"Ecologic-Democratic Party;Ökologisch-Demokratische Partei";none;;NA;none;none
+DE_OEDP_RE-HH;RE;HH;lookup;DE_OEDP_NT;OEDP;"Ecologic-Democratic Party;Ökologisch-Demokratische Partei";none;;NA;none;none
 DE_OEDP_RE-MV;RE;MV;lookup;lookup;OEDP;"Ecologic-Democratic Party;Ökologisch-Demokratische Partei";none;;NA;none;none
 DE_OEDP_RE-NI;RE;NI;lookup;lookup;OEDP;"Ecologic-Democratic Party;Ökologisch-Demokratische Partei";none;;NA;none;none
-DE_OEDP_RE-NW;RE;NW;lookup;lookup;OEDP;"Ecologic-Democratic Party;Ökologisch-Demokratische Partei";none;;NA;none;none
-DE_OEDP_RE-RP;RE;RP;lookup;lookup;OEDP;"Ecologic-Democratic Party;Ökologisch-Demokratische Partei";none;;NA;none;none
+DE_OEDP_RE-NW;RE;NW;lookup;DE_OEDP_NT;OEDP;"Ecologic-Democratic Party;Ökologisch-Demokratische Partei";none;;NA;none;none
+DE_OEDP_RE-RP;RE;RP;lookup;DE_OEDP_NT;OEDP;"Ecologic-Democratic Party;Ökologisch-Demokratische Partei";none;;NA;none;none
 DE_OEDP_RE-SH;RE;SH;lookup;lookup;OEDP;"Ecologic-Democratic Party;Ökologisch-Demokratische Partei";none;;NA;none;none
 DE_OEDP_RE-SN;RE;SN;lookup;lookup;OEDP;"Ecologic-Democratic Party;Ökologisch-Demokratische Partei";none;;NA;none;none
-DE_OEDP_RE-TH;RE;TH;lookup;lookup;OEDP;"Ecologic-Democratic Party;Ökologisch-Demokratische Partei";none;;NA;none;none
-DE_PARTEI_RE-BB;RE;BB;lookup;lookup;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
-DE_PARTEI_RE-BE;RE;BE;lookup;lookup;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
-DE_PARTEI_RE-BW;RE;BW;lookup;lookup;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
-DE_PARTEI_RE-BY;RE;BY;lookup;lookup;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
-DE_PARTEI_RE-HB;RE;HB;lookup;lookup;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
-DE_PARTEI_RE-HE;RE;HE;lookup;lookup;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
-DE_PARTEI_RE-HH;RE;HH;lookup;lookup;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
+DE_OEDP_RE-TH;RE;TH;lookup;DE_OEDP_NT;OEDP;"Ecologic-Democratic Party;Ökologisch-Demokratische Partei";none;;NA;none;none
+DE_PARTEI_RE-BB;RE;BB;lookup;DE_PARTEI_NT;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
+DE_PARTEI_RE-BE;RE;BE;lookup;DE_PARTEI_NT;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
+DE_PARTEI_RE-BW;RE;BW;lookup;DE_PARTEI_NT;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
+DE_PARTEI_RE-BY;RE;BY;lookup;DE_PARTEI_NT;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
+DE_PARTEI_RE-HB;RE;HB;lookup;DE_PARTEI_NT;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
+DE_PARTEI_RE-HE;RE;HE;lookup;DE_PARTEI_NT;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
+DE_PARTEI_RE-HH;RE;HH;lookup;DE_PARTEI_NT;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
 DE_PARTEI_RE-MV;RE;MV;lookup;lookup;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
 DE_PARTEI_RE-NI;RE;NI;lookup;lookup;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
-DE_PARTEI_RE-NW;RE;NW;lookup;lookup;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
-DE_PARTEI_RE-RP;RE;RP;lookup;lookup;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
+DE_PARTEI_RE-NW;RE;NW;lookup;DE_PARTEI_NT;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
+DE_PARTEI_RE-RP;RE;RP;lookup;DE_PARTEI_NT;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
 DE_PARTEI_RE-SH;RE;SH;lookup;lookup;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
 DE_PARTEI_RE-SL;RE;SL;lookup;lookup;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
-DE_PARTEI_RE-SN;RE;SN;lookup;lookup;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
+DE_PARTEI_RE-SN;RE;SN;lookup;DE_PARTEI_NT;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
 DE_PARTEI_RE-ST;RE;ST;lookup;lookup;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
 DE_PARTEI_RE-TH;RE;TH;lookup;lookup;PARTEI;"The Party;DIE PARTEI - Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative";2649;;spec;none;none
-DE_PDV_RE-SL;RE;SL;lookup;lookup;PDV;"Party of Reason;Partei der Vernunft";none;;NA;none;none
-DE_Pi_RE-BB;RE;BB;lookup;lookup;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
-DE_Pi_RE-BE;RE;BE;lookup;lookup;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
-DE_Pi_RE-BW;RE;BW;lookup;lookup;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
-DE_Pi_RE-BY;RE;BY;lookup;lookup;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
-DE_Pi_RE-HB;RE;HB;lookup;lookup;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
-DE_Pi_RE-HE;RE;HE;lookup;lookup;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
-DE_Pi_RE-NI;RE;NI;lookup;lookup;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
-DE_Pi_RE-NW;RE;NW;lookup;lookup;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
-DE_Pi_RE-RP;RE;RP;lookup;lookup;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
-DE_Pi_RE-SL;RE;SL;lookup;lookup;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
-DE_Pi_RE-SN;RE;SN;lookup;lookup;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
-DE_Pi_RE-TH;RE;TH;lookup;lookup;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
+DE_PDV_RE-SL;RE;SL;lookup;DE_PDV_NT;PDV;"Party of Reason;Partei der Vernunft";none;;NA;none;none
+DE_Pi_RE-BB;RE;BB;lookup;DE_Pi_NT;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
+DE_Pi_RE-BE;RE;BE;lookup;DE_Pi_NT;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
+DE_Pi_RE-BW;RE;BW;lookup;DE_Pi_NT;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
+DE_Pi_RE-BY;RE;BY;lookup;DE_Pi_NT;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
+DE_Pi_RE-HB;RE;HB;lookup;DE_Pi_NT;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
+DE_Pi_RE-HE;RE;HE;lookup;DE_Pi_NT;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
+DE_Pi_RE-NI;RE;NI;lookup;DE_Pi_NT;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
+DE_Pi_RE-NW;RE;NW;lookup;DE_Pi_NT;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
+DE_Pi_RE-RP;RE;RP;lookup;DE_Pi_NT;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
+DE_Pi_RE-SL;RE;SL;lookup;DE_Pi_NT;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
+DE_Pi_RE-SN;RE;SN;lookup;DE_Pi_NT;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
+DE_Pi_RE-TH;RE;TH;lookup;DE_Pi_NT;Pi;"German Pirate Party;Piratenpartei Deutschland";865;;spec;none;none
 DE_RECHTE_RE-BW;RE;BW;lookup;lookup;RECHTE;"The right;DIE RECHTE";none;;NA;none;none
 DE_SGP_RE-BE;RE;BE;lookup;lookup;SGP;"Socialist Equality Party;Sozialistische Gleichheitspartei, Vierte Internationale";none;;NA;none;none
 DE_SGP_RE-HE;RE;HE;lookup;lookup;SGP;"Socialist Equality Party;Sozialistische Gleichheitspartei, Vierte Internationale";none;;NA;none;none
@@ -2283,12 +2283,12 @@ DE_SPD_RE-ST;RE;ST;lookup;DE_SPD_NT;SPD;"Social Democratic Party of Germany;Sozi
 DE_SPD_RE-TH;RE;TH;lookup;DE_SPD_NT;SPD;"Social Democratic Party of Germany;Sozialdemokratische Partei Deutschlands";558;;soc;none;none
 DE_Tier_RE-BB;RE;BB;lookup;lookup;Tier;"Animal Protection Party;Tierschutzpartei,PARTEI MENSCH UMWELT TIERSCHUTZ";301;;spec;none;none
 DE_Tier_RE-BE;RE;BE;lookup;lookup;Tier;"Animal Protection Party;Tierschutzpartei,PARTEI MENSCH UMWELT TIERSCHUTZ";301;;spec;none;none
-DE_Tier_RE-BW;RE;BW;lookup;lookup;Tier;"Animal Protection Party;Tierschutzpartei,PARTEI MENSCH UMWELT TIERSCHUTZ";301;;spec;none;none
-DE_Tier_RE-BY;RE;BY;lookup;lookup;Tier;"Animal Protection Party;Tierschutzpartei,PARTEI MENSCH UMWELT TIERSCHUTZ";301;;spec;none;none
+DE_Tier_RE-BW;RE;BW;lookup;DE_Tier_NT;Tier;"Animal Protection Party;Tierschutzpartei,PARTEI MENSCH UMWELT TIERSCHUTZ";301;;spec;none;none
+DE_Tier_RE-BY;RE;BY;lookup;DE_Tier_NT;Tier;"Animal Protection Party;Tierschutzpartei,PARTEI MENSCH UMWELT TIERSCHUTZ";301;;spec;none;none
 DE_Tier_RE-HE;RE;HE;lookup;lookup;Tier;"Animal Protection Party;Tierschutzpartei,PARTEI MENSCH UMWELT TIERSCHUTZ";301;;spec;none;none
 DE_Tier_RE-HH;RE;HH;lookup;lookup;Tier;"Animal Protection Party;Tierschutzpartei,PARTEI MENSCH UMWELT TIERSCHUTZ";301;;spec;none;none
 DE_Tier_RE-MV;RE;MV;lookup;lookup;Tier;"Animal Protection Party;Tierschutzpartei,PARTEI MENSCH UMWELT TIERSCHUTZ";301;;spec;none;none
-DE_Tier_RE-NI;RE;NI;lookup;lookup;Tier;"Animal Protection Party;Tierschutzpartei,PARTEI MENSCH UMWELT TIERSCHUTZ";301;;spec;none;none
+DE_Tier_RE-NI;RE;NI;lookup;DE_Tier_NT;Tier;"Animal Protection Party;Tierschutzpartei,PARTEI MENSCH UMWELT TIERSCHUTZ";301;;spec;none;none
 DE_Tier_RE-NW;RE;NW;lookup;lookup;Tier;"Animal Protection Party;Tierschutzpartei,PARTEI MENSCH UMWELT TIERSCHUTZ";301;;spec;none;none
 DE_Tier_RE-SN;RE;SN;lookup;lookup;Tier;"Animal Protection Party;Tierschutzpartei,PARTEI MENSCH UMWELT TIERSCHUTZ";301;;spec;none;none
 DE_TSA_RE-BW;RE;BW;lookup;lookup;TSA;"Alliance for human rights, protection of nature and animals;Allianz für Menschenrechte, Tier- und Naturschutz";none;;NA;none;none
@@ -2306,8 +2306,503 @@ DE_V3_RE-RP;RE;RP;lookup;lookup;V3;"V-Party³-Party for Change, Vegetarians and V
 DE_V3_RE-SL;RE;SL;lookup;lookup;V3;"V-Party³-Party for Change, Vegetarians and Vegans;V-Partei³ - Partei für Veränderung, Vegetarier und Veganer";none;;NA;none;none
 DE_V3_RE-SN;RE;SN;lookup;lookup;V3;"V-Party³-Party for Change, Vegetarians and Vegans;V-Partei³ - Partei für Veränderung, Vegetarier und Veganer";none;;NA;none;none
 DE_V3_RE-TH;RE;TH;lookup;lookup;V3;"V-Party³-Party for Change, Vegetarians and Vegans;V-Partei³ - Partei für Veränderung, Vegetarier und Veganer";none;;NA;none;none
-DE_Viol_RE-BY;RE;BY;lookup;lookup;Viol;"The Violetts;Die Violetten";none;;NA;none;none
+DE_Viol_RE-BY;RE;BY;lookup;DE_Viol_NT;Viol;"The Violetts;Die Violetten";none;;NA;none;none
 DE_Viol_RE-HE;RE;HE;lookup;lookup;Viol;"The Violetts;Die Violetten";none;;NA;none;none
 DE_Viol_RE-NW;RE;NW;lookup;lookup;Viol;"The Violetts;Die Violetten";none;;NA;none;none
 DE_Berg_RE-BE;RE;BE;lookup;lookup;Berg;"Mountainparty;bergpartei, die überpartei";none;;NA;none;none
 DE_Volksab_RE-NW;RE;NW;lookup;lookup;Volksab;"Democracy by Popular Vote;Ab jetzt Demokratie durch Volksabstimmung";none;;NA;none;none
+DE_Pi_RE-HH;RE;HH;;DE_Pi_NT;Pi;;;;;;
+DE_Pi_RE-MV;RE;MV;;DE_Pi_NT;Pi;;;;;;
+DE_Pi_RE-ST;RE;ST;;DE_Pi_NT;Pi;;;;;;
+DE_BIG_RE-BE;RE;BE;;DE_BIG_NT;;;;;;;
+DE_Pi_RE-SH;RE;SH;;DE_Pi_NT;Pi;;;;;;
+DE_REP_RE-BW;RE;BW;;DE_REP_NT;REP;;;;;;
+DE_REP_RE-BY;RE;BY;;DE_REP_NT;REP;;;;;;
+DE_BueSo_RE-NW;RE;NW;;DE_BueSo_NT;BueSo;;;;;;
+DE_REP_RE-NW;RE;NW;;DE_REP_NT;REP;;;;;;
+DE_REP_RE-RP;RE;RP;;DE_REP_NT;REP;;;;;;
+DE_PDV_RE-RP;RE;RP;;DE_PDV_NT;;;;;;;
+DE_PBC_RE-NI;RE;NI;;;PBC;;;;;;
+DE_RENTNER_RE-SH;RE;SH;;;RENTNER;;;;;;
+DE_PDV_RE-BY;RE;BY;;DE_PDV_NT;;;;;;;
+DE_REP_RE-BB;RE;BB;;DE_REP_NT;REP;;;;;;
+DE_PD_RE-NW;RE;NW;;DE_PD_NT;;;;;;;
+DE_PD_RE-SN;RE;SN;;DE_PD_NT;;;;;;;
+DE_PD_RE-BY;RE;BY;;DE_PD_NT;;;;;;;
+DE_BIG_RE-NW;RE;NW;;DE_BIG_NT;;;;;;;
+DE_RENTNER_RE-HH;RE;HH;;;RENTNER;;;;;;
+DE_KWV_RE-MV;RE;MV;;DE_KWV_NT;;;;;;;
+DE_PDV_RE-NW;RE;NW;;DE_PDV_NT;;;;;;;
+DE_BIG_RE-BW;RE;BW;;DE_BIG_NT;;;;;;;
+DE_PD_RE-BB;RE;BB;;DE_PD_NT;;;;;;;
+DE_PDV_RE-BW;RE;BW;;DE_PDV_NT;;;;;;;
+DE_PSG_RE-HE;RE;HE;;;PSG;;;;;;
+DE_NEIN_RE-BY;RE;BY;;;;;;;;;
+DE_KWV_RE-NW;RE;NW;;DE_KWV_NT;;;;;;;
+DE_PSG_RE-BE;RE;BE;;;PSG;;;;;;
+DE_Volksab_RE-BW;RE;BW;;;Volksab;;;;;;
+DE_REP_RE-BE;RE;BE;;DE_REP_NT;REP;;;;;;
+DE_KWV_RE-BY;RE;BY;;DE_KWV_NT;;;;;;;
+DE_KWV_RE-ST;RE;ST;;DE_KWV_NT;;;;;;;
+DE_KWV_RE-NI;RE;NI;;DE_KWV_NT;;;;;;;
+DE_KWV_RE-BE;RE;BE;;DE_KWV_NT;;;;;;;
+DE_KWV_RE-BW;RE;BW;;DE_KWV_NT;;;;;;;
+DE_PD_RE-SL;RE;SL;;DE_PD_NT;;;;;;;
+DE_Viol_RE-BW;RE;BW;;DE_Viol_NT;Viol;;;;;;
+DE_PD_RE-HE;RE;HE;;DE_PD_NT;;;;;;;
+DE_Frau_RE-BY;RE;BY;;;Frau;;;;;;
+DE_PD_RE-MV;RE;MV;;DE_PD_NT;;;;;;;
+DE_REP_RE-NI;RE;NI;;DE_REP_NT;REP;;;;;;
+DE_RECHTE_RE-NW;RE;NW;;;;;;;;;
+DE_KWV_RE-HE;RE;HE;;DE_KWV_NT;;;;;;;
+DE_PDV_RE-TH;RE;TH;;DE_PDV_NT;;;;;;;
+DE_RENTNER_RE-BW;RE;BW;;;;;;;;;
+DE_KWV_RE-BB;RE;BB;;DE_KWV_NT;;;;;;;
+DE_NW_RE-NW;RE;NW;;;;;;;;;
+DE_PD_RE-RP;RE;RP;;DE_PD_NT;;;;;;;
+DE_PD_RE-BW;RE;BW;;DE_PD_NT;;;;;;;
+DE_PD_RE-NI;RE;NI;;DE_PD_NT;;;;;;;
+DE_Tier_RE-SH;RE;SH;;DE_Tier_NT;;;;;;;
+DE_Tier_RE-ST;RE;ST;;DE_Tier_NT;Tier;;;;;;
+DE_REP_RE-TH;RE;TH;;DE_REP_NT;REP;;;;;;
+DE_KWV_RE-HH;RE;HH;;DE_KWV_NT;;;;;;;
+DE_REP_RE-HE;RE;HE;;DE_REP_NT;REP;;;;;;
+DE_REP_RE-MV;RE;MV;;DE_REP_NT;REP;;;;;;
+DE_PSG_RE-NW;RE;NW;;;PSG;;;;;;
+DE_FAMILIE_RE-RP;RE;RP;;;FAMILIE;;;;;;
+DE_PD_RE-ST;RE;ST;;DE_PD_NT;;;;;;;
+DE_PD_RE-BE;RE;BE;;DE_PD_NT;;;;;;;
+DE_FAMILIE_RE-SL;RE;SL;;;FAMILIE;;;;;;
+DE_KWV_RE-SH;RE;SH;;DE_KWV_NT;;;;;;;
+DE_Tier_RE-HB;RE;HB;;DE_Tier_NT;;;;;;;
+DE_KWV_RE-RP;RE;RP;;DE_KWV_NT;;;;;;;
+DE_OEDP_RE-ST;RE;ST;;DE_OEDP_NT;OEDP;;;;;;
+DE_PD_RE-HB;RE;HB;;DE_PD_NT;;;;;;;
+DE_KWV_RE-SN;RE;SN;;DE_KWV_NT;;;;;;;
+DE_KWV_RE-TH;RE;TH;;DE_KWV_NT;;;;;;;
+DE_PBC_RE-BW;RE;BW;;;PBC;;;;;;
+DE_BGD_RE-SN;RE;SN;;;;;;;;;
+DE_FAMILIE_RE-NI;RE;NI;;;;;;;;;
+DE_BueSo_RE-RP;RE;RP;;DE_BueSo_NT;BueSo;;;;;;
+DE_FAMILIE_RE-NW;RE;NW;;;FAMILIE;;;;;;
+DE_BIG_RE-NI;RE;NI;;DE_BIG_NT;;;;;;;
+DE_Viol_RE-BE;RE;BE;;DE_Viol_NT;Viol;;;;;;
+DE_DFU_RE-SL;RE;SL;;;DFU;;;;;;
+DE_ADF_RE-BW;RE;BW;;;ADF;;;;;;
+DE_AUD_RE-SL;RE;SL;;;AUD;;;;;;
+DE_FSU_RE-HB;RE;HB;;;FSU;;;;;;
+DE_GDP_RE-NI;RE;NI;;;GDP;;;;;;
+DE_GDP_RE-NW;RE;NW;;;GDP;;;;;;
+DE_ADF_RE-RP;RE;RP;;;ADF;;;;;;
+DE_DFU_RE-BW;RE;BW;;;DFU;;;;;;
+DE_AUD_RE-NI;RE;NI;;;AUD;;;;;;
+DE_DFU_RE-HE;RE;HE;;;DFU;;;;;;
+DE_ADF_RE-HH;RE;HH;;;ADF;;;;;;
+DE_Z_RE-NW;RE;NW;;;Z;;;;;;
+DE_ADF_RE-HE;RE;HE;;;ADF;;;;;;
+DE_AUD_RE-BY;RE;BY;;;AUD;;;;;;
+DE_ADF_RE-NW;RE;NW;;;ADF;;;;;;
+DE_AUD_RE-HH;RE;HH;;;AUD;;;;;;
+DE_AUD_RE-HE;RE;HE;;;AUD;;;;;;
+DE_GDP_RE-BW;RE;BW;;;GDP;;;;;;
+DE_EFP_RE-HB;RE;HB;;;EFP;;;;;;
+DE_ADF_RE-SL;RE;SL;;;ADF;;;;;;
+DE_AUD_RE-RP;RE;RP;;;AUD;;;;;;
+DE_EFP_RE-NI;RE;NI;;;EFP;;;;;;
+DE_DFU_RE-SH;RE;SH;;;DFU;;;;;;
+DE_GDP_RE-HE;RE;HE;;;GDP;;;;;;
+DE_ADF_RE-NI;RE;NI;;;ADF;;;;;;
+DE_DKP_RE-RP;RE;RP;;;DKP;;;;;;
+DE_ADF_RE-SH;RE;SH;;;ADF;;;;;;
+DE_FSU_RE-BW;RE;BW;;;FSU;;;;;;
+DE_CVP_RE-NW;RE;NW;;;CVP;;;;;;
+DE_DFU_RE-NI;RE;NI;;;DFU;;;;;;
+DE_AUD_RE-BW;RE;BW;;;AUD;;;;;;
+DE_AUD_RE-SH;RE;SH;;;AUD;;;;;;
+DE_EFP_RE-SH;RE;SH;;;EFP;;;;;;
+DE_EFP_RE-NW;RE;NW;;;EFP;;;;;;
+DE_UAP_RE-NW;RE;NW;;;UAP;;;;;;
+DE_AUD_RE-HB;RE;HB;;;AUD;;;;;;
+DE_EFP_RE-HH;RE;HH;;;EFP;;;;;;
+DE_ADF_RE-BY;RE;BY;;;ADF;;;;;;
+DE_GDP_RE-SH;RE;SH;;;GDP;;;;;;
+DE_DKP_RE-SL;RE;SL;;;DKP;;;;;;
+DE_FSU_RE-NI;RE;NI;;;FSU;;;;;;
+DE_DFU_RE-HB;RE;HB;;;DFU;;;;;;
+DE_FSU_RE-HH;RE;HH;;;FSU;;;;;;
+DE_ADF_RE-HB;RE;HB;;;ADF;;;;;;
+DE_DKP_RE-SH;RE;SH;;;DKP;;;;;;
+DE_AVP_RE-BY;RE;BY;;;AVP;;;;;;
+DE_EFP_RE-BY;RE;BY;;;EFP;;;;;;
+DE_EFP_RE-BW;RE;BW;;;EFP;;;;;;
+DE_DFU_RE-HH;RE;HH;;;DFU;;;;;;
+DE_DFU_RE-NW;RE;NW;;;DFU;;;;;;
+DE_DFU_RE-RP;RE;RP;;;DFU;;;;;;
+DE_FSU_RE-BY;RE;BY;;;FSU;;;;;;
+DE_DFU_RE-BY;RE;BY;;;DFU;;;;;;
+DE_FSU_RE-NW;RE;NW;;;FSU;;;;;;
+DE_AUD_RE-NW;RE;NW;;;AUD;;;;;;
+DE_EFP_RE-SL;RE;SL;;;EFP;;;;;;
+DE_GDP_RE-BY;RE;BY;;;GDP;;;;;;
+DE_REP_RE-SN;RE;SN;;;REP;;;;;;
+DE_AVP_RE-NW;RE;NW;;;AVP;;;;;;
+DE_CBV_RE-BY;RE;BY;;;CBV;;;;;;
+DE_EFP_RE-HE;RE;HE;;;EFP;;;;;;
+DE_Z_RE-SL;RE;SL;;;Z;;;;;;
+DE_AVP_RE-SH;RE;SH;;;AVP;;;;;;
+DE_BUERGER_RE-BY;RE;BY;;;BUERGER;;;;;;
+DE_Frau_RE-HB;RE;HB;;;Frau;;;;;;
+DE_DVU_RE-NI;RE;NI;;;DVU;;;;;;
+DE_CVP_RE-SL;RE;SL;;;CVP;;;;;;
+DE_BFB_RE-HH;RE;HH;;;BFB;;;;;;
+DE_Grau_RE-BY;RE;BY;;;Grau;;;;;;
+DE_KBW_RE-BW;RE;BW;;;KBW;;;;;;
+DE_Muend_RE-BY;RE;BY;;;Muend;;;;;;
+DE_AVP_RE-SL;RE;SL;;;AVP;;;;;;
+DE_EAP_RE-NI;RE;NI;;;EAP;;;;;;
+DE_5BLK_RE-BY;RE;BY;;;5BLK;;;;;;
+DE_KPD_RE-RP;RE;RP;;;KPD;;;;;;
+DE_GIM_RE-HH;RE;HH;;;GIM;;;;;;
+DE_KBW_RE-SH;RE;SH;;;KBW;;;;;;
+DE_AVP_RE-HB;RE;HB;;;AVP;;;;;;
+DE_AVP_RE-HE;RE;HE;;;AVP;;;;;;
+DE_GIM_RE-NW;RE;NW;;;GIM;;;;;;
+DE_KBW_RE-HH;RE;HH;;;KBW;;;;;;
+DE_EAP_RE-HH;RE;HH;;;EAP;;;;;;
+DE_KBW_RE-RP;RE;RP;;;KBW;;;;;;
+DE_KPD_RE-NI;RE;NI;;;KPD;;;;;;
+DE_Patri_RE-BE;RE;BE;;;Patri;;;;;;
+DE_Patri_RE-NW;RE;NW;;;Patri;;;;;;
+DE_KPD_RE-SH;RE;SH;;;KPD;;;;;;
+DE_EAP_RE-BY;RE;BY;;;EAP;;;;;;
+DE_KBW_RE-HE;RE;HE;;;KBW;;;;;;
+DE_EAP_RE-BW;RE;BW;;;EAP;;;;;;
+DE_KPD_RE-NW;RE;NW;;;KPD;;;;;;
+DE_KBW_RE-NI;RE;NI;;;KBW;;;;;;
+DE_KBW_RE-NW;RE;NW;;;KBW;;;;;;
+DE_EAP_RE-HE;RE;HE;;;EAP;;;;;;
+DE_KBW_RE-HB;RE;HB;;;KBW;;;;;;
+DE_KPD_RE-HH;RE;HH;;;KPD;;;;;;
+DE_VL_RE-NW;RE;NW;;;VL;;;;;;
+DE_REP_RE-ST;RE;ST;;;REP;;;;;;
+DE_EAP_RE-SL;RE;SL;;;EAP;;;;;;
+DE_BueSo_RE-NI;RE;NI;;;BueSo;;;;;;
+DE_KBW_RE-BY;RE;BY;;;KBW;;;;;;
+DE_BWK_RE-BY;RE;BY;;;BWK;;;;;;
+DE_EAP_RE-RP;RE;RP;;;EAP;;;;;;
+DE_Patri_RE-BW;RE;BW;;;Patri;;;;;;
+DE_EAP_RE-NW;RE;NW;;;EAP;;;;;;
+DE_BUERGER_RE-NW;RE;NW;;;BUERGER;;;;;;
+DE_GIM_RE-BW;RE;BW;;;GIM;;;;;;
+DE_Patri_RE-SN;RE;SN;;;Patri;;;;;;
+DE_Patri_RE-NI;RE;NI;;;Patri;;;;;;
+DE_DVU_RE-ST;RE;ST;;;DVU;;;;;;
+DE_DVU_RE-BW;RE;BW;;;DVU;;;;;;
+DE_KPD_RE-HB;RE;HB;;;KPD;;;;;;
+DE_BWK_RE-NI;RE;NI;;;BWK;;;;;;
+DE_BWK_RE-BW;RE;BW;;;BWK;;;;;;
+DE_KPD_RE-HE;RE;HE;;;KPD;;;;;;
+DE_Patri_RE-TH;RE;TH;;;Patri;;;;;;
+DE_EAP_RE-SH;RE;SH;;;EAP;;;;;;
+DE_V_RE-BY;RE;BY;;;V;;;;;;
+DE_V_RE-SH;RE;SH;;;V;;;;;;
+DE_BueSo_RE-BB;RE;BB;;;BueSo;;;;;;
+DE_V_RE-NW;RE;NW;;;V;;;;;;
+DE_V_RE-HH;RE;HH;;;V;;;;;;
+DE_V_RE-BW;RE;BW;;;V;;;;;;
+DE_Patri_RE-RP;RE;RP;;;Patri;;;;;;
+DE_BUERGER_RE-HB;RE;HB;;;BUERGER;;;;;;
+DE_V_RE-SL;RE;SL;;;V;;;;;;
+DE_V_RE-HB;RE;HB;;;V;;;;;;
+DE_V_RE-HE;RE;HE;;;V;;;;;;
+DE_V_RE-RP;RE;RP;;;V;;;;;;
+DE_BueSo_RE-TH;RE;TH;;;BueSo;;;;;;
+DE_V_RE-NI;RE;NI;;;V;;;;;;
+DE_Grau_RE-NW;RE;NW;;;Grau;;;;;;
+DE_USD_RE-NW;RE;NW;;;USD;;;;;;
+DE_EAP_RE-HB;RE;HB;;;EAP;;;;;;
+DE_Patri_RE-BY;RE;BY;;;Patri;;;;;;
+DE_Patri_RE-HE;RE;HE;;;Patri;;;;;;
+DE_Frau_RE-HE;RE;HE;;;Frau;;;;;;
+DE_Z_RE-BW;RE;BW;;;Z;;;;;;
+DE_Frau_RE-BW;RE;BW;;;Frau;;;;;;
+DE_Frau_RE-NW;RE;NW;;;Frau;;;;;;
+DE_OEDP_RE-SL;RE;SL;;;OEDP;;;;;;
+DE_Muend_RE-BW;RE;BW;;;Muend;;;;;;
+DE_Muend_RE-HB;RE;HB;;;Muend;;;;;;
+DE_Frau_RE-SH;RE;SH;;;Frau;;;;;;
+DE_Frau_RE-HH;RE;HH;;;Frau;;;;;;
+DE_Muend_RE-NW;RE;NW;;;Muend;;;;;;
+DE_FAP_RE-HB;RE;HB;;;FAP;;;;;;
+DE_PBC_RE-RP;RE;RP;;;PBC;;;;;;
+DE_Muend_RE-NI;RE;NI;;;Muend;;;;;;
+DE_Patri_RE-SL;RE;SL;;;Patri;;;;;;
+DE_BFB_RE-NW;RE;NW;;;BFB;;;;;;
+DE_Patri_RE-HH;RE;HH;;;Patri;;;;;;
+DE_ASD_RE-HB;RE;HB;;;ASD;;;;;;
+DE_CM_RE-NI;RE;NI;;;CM;;;;;;
+DE_BFB_RE-BW;RE;BW;;;BFB;;;;;;
+DE_REP_RE-HB;RE;HB;;;REP;;;;;;
+DE_OffenD_RE-ST;RE;ST;;;OffenD;;;;;;
+DE_FAMILIE_RE-BW;RE;BW;;;FAMILIE;;;;;;
+DE_Muend_RE-BB;RE;BB;;;Muend;;;;;;
+DE_VAA_RE-SN;RE;SN;;;VAA;;;;;;
+DE_BSA_RE-BE;RE;BE;;;BSA;;;;;;
+DE_Grau_RE-RP;RE;RP;;;Grau;;;;;;
+DE_DSU_RE-SN;RE;SN;;;DSU;;;;;;
+DE_CM_RE-BY;RE;BY;;;CM;;;;;;
+DE_BSA_RE-SN;RE;SN;;;BSA;;;;;;
+DE_Grau_RE-SN;RE;SN;;;Grau;;;;;;
+DE_VAA_RE-BE;RE;BE;;;VAA;;;;;;
+DE_CM_RE-BW;RE;BW;;;CM;;;;;;
+DE_LIGA_RE-BW;RE;BW;;;LIGA;;;;;;
+DE_REP_RE-SL;RE;SL;;;REP;;;;;;
+DE_LIGA_RE-BY;RE;BY;;;LIGA;;;;;;
+DE_CM_RE-SL;RE;SL;;;CM;;;;;;
+DE_DVU_RE-SN;RE;SN;;;DVU;;;;;;
+DE_AGFG_RE-SN;RE;SN;;;AGFG;;;;;;
+DE_Grau_RE-NI;RE;NI;;;Grau;;;;;;
+DE_DSU_RE-TH;RE;TH;;;DSU;;;;;;
+DE_REP_RE-SH;RE;SH;;;REP;;;;;;
+DE_CM_RE-HH;RE;HH;;;CM;;;;;;
+DE_CM_RE-NW;RE;NW;;;CM;;;;;;
+DE_Grau_RE-SL;RE;SL;;;Grau;;;;;;
+DE_CM_RE-RP;RE;RP;;;CM;;;;;;
+DE_DSU_RE-ST;RE;ST;;;DSU;;;;;;
+DE_DSU_RE-MV;RE;MV;;;DSU;;;;;;
+DE_KPD_RE-BE;RE;BE;;;KPD;;;;;;
+DE_Grau_RE-ST;RE;ST;;;Grau;;;;;;
+DE_OEDP_RE-HB;RE;HB;;;OEDP;;;;;;
+DE_BFB_RE-HB;RE;HB;;;BFB;;;;;;
+DE_VAA_RE-NW;RE;NW;;;VAA;;;;;;
+DE_LIGA_RE-TH;RE;TH;;;LIGA;;;;;;
+DE_DVU_RE-NW;RE;NW;;;DVU;;;;;;
+DE_SpAD_RE-MV;RE;MV;;;SpAD;;;;;;
+DE_DSU_RE-BB;RE;BB;;;DSU;;;;;;
+DE_BFB_RE-MV;RE;MV;;;BFB;;;;;;
+DE_LIGA_RE-BB;RE;BB;;;LIGA;;;;;;
+DE_Grau_RE-TH;RE;TH;;;Grau;;;;;;
+DE_Grau_RE-BB;RE;BB;;;Grau;;;;;;
+DE_Grau_RE-HE;RE;HE;;;Grau;;;;;;
+DE_SpAD_RE-SN;RE;SN;;;SpAD;;;;;;
+DE_LIGA_RE-SN;RE;SN;;;LIGA;;;;;;
+DE_SpAD_RE-BE;RE;BE;;;SpAD;;;;;;
+DE_DVU_RE-BY;RE;BY;;;DVU;;;;;;
+DE_DDD_RE-BE;RE;BE;;;DDD;;;;;;
+DE_Grau_RE-HH;RE;HH;;;Grau;;;;;;
+DE_REP_RE-HH;RE;HH;;;REP;;;;;;
+DE_Grau_RE-MV;RE;MV;;;Grau;;;;;;
+DE_Grau_RE-BW;RE;BW;;;Grau;;;;;;
+DE_KPD_RE-SN;RE;SN;;;KPD;;;;;;
+DE_SpAD_RE-ST;RE;ST;;;SpAD;;;;;;
+DE_Grau_RE-SH;RE;SH;;;Grau;;;;;;
+DE_DSU_RE-BE;RE;BE;;;DSU;;;;;;
+DE_Grau_RE-HB;RE;HB;;;Grau;;;;;;
+DE_NaturG_RE-HE;RE;HE;;;NaturG;;;;;;
+DE_NaturG_RE-NW;RE;NW;;;NaturG;;;;;;
+DE_PASS_RE-BE;RE;BE;;;PASS;;;;;;
+DE_NaturG_RE-BW;RE;BW;;;NaturG;;;;;;
+DE_NaturG_RE-NI;RE;NI;;;NaturG;;;;;;
+DE_PBC_RE-HE;RE;HE;;;PBC;;;;;;
+DE_NaturG_RE-RP;RE;RP;;;NaturG;;;;;;
+DE_NaturG_RE-HB;RE;HB;;;NaturG;;;;;;
+DE_APD_RE-BW;RE;BW;;;APD;;;;;;
+DE_NaturG_RE-BE;RE;BE;;;NaturG;;;;;;
+DE_PBC_RE-NW;RE;NW;;;PBC;;;;;;
+DE_DVU_RE-SH;RE;SH;;;DVU;;;;;;
+DE_NaturG_RE-BY;RE;BY;;;NaturG;;;;;;
+DE_STATT_RE-BY;RE;BY;;;STATT;;;;;;
+DE_PBC_RE-BY;RE;BY;;;PBC;;;;;;
+DE_NaturG_RE-SH;RE;SH;;;NaturG;;;;;;
+DE_NaturG_RE-BB;RE;BB;;;NaturG;;;;;;
+DE_NaturG_RE-HH;RE;HH;;;NaturG;;;;;;
+DE_NaturG_RE-SL;RE;SL;;;NaturG;;;;;;
+DE_STATT_RE-NW;RE;NW;;;STATT;;;;;;
+DE_BSA_RE-NW;RE;NW;;;BSA;;;;;;
+DE_STATT_RE-RP;RE;RP;;;STATT;;;;;;
+DE_PBC_RE-SN;RE;SN;;;PBC;;;;;;
+DE_STATT_RE-BW;RE;BW;;;STATT;;;;;;
+DE_STATT_RE-TH;RE;TH;;;STATT;;;;;;
+DE_PASS_RE-ST;RE;ST;;;PASS;;;;;;
+DE_STATT_RE-BE;RE;BE;;;STATT;;;;;;
+DE_STATT_RE-BB;RE;BB;;;STATT;;;;;;
+DE_NaturG_RE-MV;RE;MV;;;NaturG;;;;;;
+DE_STATT_RE-SL;RE;SL;;;STATT;;;;;;
+DE_FAMILIE_RE-BY;RE;BY;;;FAMILIE;;;;;;
+DE_BFB_RE-SN;RE;SN;;;BFB;;;;;;
+DE_APPD_RE-BY;RE;BY;;;APPD;;;;;;
+DE_Nichtw_RE-NW;RE;NW;;;Nichtw;;;;;;
+DE_APPD_RE-BW;RE;BW;;;APPD;;;;;;
+DE_BFB_RE-RP;RE;RP;;;BFB;;;;;;
+DE_APD_RE-BE;RE;BE;;;APD;;;;;;
+DE_BFB_RE-BY;RE;BY;;;BFB;;;;;;
+DE_BFB_RE-NI;RE;NI;;;BFB;;;;;;
+DE_APPD_RE-NI;RE;NI;;;APPD;;;;;;
+DE_APPD_RE-BE;RE;BE;;;APPD;;;;;;
+DE_APPD_RE-HE;RE;HE;;;APPD;;;;;;
+DE_APPD_RE-SL;RE;SL;;;APPD;;;;;;
+DE_APPD_RE-HH;RE;HH;;;APPD;;;;;;
+DE_DVU_RE-BE;RE;BE;;;DVU;;;;;;
+DE_AB2000_RE-MV;RE;MV;;;AB2000;;;;;;
+DE_BFB_RE-HE;RE;HE;;;BFB;;;;;;
+DE_DVU_RE-BB;RE;BB;;;DVU;;;;;;
+DE_Frau_RE-RP;RE;RP;;;Frau;;;;;;
+DE_BFB_RE-SH;RE;SH;;;BFB;;;;;;
+DE_DVU_RE-RP;RE;RP;;;DVU;;;;;;
+DE_FORUM_RE-TH;RE;TH;;;FORUM;;;;;;
+DE_BFB_RE-BB;RE;BB;;;BFB;;;;;;
+DE_Frau_RE-SL;RE;SL;;;Frau;;;;;;
+DE_DVU_RE-TH;RE;TH;;;DVU;;;;;;
+DE_BFB_RE-SL;RE;SL;;;BFB;;;;;;
+DE_Frau_RE-TH;RE;TH;;;Frau;;;;;;
+DE_DVU_RE-SL;RE;SL;;;DVU;;;;;;
+DE_DVU_RE-HE;RE;HE;;;DVU;;;;;;
+DE_BFB_RE-BE;RE;BE;;;BFB;;;;;;
+DE_DVU_RE-HB;RE;HB;;;DVU;;;;;;
+DE_DVU_RE-MV;RE;MV;;;DVU;;;;;;
+DE_DVU_RE-HH;RE;HH;;;DVU;;;;;;
+DE_APPD_RE-NW;RE;NW;;;APPD;;;;;;
+DE_Tier_RE-RP;RE;RP;;;Tier;;;;;;
+DE_BFB_RE-TH;RE;TH;;;BFB;;;;;;
+DE_OffenD_RE-TH;RE;TH;;;OffenD;;;;;;
+DE_APPD_RE-HB;RE;HB;;;APPD;;;;;;
+DE_CM_RE-HE;RE;HE;;;CM;;;;;;
+DE_OffenD_RE-SL;RE;SL;;;OffenD;;;;;;
+DE_OffenD_RE-NI;RE;NI;;;OffenD;;;;;;
+DE_HP_RE-BE;RE;BE;;;HP;;;;;;
+DE_DPD_RE-BW;RE;BW;;;DPD;;;;;;
+DE_OffenD_RE-RP;RE;RP;;;OffenD;;;;;;
+DE_OffenD_RE-MV;RE;MV;;;OffenD;;;;;;
+DE_OffenD_RE-HE;RE;HE;;;OffenD;;;;;;
+DE_OffenD_RE-BE;RE;BE;;;OffenD;;;;;;
+DE_AUFBR_RE-BY;RE;BY;;;AUFBR;;;;;;
+DE_OffenD_RE-BY;RE;BY;;;OffenD;;;;;;
+DE_OffenD_RE-BW;RE;BW;;;OffenD;;;;;;
+DE_OffenD_RE-SN;RE;SN;;;OffenD;;;;;;
+DE_OffenD_RE-BB;RE;BB;;;OffenD;;;;;;
+DE_PRG_RE-BW;RE;BW;;;PRG;;;;;;
+DE_OffenD_RE-HH;RE;HH;;;OffenD;;;;;;
+DE_PBC_RE-SH;RE;SH;;;PBC;;;;;;
+DE_OffenD_RE-SH;RE;SH;;;OffenD;;;;;;
+DE_OffenD_RE-NW;RE;NW;;;OffenD;;;;;;
+DE_PBC_RE-BE;RE;BE;;;PBC;;;;;;
+DE_OffenD_RE-HB;RE;HB;;;OffenD;;;;;;
+DE_HP_RE-NW;RE;NW;;;HP;;;;;;
+DE_PBC_RE-MV;RE;MV;;;PBC;;;;;;
+DE_50Plus_RE-BB;RE;BB;;;50Plus;;;;;;
+DE_PBC_RE-HB;RE;HB;;;PBC;;;;;;
+DE_ADM_RE-BW;RE;BW;;;ADM;;;;;;
+DE_RENTNER_RE-NW;RE;NW;;;RENTNER;;;;;;
+DE_KPD_RE-BW;RE;BW;;;KPD;;;;;;
+DE_KPD_RE-BY;RE;BY;;;KPD;;;;;;
+DE_Patri_RE-SH;RE;SH;;;Patri;;;;;;
+DE_BueSo_RE-HH;RE;HH;;;BueSo;;;;;;
+DE_Patri_RE-HB;RE;HB;;;Patri;;;;;;
+DE_APPD_RE-BB;RE;BB;;;APPD;;;;;;
+DE_FAMILIE_RE-BB;RE;BB;;;FAMILIE;;;;;;
+DE_FU_RE-BB;RE;BB;;;FU;;;;;;
+DE_AB2000_RE-BB;RE;BB;;;AB2000;;;;;;
+DE_Muend_RE-BE;RE;BE;;;Muend;;;;;;
+DE_FAMILIE_RE-BE;RE;BE;;;FAMILIE;;;;;;
+DE_FAP_RE-BW;RE;BW;;;FAP;;;;;;
+DE_5BLK_RE-BW;RE;BW;;;5BLK;;;;;;
+DE_du_RE-BW;RE;BW;;;du;;;;;;
+DE_VAA_RE-BW;RE;BW;;;VAA;;;;;;
+DE_DMP_RE-BW;RE;BW;;;DMP;;;;;;
+DE_FP_RE-BW;RE;BW;;;FP;;;;;;
+DE_du_RE-BY;RE;BY;;;du;;;;;;
+DE_GIM_RE-BY;RE;BY;;;GIM;;;;;;
+DE_FBU_RE-BY;RE;BY;;;FBU;;;;;;
+DE_DFP_RE-BY;RE;BY;;;DFP;;;;;;
+DE_HP_RE-BY;RE;BY;;;HP;;;;;;
+DE_VAA_RE-BY;RE;BY;;;VAA;;;;;;
+DE_FU_RE-BY;RE;BY;;;FU;;;;;;
+DE_LD_RE-BY;RE;BY;;;LD;;;;;;
+DE_none_RE-HB;RE;HB;;;none;;;;;;
+DE_UAP_RE-HE;RE;HE;;;UAP;;;;;;
+DE_GIM_RE-HE;RE;HE;;;GIM;;;;;;
+DE_Z_RE-HE;RE;HE;;;Z;;;;;;
+DE_ASD_RE-HE;RE;HE;;;ASD;;;;;;
+DE_VAA_RE-HE;RE;HE;;;VAA;;;;;;
+DE_STATT_RE-HE;RE;HE;;;STATT;;;;;;
+DE_PASS_RE-HE;RE;HE;;;PASS;;;;;;
+DE_FAMILIE_RE-HE;RE;HE;;;FAMILIE;;;;;;
+DE_ADM_RE-HE;RE;HE;;;ADM;;;;;;
+DE_Z_RE-HH;RE;HH;;;Z;;;;;;
+DE_SpAD_RE-HH;RE;HH;;;SpAD;;;;;;
+DE_PBC_RE-HH;RE;HH;;;PBC;;;;;;
+DE_GIM_RE-NI;RE;NI;;;GIM;;;;;;
+DE_Z_RE-NI;RE;NI;;;Z;;;;;;
+DE_FAP_RE-NI;RE;NI;;;FAP;;;;;;
+DE_ASD_RE-NI;RE;NI;;;ASD;;;;;;
+DE_HP_RE-NI;RE;NI;;;HP;;;;;;
+DE_Frau_RE-NI;RE;NI;;;Frau;;;;;;
+DE_Volksab_RE-NI;RE;NI;;;Volksab;;;;;;
+DE_STATT_RE-NI;RE;NI;;;STATT;;;;;;
+DE_AGFG_RE-NI;RE;NI;;;AGFG;;;;;;
+DE_DV_RE-NW;RE;NW;;;DV;;;;;;
+DE_BGD_RE-NW;RE;NW;;;BGD;;;;;;
+DE_RFP_RE-NW;RE;NW;;;RFP;;;;;;
+DE_5BLK_RE-NW;RE;NW;;;5BLK;;;;;;
+DE_FBU_RE-NW;RE;NW;;;FBU;;;;;;
+DE_Demokr_RE-NW;RE;NW;;;Demokr;;;;;;
+DE_DMP_RE-NW;RE;NW;;;DMP;;;;;;
+DE_PRG_RE-NW;RE;NW;;;PRG;;;;;;
+DE_AVP_RE-RP;RE;RP;;;AVP;;;;;;
+DE_BUERGER_RE-RP;RE;RP;;;BUERGER;;;;;;
+DE_Viol_RE-RP;RE;RP;;;Viol;;;;;;
+DE_FSU_RE-SH;RE;SH;;;FSU;;;;;;
+DE_CM_RE-SH;RE;SH;;;CM;;;;;;
+DE_APD_RE-SH;RE;SH;;;APD;;;;;;
+DE_STATT_RE-SH;RE;SH;;;STATT;;;;;;
+DE_Z_RE-SH;RE;SH;;;Z;;;;;;
+DE_Viol_RE-SH;RE;SH;;;Viol;;;;;;
+DE_none_RE-SL;RE;SL;;;none;;;;;;
+DE_KBW_RE-SL;RE;SL;;;KBW;;;;;;
+DE_APD_RE-SL;RE;SL;;;APD;;;;;;
+DE_Z_RE-SN;RE;SN;;;Z;;;;;;
+DE_FP_RE-SN;RE;SN;;;FP;;;;;;
+DE_FSU_RE-SN;RE;SN;;;FSU;;;;;;
+DE_APPD_RE-SN;RE;SN;;;APPD;;;;;;
+DE_Z_RE-ST;RE;ST;;;Z;;;;;;
+DE_PBC_RE-ST;RE;ST;;;PBC;;;;;;
+DE_BFB_RE-ST;RE;ST;;;BFB;;;;;;
+DE_FORUM_RE-ST;RE;ST;;;FORUM;;;;;;
+DE_FAMILIE_RE-TH;RE;TH;;;FAMILIE;;;;;;
+DE_KPD_RE-TH;RE;TH;;;KPD;;;;;;
+DE_PASS_RE-TH;RE;TH;;;PASS;;;;;;
+DE_PBC_RE-TH;RE;TH;;;PBC;;;;;;
+DE_Chance_RE-HB;RE;HB;;;Chance;;;;;;
+DE_Chance_RE-BY;RE;BY;;;Chance;;;;;;
+DE_Chance_RE-BE;RE;BE;;;Chance;;;;;;
+DE_Chance_RE-HE;RE;HE;;;Chance;;;;;;
+DE_Chance_RE-HH;RE;HH;;;Chance;;;;;;
+DE_Chance_RE-SN;RE;SN;;;Chance;;;;;;
+DE_Chance_RE-MV;RE;MV;;;Chance;;;;;;
+DE_Chance_RE-NW;RE;NW;;;Chance;;;;;;
+DE_ProDM_RE-NW;RE;NW;;;ProDM;;;;;;
+DE_ProDM_RE-SN;RE;SN;;;ProDM;;;;;;
+DE_ProDM_RE-MV;RE;MV;;;ProDM;;;;;;
+DE_ProDM_RE-HB;RE;HB;;;ProDM;;;;;;
+DE_ProDM_RE-BB;RE;BB;;;ProDM;;;;;;
+DE_ProDM_RE-NI;RE;NI;;;ProDM;;;;;;
+DE_ProDM_RE-BE;RE;BE;;;ProDM;;;;;;
+DE_ProDM_RE-HE;RE;HE;;;ProDM;;;;;;
+DE_ProDM_RE-SL;RE;SL;;;ProDM;;;;;;
+DE_ProDM_RE-ST;RE;ST;;;ProDM;;;;;;
+DE_ProDM_RE-BW;RE;BW;;;ProDM;;;;;;
+DE_ProDM_RE-SH;RE;SH;;;ProDM;;;;;;
+DE_ProDM_RE-RP;RE;RP;;;ProDM;;;;;;
+DE_ProDM_RE-TH;RE;TH;;;ProDM;;;;;;
+DE_ProDM_RE-HH;RE;HH;;;ProDM;;;;;;
+DE_ProDM_RE-BY;RE;BY;;;ProDM;;;;;;
+DE_PSG_RE-ST;RE;ST;;;PSG;;;;;;
+DE_PSG_RE-SN;RE;SN;;;PSG;;;;;;
+DE_PSG_RE-NI;RE;NI;;;PSG;;;;;;
+DE_PSG_RE-BW;RE;BW;;;PSG;;;;;;
+DE_OEKO_RE-NI;RE;NI;;;OEKO;;;;;;
+DE_RRP_RE-SL;RE;SL;;;RRP;;;;;;
+DE_RRP_RE-NW;RE;NW;;;RRP;;;;;;
+DE_RRP_RE-BY;RE;BY;;;RRP;;;;;;
+DE_RRP_RE-NI;RE;NI;;;RRP;;;;;;
+DE_RRP_RE-HB;RE;HB;;;RRP;;;;;;

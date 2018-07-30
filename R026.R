@@ -83,7 +83,10 @@
 				summary(QUOT)
 				names(QUOT)
 				
-	
+					# tranform dates to a format I can work with
+					QUOT$quot_ep_startdate_posoxctformat <- as.POSIXct(as.character(QUOT$quot_ep_startdate),format=c("%d%b%Y"))
+					QUOT$quot_ep_enddate_posoxctformat <- as.POSIXct(as.character(QUOT$quot_ep_enddate),format=c("%d%b%Y"))
+				
 ######################################################################################
 #################################### DATA ############################################
 ######################################################################################
@@ -415,8 +418,12 @@
 			ELLIBU[9030:9050,]
 			tail(ELLIBU)
 			
-			
-		# get district magnitude in (for now just number of people that got elected from this district in this parliament)
+	
+	##################################################################################################
+	################################# variable building here #########################################
+	##################################################################################################
+
+		### get district magnitude in (for now just number of people that got elected from this district in this parliament)
 		
 			mydistrict <- ELLIBU$district_id[9993]
 		
@@ -433,7 +440,7 @@
 			tail(ELLIBU)
 			head(ELLIBU)
 			
-		# get party size in (for now just number of people from this party that got elected in the parliament)
+		### get party size in (for now just number of people from this party that got elected in the parliament)
 
 			# also here, get the national party versions
 			resvec <- vector()
@@ -478,6 +485,43 @@
 			head(ELLIBU[which(ELLIBU$party_size == 0 & ELLIBU$country == "CH"),])
 			tail(ELLIBU[which(ELLIBU$party_size == 0 & ELLIBU$country == "CH"),])
 
+		### get a variable that indicates of this 'list' is a list list or a district list
+		
+			# if you are in Germany, and your list is only one person long, you are a district - also the word 'district' occurs in your listname
+			ELLIBU$type <- ifelse(grepl("_district-",ELLIBU$list_id),"district","list") # _ and - are needed because otherwise it also hits on some swiss names
+			head(ELLIBU)
+			table(ELLIBU$country,ELLIBU$type)
+			
+		### was there a quota
+
+			### get the start-date of the parliamentary term in
+		
+				ELLIBU <- sqldf("SELECT ELLIBU.*, PARL.leg_period_start, PARL.leg_period_end
+                   FROM ELLIBU LEFT JOIN PARL 
+                   ON ELLIBU.parliament_id = PARL.parliament_id")
+				head(ELLIBU)
+		
+				ELLIBU$leg_period_start_posoxctformat <- as.POSIXct(as.character(ELLIBU$leg_period_start),format=c("%d%b%Y"))
+				ELLIBU$leg_period_end_posoxctformat <- as.POSIXct(as.character(ELLIBU$leg_period_end),format=c("%d%b%Y"))
+		
+			names(ELLIBU)
+			table(ELLIBU$nat_party_id)
+			ELLIBU <- sqldf("SELECT ELLIBU.*, QUOT.quota_bin, QUOT.quot_ep_startdate_posoxctformat, QUOT.quota_percentage, QUOT.quota_zipper
+					   FROM ELLIBU LEFT JOIN QUOT 
+					   ON ELLIBU.nat_party_id = QUOT.party_id AND ELLIBU.leg_period_start_posoxctformat BETWEEN QUOT.quot_ep_startdate_posoxctformat and QUOT.quot_ep_enddate_posoxctformat")
+				
+			tail(ELLIBU)
+			table(ELLIBU$quota_bin)
+			summary(ELLIBU$quota_bin)
+			ELLIBU[which(is.na(ELLIBU$quota_bin & !ELLIBU$country == "CH")),]	# i've asked Elena about this
+					
+			# we call this one 'quota now'
+			names(ELLIBU)[match(c("quota_bin"),names(ELLIBU))] <- "quota_now"
+			ELLIBU$quota_now <- as.factor(ELLIBU$quota_now)
+			head(ELLIBU)
+			tail(ELLIBU)
+			
+			
 ######################################## reduction here ##########################################
 ##################################################################################################
 
@@ -491,9 +535,17 @@
 ############################### DESCRIPTIVE RESULTS ##################################
 ######################################################################################			
 
+	# country with lists/district device
+		names(ELLIBU)
+		ELLIBU$countryld <- ELLIBU$country
+		table(ELLIBU$country,ELLIBU$type)
+		ELLIBU$countryld[which(ELLIBU$countryld == "DE" & ELLIBU$type == "list")] <- "DE-L"
+		ELLIBU$countryld[which(ELLIBU$countryld == "DE" & ELLIBU$type == "district")] <- "DE-D"
+		table(ELLIBU$countryld)
+		
 	# country differences
 	
-				ggplot(ELLIBU, aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
+				ggplot(ELLIBU, aes(x=ratio_on_list, y=ratio_elected,color=countryld)) + 
 				geom_point() + 
 				geom_smooth(method='lm') +
 				scale_x_continuous(limits = c(0, 0.6)) +
@@ -510,12 +562,29 @@
 				geom_smooth() +
 				scale_x_continuous(limits = c(0, 0.6)) +
 				geom_abline()
-				
+			
+			# all
 				ggplot(subset(ELLIBU, country == "DE"), aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
 				geom_point() + 
 				geom_smooth() +
 				scale_x_continuous(limits = c(0, 0.6)) +
 				geom_abline()
+			
+				# only the lists
+				ggplot(subset(ELLIBU, countryld == "DE-L"), aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
+				geom_point() + 
+				geom_smooth() +
+				scale_x_continuous(limits = c(0, 0.6)) +
+				geom_abline()
+			
+				# only the districts
+				ggplot(subset(ELLIBU, countryld == "DE-D"), aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
+				geom_point() + 
+				geom_smooth() +
+				scale_x_continuous(limits = c(0, 0.6)) +
+				geom_abline()
+				
+				head(ELLIBU[which(ELLIBU$countryld == "DE-D"),]) # yes, makes sense. Ratio elected is always exactly the same as ratio on list.	
 				
 	# district size
 	
@@ -531,7 +600,7 @@
 				
 			
 			# for CH
-			hist(ELLIBU$district_magnitude[which(ELLIBU$country == "CH")]) # only country with some actual proper variantion, lets for now only do this for CH!
+			hist(ELLIBU$district_magnitude[which(ELLIBU$country == "CH")]) # only country with some actual proper variation, lets for now only do this for CH!
 				ELLIBU$district_magnitude_cat <- ELLIBU$district_magnitude
 				ELLIBU$district_magnitude_cat[ELLIBU$district_magnitude > 0 & ELLIBU$district_magnitude < 11] <- "00-10"
 				ELLIBU$district_magnitude_cat[ELLIBU$district_magnitude > 10 & ELLIBU$district_magnitude < 21] <- "11-20"
@@ -591,6 +660,76 @@
 		table(ELLIBU$election_year_cent)
 		
 		stargazer(ELLIBU)
+		
+	### impact of gender quotas
+	
+		## constructing some combined factors
+		
+			# quota now and percentage
+			
+				ELLIBU$qnqp <- as.character(ELLIBU$quota_now)
+				table(ELLIBU$quota_now,ELLIBU$quota_percentage)
+				ELLIBU$qnqp[which(ELLIBU$quota_now == "1" & ELLIBU$quota_percentage == "25")] <- "1_25"
+				ELLIBU$qnqp[which(ELLIBU$quota_now == "1" & ELLIBU$quota_percentage == "33")] <- "1_33"
+				ELLIBU$qnqp[which(ELLIBU$quota_now == "1" & ELLIBU$quota_percentage == "40")] <- "1_40"
+				ELLIBU$qnqp[which(ELLIBU$quota_now == "1" & ELLIBU$quota_percentage == "50")] <- "1_50"
+				table(ELLIBU$qnqp)
+			
+			# + zipper
+				table(ELLIBU$qnqp,ELLIBU$quota_zipper)
+				ELLIBU$qnqpz <- ELLIBU$qnqp
+				ELLIBU$qnqpz[which(ELLIBU$qnqp == "1_40")] <- "1_40_zip"
+				ELLIBU$qnqpz[which(ELLIBU$qnqp == "1_50" & ELLIBU$quota_zipper == "1")] <- "1_50_zip"
+				ELLIBU$qnqpz[which(ELLIBU$qnqp == "1_50" & ELLIBU$quota_zipper == "0")] <- "1_50_notzip"
+				table(ELLIBU$qnqpz)
+				
+		## on the percentage
+			
+			# focus on lists!
+			table(ELLIBU$type)
+			ELLIBUL <- ELLIBU[which(ELLIBU$type == "list"),]
+			
+			# present
+			ggplot(ELLIBUL, aes(x=quota_now, y=ratio_elected)) + 
+			geom_boxplot()
+
+			# present + percentage
+			ggplot(ELLIBUL, aes(x=qnqp, y=ratio_elected)) + 
+			geom_boxplot()
+			
+			# present + percentage + zipper
+			ggplot(ELLIBUL, aes(x=qnqpz, y=ratio_elected)) + 
+			geom_boxplot()
+	
+		## on the relation
+			# present
+				# only the districts
+					ggplot(ELLIBU, aes(x=ratio_on_list, y=ratio_elected,color=quota_now)) + 
+					geom_point() + 
+					geom_smooth(method='lm') +
+					# geom_smooth() +
+					scale_x_continuous(limits = c(0, 0.6)) +
+					geom_abline()
+				
+			# + percentage
+				
+				ggplot(ELLIBU, aes(x=ratio_on_list, y=ratio_elected,color=qnqp)) + 
+					geom_point() + 
+					geom_smooth(method='lm') +
+					scale_x_continuous(limits = c(0, 0.6)) +
+					geom_abline()
+			
+			# + strength / zipper
+			
+				ggplot(ELLIBU, aes(x=ratio_on_list, y=ratio_elected,color=qnqpz)) + 
+					geom_point() + 
+					geom_smooth(method='lm') +
+					scale_x_continuous(limits = c(0, 0.6)) +
+					geom_abline()
+			
+				
+	
+		
 				
 ######################################################################################
 ###################################### MODELS ########################################
