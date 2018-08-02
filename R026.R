@@ -702,9 +702,17 @@
 			geom_boxplot()
 	
 		## on the relation
+		
+			# reduce the sample to not include 0,0 observations
+		
+				table(ELLIBU$ratio_on_list)
+				nrow(ELLIBU)
+				ELLIBUR <- ELLIBU[which(!(ELLIBU$ratio_on_list == 0)),]
+				nrow(ELLIBUR)
+		
 			# present
 				# only the districts
-					ggplot(ELLIBU, aes(x=ratio_on_list, y=ratio_elected,color=quota_now)) + 
+					ggplot(ELLIBUR, aes(x=ratio_on_list, y=ratio_elected,color=quota_now)) + 
 					geom_point() + 
 					geom_smooth(method='lm') +
 					# geom_smooth() +
@@ -713,7 +721,7 @@
 				
 			# + percentage
 				
-				ggplot(ELLIBU, aes(x=ratio_on_list, y=ratio_elected,color=qnqp)) + 
+				ggplot(ELLIBUR, aes(x=ratio_on_list, y=ratio_elected,color=qnqp)) + 
 					geom_point() + 
 					geom_smooth(method='lm') +
 					scale_x_continuous(limits = c(0, 0.6)) +
@@ -721,13 +729,13 @@
 			
 			# + strength / zipper
 			
-				ggplot(ELLIBU, aes(x=ratio_on_list, y=ratio_elected,color=qnqpz)) + 
+				ggplot(ELLIBUR, aes(x=ratio_on_list, y=ratio_elected,color=qnqpz)) + 
 					geom_point() + 
 					geom_smooth(method='lm') +
 					scale_x_continuous(limits = c(0, 0.6)) +
 					geom_abline()
 			
-				
+		
 	
 		
 				
@@ -780,7 +788,6 @@
 	names(ELLIBU)
 	table(ELLIBU$party_id)
 	
-
 	mempty <- lm(ratio_elected~1,
 				 data=ELLIBU)
 	summary(mempty)
@@ -837,6 +844,15 @@
 				,data=ELLIBU)
 	summary(m4a)
 	
+	m5 <- lm(ratio_elected~ratio_on_list_cent +
+				election_year_cent +
+				district_mag_gmcent * ratio_on_list_cent +
+				party_size_gmcent * ratio_on_list_cent +
+				country * ratio_on_list_cent +
+				quota_now * ratio_on_list_cent
+				,data=ELLIBU)
+	summary(m5)
+	
 	
 		# building up the stargazer output
 			
@@ -853,11 +869,11 @@
 			}
 			specificnamecleaning(dirtynames)
 			
-			labelsinthisorder <- specificnamecleaning(names(coef(m4a)))
+			labelsinthisorder <- specificnamecleaning(names(coef(m5)))
 	
-	stargazer(mempty,m1,m1a,m2,m2a,m3,m3a,m4,m4a,
-			type="latex",
-			covariate.labels = labelsinthisorder,
+	stargazer(mempty,m1,m1a,m2,m2a,m3,m3a,m4,m4a,m5,
+			type="text",
+			# covariate.labels = labelsinthisorder,
 			intercept.bottom=F,
 			omit.stat=c("f","ser"))
 
