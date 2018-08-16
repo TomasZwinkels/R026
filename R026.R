@@ -18,6 +18,7 @@
 		library(ggplot2)
 		library(stargazer)
 		
+		
 	substrRight <- function(x, n)
 	{
 		substr(x, nchar(x)-n+1, nchar(x))
@@ -520,16 +521,74 @@
 			ELLIBU$quota_now <- as.factor(ELLIBU$quota_now)
 			head(ELLIBU)
 			tail(ELLIBU)
+	
+	### for all the list seats, get a variable as well that indicates what the percentage of women was on the district seats in this list its region
+	
+		# for all the districts, get the region from ELDI
+			nrow(ELLIBU)
+			ELLIBU <- sqldf("SELECT ELLIBU.*, ELDI.region_abb
+					       FROM ELLIBU LEFT JOIN ELDI 
+					       ON ELLIBU.district_id = ELDI.district_id	
+						   ")
+			nrow(ELLIBU)
+			head(ELLIBU)
+
+		# get a list of all district candidates in this region
 			
+			myregion <- "SN"
+			myparliament <- "DE_NT-BT_2009"
+			mycountry <- "DE"
+			mynatpartyid <- "DE_CDU_NT"
+			
+			ADCIR <- ELLIBU[which(ELLIBU$type == "district" & ELLIBU$parliament_id == myparliament & ELLIBU$country == mycountry & ELLIBU$region == myregion & ELLIBU$nat_party_id == mynatpartyid),]
+			mean(ADCIR$ratio_on_list)
+			
+			# and in a function
+			getmyregionitsdistrictpercentage <- function(myregion,myparliament,mycountry,mynatpartyid)
+			{
+				ADCIR <- ELLIBU[which(ELLIBU$type == "district" & ELLIBU$parliament_id == myparliament & ELLIBU$country == mycountry & ELLIBU$region == myregion & ELLIBU$nat_party_id == mynatpartyid),]
+				mean(ADCIR$ratio_on_list)
+			}
+			# check
+			getmyregionitsdistrictpercentage("SN","DE_NT-BT_2009","DE","DE_CDU_NT")
+			
+			# and run in a loop
+			for (i in 1:nrow(ELLIBU))
+			{
+			pb <- txtProgressBar(min = 1, max = nrow(ELLIBU), style = 3)
+			a <- ELLIBU$region[i]
+			b <- ELLIBU$parliament_id[i]
+			c <- ELLIBU$country[i]
+			d <- ELLIBU$nat_party_id[i]
+			
+			ELLIBU$percentage_onlist_indistrict[i] <- getmyregionitsdistrictpercentage(a,b,c,d)
+			setTxtProgressBar(pb, i)
+			}
+			close(pb)
+			summary(ELLIBU$percentage_onlist_indistrict)
+			nrow(ELLIBU)
 			
 ######################################## reduction here ##########################################
 ##################################################################################################
 
-	# exclude those cases in which nobody got elected
-	
-	nrow(ELLIBU)
-	ELLIBU <- ELLIBU[which(!is.na(ELLIBU$f_elected)),] # we loose about 2/3 of cases
-	nrow(ELLIBU)
+	# focus on list candidates only - temp!
+		table(ELLIBU$type)
+		nrow(ELLIBU)
+		ELLIBU <- ELLIBU[which(ELLIBU$type == "list"),]
+		nrow(ELLIBU)
+
+	# reduce to those cases after 1982
+		ELLIBU$year <- as.numeric(as.character(substrRight(ELLIBU$parliament_id,4)))
+		table(ELLIBU$year,ELLIBU$parliament_id)
+		
+		nrow(ELLIBU)
+		ELLIBU <- ELLIBU[which(ELLIBU$year > 1981),]
+		nrow(ELLIBU)
+			
+	# exclude those cases in which no women got elected at all
+		nrow(ELLIBU)
+		ELLIBU <- ELLIBU[which(!is.na(ELLIBU$f_elected)),] # we loose about 2/3 of cases
+		nrow(ELLIBU)
 
 ######################################################################################
 ############################### DESCRIPTIVE RESULTS ##################################
@@ -542,6 +601,17 @@
 		ELLIBU$countryld[which(ELLIBU$countryld == "DE" & ELLIBU$type == "list")] <- "DE-L"
 		ELLIBU$countryld[which(ELLIBU$countryld == "DE" & ELLIBU$type == "district")] <- "DE-D"
 		table(ELLIBU$countryld)
+		
+	# some general descriptives for the first version of the paper
+	
+		table(ELLIBU$parliament_id)
+	
+		nrow(ELLIBU)
+		
+		table(ELLIBU$country)
+		table(ELLIBU$type)
+		
+		
 		
 	# country differences
 	
@@ -629,6 +699,8 @@
 				ELLIBU$party_size_cat[ELLIBU$country == "NL" &ELLIBU$party_size > 15 & ELLIBU$party_size < 33] <- "medium"
 				ELLIBU$party_size_cat[ELLIBU$country == "NL" &ELLIBU$party_size > 32] <- "large"
 				table(ELLIBU$party_size_cat)
+				
+				table(ELLIBU$party_size_cat[which(ELLIBU$country == "NL")],ELLIBU$party_id[which(ELLIBU$country == "NL")])
 			
 			# for DE 
 				hist(ELLIBU$party_size[which(ELLIBU$country == "DE")]) 
@@ -685,21 +757,59 @@
 				
 		## on the percentage
 			
-			# focus on lists!
-			table(ELLIBU$type)
-			ELLIBUL <- ELLIBU[which(ELLIBU$type == "list"),]
-			
 			# present
-			ggplot(ELLIBUL, aes(x=quota_now, y=ratio_elected)) + 
+			ggplot(ELLIBU, aes(x=quota_now, y=ratio_elected)) + 
 			geom_boxplot()
 
 			# present + percentage
-			ggplot(ELLIBUL, aes(x=qnqp, y=ratio_elected)) + 
+			ggplot(ELLIBU, aes(x=qnqp, y=ratio_elected)) + 
 			geom_boxplot()
 			
 			# present + percentage + zipper
-			ggplot(ELLIBUL, aes(x=qnqpz, y=ratio_elected)) + 
+			ggplot(ELLIBU, aes(x=qnqpz, y=ratio_elected)) + 
 			geom_boxplot()
+			
+			# quota times party size
+			table(ELLIBU$party_size_cat)
+			table(ELLIBU$quota_now)
+			ELLIBU$quota_and_party_size <- ELLIBU$party_size_cat
+			ELLIBU$quota_and_party_size[which(ELLIBU$party_size_cat == "small" & ELLIBU$quota_now == 0)] <- "small - no quota"
+			ELLIBU$quota_and_party_size[which(ELLIBU$party_size_cat == "small" & ELLIBU$quota_now == 1)] <- "small - with quota"
+			
+			ELLIBU$quota_and_party_size[which(ELLIBU$party_size_cat == "medium" & ELLIBU$quota_now == 0)] <- "medium - no quota"
+			ELLIBU$quota_and_party_size[which(ELLIBU$party_size_cat == "medium" & ELLIBU$quota_now == 1)] <- "medium - with quota"
+			
+			ELLIBU$quota_and_party_size[which(ELLIBU$party_size_cat == "large" & ELLIBU$quota_now == 0)] <- "large - no quota"
+			ELLIBU$quota_and_party_size[which(ELLIBU$party_size_cat == "large" & ELLIBU$quota_now == 1)] <- "large - with quota"
+			
+			ELLIBU$quota_and_party_size[which(ELLIBU$quota_and_party_size == "small" | ELLIBU$quota_and_party_size == "medium" | ELLIBU$quota_and_party_size == "large")] <- NA
+			
+			table(ELLIBU$quota_and_party_size)
+			
+			TE <- ELLIBU[which(ELLIBU$quota_and_party_size == "medium - with quota"),]
+			table(TE$parliament_id)
+			table(TE$nat_party_id)
+			
+			# percentage
+				ggplot(ELLIBU, aes(x=quota_and_party_size, y=ratio_elected, color=party_size_cat)) + 
+				geom_boxplot()
+			
+			# relation
+			
+				table(ELLIBU$type)
+				table(ELLIBU$country)
+				table(ELLIBU$type,ELLIBU$country)
+				
+				ELLIBUA <- ELLIBU[which(ELLIBU$type=="list" & ELLIBU$country=="NL" & ELLIBU$ratio_on_list > 0),]
+				nrow(ELLIBUA)
+				
+				ggplot(ELLIBUA, aes(x=ratio_on_list, y=ratio_elected,color=quota_and_party_size)) + 
+				geom_point() + 
+				geom_smooth(method='lm') +
+				scale_x_continuous(limits = c(0, 0.6)) +
+				geom_abline()
+	
+	
 	
 		## on the relation
 		
@@ -743,6 +853,13 @@
 ###################################### MODELS ########################################
 ######################################################################################
 
+	# focus on the lists
+		ELLIBU <- ELLIBUL
+	
+	# lets remove switserland as well for now
+		table(ELLIBU$country)
+		ELLIBU <- ELLIBU[which(!ELLIBU$country == "CH"),]
+		nrow(ELLIBU)
 
 	# group mean centering district size and party size
 	
@@ -849,14 +966,15 @@
 				district_mag_gmcent * ratio_on_list_cent +
 				party_size_gmcent * ratio_on_list_cent +
 				country * ratio_on_list_cent +
-				quota_now * ratio_on_list_cent
+				quota_now * ratio_on_list_cent +
+				quota_now * party_size_gmcent
 				,data=ELLIBU)
 	summary(m5)
 	
 	
 		# building up the stargazer output
 			
-			dirtynames <- names(coef(m4a))
+			dirtynames <- names(coef(m5))
 			
 			specificnamecleaning <- function(dirtynamesloc)
 			{
@@ -864,6 +982,7 @@
 				cleanernames <- gsub("election_year_cent","election year",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("district_mag_gmcent","district magnitude gmcent",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("party_size_gmcent","party size gmcent",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("quota_now","quota now",cleanernames,fixed=TRUE)
 				return(cleanernames)
 				
 			}
@@ -871,9 +990,9 @@
 			
 			labelsinthisorder <- specificnamecleaning(names(coef(m5)))
 	
-	stargazer(mempty,m1,m1a,m2,m2a,m3,m3a,m4,m4a,m5,
-			type="text",
-			# covariate.labels = labelsinthisorder,
+	stargazer(mempty,m1,m1a,m2a,m3,m3a,m4,m4a,m5,
+			type="latex",
+			covariate.labels = labelsinthisorder,
 			intercept.bottom=F,
 			omit.stat=c("f","ser"))
 
