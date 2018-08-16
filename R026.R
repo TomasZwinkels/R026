@@ -579,7 +579,7 @@
 
 	# reduce to those cases after 1982
 		ELLIBU$year <- as.numeric(as.character(substrRight(ELLIBU$parliament_id,4)))
-		table(ELLIBU$year,ELLIBU$parliament_id)
+		table(ELLIBU$year)
 		
 		nrow(ELLIBU)
 		ELLIBU <- ELLIBU[which(ELLIBU$year > 1981),]
@@ -605,11 +605,20 @@
 	# some general descriptives for the first version of the paper
 	
 		table(ELLIBU$parliament_id)
+		length(table(ELLIBU$parliament_id))
 	
 		nrow(ELLIBU)
 		
 		table(ELLIBU$country)
 		table(ELLIBU$type)
+		
+		table(ELLIBU$nat_party_id)
+		length(table(ELLIBU$nat_party_id))
+		length(table(ELLIBU$nat_party_id[which(ELLIBU$country == "NL")]))
+		length(table(ELLIBU$nat_party_id[which(ELLIBU$country == "DE")]))
+		length(table(ELLIBU$nat_party_id[which(ELLIBU$country == "CH")]))
+		
+		table(ELLIBU$nat_party_id[which(ELLIBU$country == "CH")])
 		
 		
 		
