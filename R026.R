@@ -778,6 +778,10 @@
 			ggplot(ELLIBU, aes(x=qnqpz, y=ratio_elected)) + 
 			geom_boxplot()
 			
+			# present + percentage + zipper TEMP TEMP
+			ggplot(ELLIBU, aes(x=qnqpz, y=ratio_on_list)) + 
+			geom_boxplot()
+			
 			# quota times party size
 			table(ELLIBU$party_size_cat)
 			table(ELLIBU$quota_now)
@@ -799,10 +803,13 @@
 			table(TE$parliament_id)
 			table(TE$nat_party_id)
 			
-			# percentage
+			# percentage - can also try ratio elected here
 				ggplot(ELLIBU, aes(x=quota_and_party_size, y=ratio_elected, color=party_size_cat)) + 
 				geom_boxplot()
-			
+		
+				ggplot(ELLIBU, aes(x=quota_and_party_size, y=ratio_on_list, color=party_size_cat)) + 
+				geom_boxplot()
+		
 			# relation
 			
 				table(ELLIBU$type)
@@ -812,6 +819,7 @@
 				ELLIBUA <- ELLIBU[which(ELLIBU$type=="list" & ELLIBU$country=="NL" & ELLIBU$ratio_on_list > 0),]
 				nrow(ELLIBUA)
 				
+				# this should say!
 				ggplot(ELLIBUA, aes(x=ratio_on_list, y=ratio_elected,color=quota_and_party_size)) + 
 				geom_point() + 
 				geom_smooth(method='lm') +
@@ -914,68 +922,78 @@
 	names(ELLIBU)
 	table(ELLIBU$party_id)
 	
-	mempty <- lm(ratio_elected~1,
+#	mempty <- lm(ratio_elected~1,
+	mempty <- lm(ratio_on_list~1,
 				 data=ELLIBU)
 	summary(mempty)
 
 
-	m1 <- lm(ratio_elected~ratio_on_list_cent,
+#	m1 <- lm(ratio_elected~ratio_on_list_cent,
+	m1 <- lm(ratio_on_list ~
 				 data=ELLIBU)
 	summary(m1)
 	
-	m1a <- lm(ratio_elected~ratio_on_list_cent +
+#	m1a <- lm(ratio_elected~ratio_on_list_cent +
+	m1a <- lm(ratio_on_list ~
 				 election_year_cent
 				 ,data=ELLIBU)
 	summary(m1a)
 	
-	m2 <- lm(ratio_elected~ratio_on_list_cent +
+#	m2 <- lm(ratio_elected~ratio_on_list_cent +
+	m2 <- lm(ratio_on_list ~
 				 election_year_cent +
 				district_mag_gmcent
 				,data=ELLIBU)
 	summary(m2)
 	
-	m2a <- lm(ratio_elected~ratio_on_list_cent +
+#	m2a <- lm(ratio_elected~ratio_on_list_cent +
+	m2a <- lm(ratio_on_list ~
 				election_year_cent +
-				district_mag_gmcent * ratio_on_list_cent 
+				district_mag_gmcent #* ratio_on_list_cent 
 				,data=ELLIBU)
 	summary(m2a)
 	
-	m3 <- lm(ratio_elected~ratio_on_list_cent +
+#	m3 <- lm(ratio_elected~ratio_on_list_cent +
+	m3 <- lm(ratio_on_list ~
 				election_year_cent +
-				district_mag_gmcent * ratio_on_list_cent +
+				district_mag_gmcent + #* ratio_on_list_cent +
 				party_size_gmcent
 				,data=ELLIBU)
 	summary(m3)
 	
-	m3a <- lm(ratio_elected~ratio_on_list_cent +
+#	m3a <- lm(ratio_elected~ratio_on_list_cent +
+	m3a <- lm(ratio_on_list ~
 				election_year_cent +
-				district_mag_gmcent * ratio_on_list_cent +
-				party_size_gmcent * ratio_on_list_cent
+				district_mag_gmcent + #* ratio_on_list_cent +
+				party_size_gmcent  #* ratio_on_list_cent
 				,data=ELLIBU)
 	summary(m3a)
 	
-	m4 <- lm(ratio_elected~ratio_on_list_cent +
+#	m4 <- lm(ratio_elected~ratio_on_list_cent +
+	m4 <- lm(ratio_on_list ~
 				election_year_cent +
-				district_mag_gmcent * ratio_on_list_cent +
-				party_size_gmcent * ratio_on_list_cent +
+				district_mag_gmcent + #* ratio_on_list_cent +
+				party_size_gmcent + #* ratio_on_list_cent +
 				country
 				,data=ELLIBU)
 	summary(m4)
 	
-	m4a <- lm(ratio_elected~ratio_on_list_cent +
+#	m4a <- lm(ratio_elected~ratio_on_list_cent +
+	m4a <- lm(ratio_on_list ~
 				election_year_cent +
-				district_mag_gmcent * ratio_on_list_cent +
-				party_size_gmcent * ratio_on_list_cent +
-				country * ratio_on_list_cent
+				district_mag_gmcent + #* ratio_on_list_cent +
+				party_size_gmcent + #* ratio_on_list_cent +
+				country  #* ratio_on_list_cent
 				,data=ELLIBU)
 	summary(m4a)
 	
-	m5 <- lm(ratio_elected~ratio_on_list_cent +
+#	m5 <- lm(ratio_elected~ratio_on_list_cent +
+	m5 <- lm(ratio_on_list ~
 				election_year_cent +
-				district_mag_gmcent * ratio_on_list_cent +
-				party_size_gmcent * ratio_on_list_cent +
-				country * ratio_on_list_cent +
-				quota_now * ratio_on_list_cent +
+				district_mag_gmcent + #* ratio_on_list_cent +
+				party_size_gmcent + #* ratio_on_list_cent +
+				country + #* ratio_on_list_cent +
+				quota_now + #* ratio_on_list_cent +
 				quota_now * party_size_gmcent
 				,data=ELLIBU)
 	summary(m5)
@@ -999,7 +1017,7 @@
 			
 			labelsinthisorder <- specificnamecleaning(names(coef(m5)))
 	
-	stargazer(mempty,m1,m1a,m2a,m3,m3a,m4,m4a,m5,
+	stargazer(mempty,m1a,m2a,m3,m4,m5,
 			type="latex",
 			covariate.labels = labelsinthisorder,
 			intercept.bottom=F,
