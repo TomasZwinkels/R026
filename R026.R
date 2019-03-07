@@ -7,6 +7,7 @@
 		Sys.setlocale("LC_TIME", "English") # key, without this conversion to POSIXct does not work
 		Sys.getlocale(category = "LC_ALL")
 		
+		setwd("C:/Users/turnerzw/Basel Powi Dropbox/R/R026_temp")
 		setwd("F:/PolCa/Analysis/R/ProjectR026_control")
 		getwd()
 		# also see 
@@ -17,6 +18,7 @@
 		library(lubridate)
 		library(ggplot2)
 		library(stargazer)
+		library(dplyr)
 		
 		
 	substrRight <- function(x, n)
@@ -54,10 +56,10 @@
 				summary(MEME)
 				names(MEME)
 				
-				# import and inspect
-				PARE = read.csv("PCC/PARE.csv", header = TRUE, sep = ";")
-				summary(PARE)
-				names(PARE)
+				# import and inspect # now renamed, because we just generate this dataframe below and just merge some stuff into it from here
+				PAREWRONG = read.csv("PCC/PARE.csv", header = TRUE, sep = ";")
+				summary(PAREWRONG)
+				names(PAREWRONG)
 				
 				# import and inspect
 				PARL = read.csv("PCC/PARL.csv", header = TRUE, sep = ";")
@@ -91,6 +93,86 @@
 ######################################################################################
 #################################### DATA ############################################
 ######################################################################################
+	
+	# new approach to getting PARE data
+	
+		# generate PARE type data on basis of RESE		
+		# get the dates properly formatted into this
+			PARLBU <- PARL
+			PARLBU$leg_period_start_posoxctformat <- as.POSIXct(as.character(PARLBU$leg_period_start),format=c("%d%b%Y"))
+			PARLBU$leg_period_end_posoxctformat <- as.POSIXct(as.character(PARLBU$leg_period_end),format=c("%d%b%Y"))
+			
+		# get all of the German parliamentary RESE episodes sub-selected so we can merge these in on date
+		
+			# write in a column with a standerat indicator
+			
+				# do the reduction		
+				RESERED <- RESE[which((RESE$country == "DE" | RESE$country == "CH"| RESE$country == "NL") & RESE$political_function == "NT_LE_T3_NA_01" & RESE$res_entry_type == "pol" & !(grepl("-SR_",RESE$parliament_id))),] # also exclude standerat entries here with a grepl, they have the same political function code
+				head(RESERED)
+				tail(RESERED)
+				table(RESERED$country)
+				table(droplevels(RESERED$parliament_id))
+			
+			# get internal r-date format here as well
+			
+				# deal with left and right censored dates
+				RESERED$res_entry_start_cleaned <- gsub("[[rcen]]","",RESERED$res_entry_start)
+				RESERED$res_entry_start_cleaned <- gsub("[[lcen]]","",RESERED$res_entry_start)
+				RESERED$res_entry_end_cleaned <- gsub("[[rcen]]","",RESERED$res_entry_end)
+				RESERED$res_entry_end_cleaned <- gsub("[[lcen]]","",RESERED$res_entry_end)
+			
+				RESERED$res_entry_start_posoxctformat <- as.POSIXct(as.character(RESERED$res_entry_start_cleaned),format=c("%d%b%Y"))
+				RESERED$res_entry_end_posoxctformat <- as.POSIXct(as.character(RESERED$res_entry_end_cleaned),format=c("%d%b%Y"))
+				summary(RESERED$res_entry_start_posoxctformat)
+				summary(RESERED$res_entry_end_posoxctformat)
+				
+		# now, lets build up a PARE like data-frames
+			FPAREBU <- sqldf("SELECT PARLBU.parliament_id, PARLBU.leg_period_start,PARLBU.leg_period_end_posoxctformat, RESERED.res_entry_raw, RESERED.pers_id, PARLBU.country_abb
+						    FROM PARLBU LEFT JOIN RESERED
+							ON
+							(
+									(RESERED.res_entry_start_posoxctformat <= PARLBU.leg_period_start_posoxctformat AND  RESERED.res_entry_end_posoxctformat >= PARLBU.leg_period_end_posoxctformat)
+								OR 
+									(RESERED.res_entry_start_posoxctformat >= PARLBU.leg_period_start_posoxctformat AND RESERED.res_entry_start_posoxctformat <= PARLBU.leg_period_end_posoxctformat)
+								OR 
+									(RESERED.res_entry_end_posoxctformat >= PARLBU.leg_period_start_posoxctformat AND RESERED.res_entry_end_posoxctformat <= PARLBU.leg_period_end_posoxctformat)
+									
+							) 
+								AND
+								(PARLBU.country_abb = RESERED.country)
+							")
+			head(FPAREBU)
+			nrow(FPAREBU)
+			table(FPAREBU$parliament_id) # alright, this looks a lot more reasonable
+			head(FPAREBU)
+		
+			# create a parliamentary episode ID 			
+			FPAREBU$fake_parl_episode_id <- paste(FPAREBU$pers_id,FPAREBU$parliament_id,sep="__")
+			length(unique(FPAREBU$fake_parl_episode_id)) # does not match!, several people occur double
+			DUB <- FPAREBU[which(duplicated(FPAREBU$fake_parl_episode_id)),] # these are the problematic cases
+			nrow(DUB) # NOTE TO SELF: you can parse theses cases to Adrian to fix # 93 cases!
+			UNI <- FPAREBU %>% distinct(fake_parl_episode_id, .keep_all = TRUE)
+			nrow(UNI)
+			head(UNI)
+			
+			# get info from PAREWRONG if it exists
+			
+			# first check that one for duplicates as well
+			nrow(PAREWRONG)
+			length(unique(PAREWRONG$parl_episode_id)) # so there are duplicates here as well that I should remove
+			PAREWRONG[which(duplicated(PAREWRONG$parl_episode_id)),]
+			
+			PAREWRONGRED <- PAREWRONG %>% distinct(parl_episode_id, .keep_all = TRUE)
+			nrow(PAREWRONGRED) # alright, looking promissing
+			
+			TEMP <- sqldf("SELECT UNI.fake_parl_episode_id, PAREWRONGRED.*
+						   FROM UNI LEFT JOIN PAREWRONGRED
+						   ON UNI.fake_parl_episode_id = PAREWRONGRED.parl_episode_id
+						 ")
+			nrow(TEMP) # alright number is looking good
+			
+			# so lets make this our PARE for this script
+			PARE <- TEMP
 
 	# we start with getting ELEN level data-frames
 		nrow(ELEN)
@@ -107,8 +189,9 @@
 						ON
 						ELENBU.pers_id = POLI.pers_id
 						")
-		nrow(ELENBU)
+		nrow(ELENBU) # about 3 cases to much here?! duplicate pers_ids?!
 		head(ELENBU)
+		tail(ELENBU)
 		
 	# merge in some ELLI characteristics
 		ELENBU <- sqldf("SELECT ELENBU.*, ELLI.list_name, ELLI.parliament_id, ELLI.district_id, ELLI.list_length
@@ -118,6 +201,8 @@
 						")
 		nrow(ELENBU)
 		head(ELENBU)
+		tail(ELENBU)
+		table()
 	
 	# merge in some PARL data
 		ELENBU <- sqldf("SELECT ELENBU.*, PARL.leg_period_start, PARL.leg_period_end
