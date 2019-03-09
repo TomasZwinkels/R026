@@ -171,6 +171,11 @@
 						 ")
 			nrow(TEMP) # alright number is looking good
 			
+			# everyboyd in this new PARE file was in parliament at same point, so lets indicate that
+			table(TEMP$member_ofthisparliament_atsomepoint)
+			TEMP$member_ofthisparliament_atsomepoint <- "yes"
+			table(TEMP$member_ofthisparliament_atsomepoint)
+			
 			# so lets make this our PARE for this script
 			PARE <- TEMP
 
@@ -344,7 +349,8 @@
 		table(is.na(ELENBU$gender))
 		table(is.na(ELENBU$genderguesses))
 		
-		table(is.na(ELENBU$genderguesses),ELENBU$country)
+		table(is.na(ELENBU$genderguesses),ELENBU$country) # so, decent amounts of missingness per country still
+		prop.table(table(is.na(ELENBU$genderguesses),ELENBU$country),2) # about 13% in CH and NL and 5% in DE
 	
 	#### find out which of these people entered parliament_id ####
 	
@@ -359,9 +365,10 @@
 			head(ELENBU)
 			
 			ELENBU$in_parliament <- ifelse(ELENBU$fictional_parl_episode_id %in% PARERED$parl_episode_id,"yes","no") 
-			table(ELENBU$in_parliament) # is roughly one third
+			table(ELENBU$in_parliament) 
+			table(ELENBU$in_parliament)[2] / (table(ELENBU$in_parliament)[2]+table(ELENBU$in_parliament)[1]) # is roughly one third
 			
-		# and reduce this to the people that where in parliament straight after the election  (taken from R019!)
+		# and reduce this to the people that where in parliament straight after the election  (taken from R019!) # what am I doing this again?!
 					
 					# tranform the dates
 					RESE$res_entry_start_posoxctformat <- as.POSIXct(as.character(RESE$res_entry_start),format=c("%d%b%Y"))
@@ -417,7 +424,7 @@
 										)
 										")
 					nrow(ELENBURED)
-					table(ELENBURED$in_parliament) # looks good in general, I should follow up these 75 people, these are people that we know where in parliament but that are somehow not in PARE?
+					table(ELENBURED$in_parliament) 
 					
 	##################################################################################################
 	###################################### aggregation here ##########################################
@@ -425,13 +432,14 @@
 	
 	##### aggregation on the ELLI level ######
 			GCELLI <- as.data.frame.matrix(table(ELENBU$list_id,ELENBU$genderguesses))
-			GCELLI$list_id <- rownames(GCELLI)
+			GCELLI$list_id <- rownames(GCELLI)		
+			GCELLI$ratio <- GCELLI$f / (GCELLI$f+GCELLI$m)
+			
 			head(GCELLI)
 			GCELLI[30:50,]
 			tail(GCELLI)
 			
-			GCELLI$ratio <- GCELLI$f / (GCELLI$f+GCELLI$m)
-			hist(GCELLI$ratio)
+			hist(GCELLI$ratio) # so this is the ratio of men/women on the election lists
 
 		# merge into an ELLI level data-frame
 			
