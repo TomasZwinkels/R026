@@ -65,6 +65,7 @@ NL_RKPN_NT;NT;;;;RKPN;Rooms-Katholieke Partij Nederland;none;;;;;;
 NL_EVP_NT;NT;;;;EVP;NA;none;;;;;;
 NL_PPVO_NT;NT;;;;PPVO;NA;none;;;;;;
 NL_SEN2000_NT;NT;;;;SEN2000;Senioren 2000;none;;;;;;
+NL_LibDem_NT;NT;;;;LidDem;Liberaal Democratische Partij;none;;;;;;
 DE_B90|Gru_NT;NT;NA;DE_AL_RE-BE;none;B90|Gru;"Alliance 90/Greens; Buendnis 90/Die Gruenen";772;;eco;NA;NA;;
 DE_CDU_NT;NT;NA;none;none;CDU;"Christian Democratic Union; Christlich Demokratische Union";808;;chr;NA;NA;;
 DE_CSU_NT;NT;NA;none;none;CSU;"Christian Social Union; Christlich Soziale Union";1180;;chr;NA;NA;;

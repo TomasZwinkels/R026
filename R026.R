@@ -189,20 +189,19 @@
 						ON
 						ELENBU.pers_id = POLI.pers_id
 						")
-		nrow(ELENBU) # about 3 cases to much here?! duplicate pers_ids?!
+		nrow(ELENBU)
 		head(ELENBU)
 		tail(ELENBU)
 		
 	# merge in some ELLI characteristics
-		ELENBU <- sqldf("SELECT ELENBU.*, ELLI.list_name, ELLI.parliament_id, ELLI.district_id, ELLI.list_length
+		ELENBU <- sqldf("SELECT ELENBU.*, ELLI.list_name, ELLI.parliament_id, ELLI.district_id, ELLI.list_length, ELLI.party_id as 'party_id_from_elli'
 						FROM ELENBU LEFT JOIN ELLI
 						ON
 						ELENBU.list_id = ELLI.list_id
 						")
-		nrow(ELENBU)
+		nrow(ELENBU) 
 		head(ELENBU)
 		tail(ELENBU)
-		table()
 	
 	# merge in some PARL data
 		ELENBU <- sqldf("SELECT ELENBU.*, PARL.leg_period_start, PARL.leg_period_end
@@ -213,7 +212,10 @@
 		nrow(ELENBU)
 		head(ELENBU)
 	
-	# and party membership
+	# and party membership from MEME
+	
+		## please be aware that this is something of which we know there are issues
+		## something which is also interesting is that party is taken from MEME, but we also have a lot of people in here that where just candidates right? --> indeed, now added these above, this is just party id from MEME
 	
 		# prepare the date formats
 								
@@ -231,14 +233,58 @@
 			MEME$memep_startdate_posoxctformat <- as.POSIXct(as.character(MEME$memep_startdate),format=c("%d%b%Y"))
 			MEME$memep_enddate_posoxctformat <- as.POSIXct(as.character(MEME$memep_enddate),format=c("%d%b%Y"))
 						
-		# do the merge
-			ELENBU <- sqldf("SELECT ELENBU.*, MEME.party_id
+		# do the merge of party ids from meme
+			ELENBU <- sqldf("SELECT ELENBU.*, MEME.party_id as 'party_id_from_meme'
 						     FROM ELENBU LEFT JOIN MEME 
 							ON ELENBU.pers_id = MEME.pers_id AND ELENBU.leg_period_start_twoweekslater_posoxctformat BETWEEN MEME.memep_startdate_posoxctformat and MEME.memep_enddate_posoxctformat")
-		nrow(ELENBU)
-		head(ELENBU)
+			nrow(ELENBU)
+			head(ELENBU)
 		
+			table(ELENBU$party_id_from_meme)
+			summary(ELENBU$party_id_from_meme)
+			table(is.na(ELENBU$party_id_from_meme)) # right, so indeed the far majority here is missing!
+			
+		# now lets compare these party ids!
+		
+			#set empty values as missing
+				
+				# in elli
+					table(ELENBU$party_id_from_elli)
+					ELENBU$party_id_from_elli[which(ELENBU$party_id_from_elli == "")] <- NA
+					table(ELENBU$party_id_from_elli)
+				# in meme?
+					table(ELENBU$party_id_from_meme) # all NA already
+		
+			ELENBU$samepartyid <- ifelse(ELENBU$party_id_from_elli==ELENBU$party_id_from_meme,TRUE,FALSE)
+			table(ELENBU$samepartyid)
+			head(ELENBU[which(ELENBU$samepartyid == FALSE),]) # lots of cases where this is not the case
+			tail(ELENBU[which(ELENBU$samepartyid == FALSE),])
 
+		# quite some seem to be due to the national equivalent issue, so lets get one of those
+			ELENBU$party_id_from_elli_nat_equiv <- gsub("RE-[A-Z]{2}","NT",ELENBU$party_id_from_elli)
+			table(ELENBU$party_id_from_elli_nat_equiv)
+			
+			ELENBU$party_id_from_meme_nat_equiv <- gsub("RE-[A-Z]{2}","NT",ELENBU$party_id_from_meme)
+			table(ELENBU$party_id_from_meme_nat_equiv)
+			
+			ELENBU$samepartyid <- ifelse(ELENBU$party_id_from_elli_nat_equiv==ELENBU$party_id_from_meme_nat_equiv,TRUE,FALSE)
+			
+			table(ELENBU$samepartyid) # still 530 cases where this is not case
+			ELENBUNOTSAME <- ELENBU[which(ELENBU$samepartyid == FALSE),]
+			nrow(ELENBUNOTSAME)
+			head(ELENBUNOTSAME) 
+			tail(ELENBUNOTSAME)
+			table(ELENBUNOTSAME$country)
+			table(ELENBUNOTSAME$party_id_from_meme_nat_equiv)
+			ELENBUNOTSAME[which(ELENBUNOTSAME$party_id_from_meme_nat_equiv == "NL_GL_NT"),]
+		
+		# combining these two party indicators, taking the election list one as the most reliable one
+			
+			ELENBU$party_id_from_elliandmeme <- ifelse(is.na(ELENBU$party_id_from_elli_nat_equiv),ELENBU$party_id_from_meme_nat_equiv,ELENBU$party_id_from_elli_nat_equiv)
+			table(is.na(ELENBU$party_id_from_elli_nat_equiv))
+			table(is.na(ELENBU$party_id_from_meme_nat_equiv))
+			table(is.na(ELENBU$party_id_from_elliandmeme)) # ok, so this only ads very little extra information but that is fine :)
+			
 	############ gender guessing (if necessary) e.t.c. ##############
 	
 		ELENBU$gender[which(ELENBU$gender == "")] <- NA
