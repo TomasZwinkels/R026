@@ -860,11 +860,11 @@
 			summary(ELLIBU$percentage_onlist_indistrict)
 			nrow(ELLIBU)
 
-	## creating the two crucial gap variables 
+	##### creating the three crucial gap variables 
 		
 		# there are a total of two steps: ambition --(step 1)--> percentage on list --(step 2)--> percentage elected
 			head(ELLIBU)
-		# ambition realisation gap (overall gap) (quota percentage - percentage elected)
+		### ambition realisation gap (overall gap) (quota percentage - percentage elected)
 			
 			# inspection
 			table(ELLIBU$quota_now)
@@ -894,12 +894,12 @@
 			hist(ELLIBU$ambition_realisation_gap[which(ELLIBU$country =="NL")]) # lets add this to the overleaf file
 				
 			# key descriptive relating to Philip suggestion
-			boxplot(ELLIBU$ambition_realisation_gap~ELLIBU$keylisttypes)
+			boxplot(ELLIBU$ambition_realisation_gap~ELLIBU$keylisttypes, main="% women elected into parliament - % from quota")
 			
 			table(is.na(ELLIBU$ambition_realisation_gap))
 			table(is.na(ELLIBU$ambition_realisation_gap),is.na(ELLIBU$keylisttypes))
 			
-		# ambition to selection gap (quota percentage - percentage selected)
+		### ambition to selection gap (quota percentage - percentage selected)
 			
 			# calculating this gap
 			table(is.na(ELLIBU$ratio_on_list))
@@ -913,13 +913,10 @@
 			boxplot(ELLIBU$ambition_selection_gap~ELLIBU$country) 
 			hist(ELLIBU$ambition_selection_gap[which(ELLIBU$country =="DE")])
 			hist(ELLIBU$ambition_selection_gap[which(ELLIBU$country =="NL")]) 
-		
-			# inspecting some of these 'extreme' german cases
-			ELLIBU[which(ELLIBU$ambition_selection_gap > 0.7),] # seem to be SPD cases, with 25% as the ambition, and then the districts select a women (1)
-			table(ELLIBU[which(ELLIBU$ambition_selection_gap < -0.4),]$nat_party_id)
-			table(ELLIBU[which(ELLIBU$ambition_selection_gap < -0.4),]$keylisttypes) # so, indeed, is all of the single-member districts
 			
-		# selection to election gap (percentage selected - percentage elected)
+			boxplot(ELLIBU$ambition_selection_gap~ELLIBU$keylisttypes, main="% of women selected onto the list - % from quota")
+		
+		### selection to election gap (percentage selected - percentage elected)
 
 			# calculating this gap
 			ELLIBU$selection_election_gap <- ELLIBU$ratio_elected - ELLIBU$ratio_on_list # negative numbers indicate that less women where elected then selected
@@ -929,12 +926,32 @@
 			table(is.na(ELLIBU$ratio_elected)) # by far most cases are lost here
 			table(is.na(ELLIBU$ratio_on_list))
 			
-			hist(ELLIBU$selection_election_gap) # not a lot is happening here?
-			boxplot(ELLIBU$selection_election_gap~ELLIBU$country) 
-			hist(ELLIBU$selection_election_gap[which(ELLIBU$country =="CH")])
-			hist(ELLIBU$selection_election_gap[which(ELLIBU$country =="DE")])
-			hist(ELLIBU$selection_election_gap[which(ELLIBU$country =="NL")]) 
+			# do the stuff below either for sample above (parties with a quota), or the entire sample
+			ELLIBUTOCHECK <- ELLIBU[which(ELLIBU$quota_now == 1),]
+			nrow(ELLIBUTOCHECK)
+			table(is.na(ELLIBU$ambition_selection_gap)) # check 
+			ELLIBUTOCHECK <- ELLIBU
 			
+			hist(ELLIBUTOCHECK$selection_election_gap) # not a lot is happening here?
+			boxplot(ELLIBUTOCHECK$selection_election_gap~ELLIBUTOCHECK$country) 
+			hist(ELLIBUTOCHECK$selection_election_gap[which(ELLIBUTOCHECK$country =="CH")])
+			hist(ELLIBUTOCHECK$selection_election_gap[which(ELLIBUTOCHECK$country =="DE")])
+			hist(ELLIBUTOCHECK$selection_election_gap[which(ELLIBUTOCHECK$country =="NL")]) 
+			
+			boxplot(ELLIBUTOCHECK$selection_election_gap~ELLIBUTOCHECK$keylisttypes, main="% women elected  into parliament - % women selected onto list")
+			
+			table(ELLIBUTOCHECK$keylisttypes)
+			hist(ELLIBUTOCHECK$selection_election_gap[which(ELLIBUTOCHECK$keylisttypes =="one-list")])
+			hist(ELLIBUTOCHECK$selection_election_gap[which(ELLIBUTOCHECK$keylisttypes =="party-list-secondary-districts")])
+			hist(ELLIBUTOCHECK$selection_election_gap[which(ELLIBUTOCHECK$keylisttypes =="single-member-districts")]) 
+			
+			# lets inspect some of these positive cases, for example in the Netherlands
+			SAMPLETOCHECK <- ELLIBUTOCHECK[which(ELLIBUTOCHECK$country == "DE" & (ELLIBUTOCHECK$ratio_elected > ELLIBUTOCHECK$ratio_on_list)),] # 629 cases
+			SAMPLETOCHECK <- ELLIBUTOCHECK[which(ELLIBUTOCHECK$country == "DE" & (ELLIBUTOCHECK$ratio_elected < ELLIBUTOCHECK$ratio_on_list)),] # 448 cases
+			nrow(SAMPLETOCHECK)
+			
+			table(ELLIBUTOCHECK$party_id)
+			table(SAMPLETOCHECK$party_id) # happens a lot especially for the greens?
 			
 ######################################## reduction here ##########################################
 ##################################################################################################
