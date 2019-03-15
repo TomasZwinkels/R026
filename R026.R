@@ -355,83 +355,9 @@
 		table(is.na(ELENBU$genderguesses),ELENBU$list_id) 
 		prop.table(table(is.na(ELENBU$genderguesses),ELENBU$list_id),2) 
 	
-	#### find out which of these people entered parliament_id ####
 	
-		# get an 'in parliament'
-		
-			nrow(PARE)
-			PARERED <- PARE[which(PARE$member_ofthisparliament_atsomepoint == "yes"),]
-			nrow(PARERED)
-			
-			# make a fictional parliament id
-			ELENBU$fictional_parl_episode_id<- paste(ELENBU$pers_id,ELENBU$parliament_id,sep="__")
-			head(ELENBU)
-			
-			ELENBU$in_parliament <- ifelse(ELENBU$fictional_parl_episode_id %in% PARERED$parl_episode_id,"yes","no") 
-			table(ELENBU$in_parliament) 
-			table(ELENBU$in_parliament)[2] / (table(ELENBU$in_parliament)[2]+table(ELENBU$in_parliament)[1]) # is roughly one third
-			
-		# and reduce this to the people that where in parliament straight after the election  (taken from R019!) # what am I doing this again?!
-					
-					# tranform the dates
-					RESE$res_entry_start_posoxctformat <- as.POSIXct(as.character(RESE$res_entry_start),format=c("%d%b%Y"))
-					RESE$res_entry_end_posoxctformat <- as.POSIXct(as.character(RESE$res_entry_end),format=c("%d%b%Y"))
-					
-					RESEMPENT <- sqldf("SELECT RESE.res_entry_id, RESE.pers_id, RESE.res_entry_start, RESE.res_entry_end, RESE.res_entry_start_posoxctformat, RESE.res_entry_end_posoxctformat, RESE.parliament_id
-							FROM RESE
-							WHERE RESE.political_function = 'NT_LE_T3_NA_01'")
-					nrow(RESEMPENT) 
-					
-				# update PARL to have the startdate in useable format
-						PARL$leg_period_start_posoxctformat <- as.POSIXct(as.character(PARL$leg_period_start),format=c("%d%b%Y"))
-					
-			# make a dataframe that contains all the people that entered within 'x' weeks of the start of when the faction started
-			
-					# set the range
-						ELENBU$leg_period_start_weeklater_posoxctformat <- ELENBU$leg_period_start_posoxctformat + weeks(1)
-
-					# moving these dates one day to fix overlap issues (on day of transition matching now)
-						RESEMPENT$res_entry_start_posoxctformat =  RESEMPENT$res_entry_start_posoxctformat + days(1)
-						RESEMPENT$res_entry_end_posoxctformat = RESEMPENT$res_entry_end_posoxctformat - days(1)
-			
-				# first, a query that checks for each PARE of each politician if according to this MP its RESE episodes that specific parliaments, this MP was in this parliament in the first week
-			
-					ELENBURED <- sqldf("SELECT ELENBU.*
-									   FROM 
-									   ELENBU, RESEMPENT
-									   WHERE
-									   (
-										   ELENBU.pers_id = RESEMPENT.pers_id
-										   AND
-										   RESEMPENT.parliament_id LIKE '%'||ELENBU.parliament_id||'%'
-										   AND
-										   (
-											   (
-													RESEMPENT.res_entry_start_posoxctformat >= ELENBU.leg_period_start_posoxctformat
-													AND
-													RESEMPENT.res_entry_start_posoxctformat <= ELENBU.leg_period_start_weeklater_posoxctformat
-												)
-												OR
-												(
-													RESEMPENT.res_entry_end_posoxctformat >= ELENBU.leg_period_start_posoxctformat
-													AND
-													RESEMPENT.res_entry_end_posoxctformat <= ELENBU.leg_period_start_weeklater_posoxctformat
-												)
-												OR
-												(
-													RESEMPENT.res_entry_start_posoxctformat <= ELENBU.leg_period_start_posoxctformat
-													AND
-													RESEMPENT.res_entry_end_posoxctformat >= ELENBU.leg_period_start_weeklater_posoxctformat
-												)
-											)
-										)
-										")
-					nrow(ELENBURED)
-					table(ELENBURED$in_parliament) 
-	
-
 	##################################################################################################
-	########################## German distric seats get combined here ################################
+	########################## German distric seats get combined here ################################ <- this got moved up from down below
 	##################################################################################################
 
 	# ELENBU > elected MPS
@@ -537,6 +463,81 @@
 			nrow(ELLIBU)
 	
 	##################################################################################################
+	################### find out which of these people entered parliament_id #########################
+	##################################################################################################
+		# get an 'in parliament'
+		
+			nrow(PARE)
+			PARERED <- PARE[which(PARE$member_ofthisparliament_atsomepoint == "yes"),]
+			nrow(PARERED)
+			
+			# make a fictional parliament id
+			ELENBU$fictional_parl_episode_id<- paste(ELENBU$pers_id,ELENBU$parliament_id,sep="__")
+			head(ELENBU)
+			
+			ELENBU$in_parliament <- ifelse(ELENBU$fictional_parl_episode_id %in% PARERED$parl_episode_id,"yes","no") 
+			table(ELENBU$in_parliament) 
+			table(ELENBU$in_parliament)[2] / (table(ELENBU$in_parliament)[2]+table(ELENBU$in_parliament)[1]) # is roughly one third
+			
+		# and reduce this to the people that where in parliament straight after the election  (taken from R019!) # what am I doing this again?!
+					
+					# tranform the dates
+					RESE$res_entry_start_posoxctformat <- as.POSIXct(as.character(RESE$res_entry_start),format=c("%d%b%Y"))
+					RESE$res_entry_end_posoxctformat <- as.POSIXct(as.character(RESE$res_entry_end),format=c("%d%b%Y"))
+					
+					RESEMPENT <- sqldf("SELECT RESE.res_entry_id, RESE.pers_id, RESE.res_entry_start, RESE.res_entry_end, RESE.res_entry_start_posoxctformat, RESE.res_entry_end_posoxctformat, RESE.parliament_id
+							FROM RESE
+							WHERE RESE.political_function = 'NT_LE_T3_NA_01'")
+					nrow(RESEMPENT) 
+					
+				# update PARL to have the startdate in useable format
+						PARL$leg_period_start_posoxctformat <- as.POSIXct(as.character(PARL$leg_period_start),format=c("%d%b%Y"))
+					
+			# make a dataframe that contains all the people that entered within 'x' weeks of the start of when the faction started
+			
+					# set the range
+						ELENBU$leg_period_start_weeklater_posoxctformat <- ELENBU$leg_period_start_posoxctformat + weeks(1)
+
+					# moving these dates one day to fix overlap issues (on day of transition matching now)
+						RESEMPENT$res_entry_start_posoxctformat =  RESEMPENT$res_entry_start_posoxctformat + days(1)
+						RESEMPENT$res_entry_end_posoxctformat = RESEMPENT$res_entry_end_posoxctformat - days(1)
+			
+				# first, a query that checks for each PARE of each politician if according to this MP its RESE episodes that specific parliaments, this MP was in this parliament in the first week
+			
+					ELENBURED <- sqldf("SELECT ELENBU.*
+									   FROM 
+									   ELENBU, RESEMPENT
+									   WHERE
+									   (
+										   ELENBU.pers_id = RESEMPENT.pers_id
+										   AND
+										   RESEMPENT.parliament_id LIKE '%'||ELENBU.parliament_id||'%'
+										   AND
+										   (
+											   (
+													RESEMPENT.res_entry_start_posoxctformat >= ELENBU.leg_period_start_posoxctformat
+													AND
+													RESEMPENT.res_entry_start_posoxctformat <= ELENBU.leg_period_start_weeklater_posoxctformat
+												)
+												OR
+												(
+													RESEMPENT.res_entry_end_posoxctformat >= ELENBU.leg_period_start_posoxctformat
+													AND
+													RESEMPENT.res_entry_end_posoxctformat <= ELENBU.leg_period_start_weeklater_posoxctformat
+												)
+												OR
+												(
+													RESEMPENT.res_entry_start_posoxctformat <= ELENBU.leg_period_start_posoxctformat
+													AND
+													RESEMPENT.res_entry_end_posoxctformat >= ELENBU.leg_period_start_weeklater_posoxctformat
+												)
+											)
+										)
+										")
+					nrow(ELENBURED)
+					table(ELENBURED$in_parliament) 
+	
+	##################################################################################################
 	###################################### aggregation here ##########################################
 	##################################################################################################
 	
@@ -574,11 +575,10 @@
 			head(ELLIBU)
 			ELLIBU[30:50,]
 			tail(ELLIBU)
-			table(ELLIBU$parliament_id) # still a lot more lists in DE, about 2000 per election?! - this should be less right?
+			table(ELLIBU$parliament_id) # this looks a lot better now
+			length(unique(ELLIBU$list_id))
+			nrow(ELLIBU) # close enough for now
 			
-			table(ELLIBU[which(ELLIBU$parliament_id == "DE_NT-BT_1994"),]$list_id) # so I see here that indeed aggregation was successfull, but, now what... 
-			
-		
 		# get a count of the number of people in each faction
 			MemVec <- as.matrix(table(ELENBU$list_id))
 			MEMCOUNT <- data.frame(rownames(MemVec),unlist(MemVec))
@@ -599,6 +599,9 @@
 			table(ELLIBU$sumcheck)
 			
 		# lets select the 'complete' cases: where these is not to little knowledge on the number of men and women
+			
+			
+			
 			nrow(ELLIBU)
 			ELLIBUCOMP <- ELLIBU
 		#	ELLIBUCOMP <- ELLIBU[which(ELLIBU$sumcheck == 0),]
@@ -609,16 +612,18 @@
 			
 			nrow(ELLIBU) / (nrow(ELLIBUCOMP)+nrow(ELLIBU)) # using about 50% of the currently available cases (which are all list for CH, but only some of the main parties for NL and only 2017 for DE?)
 		
+			ELLIBUCOMP$parliament_id <- as.factor(ELLIBUCOMP$parliament_id)
+		
 		boxplot(ELLIBUCOMP$ratio_on_list~ELLIBUCOMP$country)
 		table(is.na(ELLIBUCOMP$ratio_on_list),ELLIBUCOMP$country)
-		
+			
 			EDE <- ELLIBUCOMP[which(ELLIBUCOMP$country == "DE"),]
 			nrow(EDE)
 			boxplot(EDE$ratio_on_list~droplevels(EDE$parliament_id))
 			
 			ENL <- ELLIBUCOMP[which(ELLIBUCOMP$country == "NL"),]
 			nrow(ENL)
-			boxplot(ENL$ratio_on_list~droplevels(ENL$parliament_id)) # carefull, there are only very few lists where we actually have the full gender composition!
+			boxplot(ENL$ratio_on_list~droplevels(ENL$parliament_id)) 
 			
 			ECH <- ELLIBUCOMP[which(ELLIBUCOMP$country == "CH"),]
 			nrow(ECH)
@@ -663,7 +668,7 @@
 			GCPARE$ratio <- GCPARE$f / (GCPARE$f+GCPARE$m)
 			hist(GCPARE$ratio)
 			
-		# now merge this in into the ELLI data we made above
+		# now merge this in into the ELLI data we made above - looks like something is going wrong here?!
 		
 		ELLIBU <- sqldf("SELECT ELLIBU.*, GCPARE.f as 'f_elected', GCPARE.m as 'm_elected', GCPARE.ratio as 'ratio_elected'
 						FROM ELLIBU LEFT JOIN GCPARE
@@ -713,6 +718,7 @@
 			ELLIBU$district_magnitude <- resvec
 			tail(ELLIBU)
 			head(ELLIBU)
+			table(ELLIBU$district_magnitude) # this one now broke, fix later
 			
 		### get party size in (for now just number of people from this party that got elected in the parliament)
 
@@ -874,7 +880,7 @@
 			hist(ELLIBU$ambition_realisation_gap[which(ELLIBU$country =="NL")]) # lets add this to the overleaf file
 				
 			# key descriptive relating to Philip suggestion
-			boxplot(ELLIBU$ambition_realisation_gap~ELLIBU$country)
+			boxplot(ELLIBU$ambition_realisation_gap~ELLIBU$keylisttypes)
 			
 		# ambition to selection gap (quota percentage - percentage selected)
 			
