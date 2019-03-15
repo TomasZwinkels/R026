@@ -464,6 +464,7 @@
 			head(ELLIBU)
 			ELLIBU[30:50,]
 			tail(ELLIBU)
+			table(ELLIBU$parliament_id)
 		
 		# get a count of the number of people in each faction
 			MemVec <- as.matrix(table(ELENBU$list_id))
@@ -481,15 +482,17 @@
 			ELLIBU[30:50,]
 			tail(ELLIBU)
 			
-			ELLIBU$sumcheck <- (ELLIBU$f+ELLIBU$m) - ELLIBU$list_member_count
+			ELLIBU$sumcheck <- (ELLIBU$f+ELLIBU$m) - ELLIBU$list_member_count # right, so zero is good here! this means that the number of women and men together add up to the total number on the list
 			table(ELLIBU$sumcheck)
 			
-		# lets select the 'complete cases'
+		# lets select the 'complete' cases: where these is not to little knowledge on the number of men and women
 			nrow(ELLIBU)
 			ELLIBUCOMP <- ELLIBU
 		#	ELLIBUCOMP <- ELLIBU[which(ELLIBU$sumcheck == 0),]
-		ELLIBUCOMP <- ELLIBU[which(ELLIBU$sumcheck > -6),]
+		
+			ELLIBUCOMP <- ELLIBU[which(ELLIBU$sumcheck > -8),] # arbritary decision, how big do I allow the gap to be?
 			nrow(ELLIBUCOMP)
+			nrow(ELLIBU) - nrow(ELLIBUCOMP) # only lossing about 700 election lists here
 			
 			nrow(ELLIBU) / (nrow(ELLIBUCOMP)+nrow(ELLIBU)) # using about 60% of the currently available cases (which are all list for CH, but only some of the main parties for NL and only 2017 for DE?)
 		
@@ -568,9 +571,6 @@
 
 		### get district magnitude in (for now just number of people that got elected from this district in this parliament)
 		
-			mydistrict <- ELLIBU$district_id[9993]
-		
-			i = 2000
 			resvec <- vector()
 			for(i in 1:nrow(ELLIBU))
 			{
@@ -634,6 +634,7 @@
 			ELLIBU$type <- ifelse(grepl("_district-",ELLIBU$list_id),"district","list") # _ and - are needed because otherwise it also hits on some swiss names
 			head(ELLIBU)
 			table(ELLIBU$country,ELLIBU$type)
+			# /\ this needs to be developed to follow Philip his specification
 			
 		### was there a quota
 
@@ -663,6 +664,7 @@
 			ELLIBU$quota_now <- as.factor(ELLIBU$quota_now)
 			head(ELLIBU)
 			tail(ELLIBU)
+			table(ELLIBU$quota_now)
 	
 	### for all the list seats, get a variable as well that indicates what the percentage of women was on the district seats in this list its region
 	
@@ -709,28 +711,65 @@
 			close(pb)
 			summary(ELLIBU$percentage_onlist_indistrict)
 			nrow(ELLIBU)
+
+	## creating the two crucial gap variables 
+		
+		# there are a total of two steps: ambition --(step 1)--> percentage on list --(step 2)--> percentage elected
+			head(ELLIBU)
+		# ambition realisation gap (overall gap) (quota percentage - percentage elected)
 			
+			# inspection
+			table(ELLIBU$quota_now)
+			table(ELLIBU$quota_percentage)
+			sum(table(ELLIBU$quota_percentage)) # percentage specifications seem complete
+			
+			# adding a 0% category
+			ELLIBU$quota_percentage_cleaned <- ifelse(ELLIBU$quota_now == 0,0,ELLIBU$quota_percentage)
+			
+			# more inspection
+			table(ELLIBU$quota_percentage_cleaned)
+			table(is.na(ELLIBU$quota_percentage_cleaned)) # so, we have we have quota info for a little more then half the election lists
+			table(is.na(ELLIBU$quota_percentage_cleaned),ELLIBU$country) # complete in NL, nothing in Switserland
+		
+			# calculating the gap
+			ELLIBU$ambition_realisation_gap <- ((ELLIBU$quota_percentage/100)- ELLIBU$ratio_elected)
+
+			# inspection of the gap
+			table(is.na(ELLIBU$ambition_realisation_gap))
+			hist(ELLIBU$ambition_realisation_gap) # some suggestion here that unit of analysis of the district, and counting this as a simular case then lets say a list is not really fair?
+			
+			boxplot(ELLIBU$ambition_realisation_gap~ELLIBU$country) # see point above, districts that have a women count as a one, how to do this? Maybe take the average percentages at the level of the secundary districts for DE or so?
+			hist(ELLIBU$ambition_realisation_gap[which(ELLIBU$country =="DE")]) # lets add this to the overleaf file
+			hist(ELLIBU$ambition_realisation_gap[which(ELLIBU$country =="NL")]) # lets add this to the overleaf file
+				
+			# key descriptive relating to Philip suggestion
+			boxplot(ELLIBU$ambition_realisation_gap~ELLIBU$country)
+			
+		# ambition to selection gap (quota percentage - percentage selected)
+		
+		# selection to election gap (percentage selected - percentage elected)
+
 ######################################## reduction here ##########################################
 ##################################################################################################
 
 	# focus on list candidates only - temp!
-		table(ELLIBU$type)
-		nrow(ELLIBU)
-		ELLIBU <- ELLIBU[which(ELLIBU$type == "list"),]
-		nrow(ELLIBU)
+#		table(ELLIBU$type)
+#		nrow(ELLIBU)
+#		ELLIBU <- ELLIBU[which(ELLIBU$type == "list"),]
+#		nrow(ELLIBU)
 
 	# reduce to those cases after 1982
-		ELLIBU$year <- as.numeric(as.character(substrRight(ELLIBU$parliament_id,4)))
-		table(ELLIBU$year)
+#		ELLIBU$year <- as.numeric(as.character(substrRight(ELLIBU$parliament_id,4)))
+#		table(ELLIBU$year)
 		
-		nrow(ELLIBU)
-		ELLIBU <- ELLIBU[which(ELLIBU$year > 1981),]
-		nrow(ELLIBU)
+#		nrow(ELLIBU)
+#		ELLIBU <- ELLIBU[which(ELLIBU$year > 1981),]
+#		nrow(ELLIBU)
 			
 	# exclude those cases in which no women got elected at all
-		nrow(ELLIBU)
-		ELLIBU <- ELLIBU[which(!is.na(ELLIBU$f_elected)),] # we loose about 2/3 of cases
-		nrow(ELLIBU)
+#		nrow(ELLIBU)
+#		ELLIBU <- ELLIBU[which(!is.na(ELLIBU$f_elected)),] # we loose about 2/3 of cases
+#		nrow(ELLIBU)
 
 ######################################################################################
 ############################### DESCRIPTIVE RESULTS ##################################
@@ -743,6 +782,14 @@
 		ELLIBU$countryld[which(ELLIBU$countryld == "DE" & ELLIBU$type == "list")] <- "DE-L"
 		ELLIBU$countryld[which(ELLIBU$countryld == "DE" & ELLIBU$type == "district")] <- "DE-D"
 		table(ELLIBU$countryld)
+	
+		# following Philip his suggested distinction
+		ELLIBU$keylisttypes <- ELLIBU$countryld
+		ELLIBU$keylisttypes[which(ELLIBU$keylisttypes == "DE")] <- "one-list"
+		ELLIBU$keylisttypes[which(ELLIBU$keylisttypes == "DE")] <- "party-list-secondary-districts"
+		ELLIBU$keylisttypes[which(ELLIBU$keylisttypes == "DE")] <- "single-member-districts"
+		ELLIBU$keylisttypes[which(ELLIBU$keylisttypes == "DE")] <- "DE-D"
+		table(ELLIBU$keylisttypes)
 		
 	# some general descriptives for the first version of the paper
 	
