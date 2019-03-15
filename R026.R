@@ -494,7 +494,7 @@
 			nrow(ELLIBUCOMP)
 			nrow(ELLIBU) - nrow(ELLIBUCOMP) # only lossing about 700 election lists here
 			
-			nrow(ELLIBU) / (nrow(ELLIBUCOMP)+nrow(ELLIBU)) # using about 60% of the currently available cases (which are all list for CH, but only some of the main parties for NL and only 2017 for DE?)
+			nrow(ELLIBU) / (nrow(ELLIBUCOMP)+nrow(ELLIBU)) # using about 50% of the currently available cases (which are all list for CH, but only some of the main parties for NL and only 2017 for DE?)
 		
 		boxplot(ELLIBUCOMP$ratio_on_list~ELLIBUCOMP$country)
 		table(is.na(ELLIBUCOMP$ratio_on_list),ELLIBUCOMP$country)
@@ -541,7 +541,7 @@
 	
 	###### gender aggregations on the reduced data! #######
 	
-			GCPARE <- as.data.frame.matrix(table(ELENBURED$list_id,ELENBURED$genderguesses))
+			GCPARE <- as.data.frame.matrix(table(ELENBURED$list_id,ELENBURED$genderguesses)) # is this correct? We calculate the ratio of men/women for each list that lead to anybody being elected
 			GCPARE$list_id <- rownames(GCPARE)
 			head(GCPARE)
 			GCPARE[30:50,]
@@ -568,6 +568,24 @@
 	##################################################################################################
 	################################# variable building here #########################################
 	##################################################################################################
+
+		### country with lists/district device
+			names(ELLIBU)
+			ELLIBU$countryld <- ELLIBU$country
+			table(ELLIBU$country,ELLIBU$type)
+			ELLIBU$countryld[which(ELLIBU$countryld == "DE" & ELLIBU$type == "list")] <- "DE-L"
+			ELLIBU$countryld[which(ELLIBU$countryld == "DE" & ELLIBU$type == "district")] <- "DE-D"
+			table(ELLIBU$countryld)
+		
+		### following Philip his suggested distinction
+			ELLIBU$keylisttypes <- ELLIBU$countryld
+			ELLIBU$keylisttypes[which(ELLIBU$keylisttypes == "CH")] <- "party-list-secondary-districts"
+			ELLIBU$keylisttypes[which(ELLIBU$keylisttypes == "DE-L")] <- "party-list-secondary-districts"
+			ELLIBU$keylisttypes[which(ELLIBU$keylisttypes == "DE-D")] <- "single-member-districts"
+			ELLIBU$keylisttypes[which(ELLIBU$keylisttypes == "NL")] <- "one-list"
+			table(ELLIBU$keylisttypes)
+			table(ELLIBU$keylisttypes,ELLIBU$countryld)
+
 
 		### get district magnitude in (for now just number of people that got elected from this district in this parliament)
 		
@@ -732,23 +750,53 @@
 			table(is.na(ELLIBU$quota_percentage_cleaned),ELLIBU$country) # complete in NL, nothing in Switserland
 		
 			# calculating the gap
-			ELLIBU$ambition_realisation_gap <- ((ELLIBU$quota_percentage/100)- ELLIBU$ratio_elected)
+			ELLIBU$ambition_realisation_gap <- (ELLIBU$ratio_elected - (ELLIBU$quota_percentage/100)) # negative numbers indicate that the quota was not reached (less women elected then specified)
 
 			# inspection of the gap
 			table(is.na(ELLIBU$ambition_realisation_gap))
 			hist(ELLIBU$ambition_realisation_gap) # some suggestion here that unit of analysis of the district, and counting this as a simular case then lets say a list is not really fair?
 			
 			boxplot(ELLIBU$ambition_realisation_gap~ELLIBU$country) # see point above, districts that have a women count as a one, how to do this? Maybe take the average percentages at the level of the secundary districts for DE or so?
-			hist(ELLIBU$ambition_realisation_gap[which(ELLIBU$country =="DE")]) # lets add this to the overleaf file
+			hist(ELLIBU$ambition_realisation_gap[which(ELLIBU$country =="DE")]) # lets add this to the overleaf file - some suggestion indeed that much more often in DE quota is not reached?
 			hist(ELLIBU$ambition_realisation_gap[which(ELLIBU$country =="NL")]) # lets add this to the overleaf file
 				
 			# key descriptive relating to Philip suggestion
 			boxplot(ELLIBU$ambition_realisation_gap~ELLIBU$country)
 			
 		# ambition to selection gap (quota percentage - percentage selected)
+			
+			# calculating this gap
+			ELLIBU$ambition_selection_gap <- (ELLIBU$ratio_on_list - (ELLIBU$quota_percentage/100))
+			
+			# inspection of the gap
+			table(is.na(ELLIBU$ambition_selection_gap)) # so, just as a note so self, quite a bit more cases because from many lists never anybody got elected?
+			hist(ELLIBU$ambition_selection_gap) # looks a lot like the ambition realisation gap? - so some suggestion that the selection step is the crucial one in the sample as a whole?
+			boxplot(ELLIBU$ambition_selection_gap~ELLIBU$country) 
+			hist(ELLIBU$ambition_selection_gap[which(ELLIBU$country =="DE")])
+			hist(ELLIBU$ambition_selection_gap[which(ELLIBU$country =="NL")]) 
 		
+			# inspecting some of these 'extreme' german cases
+			ELLIBU[which(ELLIBU$ambition_selection_gap > 0.7),] # seem to be SPD cases, with 25% as the ambition, and then the districts select a women (1)
+			table(ELLIBU[which(ELLIBU$ambition_selection_gap < -0.4),]$nat_party_id)
+			table(ELLIBU[which(ELLIBU$ambition_selection_gap < -0.4),]$keylisttypes) # so, indeed, is all of the single-member districts
+			
 		# selection to election gap (percentage selected - percentage elected)
 
+			# calculating this gap
+			ELLIBU$selection_election_gap <- ELLIBU$ratio_elected - ELLIBU$ratio_on_list # negative numbers indicate that less women where elected then selected
+			
+			# inspection
+			table(is.na(ELLIBU$selection_election_gap)) # very large number of NA here is the result of many election lists just not leading to anybody being elected
+			table(is.na(ELLIBU$ratio_elected)) # by far most cases are lost here
+			table(is.na(ELLIBU$ratio_on_list))
+			
+			hist(ELLIBU$selection_election_gap) # not a lot is happening here?
+			boxplot(ELLIBU$selection_election_gap~ELLIBU$country) 
+			hist(ELLIBU$selection_election_gap[which(ELLIBU$country =="CH")])
+			hist(ELLIBU$selection_election_gap[which(ELLIBU$country =="DE")])
+			hist(ELLIBU$selection_election_gap[which(ELLIBU$country =="NL")]) 
+			
+			
 ######################################## reduction here ##########################################
 ##################################################################################################
 
@@ -774,22 +822,6 @@
 ######################################################################################
 ############################### DESCRIPTIVE RESULTS ##################################
 ######################################################################################			
-
-	# country with lists/district device
-		names(ELLIBU)
-		ELLIBU$countryld <- ELLIBU$country
-		table(ELLIBU$country,ELLIBU$type)
-		ELLIBU$countryld[which(ELLIBU$countryld == "DE" & ELLIBU$type == "list")] <- "DE-L"
-		ELLIBU$countryld[which(ELLIBU$countryld == "DE" & ELLIBU$type == "district")] <- "DE-D"
-		table(ELLIBU$countryld)
-	
-		# following Philip his suggested distinction
-		ELLIBU$keylisttypes <- ELLIBU$countryld
-		ELLIBU$keylisttypes[which(ELLIBU$keylisttypes == "DE")] <- "one-list"
-		ELLIBU$keylisttypes[which(ELLIBU$keylisttypes == "DE")] <- "party-list-secondary-districts"
-		ELLIBU$keylisttypes[which(ELLIBU$keylisttypes == "DE")] <- "single-member-districts"
-		ELLIBU$keylisttypes[which(ELLIBU$keylisttypes == "DE")] <- "DE-D"
-		table(ELLIBU$keylisttypes)
 		
 	# some general descriptives for the first version of the paper
 	
