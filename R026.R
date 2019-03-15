@@ -428,32 +428,142 @@
 										")
 					nrow(ELENBURED)
 					table(ELENBURED$in_parliament) 
-					
-	##################################################################################################
-	###################################### aggregation here ##########################################
-	##################################################################################################
 	
-	##### aggregation on the ELLI level ######
-			GCELLI <- as.data.frame.matrix(table(ELENBU$list_id,ELENBU$genderguesses)) # so, note to future self: if there is missingness here it is simply ignored. only known cases are counted
-			GCELLI$list_id <- rownames(GCELLI)		
-			GCELLI$ratio <- GCELLI$f / (GCELLI$f+GCELLI$m)
-			
-			head(GCELLI)
-			GCELLI[30:50,]
-			tail(GCELLI)
-			
-			hist(GCELLI$ratio) # so this is the ratio of men/women on the election lists
 
-		# merge into an ELLI level data-frame
+	##################################################################################################
+	########################## German distric seats get combined here ################################
+	##################################################################################################
+
+	# ELENBU > elected MPS
+		table(ELENBU[which(ELENBU$country == "DE"),]$list_id)
+		
+		# so, what we would like is to have an adjusted version of the list id, that aggregates the district types to their land
 			
+			# lets start with taking the region_abb from ELDI
+			nrow(ELENBU)
+			TEMP <- sqldf("SELECT ELENBU.*, ELDI.region_abb
+			               FROM ELENBU LEFT JOIN ELDI
+						   ON ELENBU.district_id = ELDI.district_id
+						  ")
+			nrow(TEMP)
+			table(TEMP$region_abb)
+			ELENBU <- TEMP
+
+		# for the german district candidates, we replace the list_id with another version on basis of this district abbreviation
+			table(grepl("district-",ELENBU$list_name)) # cases where we are looking at german single member districts
+			
+			i = 163049
+		
+		resvec <- vector()
+		ELENBU$list_id <- as.character(ELENBU$list_id)
+		for(i in 1:nrow(ELENBU))
+		{
+
+			# loop throught the replacement here
+				if (grepl("district-",ELENBU$list_name[i])) # if this is a district, then replace the list_id
+				{ 
+					resvec[i] <-  gsub("__.+__district-.+",paste("__district-seats-",ELENBU$region_abb[i],"__",ELENBU$party_id_from_elli_nat_equiv[i],sep=""),ELENBU$list_id[i])
+				} else { #otherwise keep the current one
+					resvec[i] <- ELENBU$list_id[i]
+				}
+		}
+		length(unique(resvec))
+		length(unique(ELENBU$list_id))
+		# lets check this number
+		head(ELENBU)
+		tail(ELENBU)
+		table(grepl("district-",ELENBU$list_name))
+		(length(unique(ELENBU$list_id)) - length(unique(resvec))) 
+		
+		# lets add the result to another aggregation variable
+		ELENBU$list_id_aggr <- resvec
+	
+		# now, we also need to not just give them the same ID, but really aggregate them
+		
+			# inspection
+			ELENBU[which(ELENBU$list_id_aggr == "DE_NT-BT_1998__district-seats-NW__DE_OEDP_NT"),] # this looks quite good, all on one list now... 
+		
+	## this same thing needs to be done in the ELLI data! ## 
+		head(ELLI)
+		tail(ELLI)
+		ELLI[10000:10010,]
+		
+		# also get the region abbreviation in here 
+			nrow(ELLI)
+			TEMP2 <- sqldf("SELECT ELLI.*, ELDI.region_abb
+			               FROM ELLI LEFT JOIN ELDI
+						   ON ELLI.district_id = ELDI.district_id
+						  ")
+			nrow(TEMP2) # one double district id somewhere?
+			table(TEMP2$region_abb)
+			ELLI <- TEMP2
+		
+		# 
+		ELLI$party_id_nat_equiv <- gsub("RE-[A-Z]{2}","NT",ELLI$party_id)
+		
+		resvec2 <- vector()
+		ELLI$list_id <- as.character(ELLI$list_id)
+		for(i in 1:nrow(ELLI))
+		{
+
+			# loop throught the replacement here
+				if (grepl("district-",ELLI$list_name[i])) # if this is a district, then replace the list_id
+				{ 
+					resvec2[i] <-  gsub("__.+__district-.+",paste("__district-seats-",ELLI$region_abb[i],"__",ELLI$party_id_nat_equiv[i],sep=""),ELLI$list_id[i])
+				} else { #otherwise keep the current one
+					resvec2[i] <- ELLI$list_id[i]
+				}
+		}
+		length(unique(resvec2))
+		length(unique(ELLI$list_id))
+		length(unique(ELLI$list_id)) - length(unique(resvec2)) # exact same amount as above, which is very promissing
+		ELLI$list_id_aggr <- resvec2
+		
+	# now for ELLI, we also need to combine thse values? Because this is technically only one list now?!
+		ELLI[36000:36010,]
+		
+		# only thing really needs to happen for that is to remove the district id and to then select all the unique rows?
 			nrow(ELLI)
 			ELLI$country <- substr(ELLI$list_id,1,2)
 			table(ELLI$country)
 		
-			ELLIBU <- sqldf("SELECT list_id, list_name, parliament_id, list_length, country, party_id, district_id
+			ELLIBU <- sqldf("SELECT list_id, list_name, parliament_id, list_length, country, party_id
 						FROM ELLI
 						")
 			head(ELLIBU)
+
+			nrow(ELLIBU)
+			ELLIBU <- ELLIBU[!duplicated(ELLIBU),]
+			nrow(ELLIBU)
+	
+	##################################################################################################
+	###################################### aggregation here ##########################################
+	##################################################################################################
+	
+		# temp trial overwrites
+		length(unique(ELENBU$list_id))
+		ELENBU$list_id <- ELENBU$list_id_aggr
+		length(unique(ELENBU$list_id))
+		
+		length(unique(ELLI$list_id))
+		ELLI$list_id <- ELLI$list_id_aggr
+		length(unique(ELLI$list_id))
+		
+	##### aggregation on the ELLI level ######
+			GCELLI <- as.data.frame.matrix(table(ELENBU$list_id,ELENBU$genderguesses)) # so, note to future self: if there is missingness here it is simply ignored. only known cases are counted
+			
+			GCELLI$list_id <- rownames(GCELLI)		
+			GCELLI$country <- substr(GCELLI$list_id,1,2)
+			table(GCELLI$country)
+			GCELLI$ratio <- GCELLI$f / (GCELLI$f+GCELLI$m)
+			
+			head(GCELLI[which(GCELLI$country == "DE"),])
+			tail(GCELLI[which(GCELLI$country == "DE"),])
+			# this looks good
+					
+			hist(GCELLI$ratio) # so this is the ratio of men/women on the election lists
+
+		# merge into the ELLI level data-frame which above was given the same abbreviated list ids, this data-frame was reduced above
 			
 			ELLIBU <- sqldf("SELECT ELLIBU.*, GCELLI.f, GCELLI.m, GCELLI.ratio as 'ratio_on_list'
 						FROM ELLIBU LEFT JOIN GCELLI
@@ -464,7 +574,10 @@
 			head(ELLIBU)
 			ELLIBU[30:50,]
 			tail(ELLIBU)
-			table(ELLIBU$parliament_id)
+			table(ELLIBU$parliament_id) # still a lot more lists in DE, about 2000 per election?! - this should be less right?
+			
+			table(ELLIBU[which(ELLIBU$parliament_id == "DE_NT-BT_1994"),]$list_id) # so I see here that indeed aggregation was successfull, but, now what... 
+			
 		
 		# get a count of the number of people in each faction
 			MemVec <- as.matrix(table(ELENBU$list_id))
