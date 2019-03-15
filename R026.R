@@ -352,6 +352,9 @@
 		table(is.na(ELENBU$genderguesses),ELENBU$country) # so, decent amounts of missingness per country still
 		prop.table(table(is.na(ELENBU$genderguesses),ELENBU$country),2) # about 13% in CH and NL and 5% in DE
 	
+		table(is.na(ELENBU$genderguesses),ELENBU$list_id) 
+		prop.table(table(is.na(ELENBU$genderguesses),ELENBU$list_id),2) 
+	
 	#### find out which of these people entered parliament_id ####
 	
 		# get an 'in parliament'
@@ -431,7 +434,7 @@
 	##################################################################################################
 	
 	##### aggregation on the ELLI level ######
-			GCELLI <- as.data.frame.matrix(table(ELENBU$list_id,ELENBU$genderguesses))
+			GCELLI <- as.data.frame.matrix(table(ELENBU$list_id,ELENBU$genderguesses)) # so, note to future self: if there is missingness here it is simply ignored. only known cases are counted
 			GCELLI$list_id <- rownames(GCELLI)		
 			GCELLI$ratio <- GCELLI$f / (GCELLI$f+GCELLI$m)
 			
