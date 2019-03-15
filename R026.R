@@ -409,6 +409,11 @@
 			# inspection
 			ELENBU[which(ELENBU$list_id_aggr == "DE_NT-BT_1998__district-seats-NW__DE_OEDP_NT"),] # this looks quite good, all on one list now... 
 		
+		# temp trial overwrite here!
+		length(unique(ELENBU$list_id))
+		ELENBU$list_id <- ELENBU$list_id_aggr
+		length(unique(ELENBU$list_id))
+		
 	## this same thing needs to be done in the ELLI data! ## 
 		head(ELLI)
 		tail(ELLI)
@@ -444,6 +449,11 @@
 		length(unique(ELLI$list_id))
 		length(unique(ELLI$list_id)) - length(unique(resvec2)) # exact same amount as above, which is very promissing
 		ELLI$list_id_aggr <- resvec2
+	
+	# overwrite here!
+		length(unique(ELLI$list_id))
+		ELLI$list_id <- ELLI$list_id_aggr
+		length(unique(ELLI$list_id))
 		
 	# now for ELLI, we also need to combine thse values? Because this is technically only one list now?!
 		ELLI[36000:36010,]
@@ -461,6 +471,7 @@
 			nrow(ELLIBU)
 			ELLIBU <- ELLIBU[!duplicated(ELLIBU),]
 			nrow(ELLIBU)
+	
 	
 	##################################################################################################
 	################### find out which of these people entered parliament_id #########################
@@ -535,20 +546,11 @@
 										)
 										")
 					nrow(ELENBURED)
-					table(ELENBURED$in_parliament) 
+					table(ELENBURED$in_parliament) # should be 100?%
 	
 	##################################################################################################
 	###################################### aggregation here ##########################################
 	##################################################################################################
-	
-		# temp trial overwrites
-		length(unique(ELENBU$list_id))
-		ELENBU$list_id <- ELENBU$list_id_aggr
-		length(unique(ELENBU$list_id))
-		
-		length(unique(ELLI$list_id))
-		ELLI$list_id <- ELLI$list_id_aggr
-		length(unique(ELLI$list_id))
 		
 	##### aggregation on the ELLI level ######
 			GCELLI <- as.data.frame.matrix(table(ELENBU$list_id,ELENBU$genderguesses)) # so, note to future self: if there is missingness here it is simply ignored. only known cases are counted
@@ -682,14 +684,23 @@
 			ELLIBU[9030:9050,]
 			tail(ELLIBU)
 			
+		# so there is an issue here, none of the single member districts are merged in?!
+		ELLIBU$list_id %in% GCPARE$list_id
+		ELLIBU$list_id
+		GCPARE$list_id
+			
 	
 	##################################################################################################
 	################################# variable building here #########################################
 	##################################################################################################
 
+		### lets make the type one again, just a grepl on word district
+			ELLIBU$type <- ifelse(grepl("district-seats-",ELLIBU$list_id),"district","list")
+
 		### country with lists/district device
 			names(ELLIBU)
 			ELLIBU$countryld <- ELLIBU$country
+			table(ELLIBU$type)
 			table(ELLIBU$country,ELLIBU$type)
 			ELLIBU$countryld[which(ELLIBU$countryld == "DE" & ELLIBU$type == "list")] <- "DE-L"
 			ELLIBU$countryld[which(ELLIBU$countryld == "DE" & ELLIBU$type == "district")] <- "DE-D"
@@ -867,7 +878,10 @@
 			table(ELLIBU$quota_percentage_cleaned)
 			table(is.na(ELLIBU$quota_percentage_cleaned)) # so, we have we have quota info for a little more then half the election lists
 			table(is.na(ELLIBU$quota_percentage_cleaned),ELLIBU$country) # complete in NL, nothing in Switserland
-		
+			
+			table(is.na(ELLIBU$quota_percentage),ELLIBU$keylisttypes) # still, some of everything?
+			table(is.na(ELLIBU$ratio_elected),ELLIBU$keylisttypes) # no ratio elected for any of the single member districts?!
+			
 			# calculating the gap
 			ELLIBU$ambition_realisation_gap <- (ELLIBU$ratio_elected - (ELLIBU$quota_percentage/100)) # negative numbers indicate that the quota was not reached (less women elected then specified)
 
@@ -882,9 +896,15 @@
 			# key descriptive relating to Philip suggestion
 			boxplot(ELLIBU$ambition_realisation_gap~ELLIBU$keylisttypes)
 			
+			table(is.na(ELLIBU$ambition_realisation_gap))
+			table(is.na(ELLIBU$ambition_realisation_gap),is.na(ELLIBU$keylisttypes))
+			
 		# ambition to selection gap (quota percentage - percentage selected)
 			
 			# calculating this gap
+			table(is.na(ELLIBU$ratio_on_list))
+			table(is.na(ELLIBU$quota_percentage)) # ok, so hardly any quotas
+			table(is.na(ELLIBU$quota_percentage),is.na())
 			ELLIBU$ambition_selection_gap <- (ELLIBU$ratio_on_list - (ELLIBU$quota_percentage/100))
 			
 			# inspection of the gap
