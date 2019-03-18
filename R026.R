@@ -439,6 +439,7 @@
 		
 		# only thing really needs to happen for that is to remove the district id and to then select all the unique rows?
 			ELLI$country <- substr(ELLI$list_id,1,2)
+			table(is.na(ELLI$country))
 		
 			ELLIBU <- sqldf("SELECT list_id, list_name, parliament_id, list_length, country, party_id
 						FROM ELLI
@@ -447,7 +448,7 @@
 			nrow(ELLIBU)
 			ELLIBU <- ELLIBU[!duplicated(ELLIBU),]
 			nrow(ELLIBU)
-			
+			table(is.na(ELLIBU$country))
 	
 	##################################################################################################
 	################### find out which of these people entered parliament_id #########################
@@ -537,10 +538,12 @@
 			GCELLI$list_id <- rownames(GCELLI)		
 			GCELLI$country <- substr(GCELLI$list_id,1,2)
 			table(GCELLI$country)
+			table(is.na(GCELLI$country))
 			GCELLI$ratio <- GCELLI$f / (GCELLI$f+GCELLI$m)
 			
 			head(GCELLI[which(GCELLI$country == "DE"),])
 			tail(GCELLI[which(GCELLI$country == "DE"),])
+			ELLIBU
 			# this looks good
 					
 			hist(GCELLI$ratio) # so this is the ratio of men/women on the election lists
@@ -561,11 +564,12 @@
 			nrow(ELLIBU) # close enough for now
 			
 		# get a count of the number of people in each faction
-			MemVec <- as.matrix(table(ELENBU$list_id))
+			MemVec <- as.matrix(table(ELENBU$list_id)) # also this list id has been replaced with the aggregate one
 			MEMCOUNT <- data.frame(rownames(MemVec),unlist(MemVec))
 			colnames(MEMCOUNT) <- c("list_id","list_member_count")
 			head(MEMCOUNT)
-			
+
+			nrow(ELLIBU)
 			ELLIBU <- sqldf("SELECT ELLIBU.*, MEMCOUNT.list_member_count
 						FROM ELLIBU LEFT JOIN MEMCOUNT
 						ON
@@ -581,19 +585,25 @@
 			
 		# lets select the 'complete' cases: where these is not to little knowledge on the number of men and women
 			
-			
-			
 			nrow(ELLIBU)
 			ELLIBUCOMP <- ELLIBU
+			
 		#	ELLIBUCOMP <- ELLIBU[which(ELLIBU$sumcheck == 0),]
 		
-			ELLIBUCOMP <- ELLIBU[which(ELLIBU$sumcheck > -8),] # arbritary decision, how big do I allow the gap to be?
+			CD <- ELLIBU[which(!ELLIBU$sumcheck > -8),]
+			table(CD$parliament_id) # right, so way to many from the Dutch 2012 parliament indeed!
+			CD[which(CD$parliament_id == "NL_NT-TK_2012"),] # so inspection reveals, very many cases with only innitials, this is where this goes wrong, because no gender guesses possible like this.. 
+		
+		# so... lets just remove this restriction for now
+		##	ELLIBUCOMP <- ELLIBU[which(ELLIBU$sumcheck > -8),] # arbritary decision, how big do I allow the gap to be?, right so the last year for NL is off a lot?!
 			nrow(ELLIBUCOMP)
 			nrow(ELLIBU) - nrow(ELLIBUCOMP) # only lossing about 700 election lists here
 			
 			nrow(ELLIBU) / (nrow(ELLIBUCOMP)+nrow(ELLIBU)) # using about 50% of the currently available cases (which are all list for CH, but only some of the main parties for NL and only 2017 for DE?)
-		
-			ELLIBUCOMP$parliament_id <- as.factor(ELLIBUCOMP$parliament_id)
+			
+			table(ELLIBUCOMP$parliament_id)
+			ELLIBUCOMP$parliament_id <- as.factor(as.character(ELLIBUCOMP$parliament_id))
+			table(ELLIBUCOMP$parliament_id)
 		
 		boxplot(ELLIBUCOMP$ratio_on_list~ELLIBUCOMP$country)
 		table(is.na(ELLIBUCOMP$ratio_on_list),ELLIBUCOMP$country)
@@ -605,6 +615,13 @@
 			ENL <- ELLIBUCOMP[which(ELLIBUCOMP$country == "NL"),]
 			nrow(ENL)
 			boxplot(ENL$ratio_on_list~droplevels(ENL$parliament_id)) 
+			
+			# why this drop in NL at the end? 2012 election lists not imported yet I suppose?
+			ELLIBU[which(ELLIBU$parliament_id == "NL_NT-TK_2012"),]$parliament_id[1] == ELLIBUCOMP[which(ELLIBUCOMP$parliament_id == "NL_NT-TK_2012"),]$parliament_id[1]
+			
+			ELLIBU[which(ELLIBU$parliament_id == "NL_NT-TK_2012"),]
+			ELLIBUCOMP[which(ELLIBUCOMP$parliament_id == "NL_NT-TK_2012"),] # alright, so here a lot of cases are missing!
+			ELENBU[which(ELENBU$list_id == "NL_NT-TK_2012__NL_NT-TK_2012__Netherlands[13|20]__Partij-van-de-Arbeid"),]
 			
 			ECH <- ELLIBUCOMP[which(ELLIBUCOMP$country == "CH"),]
 			nrow(ECH)
