@@ -626,6 +626,11 @@
 			nrow(ECH)
 			boxplot(ECH$ratio_on_list~droplevels(ECH$parliament_id))
 	
+	
+	##################################################################################################
+	######### creation of bunch of variables before reduction to analytical sample ###################
+	##################################################################################################
+	
 	##### if the party id is not a national party, get the mother party id ###
 		
 			ELLIBU[0:20,]
@@ -662,7 +667,7 @@
 			table(is.na(ELLIBU$party_id_nat_equiv)) # values for all here, for whatever its worth
 
 			
-		###### gender aggregations #######
+	##### gender aggregations #######
 	
 			GCPARE <- as.data.frame.matrix(table(ELENBURED$list_id,ELENBURED$genderguesses)) # is this correct? We calculate the ratio of men/women for each list that lead to anybody being elected
 			GCPARE$list_id <- rownames(GCPARE)
@@ -728,6 +733,85 @@
 			tail(ELLIBU)
 			table(ELLIBU$quota_now)
 			table(is.na(ELLIBU$quota_now),ELLIBU$country)
+
+	##### get district magnitude in (for now just number of people that got elected from this district in this parliament - needs to be done before the reduction to the anlytical sample
+		
+			# step 1: get the district variable merged back in. Can be done on basis of the list_id from ELLI for 'normal' districts, for German district ..
+			# .. candidates we do not have an ELLI entry so we need to think of something else > or maybe not?! list id got replaced in ELLI as well? - so not issue here? (CHECK THIS WELL!)
+			# so, let
+			
+				# for the normal cases
+					TEMP3 <- sqldf("SELECT ELLIBU.*, ELLI.district_id
+									FROM ELLIBU LEFT JOIN ELLI
+									ON ELLIBU.list_id = ELLI.list_id
+									")	
+					nrow(TEMP3)
+					head(TEMP3)
+					TEMP3[9030:9050,]
+					table(is.na(TEMP3$district_id))
+				
+				# for the German district ids, we will just set the district_id to be the list id, so that the value becomes 1 in the count below?!
+					
+		
+		
+			resvec <- vector()
+			for(i in 1:nrow(ELLIBU))
+			{
+				mydistrict <- ELLIBU$district_id[i]	
+				resvec[i] <- nrow(ELENBURED[which(ELENBURED$district_id == mydistrict),])
+			}
+			resvec
+			
+			ELLIBU$district_magnitude <- resvec
+			tail(ELLIBU)
+			head(ELLIBU)
+			table(ELLIBU$district_magnitude) # this one now broke, fix later
+			
+	##### get party size in (for now just number of people from this party that got elected in the parliament)
+
+			# also here, get the national party versions
+			resvec <- vector()
+			for(i in 1:nrow(ELENBURED))
+			{
+				if(grepl("_NT",as.character(ELENBURED$party_id[i])))
+				{
+					resvec[i] <- as.character(ELENBURED$party_id[i])
+				} else {
+					
+					mymotherpartyid <- as.character(PART$mother_party_id[which(as.character(PART$party_id) == as.character(ELENBURED$party_id[i]))])
+					
+					if(length(mymotherpartyid) > 0)
+					{
+						resvec[i] <- mymotherpartyid
+					}else{
+						resvec[i] <- NA
+					}
+				}
+			}
+			ELENBURED$nat_party_id <- resvec
+			head(ELENBURED)
+			table(ELENBURED$nat_party_id)
+		
+			i = 2790
+			resvec <- vector()
+			for(i in 1:nrow(ELLIBU))
+			{
+				mypartyid <- ELLIBU$nat_party_id[i]
+				myparliamentid <- ELLIBU$parliament_id[i]		
+				resvec[i] <- length(unique(ELENBURED$pers_id[which(ELENBURED$nat_party_id == mypartyid & ELENBURED$parliament_id == myparliamentid)]))
+			}
+			resvec
+			
+			ELLIBU$party_size <- resvec
+			hist(ELLIBU$party_size)
+			tail(ELLIBU)
+			head(ELLIBU)
+			
+			boxplot(ELLIBU$party_size~ELLIBU$country)
+			
+			head(ELLIBU[which(ELLIBU$party_size == 0 & ELLIBU$country == "CH"),])
+			tail(ELLIBU[which(ELLIBU$party_size == 0 & ELLIBU$country == "CH"),])
+
 
 	
 	##################################################################################################
@@ -798,77 +882,8 @@
 			table(ELLIBU$keylisttypes,ELLIBU$countryld)
 
 
-		### get district magnitude in (for now just number of people that got elected from this district in this parliament - this needs to be done before the reduction!
 		
-			resvec <- vector()
-			for(i in 1:nrow(ELLIBU))
-			{
-				mydistrict <- ELLIBU$district_id[i]	
-				resvec[i] <- nrow(ELENBURED[which(ELENBURED$district_id == mydistrict),])
-			}
-			resvec
-			
-			ELLIBU$district_magnitude <- resvec
-			tail(ELLIBU)
-			head(ELLIBU)
-			table(ELLIBU$district_magnitude) # this one now broke, fix later
-			
-		### get party size in (for now just number of people from this party that got elected in the parliament)
-
-			# also here, get the national party versions
-			resvec <- vector()
-			for(i in 1:nrow(ELENBURED))
-			{
-				if(grepl("_NT",as.character(ELENBURED$party_id[i])))
-				{
-					resvec[i] <- as.character(ELENBURED$party_id[i])
-				} else {
-					
-					mymotherpartyid <- as.character(PART$mother_party_id[which(as.character(PART$party_id) == as.character(ELENBURED$party_id[i]))])
-					
-					if(length(mymotherpartyid) > 0)
-					{
-						resvec[i] <- mymotherpartyid
-					}else{
-						resvec[i] <- NA
-					}
-				}
-			}
-			ELENBURED$nat_party_id <- resvec
-			head(ELENBURED)
-			table(ELENBURED$nat_party_id)
-		
-			i = 2790
-			resvec <- vector()
-			for(i in 1:nrow(ELLIBU))
-			{
-				mypartyid <- ELLIBU$nat_party_id[i]
-				myparliamentid <- ELLIBU$parliament_id[i]		
-				resvec[i] <- length(unique(ELENBURED$pers_id[which(ELENBURED$nat_party_id == mypartyid & ELENBURED$parliament_id == myparliamentid)]))
-			}
-			resvec
-			
-			ELLIBU$party_size <- resvec
-			hist(ELLIBU$party_size)
-			tail(ELLIBU)
-			head(ELLIBU)
-			
-			boxplot(ELLIBU$party_size~ELLIBU$country)
-			
-			head(ELLIBU[which(ELLIBU$party_size == 0 & ELLIBU$country == "CH"),])
-			tail(ELLIBU[which(ELLIBU$party_size == 0 & ELLIBU$country == "CH"),])
-
-		### get a variable that indicates of this 'list' is a list list or a district list
-		
-			# if you are in Germany, and your list is only one person long, you are a district - also the word 'district' occurs in your listname
-			ELLIBU$type <- ifelse(grepl("_district-",ELLIBU$list_id),"district","list") # _ and - are needed because otherwise it also hits on some swiss names
-			head(ELLIBU)
-			table(ELLIBU$country,ELLIBU$type)
-			# /\ this needs to be developed to follow Philip his specification
-			
-		
-			
-	
+				
 	### for all the list seats, get a variable as well that indicates what the percentage of women was on the district seats in this list its region
 	
 		# for all the districts, get the region from ELDI
