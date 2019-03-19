@@ -441,7 +441,7 @@
 			ELLI$country <- substr(ELLI$list_id,1,2)
 			table(is.na(ELLI$country))
 		
-			ELLIBU <- sqldf("SELECT list_id, list_name, parliament_id, list_length, country, party_id
+			ELLIBU <- sqldf("SELECT list_id, list_name, parliament_id, list_length, country, party_id, party_id_nat_equiv
 						FROM ELLI
 						")
 			# this is where the magic happens
@@ -543,7 +543,6 @@
 			
 			head(GCELLI[which(GCELLI$country == "DE"),])
 			tail(GCELLI[which(GCELLI$country == "DE"),])
-			ELLIBU
 			# this looks good
 					
 			hist(GCELLI$ratio) # so this is the ratio of men/women on the election lists
@@ -629,8 +628,9 @@
 	
 	##### if the party id is not a national party, get the mother party id ###
 		
-			ELLIBU[4500:4520,]
-			i = 4500
+			ELLIBU[0:20,]
+			head(ELLIBU[which(ELLIBU$party_id ==""),])
+			i = 6
 			resvec <- vector()
 			for(i in 1:nrow(ELLIBU))
 			{
@@ -653,9 +653,16 @@
 			head(ELLIBU)
 			table(ELLIBU$nat_party_id)
 			ELLIBU$nat_party_id <- ifelse(ELLIBU$nat_party_id == "lookup",NA,ELLIBU$nat_party_id)
-			table(ELLIBU$nat_party_id)
-	
-	###### gender aggregations on the reduced data! #######
+			
+			# some further fixing up and cleanup of the national party ids
+
+			table(ELLIBU$nat_party_id) # inspection suggests that the empty values left here are due to regional party ids that do not occur in PART?
+			table(is.na(ELLIBU$nat_party_id)) # still 2500 missings here..
+			table(ELLIBU$party_id_nat_equiv) # still about 1838 empty
+			table(is.na(ELLIBU$party_id_nat_equiv)) # values for all here, for whatever its worth
+
+			
+		###### gender aggregations #######
 	
 			GCPARE <- as.data.frame.matrix(table(ELENBURED$list_id,ELENBURED$genderguesses)) # is this correct? We calculate the ratio of men/women for each list that lead to anybody being elected
 			GCPARE$list_id <- rownames(GCPARE)
@@ -677,15 +684,94 @@
 			head(ELLIBU)
 			ELLIBU[30:50,]
 			ELLIBU[4030:4050,]
-			ELLIBU[9030:9050,]
+			ELLIBU[9030:9050,] # these are the district seats, looks good now. Lots of NA is because lots of parties never got anybody elected.
 			tail(ELLIBU)
 			
-		# so there is an issue here, none of the single member districts are merged in?!
-		ELLIBU$list_id %in% GCPARE$list_id
-		ELLIBU$list_id
-		GCPARE$list_id
-			
+		# lets make a variable that indicates if anybody from the list was elected at all - can be used for exclusion below
+		ELLIBU$anycandidateselected <- ifelse(ELLIBU$list_id %in% GCPARE$list_id,"yes","nobody")
+		table(ELLIBU$anycandidateselected)
+
+	##### get a was there a quota variable so it can be used to reduce to the analytical sample #####
+
+			### get the start-date of the parliamentary term in
+		
+				ELLIBU <- sqldf("SELECT ELLIBU.*, PARL.leg_period_start, PARL.leg_period_end
+                   FROM ELLIBU LEFT JOIN PARL 
+                   ON ELLIBU.parliament_id = PARL.parliament_id")
+				head(ELLIBU)
+		
+				# fix left and right censoring things
+				ELLIBU$leg_period_start <- gsub("[[rcen]]","",ELLIBU$leg_period_start,fixed=TRUE)
+				ELLIBU$leg_period_start <- gsub("[[lcen]]","",ELLIBU$leg_period_start,fixed=TRUE)
+				ELLIBU$leg_period_end <- gsub("[[rcen]]","",ELLIBU$leg_period_end,fixed=TRUE)
+				ELLIBU$leg_period_end <- gsub("[[lcen]]","",ELLIBU$leg_period_end,fixed=TRUE)
+					
+				ELLIBU$leg_period_start_posoxctformat <- as.POSIXct(as.character(ELLIBU$leg_period_start),format=c("%d%b%Y"))
+				ELLIBU$leg_period_end_posoxctformat <- as.POSIXct(as.character(ELLIBU$leg_period_end),format=c("%d%b%Y"))
+				summary(ELLIBU$leg_period_start_posoxctformat)
+				summary(ELLIBU$leg_period_end_posoxctformat)
+		
+			names(ELLIBU)
+			table(ELLIBU$nat_party_id) # please note the one from the mother party is used here, so I can alert Elena to that.
+			ELLIBU <- sqldf("SELECT ELLIBU.*, QUOT.quota_bin, QUOT.quot_ep_startdate_posoxctformat, QUOT.quota_percentage, QUOT.quota_zipper
+					   FROM ELLIBU LEFT JOIN QUOT 
+					   ON ELLIBU.nat_party_id = QUOT.party_id AND ELLIBU.leg_period_start_posoxctformat BETWEEN QUOT.quot_ep_startdate_posoxctformat and QUOT.quot_ep_enddate_posoxctformat")
+				
+			tail(ELLIBU)
+			table(ELLIBU$quota_bin)
+			summary(ELLIBU$quota_bin)
+					
+			# we call this one 'quota now'
+			names(ELLIBU)[match(c("quota_bin"),names(ELLIBU))] <- "quota_now"
+			ELLIBU$quota_now <- as.factor(ELLIBU$quota_now)
+			head(ELLIBU)
+			tail(ELLIBU)
+			table(ELLIBU$quota_now)
+			table(is.na(ELLIBU$quota_now),ELLIBU$country)
+
 	
+	##################################################################################################
+	################################# reduction to analytical sample #################################
+	##################################################################################################
+
+		# reduction of the election list data, ratio elected has already been merged in, so this is the only reduction needed?
+		
+		# get rid of parliaments that we don't want to analyse -- time-frame
+			table(ELLIBU$parliament_id)
+			ELLIBU$intimeframe <- ifelse(ELLIBU$leg_period_start_posoxctformat > 1981-01-01,"yes","before 1981")
+			head(ELLIBU)
+			tail(ELLIBU)
+			table(ELLIBU$intimeframe)
+			
+			nrow(ELLIBU)
+			ELLIBU <- ELLIBU[which(!ELLIBU$intimeframe == "before 1981"),]
+			nrow(ELLIBU)
+			
+		# get rid of all election lists from which nobody ever got eleced
+			table(ELLIBU$anycandidateselected)
+			
+			nrow(ELLIBU)
+			ELLIBU <- ELLIBU[which(!ELLIBU$anycandidateselected == "nobody"),]
+			nrow(ELLIBU)		
+		
+		# get rid of all observations for which there is no gender quota
+
+			table(ELLIBU$quota_now)
+			
+			nrow(ELLIBU)
+			ELLIBU <- ELLIBU[which(ELLIBU$quota_now == 1),]
+			nrow(ELLIBU) # 1270 election lists left
+		
+		# couple of inspections of key variables
+			head(ELLIBU)
+			tail(ELLIBU)
+			ELLIBU[500:510,]
+			
+			table(is.na(ELLIBU$ratio_on_list)) # complete
+			table(is.na(ELLIBU$ratio_elected)) # complete
+			table(is.na(ELLIBU$quota_percentage)) # complete
+
+		
 	##################################################################################################
 	################################# variable building here #########################################
 	##################################################################################################
@@ -712,7 +798,7 @@
 			table(ELLIBU$keylisttypes,ELLIBU$countryld)
 
 
-		### get district magnitude in (for now just number of people that got elected from this district in this parliament)
+		### get district magnitude in (for now just number of people that got elected from this district in this parliament - this needs to be done before the reduction!
 		
 			resvec <- vector()
 			for(i in 1:nrow(ELLIBU))
@@ -780,39 +866,7 @@
 			table(ELLIBU$country,ELLIBU$type)
 			# /\ this needs to be developed to follow Philip his specification
 			
-		### was there a quota
-
-			### get the start-date of the parliamentary term in
 		
-				ELLIBU <- sqldf("SELECT ELLIBU.*, PARL.leg_period_start, PARL.leg_period_end
-                   FROM ELLIBU LEFT JOIN PARL 
-                   ON ELLIBU.parliament_id = PARL.parliament_id")
-				head(ELLIBU)
-		
-				ELLIBU$leg_period_start_posoxctformat <- as.POSIXct(as.character(ELLIBU$leg_period_start),format=c("%d%b%Y"))
-				ELLIBU$leg_period_end_posoxctformat <- as.POSIXct(as.character(ELLIBU$leg_period_end),format=c("%d%b%Y"))
-		
-			names(ELLIBU)
-			table(ELLIBU$nat_party_id)
-			ELLIBU <- sqldf("SELECT ELLIBU.*, QUOT.quota_bin, QUOT.quot_ep_startdate_posoxctformat, QUOT.quota_percentage, QUOT.quota_zipper
-					   FROM ELLIBU LEFT JOIN QUOT 
-					   ON ELLIBU.nat_party_id = QUOT.party_id AND ELLIBU.leg_period_start_posoxctformat BETWEEN QUOT.quot_ep_startdate_posoxctformat and QUOT.quot_ep_enddate_posoxctformat")
-				
-			tail(ELLIBU)
-			table(ELLIBU$quota_bin)
-			summary(ELLIBU$quota_bin)
-			ELLIBU[which(is.na(ELLIBU$quota_bin & !ELLIBU$country == "CH")),]	# i've asked Elena about this
-					
-			# we call this one 'quota now'
-			names(ELLIBU)[match(c("quota_bin"),names(ELLIBU))] <- "quota_now"
-			ELLIBU$quota_now <- as.factor(ELLIBU$quota_now)
-			head(ELLIBU)
-			tail(ELLIBU)
-			table(ELLIBU$quota_now)
-			table(is.na(ELLIBU$quota_bin),ELLIBU$country)
-			
-			ELLIRED <- 
-			table(is.na(ELLIBU$quota_bin),ELLIBU$nat_party_id)
 			
 	
 	### for all the list seats, get a variable as well that indicates what the percentage of women was on the district seats in this list its region
