@@ -19,6 +19,7 @@
 		library(ggplot2)
 		library(stargazer)
 		library(dplyr)
+		library(reshape)
 		
 		
 	substrRight <- function(x, n)
@@ -438,15 +439,17 @@
 	# now for ELLI, we also need to combine thse values? Because this is technically only ONE list now
 		
 		# only thing really needs to happen for that is to remove the district id and to then select all the unique rows?
+		# lets think of a better way to do this, that keeps the district id in?!
+		
 			ELLI$country <- substr(ELLI$list_id,1,2)
 			table(is.na(ELLI$country))
 		
-			ELLIBU <- sqldf("SELECT list_id, list_name, parliament_id, list_length, country, party_id, party_id_nat_equiv
+			ELLIBU <- sqldf("SELECT list_id, list_name, parliament_id, list_length, country, party_id, party_id_nat_equiv, district_id
 						FROM ELLI
 						")
 			# this is where the magic happens
 			nrow(ELLIBU)
-			ELLIBU <- ELLIBU[!duplicated(ELLIBU),]
+			ELLIBU <- ELLIBU[!duplicated(ELLIBU$list_id),] # seems rather simular (was 9714 before).. probably some other duplicates! .. fixes the issue for below already?
 			nrow(ELLIBU)
 			table(is.na(ELLIBU$country))
 	
@@ -604,7 +607,7 @@
 			ELLIBUCOMP$parliament_id <- as.factor(as.character(ELLIBUCOMP$parliament_id))
 			table(ELLIBUCOMP$parliament_id)
 		
-		boxplot(ELLIBUCOMP$ratio_on_list~ELLIBUCOMP$country)
+		boxplot(ELLIBUCOMP$ratio_on_list~ELLIBUCOMP$country,ylab="Ratio on list")
 		table(is.na(ELLIBUCOMP$ratio_on_list),ELLIBUCOMP$country)
 			
 			EDE <- ELLIBUCOMP[which(ELLIBUCOMP$country == "DE"),]
@@ -718,7 +721,7 @@
 		
 			names(ELLIBU)
 			table(ELLIBU$nat_party_id) # please note the one from the mother party is used here, so I can alert Elena to that.
-			ELLIBU <- sqldf("SELECT ELLIBU.*, QUOT.quota_bin, QUOT.quot_ep_startdate_posoxctformat, QUOT.quota_percentage, QUOT.quota_zipper
+			ELLIBU <- sqldf("SELECT ELLIBU.*, QUOT.quota_bin, QUOT.quot_ep_startdate_posoxctformat, QUOT.quota_percentage, QUOT.quota_zipper, QUOT.quota_soft
 					   FROM ELLIBU LEFT JOIN QUOT 
 					   ON ELLIBU.nat_party_id = QUOT.party_id AND ELLIBU.leg_period_start_posoxctformat BETWEEN QUOT.quot_ep_startdate_posoxctformat and QUOT.quot_ep_enddate_posoxctformat")
 				
@@ -736,24 +739,11 @@
 
 	##### get district magnitude in (for now just number of people that got elected from this district in this parliament - needs to be done before the reduction to the anlytical sample
 		
-			# step 1: get the district variable merged back in. Can be done on basis of the list_id from ELLI for 'normal' districts, for German district ..
-			# .. candidates we do not have an ELLI entry so we need to think of something else > or maybe not?! list id got replaced in ELLI as well? - so not issue here? (CHECK THIS WELL!)
-			# so, let
+			# step 1: this issue has be solved above, kept district ids in so that they can be used here!
+
+			ELLIBU[9030:9050,] # good to use for checks because bunch of district ids here that should get magnitude 1
 			
-				# for the normal cases
-					TEMP3 <- sqldf("SELECT ELLIBU.*, ELLI.district_id
-									FROM ELLIBU LEFT JOIN ELLI
-									ON ELLIBU.list_id = ELLI.list_id
-									")	
-					nrow(TEMP3)
-					head(TEMP3)
-					TEMP3[9030:9050,]
-					table(is.na(TEMP3$district_id))
-				
-				# for the German district ids, we will just set the district_id to be the list id, so that the value becomes 1 in the count below?!
-					
-		
-		
+			i = 9030
 			resvec <- vector()
 			for(i in 1:nrow(ELLIBU))
 			{
@@ -765,9 +755,14 @@
 			ELLIBU$district_magnitude <- resvec
 			tail(ELLIBU)
 			head(ELLIBU)
-			table(ELLIBU$district_magnitude) # this one now broke, fix later
+			table(ELLIBU$district_magnitude) 
+			hist(ELLIBU$district_magnitude)
+			## DO LATER > inspect the very large cases here?!
+			ELLIBU[which(ELLIBU$district_magnitude > 135),] # right, so this is actually correct, Dutch recent year cases. Indeed suggestions here 'towards one big district'
 			
-	##### get party size in (for now just number of people from this party that got elected in the parliament)
+			##### ASK! Elena and Philip about where the '2' are comming from here?! use the i = 9030 case from above!
+			
+	##### get party size in (for now just number of people from this party that got elected in the parliament) << BROKEN now, fix later!
 
 			# also here, get the national party versions
 			resvec <- vector()
@@ -813,6 +808,35 @@
 			tail(ELLIBU[which(ELLIBU$party_size == 0 & ELLIBU$country == "CH"),])
 
 
+	##### make a script that creates a 'electable' position variable
+		
+		# first get parliament tmin1, tmin2 and tmin3 (previous parliament and the one for that)
+		# cut short! - pauzed for now # 
+		head(ELLIBU)
+		
+		# get the previous parliament from PARL
+		TEMP4 <- sqldf("SELECT ELLIBU.* , PARL.previous_parliament
+						FROM ELLIBU LEFT JOIN PARL
+						ON ELLIBU.parliament_id = PARL.parliament_id
+						")
+			
+	
+	##### adding some nuances for the Dutch election list data
+		
+		## step 1: make a function that generates an - ';' separated - list position ordered - array of all pers_ids occurring on a certain list (takes a list id as input)
+		
+			head(ELENBU)
+		
+			local_list_id = "CH_NT-NR_1947__CH_NT-NR_1947__Zuerich__Baeuerlich-gewerblich-buergerliche-Liste"
+		
+			getpersidarrayforlistid <- function(local_list_id)
+			{
+			# select 
+				ELENBUME <- ELENBU[which(ELENBU$list_id == local_list_id),]
+				paste(ELENBUME$pers_id,collapse=";")
+			}
+	
+	
 	
 	##################################################################################################
 	################################# reduction to analytical sample #################################
@@ -880,11 +904,8 @@
 			ELLIBU$keylisttypes[which(ELLIBU$keylisttypes == "NL")] <- "one-list"
 			table(ELLIBU$keylisttypes)
 			table(ELLIBU$keylisttypes,ELLIBU$countryld)
-
-
-		
 				
-	### for all the list seats, get a variable as well that indicates what the percentage of women was on the district seats in this list its region
+	### for all the list seats, get a variable as well that indicates what the percentage of women was on the district seats in this list its region << BROKEN now, fix later or DROP
 	
 		# for all the districts, get the region from ELDI
 			nrow(ELLIBU)
@@ -932,134 +953,105 @@
 
 	##### creating the three crucial gap variables 
 		
-			nrow(ELLIBU)
-			ELLIBU <- ELLIBU[which(!is.na(ELLIBU$ambition_realisation_gap)),]
-			nrow(ELLIBU)
-			table(ELLIBU$parliament_id)
-		
 		# there are a total of two steps: ambition --(step 1)--> percentage on list --(step 2)--> percentage elected
-			head(ELLIBU)
-		### ambition realisation gap (overall gap) (quota percentage - percentage elected)
-			
-			# inspection
-			table(ELLIBU$quota_now)
-			table(ELLIBU$quota_percentage)
-			sum(table(ELLIBU$quota_percentage)) # percentage specifications seem complete
-			
-			# adding a 0% category
-			ELLIBU$quota_percentage_cleaned <- ifelse(ELLIBU$quota_now == 0,0,ELLIBU$quota_percentage)
-			
-			# more inspection
-			table(ELLIBU$quota_percentage_cleaned)
-			table(is.na(ELLIBU$quota_percentage_cleaned)) # so, we have we have quota info for a little more then half the election lists
-			table(is.na(ELLIBU$quota_percentage_cleaned),ELLIBU$country) # complete in NL, nothing in Switserland
-			
-			table(is.na(ELLIBU$quota_percentage),ELLIBU$keylisttypes) # still, some of everything?
-			table(is.na(ELLIBU$ratio_elected),ELLIBU$keylisttypes) # no ratio elected for any of the single member districts?!
-			
-			# calculating the gap
-			ELLIBU$ambition_realisation_gap <- (ELLIBU$ratio_elected - (ELLIBU$quota_percentage/100)) # negative numbers indicate that the quota was not reached (less women elected then specified)
-
-			# inspection of the gap
-			table(is.na(ELLIBU$ambition_realisation_gap))
-			hist(ELLIBU$ambition_realisation_gap) # some suggestion here that unit of analysis of the district, and counting this as a simular case then lets say a list is not really fair?
-			
-			boxplot(ELLIBU$ambition_realisation_gap~ELLIBU$country) # see point above, districts that have a women count as a one, how to do this? Maybe take the average percentages at the level of the secundary districts for DE or so?
-			hist(ELLIBU$ambition_realisation_gap[which(ELLIBU$country =="DE")]) # lets add this to the overleaf file - some suggestion indeed that much more often in DE quota is not reached?
-			hist(ELLIBU$ambition_realisation_gap[which(ELLIBU$country =="NL")]) # lets add this to the overleaf file
-				
-			# key descriptive relating to Philip suggestion
-			boxplot(ELLIBU$ambition_realisation_gap~ELLIBU$keylisttypes, main="% women elected into parliament - % from quota")
-			
-			table(is.na(ELLIBU$ambition_realisation_gap))
-			table(is.na(ELLIBU$ambition_realisation_gap),is.na(ELLIBU$keylisttypes))
-			
-				# and a table of means per group
-				meannarm <- function(input)
-				{
-					return(mean(input,na.rm=TRUE))
-				}
-				
-				aggregate(ELLIBU$ambition_realisation_gap, by=list(ELLIBU$keylisttypes), meannarm)
-			
-		### ambition to selection gap (quota percentage - percentage selected)
-			
-			# calculating this gap
-			table(is.na(ELLIBU$ratio_on_list))
-			table(is.na(ELLIBU$quota_percentage)) # ok, so hardly any quotas
-			table(is.na(ELLIBU$quota_percentage),is.na())
-			ELLIBU$ambition_selection_gap <- (ELLIBU$ratio_on_list - (ELLIBU$quota_percentage/100))
-			
-			# inspection of the gap
-			table(is.na(ELLIBU$ambition_selection_gap)) # so, just as a note so self, quite a bit more cases because from many lists never anybody got elected?
-			hist(ELLIBU$ambition_selection_gap) # looks a lot like the ambition realisation gap? - so some suggestion that the selection step is the crucial one in the sample as a whole?
-			boxplot(ELLIBU$ambition_selection_gap~ELLIBU$country) 
-			hist(ELLIBU$ambition_selection_gap[which(ELLIBU$country =="DE")])
-			hist(ELLIBU$ambition_selection_gap[which(ELLIBU$country =="NL")]) 
-			
-			boxplot(ELLIBU$ambition_selection_gap~ELLIBU$keylisttypes, main="% of women selected onto the list - % from quota")
 		
-		### selection to election gap (percentage selected - percentage elected)
+			### ambition realisation gap (overall gap) (quota percentage - percentage elected)
+				
+				# inspection
+				table(ELLIBU$quota_now)
+				table(ELLIBU$quota_percentage)
+				sum(table(ELLIBU$quota_percentage)) # percentage specifications seem complete
+				
+				# adding a 0% category
+				ELLIBU$quota_percentage_cleaned <- ifelse(ELLIBU$quota_now == 0,0,ELLIBU$quota_percentage)
+				table(is.na(ELLIBU$quota_percentage),ELLIBU$keylisttypes) # still, some of everything?
+				table(is.na(ELLIBU$ratio_elected),ELLIBU$keylisttypes) # no ratio elected for any of the single member districts?!
+				
+				# calculating the gap
+				ELLIBU$ambition_realisation_gap <- (ELLIBU$ratio_elected - (ELLIBU$quota_percentage/100)) # negative numbers indicate that the quota was not reached (less women elected then specified)
 
-			# calculating this gap
-			ELLIBU$selection_election_gap <- ELLIBU$ratio_elected - ELLIBU$ratio_on_list # negative numbers indicate that less women where elected then selected
+				# inspection of the gap
+				table(is.na(ELLIBU$ambition_realisation_gap))
+				hist(ELLIBU$ambition_realisation_gap) # some suggestion here that unit of analysis of the district, and counting this as a simular case then lets say a list is not really fair?
+				
+				boxplot(ELLIBU$ambition_realisation_gap~ELLIBU$country) # see point above, districts that have a women count as a one, how to do this? Maybe take the average percentages at the level of the secundary districts for DE or so?
+				hist(ELLIBU$ambition_realisation_gap[which(ELLIBU$country =="DE")]) # lets add this to the overleaf file - some suggestion indeed that much more often in DE quota is not reached?
+				hist(ELLIBU$ambition_realisation_gap[which(ELLIBU$country =="NL")]) # lets add this to the overleaf file
+					
+				# key descriptive relating to Philip suggestion
+				boxplot(ELLIBU$ambition_realisation_gap~ELLIBU$keylisttypes, main="% women elected into parliament - % from quota")
+				table(ELLIBUMEL$quota_soft)
+				
+					# break down to hard and soft quotas
+						ELLIBU$typeandquota <- paste(ELLIBU$keylisttypes,ELLIBU$quota_soft,sep="")
+						table(ELLIBU$typeandquota)
+						boxplot(ELLIBU$ambition_realisation_gap~ELLIBU$typeandquota, main="% women elected into parliament - % from quota")
+				
+				
+					# and a table of means per group
+					meannarm <- function(input)
+					{
+						return(mean(input,na.rm=TRUE))
+					}
+					
+					aggregate(ELLIBU$ambition_realisation_gap, by=list(ELLIBU$keylisttypes), meannarm)
+				
+			### ambition to selection gap (quota percentage - percentage selected)
+				
+				# calculating this gap
+				table(is.na(ELLIBU$ratio_on_list))
+				table(is.na(ELLIBU$quota_percentage)) # ok, so hardly any quotas
+				table(is.na(ELLIBU$quota_percentage),is.na())
+				ELLIBU$ambition_selection_gap <- (ELLIBU$ratio_on_list - (ELLIBU$quota_percentage/100))
+				
+				# inspection of the gap
+				table(is.na(ELLIBU$ambition_selection_gap)) # so, just as a note so self, quite a bit more cases because from many lists never anybody got elected?
+				hist(ELLIBU$ambition_selection_gap) # looks a lot like the ambition realisation gap? - so some suggestion that the selection step is the crucial one in the sample as a whole?
+				boxplot(ELLIBU$ambition_selection_gap~ELLIBU$country) 
+				hist(ELLIBU$ambition_selection_gap[which(ELLIBU$country =="DE")])
+				hist(ELLIBU$ambition_selection_gap[which(ELLIBU$country =="NL")]) 
+				
+				boxplot(ELLIBU$ambition_selection_gap~ELLIBU$keylisttypes, main="% of women selected onto the list - % from quota")
+				
+					# break down to hard and soft quotas
+						boxplot(ELLIBU$ambition_selection_gap~ELLIBU$typeandquota, main="% of women selected onto the list - % from quota")
 			
-			# inspection
-			table(is.na(ELLIBU$selection_election_gap)) # very large number of NA here is the result of many election lists just not leading to anybody being elected
-			table(is.na(ELLIBU$ratio_elected)) # by far most cases are lost here
-			table(is.na(ELLIBU$ratio_on_list))
-			
-			# do the stuff below either for sample above (parties with a quota), or the entire sample
-			ELLIBUTOCHECK <- ELLIBU[which(ELLIBU$quota_now == 1),]
-			nrow(ELLIBUTOCHECK)
-			table(is.na(ELLIBU$ambition_selection_gap)) # check 
-			ELLIBUTOCHECK <- ELLIBU
-			
-			hist(ELLIBUTOCHECK$selection_election_gap) # not a lot is happening here?
-			boxplot(ELLIBUTOCHECK$selection_election_gap~ELLIBUTOCHECK$country) 
-			hist(ELLIBUTOCHECK$selection_election_gap[which(ELLIBUTOCHECK$country =="CH")])
-			hist(ELLIBUTOCHECK$selection_election_gap[which(ELLIBUTOCHECK$country =="DE")])
-			hist(ELLIBUTOCHECK$selection_election_gap[which(ELLIBUTOCHECK$country =="NL")]) 
-			
-			boxplot(ELLIBUTOCHECK$selection_election_gap~ELLIBUTOCHECK$keylisttypes, main="% women elected  into parliament - % women selected onto list")
-			
-			table(ELLIBUTOCHECK$keylisttypes)
-			hist(ELLIBUTOCHECK$selection_election_gap[which(ELLIBUTOCHECK$keylisttypes =="one-list")])
-			hist(ELLIBUTOCHECK$selection_election_gap[which(ELLIBUTOCHECK$keylisttypes =="party-list-secondary-districts")])
-			hist(ELLIBUTOCHECK$selection_election_gap[which(ELLIBUTOCHECK$keylisttypes =="single-member-districts")]) 
-			
-			# lets inspect some of these positive cases, for example in the Netherlands
-			SAMPLETOCHECK <- ELLIBUTOCHECK[which(ELLIBUTOCHECK$country == "DE" & (ELLIBUTOCHECK$ratio_elected > ELLIBUTOCHECK$ratio_on_list)),] # 629 cases
-			SAMPLETOCHECK <- ELLIBUTOCHECK[which(ELLIBUTOCHECK$country == "DE" & (ELLIBUTOCHECK$ratio_elected < ELLIBUTOCHECK$ratio_on_list)),] # 448 cases
-			nrow(SAMPLETOCHECK)
-			
-			table(ELLIBUTOCHECK$party_id)
-			table(SAMPLETOCHECK$party_id) # happens a lot especially for the greens?
-			
-######################################## reduction here ##########################################
-##################################################################################################
+			### selection to election gap (percentage selected - percentage elected)
 
-	# focus on list candidates only - temp!
-#		table(ELLIBU$type)
-#		nrow(ELLIBU)
-#		ELLIBU <- ELLIBU[which(ELLIBU$type == "list"),]
-#		nrow(ELLIBU)
-
-	# reduce to those cases after 1982
-#		ELLIBU$year <- as.numeric(as.character(substrRight(ELLIBU$parliament_id,4)))
-#		table(ELLIBU$year)
-		
-#		nrow(ELLIBU)
-#		ELLIBU <- ELLIBU[which(ELLIBU$year > 1981),]
-#		nrow(ELLIBU)
-			
-	# exclude those cases in which no women got elected at all
-#		nrow(ELLIBU)
-#		ELLIBU <- ELLIBU[which(!is.na(ELLIBU$f_elected)),] # we loose about 2/3 of cases
-#		nrow(ELLIBU)
+				# calculating this gap
+				ELLIBU$selection_election_gap <- ELLIBU$ratio_elected - ELLIBU$ratio_on_list # negative numbers indicate that less women where elected then selected
+				
+				# inspection
+				table(is.na(ELLIBU$selection_election_gap)) # very large number of NA here is the result of many election lists just not leading to anybody being elected
+				table(is.na(ELLIBU$ratio_elected)) # by far most cases are lost here
+				table(is.na(ELLIBU$ratio_on_list))
+				
+				hist(ELLIBU$selection_election_gap) # not a lot is happening here?
+				boxplot(ELLIBU$selection_election_gap~ELLIBU$country) 
+				hist(ELLIBU$selection_election_gap[which(ELLIBU$country =="CH")])
+				hist(ELLIBU$selection_election_gap[which(ELLIBU$country =="DE")])
+				hist(ELLIBU$selection_election_gap[which(ELLIBU$country =="NL")]) 
+				
+				boxplot(ELLIBU$selection_election_gap~ELLIBU$keylisttypes, main="% women elected  into parliament - % women selected onto list")
+				
+					# break down to hard and soft quotas
+						boxplot(ELLIBU$selection_election_gap~ELLIBU$typeandquota, main="% women elected  into parliament - % women selected onto list")
+				
+				table(ELLIBU$keylisttypes)
+				hist(ELLIBU$selection_election_gap[which(ELLIBU$keylisttypes =="one-list")])
+				hist(ELLIBU$selection_election_gap[which(ELLIBU$keylisttypes =="party-list-secondary-districts")])
+				hist(ELLIBU$selection_election_gap[which(ELLIBU$keylisttypes =="single-member-districts")]) 
+				
+				# lets inspect some of these positive cases, for example in the Netherlands
+				SAMPLETOCHECK <- ELLIBU[which(ELLIBU$country == "DE" & (ELLIBU$ratio_elected > ELLIBU$ratio_on_list)),] # 629 cases
+				SAMPLETOCHECK <- ELLIBU[which(ELLIBU$country == "DE" & (ELLIBU$ratio_elected < ELLIBU$ratio_on_list)),] # 448 cases
+				nrow(SAMPLETOCHECK)
+				
+				table(ELLIBU$party_id)
+				table(SAMPLETOCHECK$party_id) # happens a lot especially for the greens?
 
 ######################################################################################
-############################### DESCRIPTIVE RESULTS ##################################
+############################ OLD DESCRIPTIVE RESULTS #################################
 ######################################################################################			
 		
 	# some general descriptives for the first version of the paper
@@ -1079,8 +1071,6 @@
 		length(table(ELLIBU$nat_party_id[which(ELLIBU$country == "CH")]))
 		
 		table(ELLIBU$nat_party_id[which(ELLIBU$country == "CH")])
-		
-		
 		
 	# country differences
 	
