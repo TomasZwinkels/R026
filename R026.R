@@ -12,7 +12,7 @@
 		getwd()
 		# also see 
 	
-		install.packages("TraMineR")
+	#	install.packages("TraMineR")
 	
 	# packages
 		library(sqldf)
@@ -823,7 +823,52 @@
 						ON ELLIBU.parliament_id = PARL.parliament_id
 						")
 			
-	##### adding some nuances for the Dutch election list data
+	
+	##################################################################################################
+	################################# reduction to analytical sample #################################
+	##################################################################################################
+
+		# reduction of the election list data, ratio elected has already been merged in, so this is the only reduction needed?
+		
+		# get rid of parliaments that we don't want to analyse -- time-frame
+			table(ELLIBU$parliament_id)
+			ELLIBU$intimeframe <- ifelse(ELLIBU$leg_period_start_posoxctformat > 1981-01-01,"yes","before 1981")
+			head(ELLIBU)
+			tail(ELLIBU)
+			table(ELLIBU$intimeframe)
+			
+			nrow(ELLIBU)
+			ELLIBU <- ELLIBU[which(!ELLIBU$intimeframe == "before 1981"),]
+			nrow(ELLIBU)
+			
+		# get rid of all election lists from which nobody ever got eleced
+			table(ELLIBU$anycandidateselected)
+			
+			nrow(ELLIBU)
+			ELLIBU <- ELLIBU[which(!ELLIBU$anycandidateselected == "nobody"),]
+			nrow(ELLIBU)		
+		
+		# get rid of all observations for which there is no gender quota
+
+			table(ELLIBU$quota_now)
+			
+			nrow(ELLIBU)
+			ELLIBU <- ELLIBU[which(ELLIBU$quota_now == 1),]
+			nrow(ELLIBU) # 1270 election lists left
+		
+		# couple of inspections of key variables
+			head(ELLIBU)
+			tail(ELLIBU)
+			ELLIBU[500:510,]
+			
+			table(is.na(ELLIBU$ratio_on_list)) # complete
+			table(is.na(ELLIBU$ratio_elected)) # complete
+			table(is.na(ELLIBU$quota_percentage)) # complete
+
+
+	##################################################################################################
+	############### adding some nuances for the Dutch election list data##############################
+	##################################################################################################	
 		
 		## step 1: make a function that generates an - ';' separated - list position ordered - array of all pers_ids occurring on a certain list (takes a list id as input)
 		
@@ -870,8 +915,11 @@
 					
 					submat <- matrix(1L, nrow = length(local_dictionary) , ncol = length(local_dictionary))
 					diag(submat) <- 0
-					LocalSeqObj <- suppressMessages(seqdef(LOCALSEQDAT,states=local_dictionary))
+					
+					
+					LocalSeqObj <- suppressWarnings(suppressMessages(seqdef(LOCALSEQDAT,states=local_dictionary)))
 					resultingindeldist <- suppressMessages(seqdist(LocalSeqObj,method="OM", indel=1,sm=submat))[2,1]
+					
 					return(resultingindeldist)
 				}
 			
@@ -960,52 +1008,39 @@
 						close(pb)
 						meanpersdifferentresvec
 						percentage95simularresvec
-	
-	##################################################################################################
-	################################# reduction to analytical sample #################################
-	##################################################################################################
 
-		# reduction of the election list data, ratio elected has already been merged in, so this is the only reduction needed?
+		ELLIBU$meanpersdifferent <- meanpersdifferentresvec
+		ELLIBU$percentage95simular <- percentage95simularresvec
 		
-		# get rid of parliaments that we don't want to analyse -- time-frame
-			table(ELLIBU$parliament_id)
-			ELLIBU$intimeframe <- ifelse(ELLIBU$leg_period_start_posoxctformat > 1981-01-01,"yes","before 1981")
-			head(ELLIBU)
-			tail(ELLIBU)
-			table(ELLIBU$intimeframe)
-			
-			nrow(ELLIBU)
-			ELLIBU <- ELLIBU[which(!ELLIBU$intimeframe == "before 1981"),]
-			nrow(ELLIBU)
-			
-		# get rid of all election lists from which nobody ever got eleced
-			table(ELLIBU$anycandidateselected)
-			
-			nrow(ELLIBU)
-			ELLIBU <- ELLIBU[which(!ELLIBU$anycandidateselected == "nobody"),]
-			nrow(ELLIBU)		
+		ELLIBUNL <- ELLIBU[which(ELLIBU$country == "NL"),]
+		boxplot(ELLIBUNL$meanpersdifferent~ELLIBUNL$parliament_id)
+		hist(ELLIBUNL$meanpersdifferent)
+		table(ELLIBUNL$party_id)
+		table(ELLIBUNL$party_id,ELLIBUNL$parliament_id)
 		
-		# get rid of all observations for which there is no gender quota
-
-			table(ELLIBU$quota_now)
-			
-			nrow(ELLIBU)
-			ELLIBU <- ELLIBU[which(ELLIBU$quota_now == 1),]
-			nrow(ELLIBU) # 1270 election lists left
+		table(ELLIBU$percentage95simular)
 		
-		# couple of inspections of key variables
-			head(ELLIBU)
-			tail(ELLIBU)
-			ELLIBU[500:510,]
-			
-			table(is.na(ELLIBU$ratio_on_list)) # complete
-			table(is.na(ELLIBU$ratio_elected)) # complete
-			table(is.na(ELLIBU$quota_percentage)) # complete
-
+		######################################################################################
+		######### further sample restrictions, select unique election lists only #############
+		
+		persidarrayvec <- vector()
+		for(i in 1:nrow(ELLIBU))
+		{
+			persidarrayvec[i] <- getpersidarrayforlistid(ELLIBU$list_id[i])
+		}
+		ELLIBU$persidarray <- persidarrayvec
+		tail(ELLIBU$persidarray)
+		
+		nrow(ELLIBU)
+		TEMP4 <- ELLIBU %>% distinct(persidarray, .keep_all = TRUE)
+		nrow(TEMP4) # unfortunately loosing a lot of cases here... 
+		length(unique(ELLIBU$persidarray))
+		ELLIBU <- TEMP4
 		
 	##################################################################################################
 	################################# variable building here #########################################
 	##################################################################################################
+
 
 		### lets make the type one again, just a grepl on word district
 			ELLIBU$type <- ifelse(grepl("district-seats-",ELLIBU$list_id),"district","list")
@@ -1027,6 +1062,12 @@
 			ELLIBU$keylisttypes[which(ELLIBU$keylisttypes == "NL")] <- "one-list"
 			table(ELLIBU$keylisttypes)
 			table(ELLIBU$keylisttypes,ELLIBU$countryld)
+			
+		### now also, using the information from above, move some Dutch cases away from the single-list variable, because there is actually quite some diversity!
+			table()
+			table(ELLIBU$keylisttypes,ELLIBU$countryld)
+			ELLIBU$keylisttypes <- ifelse(ELLIBU$country == "NL" & ELLIBU$percentage95simular > 0.05,"party-list-secondary-districts",ELLIBU$keylisttypes)
+			table(ELLIBU$keylisttypes,ELLIBU$countryld) # 23 election lists from NL got moved to the other category
 				
 	### for all the list seats, get a variable as well that indicates what the percentage of women was on the district seats in this list its region << BROKEN now, fix later or DROP
 	
