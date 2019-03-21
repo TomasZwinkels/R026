@@ -844,9 +844,11 @@
 
 			# split the arrays to use into a vector again
 				
-				local_pers_id_array <- strsplit(getpersidarrayforlistid(ELLIBU$list_id[9678]),";")[[1]]
-				other_pers_id_array <- sort(strsplit(getpersidarrayforlistid(ELLIBU$list_id[9678]),";")[[1]])
+				aa <- strsplit(getpersidarrayforlistid(ELLIBU$list_id[9678]),";")[[1]]
+				bb <- sort(strsplit(getpersidarrayforlistid(ELLIBU$list_id[9678]),";")[[1]])
 				
+				getindeldistfortwoarrays <- function(local_pers_id_array,other_pers_id_array)
+				{
 				# looked into doing this myself, but tricky, lets just used traminer for this
 				
 					# first lets get a current party dictionary
@@ -871,9 +873,45 @@
 					
 					submat <- matrix(1L, nrow = length(local_dictionary) , ncol = length(local_dictionary))
 					diag(submat) <- 0
-					LocalSeqObj <- seqdef(LOCALSEQDAT,states=local_dictionary)
-					seqdist(LocalSeqObj,method="OM", indel=1,sm=submat)[2,1]
+					LocalSeqObj <- suppressMessages(seqdef(LOCALSEQDAT,states=local_dictionary))
+					resultingindeldist <- suppressMessages(seqdist(LocalSeqObj,method="OM", indel=1,sm=submat))[2,1]
+					return(resultingindeldist)
+				}
+			
+			getindeldistfortwoarrays(aa,bb)
+		
+		## step 3: 
+			# 1. make a script that..
+				# creates a vector of all relevant election lists to compare
+				# loops through the pers_id arrays of all relevant lists
+				# calculates and returns an average % difference for 'list' with the relevant comparison lists.
+				# calculates and returns percentage of lists that is 95% simular
+		
+			# create a selection of all relevant election lists to compare - relevant lists are all lists from the same party in the same election
+				mylistid <- "NL_NT-TK_2010__NL_NT-TK_2010__Lelystad__GroenLinks"
+				mypartyid <- ELLIBU$party_id[which(ELLIBU$list_id == mylistid)][1]
+				myparliamentid <- ELLIBU$parliament_id[which(ELLIBU$list_id == mylistid)][1]
 				
+				RELLISTS <- ELLIBU[which(ELLIBU$party_id == mypartyid & ELLIBU$parliament_id == myparliamentid),]
+			
+			# get the average % difference and percentage of lists that is 95% simular
+			
+				# should I maybe exclude myself from the analysis here?
+					
+				
+						
+						# for one list entry
+						mypersids <- getpersidarrayforlistid(mylistid)
+						otherspersids <- getpersidarrayforlistid(RELLISTS[1,]$list_id)
+						
+						# get the distance between them
+						disthere <- getindeldistfortwoarrays(strsplit(mypersids,";")[[1]],strsplit(otherspersids,";")[[1]])
+						
+						# calculate the relative percentage that needs to be replaced
+						persreplacedhere <- (disthere/length(strsplit(mypersids,";")[[1]]))
+			
+				
+
 						
 						
 	
