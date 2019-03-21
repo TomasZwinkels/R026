@@ -823,7 +823,6 @@
 						ON ELLIBU.parliament_id = PARL.parliament_id
 						")
 			
-	
 	##### adding some nuances for the Dutch election list data
 		
 		## step 1: make a function that generates an - ';' separated - list position ordered - array of all pers_ids occurring on a certain list (takes a list id as input)
@@ -843,9 +842,7 @@
 		## step 2:
 
 			# split the arrays to use into a vector again
-				
-				aa <- strsplit(getpersidarrayforlistid(ELLIBU$list_id[9678]),";")[[1]]
-				bb <- sort(strsplit(getpersidarrayforlistid(ELLIBU$list_id[9678]),";")[[1]])
+			
 				
 				getindeldistfortwoarrays <- function(local_pers_id_array,other_pers_id_array)
 				{
@@ -878,6 +875,9 @@
 					return(resultingindeldist)
 				}
 			
+			# testing
+			aa <- strsplit(getpersidarrayforlistid(ELLIBU$list_id[9678]),";")[[1]]
+			bb <- sort(strsplit(getpersidarrayforlistid(ELLIBU$list_id[9678]),";")[[1]])
 			getindeldistfortwoarrays(aa,bb)
 		
 		## step 3: 
@@ -887,33 +887,79 @@
 				# calculates and returns an average % difference for 'list' with the relevant comparison lists.
 				# calculates and returns percentage of lists that is 95% simular
 		
-			# create a selection of all relevant election lists to compare - relevant lists are all lists from the same party in the same election
-				mylistid <- "NL_NT-TK_2010__NL_NT-TK_2010__Lelystad__GroenLinks"
-				mypartyid <- ELLIBU$party_id[which(ELLIBU$list_id == mylistid)][1]
-				myparliamentid <- ELLIBU$parliament_id[which(ELLIBU$list_id == mylistid)][1]
+		# wrapping this whole thing in an overall loop through ELLIBU
+		
+		
+				# create a selection of all relevant election lists to compare - relevant lists are all lists from the same party in the same election
 				
-				RELLISTS <- ELLIBU[which(ELLIBU$party_id == mypartyid & ELLIBU$parliament_id == myparliamentid),]
-			
-			# get the average % difference and percentage of lists that is 95% simular
-			
-				# should I maybe exclude myself from the analysis here?
-					
-				
-						
-						# for one list entry
-						mypersids <- getpersidarrayforlistid(mylistid)
-						otherspersids <- getpersidarrayforlistid(RELLISTS[1,]$list_id)
-						
-						# get the distance between them
-						disthere <- getindeldistfortwoarrays(strsplit(mypersids,";")[[1]],strsplit(otherspersids,";")[[1]])
-						
-						# calculate the relative percentage that needs to be replaced
-						persreplacedhere <- (disthere/length(strsplit(mypersids,";")[[1]]))
-			
-				
+					# in a loop
+						meanpersdifferentresvec <- vector()
+						percentage95simularresvec <- vector()
 
+						pb <- txtProgressBar(min = 1, max = nrow(ELLIBU), style = 3)
+						for(j in 1:nrow(ELLIBU))
+						{
+							mylistid <- ELLIBU$list_id[j]
+							mypartyid <- ELLIBU$party_id[which(ELLIBU$list_id == mylistid)][1]
+							myparliamentid <- ELLIBU$parliament_id[which(ELLIBU$list_id == mylistid)][1]
+							
+							RELLISTS <- ELLIBU[which(ELLIBU$party_id == mypartyid & ELLIBU$parliament_id == myparliamentid),]
 						
-						
+						# only continue when we have values here, otherwise set result to NA
+						if(nchar(mylistid) > 0 & nchar(mypartyid) > 0 & nchar(myparliamentid) > 0)
+							{
+							# get the average % difference and percentage of lists that is more then 95% simular
+							
+								# should I maybe exclude myself from the analysis here?
+									RELLISTS <- RELLISTS[which(!RELLISTS$list_id == mylistid),]
+									
+									# only continue when there are any other lists to compare myself with, otherwise set results to no difference
+									if(nrow(RELLISTS)>0)
+									{
+										mypersids <- getpersidarrayforlistid(mylistid)
+										localresvec <- vector()
+										number95simular <- 0 # reset
+										for(i in 1:nrow(RELLISTS))
+										{
+											# for one list entry
+											otherspersids <- getpersidarrayforlistid(RELLISTS[i,]$list_id)
+											
+											# only continue when there are any people with these list ids in ELEN, otherwise: NA
+											if(!(otherspersids == "" | mypersids == ""))
+											{
+												# get the distance between them
+												disthere <- getindeldistfortwoarrays(strsplit(mypersids,";")[[1]],strsplit(otherspersids,";")[[1]])
+												
+												# calculate the relative percentage that needs to be replaced and return
+												localresvec[i] <- (disthere/length(strsplit(mypersids,";")[[1]]))
+												
+												# if disthere larger then 95% then update counter
+												if(disthere <= 0.05)
+												{
+													number95simular <- number95simular + 1
+												}
+											} else {
+												localresvec[i] <- NA
+											}
+										}
+										averagepersdifferent <- mean(localresvec,na.rm=TRUE)
+										percentagesimular <- number95simular / length(localresvec)
+									
+										meanpersdifferentresvec[j] <- averagepersdifferent
+										percentage95simularresvec[j] <- percentagesimular
+									} else {
+										meanpersdifferentresvec[j] <- 0
+										percentage95simularresvec[j] <- 1
+									}
+								} else {
+									meanpersdifferentresvec[j] <- NA
+									percentage95simularresvec[j] <- NA
+								}
+								setTxtProgressBar(pb, j)
+						}
+						close(pb)
+						meanpersdifferentresvec
+						percentage95simularresvec
 	
 	##################################################################################################
 	################################# reduction to analytical sample #################################
