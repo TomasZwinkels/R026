@@ -12,6 +12,8 @@
 		getwd()
 		# also see 
 	
+		install.packages("TraMineR")
+	
 	# packages
 		library(sqldf)
 		library(stringr)
@@ -20,6 +22,7 @@
 		library(stargazer)
 		library(dplyr)
 		library(reshape)
+		library(TraMineR)
 		
 		
 	substrRight <- function(x, n)
@@ -826,17 +829,53 @@
 		## step 1: make a function that generates an - ';' separated - list position ordered - array of all pers_ids occurring on a certain list (takes a list id as input)
 		
 			head(ELENBU)
-		
-			local_list_id = "CH_NT-NR_1947__CH_NT-NR_1947__Zuerich__Baeuerlich-gewerblich-buergerliche-Liste"
-		
+				
 			getpersidarrayforlistid <- function(local_list_id)
 			{
 			# select 
 				ELENBUME <- ELENBU[which(ELENBU$list_id == local_list_id),]
-				paste(ELENBUME$pers_id,collapse=";")
+				return(paste(ELENBUME$pers_id,collapse=";"))
 			}
 	
-	
+			getpersidarrayforlistid(ELLIBU$list_id[9686]) # inspections seems promissing
+			tail(ELLIBU)
+			
+		## step 2:
+
+			# split the arrays to use into a vector again
+				
+				local_pers_id_array <- strsplit(getpersidarrayforlistid(ELLIBU$list_id[9678]),";")[[1]]
+				other_pers_id_array <- sort(strsplit(getpersidarrayforlistid(ELLIBU$list_id[9678]),";")[[1]])
+				
+				# looked into doing this myself, but tricky, lets just used traminer for this
+				
+					# first lets get a current party dictionary
+					local_dictionary <- unique(c(local_pers_id_array,other_pers_id_array))
+					
+					# create data format as input for the seqdef function
+					
+						# create
+						LOCALSEQDAT <- as.data.frame(rbind(local_pers_id_array,other_pers_id_array))
+						longestarraylength <- max(length(local_pers_id_array),length(other_pers_id_array))
+						colnames(LOCALSEQDAT) <- seq(from=1,to=longestarraylength,by=1)
+						
+						# set NA values to avoid repitition
+						if (!length(local_pers_id_array) == longestarraylength)
+						{
+							LOCALSEQDAT[1,][(length(local_pers_id_array)+1):longestarraylength] <- NA
+						}
+						if (!length(other_pers_id_array) == longestarraylength)
+						{
+							LOCALSEQDAT[2,][(length(other_pers_id_array)+1):longestarraylength] <- NA
+						}
+					
+					submat <- matrix(1L, nrow = length(local_dictionary) , ncol = length(local_dictionary))
+					diag(submat) <- 0
+					LocalSeqObj <- seqdef(LOCALSEQDAT,states=local_dictionary)
+					seqdist(LocalSeqObj,method="OM", indel=1,sm=submat)[2,1]
+				
+						
+						
 	
 	##################################################################################################
 	################################# reduction to analytical sample #################################
