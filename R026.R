@@ -12,7 +12,7 @@
 		getwd()
 		# also see 
 	
-	#	install.packages("TraMineR")
+		install.packages("beanplot")
 	
 	# packages
 		library(sqldf)
@@ -23,6 +23,8 @@
 		library(dplyr)
 		library(reshape)
 		library(TraMineR)
+		library(lawstat)
+		library(beanplot)
 		
 		
 	substrRight <- function(x, n)
@@ -187,6 +189,53 @@
 			
 			# so lets make this our PARE for this script
 			PARE <- TEMP
+			
+		# number of people in POLI that are (not) MPS per country - numbers for the project extension
+
+			# number of MPS in each country in total
+			head(PARE)
+			nrow(PARE)
+			PARE$country <- substr(PARE$fake_parl_episode_id,1,2)
+			table(PARE$country)
+			sum(table(PARE$country))
+			
+			nrow(POLI)
+			POLI$country <- substr(POLI$pers_id,1,2)
+			table(POLI$country)
+			sum(table(POLI$country))
+			
+			# DE
+			DEmpvec <- unique(PARE[which(PARE$country == "DE"),]$pers_id)
+			length(DEmpvec)
+			DEpolivec <- POLI$pers_id[which(POLI$country == "DE")]
+			length(which(!DEpolivec %in% DEmpvec))
+			
+			# CH
+			CHmpvec <- unique(PARE[which(PARE$country == "CH"),]$pers_id)
+			length(CHmpvec)
+			CHpolivec <- POLI$pers_id[which(POLI$country == "CH")]
+			length(which(!CHpolivec %in% CHmpvec))
+			
+			# NL
+			NLmpvec <- unique(PARE[which(PARE$country == "NL"),]$pers_id)
+			length(NLmpvec)
+			NLpolivec <- POLI$pers_id[which(POLI$country == "NL")]
+			length(which(!NLpolivec %in% NLmpvec))
+			
+			# number of DE MPS in 1998 - 2016
+			length(unique(PARE[which(PARE$parliament_id == "DE_NT-BT_1998" | PARE$parliament_id == "DE_NT-BT_2002" | PARE$parliament_id == "DE_NT-BT_2005"|PARE$parliament_id == "DE_NT-BT_2009"),]$pers_id))
+	
+			# number of CH MPS in 2007 - 2015
+			length(unique(PARE[which(PARE$parliament_id == "CH_NT-NR_2007" | PARE$parliament_id == "CH_NT-NR_2011"),]$pers_id))
+	
+			
+			
+
+	# some inspections here with numbers for the project extension
+	
+		
+	
+	
 
 	# we start with getting ELEN level data-frames
 		nrow(ELEN)
@@ -1017,6 +1066,7 @@
 		hist(ELLIBUNL$meanpersdifferent)
 		table(ELLIBUNL$party_id)
 		table(ELLIBUNL$party_id,ELLIBUNL$parliament_id)
+		boxplot(ELLIBUNL$meanpersdifferent~ELLIBUNL$parliament_id)
 		
 		table(ELLIBU$percentage95simular)
 		
@@ -1066,7 +1116,12 @@
 		### now also, using the information from above, move some Dutch cases away from the single-list variable, because there is actually quite some diversity!
 			table()
 			table(ELLIBU$keylisttypes,ELLIBU$countryld)
-			ELLIBU$keylisttypes <- ifelse(ELLIBU$country == "NL" & ELLIBU$percentage95simular > 0.05,"party-list-secondary-districts",ELLIBU$keylisttypes)
+			table(ELLIBU$percentage95simular)
+			
+			ELLIBU[which(ELLIBU$percentage95simular > 0 & ELLIBU$percentage95simular < 1),]
+			
+			
+			ELLIBU$keylisttypes <- ifelse(ELLIBU$country == "NL" & ELLIBU$percentage95simular > 0.20,"party-list-secondary-districts",ELLIBU$keylisttypes)
 			table(ELLIBU$keylisttypes,ELLIBU$countryld) # 23 election lists from NL got moved to the other category
 				
 	### for all the list seats, get a variable as well that indicates what the percentage of women was on the district seats in this list its region << BROKEN now, fix later or DROP
@@ -1144,7 +1199,14 @@
 					
 				# key descriptive relating to Philip suggestion
 				boxplot(ELLIBU$ambition_realisation_gap~ELLIBU$keylisttypes, main="% women elected into parliament - % from quota")
+				beanplot(ELLIBU$ambition_realisation_gap~ELLIBU$keylisttypes, main="% women elected into parliament - % from quota",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
 				table(ELLIBUMEL$quota_soft)
+				
+				# variance per group
+				var(ELLIBU[which(ELLIBU$keylisttypes == "one-list"),]$ambition_realisation_gap)
+				var(ELLIBU[which(ELLIBU$keylisttypes == "party-list-secondary-districts"),]$ambition_realisation_gap)
+				var(ELLIBU[which(ELLIBU$keylisttypes == "single-member-districts"),]$ambition_realisation_gap)
+				levene.test(ELLIBU$ambition_realisation_gap,ELLIBU$keylisttypes)
 				
 					# break down to hard and soft quotas
 						ELLIBU$typeandquota <- paste(ELLIBU$keylisttypes,ELLIBU$quota_soft,sep="")
@@ -1176,6 +1238,14 @@
 				hist(ELLIBU$ambition_selection_gap[which(ELLIBU$country =="NL")]) 
 				
 				boxplot(ELLIBU$ambition_selection_gap~ELLIBU$keylisttypes, main="% of women selected onto the list - % from quota")
+				beanplot(ELLIBU$ambition_selection_gap~ELLIBU$keylisttypes, main="% of women selected onto the list - % from quota",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
+				
+				# variance per group
+				var(ELLIBU[which(ELLIBU$keylisttypes == "one-list"),]$ambition_selection_gap)
+				var(ELLIBU[which(ELLIBU$keylisttypes == "party-list-secondary-districts"),]$ambition_selection_gap)
+				var(ELLIBU[which(ELLIBU$keylisttypes == "single-member-districts"),]$ambition_selection_gap)
+				
+				levene.test(ELLIBU$ambition_selection_gap,ELLIBU$keylisttypes)
 				
 					# break down to hard and soft quotas
 						boxplot(ELLIBU$ambition_selection_gap~ELLIBU$typeandquota, main="% of women selected onto the list - % from quota")
@@ -1198,8 +1268,16 @@
 				
 				boxplot(ELLIBU$selection_election_gap~ELLIBU$keylisttypes, main="% women elected  into parliament - % women selected onto list")
 				
+				# variance per group
+				var(ELLIBU[which(ELLIBU$keylisttypes == "one-list"),]$selection_election_gap)
+				var(ELLIBU[which(ELLIBU$keylisttypes == "party-list-secondary-districts"),]$selection_election_gap)
+				var(ELLIBU[which(ELLIBU$keylisttypes == "single-member-districts"),]$selection_election_gap)
+				levene.test(ELLIBU$selection_election_gap,ELLIBU$keylisttypes)
+				table(ELLIBU$keylisttypes)
+				
 					# break down to hard and soft quotas
 						boxplot(ELLIBU$selection_election_gap~ELLIBU$typeandquota, main="% women elected  into parliament - % women selected onto list")
+						beanplot(ELLIBU$selection_election_gap~ELLIBU$keylisttypes, main="% women elected  into parliament - % women selected onto list",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
 				
 				table(ELLIBU$keylisttypes)
 				hist(ELLIBU$selection_election_gap[which(ELLIBU$keylisttypes =="one-list")])
@@ -1217,6 +1295,8 @@
 ######################################################################################
 ############################ OLD DESCRIPTIVE RESULTS #################################
 ######################################################################################			
+		
+	
 		
 	# some general descriptives for the first version of the paper
 	
