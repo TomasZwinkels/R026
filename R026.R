@@ -1140,6 +1140,26 @@
 				table(ELLIBU$selection_control,ELLIBU$country)
 				table(is.na(ELLIBU$selection_control)) 
 			
+			## selection control details
+				ELLIBU$selection_control_detailed <- NA
+				
+				# low, german district seats
+				ELLIBU$selection_control_detailed[which(ELLIBU$country == "DE" & ELLIBU$type == "district")] <- "low - DE district (aggregated at land level)"
+				
+				# medium, german regional list seats + Dutch lists with regional variation
+				ELLIBU$selection_control_detailed[which(ELLIBU$country == "DE" & ELLIBU$type == "list")] <- "medium - DE list"
+				ELLIBU$selection_control_detailed[which(ELLIBU$country == "NL" &  ELLIBU$meanpersdifferent >= 0.2)] <- "medium - NL with different regional lists" 
+
+				# high, Dutch centralised national lists + all swiss lists
+				ELLIBU$selection_control_detailed[which(ELLIBU$country == "NL" &  ELLIBU$meanpersdifferent < 0.2)] <- "high - NL with gen. homogenous regional lists" 
+				ELLIBU$selection_control_detailed[which(ELLIBU$country == "CH")] <- "high - all swiss lists" 
+				
+				table(ELLIBU$selection_control_detailed)
+				table(ELLIBU$selection_control_detailed,ELLIBU$country)
+				table(is.na(ELLIBU$selection_control_detailed)) 
+				ELLIBU$selection_control_detailed_fac <- factor(ELLIBU$selection_control_detailed,levels=c("low - DE district (aggregated at land level)","medium - DE list","medium - NL with different regional lists","high - NL with gen. homogenous regional lists","high - all swiss lists"))
+				table(ELLIBU$selection_control_detailed_fac)
+			
 			## electoral uncertainty
 				ELLIBU$election_uncertainty <- NA
 				
@@ -1165,8 +1185,32 @@
 				
 				table(ELLIBU$election_uncertainty)
 				table(ELLIBU$election_uncertainty,ELLIBU$country)
-				table(is.na(ELLIBU$election_uncertainty)) # the german small district parties are missing
+				table(is.na(ELLIBU$election_uncertainty))
 				
+			## electoral uncertainty with details
+				
+				ELLIBU$election_uncertainty_detailed <- NA
+			
+				# low uncertainty - german regional lists for small parties + all Dutch election lists
+				ELLIBU$election_uncertainty_detailed[which(ELLIBU$country == "DE" & ELLIBU$type == "list" & ELLIBU$party_size_cat_de == "small party")] <- "low unc. - DE list small parties"
+				ELLIBU$election_uncertainty_detailed[which(ELLIBU$country == "NL")] <- "low unc. - NL all lists"
+				ELLIBU$election_uncertainty_detailed[which(ELLIBU$country == "DE" & ELLIBU$type == "district" & ELLIBU$party_size_cat_de == "small party")] <- "low unc. - DE district small parties"
+				
+				# checking the cutoff
+				hist(ELLIBU$party_size[which(ELLIBU$country == "DE")])
+				table(ELLIBU$party_size)
+				
+				# high uncertainty - german regional list big parties + German district seats for big parties + all swiss election lists
+				ELLIBU$election_uncertainty_detailed[which(ELLIBU$country == "DE" & ELLIBU$type == "list" & ELLIBU$party_size_cat_de == "big party")] <- "high unc. DE lists big parties"
+				ELLIBU$election_uncertainty_detailed[which(ELLIBU$country == "DE" & ELLIBU$type == "district" & ELLIBU$party_size_cat_de == "big party")] <- "high unc. DE district big par. (aggr. at land lvl)]"
+				ELLIBU$election_uncertainty_detailed[which(ELLIBU$country == "CH")] <- "high unc. all CH"
+				
+				table(ELLIBU$election_uncertainty_detailed)
+				table(ELLIBU$election_uncertainty_detailed,ELLIBU$country)
+				table(is.na(ELLIBU$election_uncertainty_detailed))
+				
+				ELLIBU$election_uncertainty_detailed_fac <- factor(ELLIBU$election_uncertainty_detailed)
+				table(ELLIBU$election_uncertainty_detailed_fac)
 			
 		### now also, using the information from above, move some Dutch cases away from the single-list variable, because there is actually quite some diversity!
 			table()
@@ -1257,15 +1301,16 @@
 				hist(ELLIBU$ambition_realisation_gap[which(ELLIBU$country =="NL")]) # lets add this to the overleaf file
 					
 				# key descriptive relating to Philip suggestion
-				boxplot(ELLIBU$ambition_realisation_gap~ELLIBU$keylisttypes, main="abs(% women elected into parliament - % from quota)")
-				beanplot(ELLIBU$ambition_realisation_gap~ELLIBU$keylisttypes, main="abs(% women elected into parliament - % from quota)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
-				table(ELLIBUMEL$quota_soft)
+				boxplot(ELLIBU$ambition_realisation_gap~ELLIBU$selection_control, main="abs(% women elected into parliament - % from quota)")
+				beanplot(ELLIBU$ambition_realisation_gap~ELLIBU$selection_control_detailed_fac, main="abs(% women elected into parliament - % from quota)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
 				
 				# variance per group
-				var(ELLIBU[which(ELLIBU$keylisttypes == "one-list"),]$ambition_realisation_gap)
-				var(ELLIBU[which(ELLIBU$keylisttypes == "party-list-secondary-districts"),]$ambition_realisation_gap)
-				var(ELLIBU[which(ELLIBU$keylisttypes == "single-member-districts"),]$ambition_realisation_gap)
-				levene.test(ELLIBU$ambition_realisation_gap,ELLIBU$keylisttypes)
+				table(ELLIBU$selection_control)
+				var(ELLIBU[which(ELLIBU$selection_control == "high selection control"),]$ambition_realisation_gap)
+				var(ELLIBU[which(ELLIBU$selection_control == "low selection control"),]$ambition_realisation_gap)
+				var(ELLIBU[which(ELLIBU$selection_control == "medium selection control"),]$ambition_realisation_gap)
+				levene.test(ELLIBU$ambition_realisation_gap,ELLIBU$selection_control) # no significant difference in variance between the groups
+				table(ELLIBU$selection_control)
 				
 					# break down to hard and soft quotas
 						ELLIBU$typeandquota <- paste(ELLIBU$keylisttypes,ELLIBU$quota_soft,sep="")
@@ -1300,15 +1345,20 @@
 				hist(ELLIBU$ambition_selection_gap[which(ELLIBU$country =="DE")])
 				hist(ELLIBU$ambition_selection_gap[which(ELLIBU$country =="NL")]) 
 				
-				boxplot(ELLIBU$ambition_selection_gap~ELLIBU$keylisttypes, main="% of women selected onto the list - % from quota")
-				beanplot(ELLIBU$ambition_selection_gap~ELLIBU$keylisttypes, main="abs(% of women selected onto the list - % from quota)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
+				
+				ELLIBU$selection_control_fac <- factor(ELLIBU$selection_control, levels=c("low selection control","medium selection control","high selection control"))
+				table(ELLIBU$selection_control_fac)
+				boxplot(ELLIBU$ambition_selection_gap~ELLIBU$selection_control_fac, main="% of women selected onto the list - % from quota")
+				beanplot(ELLIBU$ambition_selection_gap~ELLIBU$selection_control_fac, main="abs(% of women selected onto the list - % from quota)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
+				beanplot(ELLIBU$ambition_selection_gap~ELLIBU$selection_control_fac, main="abs(% of women selected onto the list - % from quota)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
 				
 				# variance per group
-				var(ELLIBU[which(ELLIBU$keylisttypes == "one-list"),]$ambition_selection_gap)
-				var(ELLIBU[which(ELLIBU$keylisttypes == "party-list-secondary-districts"),]$ambition_selection_gap)
-				var(ELLIBU[which(ELLIBU$keylisttypes == "single-member-districts"),]$ambition_selection_gap)
+				var(ELLIBU[which(ELLIBU$selection_control == "high selection control"),]$ambition_selection_gap)
+				var(ELLIBU[which(ELLIBU$selection_control == "medium selection control"),]$ambition_selection_gap)
+				var(ELLIBU[which(ELLIBU$selection_control == "low selection control"),]$ambition_selection_gap)
+				table(ELLIBU$selection_control)
 				
-				levene.test(ELLIBU$ambition_selection_gap,ELLIBU$keylisttypes)
+				levene.test(ELLIBU$ambition_selection_gap,ELLIBU$selection_control)
 				
 					# break down to hard and soft quotas
 						boxplot(ELLIBU$ambition_selection_gap~ELLIBU$typeandquota, main="% of women selected onto the list - % from quota")
@@ -1332,23 +1382,20 @@
 				hist(ELLIBU$selection_election_gap[which(ELLIBU$country =="DE")])
 				hist(ELLIBU$selection_election_gap[which(ELLIBU$country =="NL")]) 
 				
-				boxplot(ELLIBU$selection_election_gap~ELLIBU$keylisttypes, main="% women elected  into parliament - % women selected onto list")
+				boxplot(ELLIBU$selection_election_gap~ELLIBU$election_uncertainty, main="% women elected  into parliament - % women selected onto list")
+				beanplot(ELLIBU$selection_election_gap~ELLIBU$election_uncertainty, main="abs(% women elected  into parliament - % women selected onto list)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
+				beanplot(ELLIBU$selection_election_gap~ELLIBU$election_uncertainty_detailed_fac, main="abs(% women elected  into parliament - % women selected onto list)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
 				
 				# variance per group
-				var(ELLIBU[which(ELLIBU$keylisttypes == "one-list"),]$selection_election_gap)
-				var(ELLIBU[which(ELLIBU$keylisttypes == "party-list-secondary-districts"),]$selection_election_gap)
-				var(ELLIBU[which(ELLIBU$keylisttypes == "single-member-districts"),]$selection_election_gap)
-				levene.test(ELLIBU$selection_election_gap,ELLIBU$keylisttypes)
-				table(ELLIBU$keylisttypes)
+				table(ELLIBU$election_uncertainty)
+				var(ELLIBU[which(ELLIBU$election_uncertainty == "low electoral uncertainty"),]$selection_election_gap)
+				var(ELLIBU[which(ELLIBU$election_uncertainty == "high electoral uncertainty"),]$selection_election_gap)
+				levene.test(ELLIBU$selection_election_gap,ELLIBU$election_uncertainty)
+				table(ELLIBU$election_uncertainty)
 				
 					# break down to hard and soft quotas
 						boxplot(ELLIBU$selection_election_gap~ELLIBU$typeandquota, main="% women elected  into parliament - % women selected onto list")
 						beanplot(ELLIBU$selection_election_gap~ELLIBU$keylisttypes, main="abs(% women elected  into parliament - % women selected onto list)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
-				
-				table(ELLIBU$keylisttypes)
-				hist(ELLIBU$selection_election_gap[which(ELLIBU$keylisttypes =="one-list")])
-				hist(ELLIBU$selection_election_gap[which(ELLIBU$keylisttypes =="party-list-secondary-districts")])
-				hist(ELLIBU$selection_election_gap[which(ELLIBU$keylisttypes =="single-member-districts")]) 
 				
 				# lets inspect some of these positive cases, for example in the Netherlands
 				SAMPLETOCHECK <- ELLIBU[which(ELLIBU$country == "DE" & (ELLIBU$ratio_elected > ELLIBU$ratio_on_list)),] # 629 cases
