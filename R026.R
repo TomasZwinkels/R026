@@ -974,8 +974,8 @@
 				}
 			
 			# testing
-			aa <- strsplit(getpersidarrayforlistid(ELLIBU$list_id[9678]),";")[[1]]
-			bb <- sort(strsplit(getpersidarrayforlistid(ELLIBU$list_id[9678]),";")[[1]])
+			aa <- strsplit(getpersidarrayforlistid(ELLIBU$list_id[200]),";")[[1]]
+			bb <- sort(strsplit(getpersidarrayforlistid(ELLIBU$list_id[900]),";")[[1]])
 			getindeldistfortwoarrays(aa,bb)
 		
 		## step 3: 
@@ -1124,13 +1124,21 @@
 				
 				# medium, german regional list seats + Dutch lists with regional variation
 				ELLIBU$selection_control[which(ELLIBU$country == "DE" & ELLIBU$type == "list")] <- "medium selection control"
-				ELLIBU$selection_control[which(ELLIBU$country == "NL" &  ELLIBU$percentage95simular =< 0.5)] <- "medium selection control" # cutoff need to be checked!
-				
+				ELLIBU$selection_control[which(ELLIBU$country == "NL" &  ELLIBU$meanpersdifferent >= 0.2)] <- "medium selection control" 
+
 				# high, Dutch centralised national lists + all swiss lists
-				ELLIBU$selection_control[which(ELLIBU$country == "NL" &  ELLIBU$percentage95simular > 0.5)] <- "medium selection control" # cutoff needs to be checked / updated
-			
+				ELLIBU$selection_control[which(ELLIBU$country == "NL" &  ELLIBU$meanpersdifferent < 0.2)] <- "high selection control" 
+				ELLIBU$selection_control[which(ELLIBU$country == "CH")] <- "high selection control" 
+				
+				# checking the distribution so I can pick a good pickoff for NL
+				hist(ELLIBU$meanpersdifferent[which(ELLIBU$country == "NL")],breaks=20)
+				hist(ELLIBU$meanpersdifferent[which(ELLIBU$country == "DE")]) # lets think about why the big values here!
+				hist(ELLIBU$meanpersdifferent[which(ELLIBU$country == "CH")],breaks=20)
+				head(ELLIBU)
+				
 				table(ELLIBU$selection_control)
-				table(is.na(ELLIBU$selection_control))
+				table(ELLIBU$selection_control,ELLIBU$country)
+				table(is.na(ELLIBU$selection_control)) 
 			
 			## election control
 				ELLIBU$election_uncertainty <- NA
