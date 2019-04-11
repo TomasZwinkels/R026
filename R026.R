@@ -1140,17 +1140,33 @@
 				table(ELLIBU$selection_control,ELLIBU$country)
 				table(is.na(ELLIBU$selection_control)) 
 			
-			## election control
+			## electoral uncertainty
 				ELLIBU$election_uncertainty <- NA
-			
-				# high - german regional lists for small parties + all Dutch election lists
-				ELLIBU$election_control[which(ELLIBU$country == "DE" & ELLIBU$type == "list" & & ELLIBU$party_size =< 40)] <- "low electoral uncertainty"
-				ELLIBU$election_control[which(ELLIBU$country == "NL")] <- "low electoral uncertainty"
 				
-				# low - german regional list big parties + German district seats for big parties + all swiss election lists
-				ELLIBU$election_control[which(ELLIBU$country == "DE" & ELLIBU$type == "list" & & ELLIBU$party_size > 40)] <- "high electoral uncertainty"
-				ELLIBU$election_control[which(ELLIBU$country == "DE" & ELLIBU$type == "district" & & ELLIBU$party_size > 40)] <- "high electoral uncertainty"
-				ELLIBU$election_control[which(ELLIBU$country == "CH")] <- "high electoral uncertainty"
+				ELLIBU$party_size_cat <- NA
+				ELLIBU$party_size_cat_de[which(ELLIBU$party_size <= 75)] <- "small party"
+				ELLIBU$party_size_cat_de[which(ELLIBU$party_size > 75)] <- "big party"
+				table(ELLIBU$party_size_cat_de)
+				table(ELLIBU[which(ELLIBU$country == "DE"),]$party_size_cat_de,ELLIBU[which(ELLIBU$country == "DE"),]$nat_party_id)
+			
+				# low uncertainty - german regional lists for small parties + all Dutch election lists
+				ELLIBU$election_uncertainty[which(ELLIBU$country == "DE" & ELLIBU$type == "list" & ELLIBU$party_size_cat_de == "small party")] <- "low electoral uncertainty"
+				ELLIBU$election_uncertainty[which(ELLIBU$country == "NL")] <- "low electoral uncertainty"
+				ELLIBU$election_uncertainty[which(ELLIBU$country == "DE" & ELLIBU$type == "district" & ELLIBU$party_size_cat_de == "small party")] <- "low electoral uncertainty" # do Elena and Philip agree with this classification?
+				
+				# checking the cutoff
+				hist(ELLIBU$party_size[which(ELLIBU$country == "DE")])
+				table(ELLIBU$party_size)
+				
+				# high uncertainty - german regional list big parties + German district seats for big parties + all swiss election lists
+				ELLIBU$election_uncertainty[which(ELLIBU$country == "DE" & ELLIBU$type == "list" & ELLIBU$party_size_cat_de == "big party")] <- "high electoral uncertainty"
+				ELLIBU$election_uncertainty[which(ELLIBU$country == "DE" & ELLIBU$type == "district" & ELLIBU$party_size_cat_de == "big party")] <- "high electoral uncertainty"
+				ELLIBU$election_uncertainty[which(ELLIBU$country == "CH")] <- "high electoral uncertainty"
+				
+				table(ELLIBU$election_uncertainty)
+				table(ELLIBU$election_uncertainty,ELLIBU$country)
+				table(is.na(ELLIBU$election_uncertainty)) # the german small district parties are missing
+				
 			
 		### now also, using the information from above, move some Dutch cases away from the single-list variable, because there is actually quite some diversity!
 			table()
