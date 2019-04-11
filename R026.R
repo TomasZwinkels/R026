@@ -1362,6 +1362,26 @@
 				
 					# break down to hard and soft quotas
 						boxplot(ELLIBU$ambition_selection_gap~ELLIBU$typeandquota, main="% of women selected onto the list - % from quota")
+						
+				## and a quick regression model
+					m1 <- lm(	ambition_selection_gap~selection_control_fac
+								
+						
+								,data=ELLIBU)
+					summary(m1)
+					
+					m2 <- lm(	ambition_selection_gap~
+								selection_control_fac +
+								party_size_cat_de +
+								quota_percentage
+								,data=ELLIBU)
+					summary(m2)
+					
+					
+					
+					stargazer(m1,m2,intercept.bottom=FALSE)
+				
+				head(ELLIBU)
 			
 			### selection to election gap (percentage selected - percentage elected)
 
@@ -1404,6 +1424,28 @@
 				
 				table(ELLIBU$party_id)
 				table(SAMPLETOCHECK$party_id) # happens a lot especially for the greens?
+				
+				
+				# and a simple regresion model
+					mb1 <- lm(selection_election_gap~election_uncertainty
+								
+						
+								,data=ELLIBU)
+					summary(mb1)
+					
+					mb2 <- lm(	selection_election_gap~
+								election_uncertainty +
+								party_size_cat_de +
+								quota_percentage
+								,data=ELLIBU)
+					summary(mb2)
+					
+					
+					stargazer(mb1,mb2,type="text",intercept.bottom=FALSE)
+					stargazer(mb1,mb2,intercept.bottom=FALSE)
+				
+				head(ELLIBU)
+				
 
 ######################################################################################
 ############################ OLD DESCRIPTIVE RESULTS #################################
