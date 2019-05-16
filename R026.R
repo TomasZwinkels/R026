@@ -724,14 +724,19 @@
 						close(pb)
 						
 						ELENBU$electable <- ifelse(resvec,"electable","not electable")
-						table(electable)
+						table(ELENBU$electable)
+						
+						tail(ELENBU)
+						head(ELENBU[which(ELENBU$electable == "electable"),])
+						ELENBU[38061:38100,]
 			
 			# do the actual reduction, so that the aggregates below are based on only the 'electable' part of the election lists
-				ELENBUTEMP < ELENBU[which(ELENBU$electable == "electable"),]
+				nrow(ELENBU)
+				ELENBUTEMP <- ELENBU[which(ELENBU$electable == "electable"),]
 				nrow(ELENBUTEMP)
 				ELENBU <- ELENBUTEMP
+				nrow(ELENBU)
 
-	
 	##################################################################################################
 	###################################### aggregation here ##########################################
 	##################################################################################################
