@@ -136,6 +136,10 @@
 			
 				# do the reduction		
 				RESERED <- RESE[which((RESE$country == "DE" | RESE$country == "CH"| RESE$country == "NL") & RESE$political_function == "NT_LE_T3_NA_01" & (!(grepl("-SR_",RESE$parliament_id)) | is.na(RESE$parliament_id) )),] # also exclude standerat entries here with a grepl, they have the same political function code, if rows do not have a parliament ID, do not exclude them on basis of this
+				
+				# run this line if you want to exclude CH completly 
+				RESERED <- RESE[which((RESE$country == "DE" | RESE$country == "NL") & RESE$political_function == "NT_LE_T3_NA_01" & (!(grepl("-SR_",RESE$parliament_id)) | is.na(RESE$parliament_id) )),]
+				
 				head(RESERED)
 				tail(RESERED)
 				table(RESERED$country)
