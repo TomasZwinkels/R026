@@ -39,6 +39,7 @@
 				ELEN = read.csv("PCC/ELEN.csv", header = TRUE, sep = ";")
 				summary(ELEN)
 				names(ELEN)
+
 				
 				ELDI = read.csv("PCC/ELDI.csv", header = TRUE, sep = ";")
 				summary(ELDI)
@@ -844,13 +845,12 @@
 			
 			table(ELENBURED$party_id_from_elli_nat_equiv)
 		
-			i = 2790
 			resvec <- vector()
 			for(i in 1:nrow(ELLIBU))
 			{
 				mypartyid <- ELLIBU$nat_party_id[i]
 				myparliamentid <- ELLIBU$parliament_id[i]	
-				# so what I do below is following: it check the number of unique individuals 
+				# so what I do below is the following: I check the number of unique individuals 
 				resvec[i] <- length(unique(ELENBURED$pers_id[which(ELENBURED$party_id_from_elli_nat_equiv == mypartyid & ELENBURED$parliament_id == myparliamentid)]))
 			}
 			resvec
@@ -919,7 +919,66 @@
 			table(is.na(ELLIBU$ratio_on_list)) # complete
 			table(is.na(ELLIBU$ratio_elected)) # complete
 			table(is.na(ELLIBU$quota_percentage)) # complete
-
+			
+		# NEW - get rid of German district candidates from SMALL parties (because they don’t stand any chance to win, there is nothing at stake.
+			# .. which is why the logic for selection is very likely very different from the other district candidates, and election does not exist).
+			
+				
+			
+				# need this here already now
+				ELENBURED$type <- ifelse(grepl("district-seats-",ELENBURED$list_id),"district","list")
+			
+				# what is a small German party?
+					ELENBUREDDETEMP <- ELENBURED[which(ELENBURED$country=="DE"),]
+					ELLIBUDETEMP <- ELLIBU[which(ELLIBU$country=="DE"),]
+				
+					# what parties 'never' won district seats?
+					table(ELENBUREDDETEMP$type,ELENBUREDDETEMP$party_id_from_elliandmeme) # this is actually hard to get at, because of double mandates...
+					hist(ELLIBUDETEMP$party_size)
+					
+					meannarm <- function(input)
+					{
+						return(mean(input,na.rm=TRUE))
+					}
+					
+					aggregate(ELLIBUDETEMP$party_size, by=list(ELLIBUDETEMP$party_id_nat_equiv), meannarm)
+			
+				nrow(ELLIBU)
+				
+				## this is where the reduction happens
+				ELLIBU <- ELLIBU[which(!(ELLIBU$party_size < 55 & ELLIBU$country == "DE" & ELLIBU$type == "district")),]
+				
+				table(ELLIBU$party_id_nat_equiv)
+				table(ELLIBU$party_id_nat_equiv,ELLIBU$type) # looking alright to me
+			
+		# NEW electable positions
+		
+			# my suggested approach to this is to find your 'double ganger' in the last two elections, to see how (s)he did
+			
+			# find everybody there double gangers, you are a double ganger when
+				# you ran for the same party
+				# in the same district / on the same list /\ i.e. the same list id, but just with a different year
+				
+				# on the same list position (please note that for German disctricst listplace is always NA now in the data, as there is only 1!)
+				
+				# e.g. DE_Achilles_Matthias_1991 ran on list DE_NT-BT_2017__DE_NT-BT_2017__Aachen-I__district-Pi
+				# his doubleganger from 2012 was? 
+				TEMPE <- ELEN[which(ELEN$list_id == "DE_NT-BT_2013__DE_NT-BT_2013__Aachen-I__district-Pi"),]
+				TEMPE
+				
+				ELLI[which(ELLI$list_id == "DE_NT-BT_2013__DE_NT-BT_2013__Aachen-I__district-Pi"),]
+				
+				TEMPE <- sqldf("SELECT TEMPE.*, ELLI.parliament_id 
+								FROM TEMPE LEFT JOIN ELLI
+								ON
+								TEMPE.list_id = ELLI.list_id
+								")
+								# the reason this goes wrong is because above I have updated the list ids, which I should have given another name?!
+				
+				# we can now also check if he got elected or not (if this returns a row, he did)
+				FPAREBU[which(FPAREBU$pers_id == TEMPE$pers_id & ),]
+				
+			
 
 	##################################################################################################
 	############### adding some nuances for the Dutch election list data##############################
