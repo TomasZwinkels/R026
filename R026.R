@@ -462,6 +462,7 @@
 		
 		# lets add the result to another aggregation variable and OVERWRITE the general list id with this one
 			ELENBU$list_id_aggr <- resvec
+			ELENBU$list_id_old <- ELENBU$list_id
 			ELENBU$list_id <- ELENBU$list_id_aggr
 		
 	## this same thing needs to be done in the ELLI data! ## 
@@ -498,6 +499,7 @@
 
 	# OVERWRITE here!
 		ELLI$list_id_aggr <- resvec2
+		ELLI$list_id_old <- ELLI$list_id
 		ELLI$list_id <- ELLI$list_id_aggr
 		
 	# now for ELLI, we also need to combine thse values? Because this is technically only ONE list now
@@ -539,7 +541,7 @@
 			table(ELENBU$in_parliament) 
 			table(ELENBU$in_parliament)[2] / (table(ELENBU$in_parliament)[2]+table(ELENBU$in_parliament)[1]) # is roughly one third of the people on the election list that made it into parliament, that seems like a lot?
 			
-		# and reduce this to the people that where in parliament straight after the election  (taken from R019!) # what am I doing this again?!
+		# and reduce this to the people that where in parliament straight after the election  (taken from R019!) # why am I doing this again?!
 					
 					# note that the cleanup and tranformation of the dates was done above already and also a selection to only eppisodes in parliament
 					RESEMPENT <- RESERED
@@ -592,6 +594,143 @@
 	
 					ELENBURED[which(ELENBURED$in_parliament == "no"),]
 	
+		# NEW electable positions, we need to know this because we want to actually reduce ELEN because we only want the aggregates on the ELLI level for electable positions? <- was suggestion from previous email..
+		
+			# my suggested approach to this is to find your 'double ganger' in the last two elections, to see how (s)he did
+			
+			# find everybody there double gangers, you are a double ganger when
+				# you ran for the same party
+				# in the same district / on the same list /\ i.e. the same list id, but just with a different year
+				
+				# on the same list position (please note that for German disctricst listplace is always NA now in the data, as there is only 1!)
+				
+				# e.g. DE_Achilles_Matthias_1991 ran on list DE_NT-BT_2017__DE_NT-BT_2017__Aachen-I__district-Pi
+				# his doubleganger from 2012 was? 
+				TEMPE <- ELEN[which(ELEN$list_id == "DE_NT-BT_2013__DE_NT-BT_2013__Aachen-I__district-Pi"),]
+				TEMPE
+				
+				ELLI[which(ELLI$list_id == "DE_NT-BT_2013__DE_NT-BT_2013__Aachen-I__district-Pi"),]
+				
+				TEMPE <- sqldf("SELECT TEMPE.*, ELLI.parliament_id 
+								FROM TEMPE LEFT JOIN ELLI
+								ON
+								TEMPE.list_id = ELLI.list_id_old
+								")
+								# the reason this goes wrong is because above I have updated the list ids, which I should have given another name?!
+				
+				# we can now also check if he got elected or not (if this returns a row, he did)
+				FPAREBU[which(FPAREBU$pers_id == TEMPE$pers_id & FPAREBU$parliament_id == TEMPE$parliament_id),] # no hits, so no luck this year, how about the year before?
+				
+				TEMPE <- ELEN[which(ELEN$list_id == "DE_NT-BT_2009__DE_NT-BT_2009__Aachen-I__district-Pi"),] # right, so here we see that re-districting is screwing up our measure
+				
+				TEMPE <- sqldf("SELECT TEMPE.*, ELLI.parliament_id 
+								FROM TEMPE LEFT JOIN ELLI
+								ON
+								TEMPE.list_id = ELLI.list_id_old
+								")
+								# the reason this goes wrong is because above I have updated the list ids, which I should have given another name?!
+				
+				# we can now also check if he got elected or not (if this returns a row, he did)
+				FPAREBU[which(FPAREBU$pers_id == TEMPE$pers_id & FPAREBU$parliament_id == TEMPE$parliament_id),]
+				
+			### /\ bit above is just here for illustrative purposes and can be removed later/
+			
+			# next step is to wrap this whole check in a (set of) functions
+				# input: a list id
+				# output: if your doubleganger had a seat in the last election
+				
+				# alright, so some prep work, first
+				
+					# I need to know the type already
+					
+						# for ELEN
+						
+							# for which first the trick from above needs to be applied
+							ELEN$type <- ifelse(grepl("district-",ELEN$list_id),"district","list")
+
+					
+					# german district seats get list position NA, but lets make this '1' where it needs to be
+
+						head(ELEN[which(ELEN$country == "DE", ELEN$type == "district"),])
+						ELEN$listplace <- ifelse(ELEN$country == "DE" & ELEN$type == "district",1,ELEN$listplace)
+						table(ELEN[which(ELEN$country == "DE", ELEN$type == "district"),]$listplace)
+						
+					# function to match previous parliament
+						
+						wasdoublegangertminxsuccesfull <- function(local_list_id,local_list_position,howfarback)
+						{
+						
+							# get the list id for my double ganger
+						
+								# first, get parliament id
+								myparid <- substr(str_extract(local_list_id,".+?__"),0,nchar(str_extract(local_list_id,".+?__"))-2)
+							
+								# find the previous parliament
+								earlierparliament <- NA # reset
+								if(howfarback == 1)
+								{
+									earlierparliament <- as.character(PARL[which(PARL$parliament_id == myparid),]$previous_parliament)
+								} 
+								else 
+								{
+									if(howfarback == 2)
+									{
+										earlierparliament <- as.character(PARL[which(PARL$parliament_id == myparid),]$previous_parliament)
+										earlierparliament <- as.character(PARL[which(PARL$parliament_id == earlierparliament),]$previous_parliament)
+									} 
+									else 
+									{
+										if(howfarback == 3)
+										{
+										earlierparliament <- as.character(PARL[which(PARL$parliament_id == myparid),]$previous_parliament)
+										earlierparliament <- as.character(PARL[which(PARL$parliament_id == earlierparliament),]$previous_parliament)
+										earlierparliament <- as.character(PARL[which(PARL$parliament_id == earlierparliament),]$previous_parliament)
+										}
+										
+									}
+									
+								}
+								
+								# now generate the list id for my double ganger
+								doublegangerfakelistid <- gsub(myparid,earlierparliament,local_list_id)
+							
+							# now get her pers_id
+								doublegangerpersid <- ELENBU[which(ELENBU$list_id_old == doublegangerfakelistid & ELENBU$listplace == local_list_position),]$pers_id
+								
+							# now, finally, check if this person got a seat in parliament
+						
+							if(nrow(FPAREBU[which(FPAREBU$pers_id == doublegangerpersid),]) > 0)
+							{
+								return(TRUE)
+							} else {
+								return(FALSE)
+							}
+						}
+						
+						# testing, proof is in the pudding!
+						
+						# for some of the very last entries shown here
+						tail(ELENBU)
+						wasdoublegangertminxsuccesfull(ELENBU$list_id_old[163045],ELENBU$listplace[163045],1) # check manually and I think this is correct
+	
+						# and in a loop, for each ELEN position
+						resvec <- vector()
+						pb <- txtProgressBar(min = 1, max = nrow(ELENBU), style = 3)
+						for(i in 1:nrow(ELENBU))
+						{
+							resvec[i] <- wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],1) | wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],2) | wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],3) # if in one of the previous three elections then it counts as electable
+							setTxtProgressBar(pb, i)
+						}
+						close(pb)
+						
+						ELENBU$electable <- ifelse(resvec,"electable","not electable")
+						table(electable)
+			
+			# do the actual reduction, so that the aggregates below are based on only the 'electable' part of the election lists
+				ELENBUTEMP < ELENBU[which(ELENBU$electable == "electable"),]
+				nrow(ELENBUTEMP)
+				ELENBU <- ELENBUTEMP
+
 	
 	##################################################################################################
 	###################################### aggregation here ##########################################
@@ -927,6 +1066,7 @@
 			
 				# need this here already now
 				ELENBURED$type <- ifelse(grepl("district-seats-",ELENBURED$list_id),"district","list")
+				ELLIBU$type <- ifelse(grepl("district-seats-",ELLIBU$list_id),"district","list")
 			
 				# what is a small German party?
 					ELENBUREDDETEMP <- ELENBURED[which(ELENBURED$country=="DE"),]
@@ -947,39 +1087,13 @@
 				
 				## this is where the reduction happens
 				ELLIBU <- ELLIBU[which(!(ELLIBU$party_size < 55 & ELLIBU$country == "DE" & ELLIBU$type == "district")),]
+				nrow(ELLIBU)
 				
 				table(ELLIBU$party_id_nat_equiv)
 				table(ELLIBU$party_id_nat_equiv,ELLIBU$type) # looking alright to me
-			
-		# NEW electable positions
 		
-			# my suggested approach to this is to find your 'double ganger' in the last two elections, to see how (s)he did
-			
-			# find everybody there double gangers, you are a double ganger when
-				# you ran for the same party
-				# in the same district / on the same list /\ i.e. the same list id, but just with a different year
-				
-				# on the same list position (please note that for German disctricst listplace is always NA now in the data, as there is only 1!)
-				
-				# e.g. DE_Achilles_Matthias_1991 ran on list DE_NT-BT_2017__DE_NT-BT_2017__Aachen-I__district-Pi
-				# his doubleganger from 2012 was? 
-				TEMPE <- ELEN[which(ELEN$list_id == "DE_NT-BT_2013__DE_NT-BT_2013__Aachen-I__district-Pi"),]
-				TEMPE
-				
-				ELLI[which(ELLI$list_id == "DE_NT-BT_2013__DE_NT-BT_2013__Aachen-I__district-Pi"),]
-				
-				TEMPE <- sqldf("SELECT TEMPE.*, ELLI.parliament_id 
-								FROM TEMPE LEFT JOIN ELLI
-								ON
-								TEMPE.list_id = ELLI.list_id
-								")
-								# the reason this goes wrong is because above I have updated the list ids, which I should have given another name?!
-				
-				# we can now also check if he got elected or not (if this returns a row, he did)
-				FPAREBU[which(FPAREBU$pers_id == TEMPE$pers_id & ),]
-				
-			
-
+						
+						
 	##################################################################################################
 	############### adding some nuances for the Dutch election list data##############################
 	##################################################################################################	
