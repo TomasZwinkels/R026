@@ -11,7 +11,9 @@
 		setwd("F:/PolCa/Analysis/R/ProjectR026_control")
 		getwd()
 	
-		# install.packages("beanplot")
+		# install.packages("foreach")
+		# install.packages("foreach")
+		# install.packages("doParallel")
 	
 	# packages
 		library(sqldf)
@@ -24,6 +26,9 @@
 		library(TraMineR)
 		library(lawstat)
 		library(beanplot)
+		library(stringr)
+		library(foreach)
+		library(doParallel)
 		
 		
 	substrRight <- function(x, n)
@@ -723,6 +728,20 @@
 						}
 						close(pb)
 						
+						# and a faster version set to not run that at the moment does not work
+						if(FALSE)
+						{
+							cores=detectCores()
+							cl <- makeCluster(cores[1]-1) #not to overload the computer
+							registerDoParallel(cl)
+							
+							resvec2 <- vector()
+							resvec2 <- foreach(i=1:nrow(ELENBU), .combine='c') %dopar%
+										{
+											wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],1) | wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],2) | wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],3)
+										}
+						}
+						
 						ELENBU$electable <- ifelse(resvec,"electable","not electable")
 						table(ELENBU$electable)
 						
@@ -1067,8 +1086,6 @@
 		# NEW - get rid of German district candidates from SMALL parties (because they don’t stand any chance to win, there is nothing at stake.
 			# .. which is why the logic for selection is very likely very different from the other district candidates, and election does not exist).
 			
-				
-			
 				# need this here already now
 				ELENBURED$type <- ifelse(grepl("district-seats-",ELENBURED$list_id),"district","list")
 				ELLIBU$type <- ifelse(grepl("district-seats-",ELLIBU$list_id),"district","list")
@@ -1091,7 +1108,9 @@
 				nrow(ELLIBU)
 				
 				## this is where the reduction happens
-				ELLIBU <- ELLIBU[which(!(ELLIBU$party_size < 55 & ELLIBU$country == "DE" & ELLIBU$type == "district")),]
+				table(ELLIBU$party_size,ELLIBU$type) # so, still plenty of cases in here with list seats won by small parties.
+				
+				ELLIBU <- ELLIBU[which(!(ELLIBU$party_size < 75 & ELLIBU$country == "DE" & ELLIBU$type == "district")),]
 				nrow(ELLIBU)
 				
 				table(ELLIBU$party_id_nat_equiv)
@@ -1274,7 +1293,6 @@
 	################################# variable building here #########################################
 	##################################################################################################
 
-
 		### lets make the type one again, just a grepl on word district
 			ELLIBU$type <- ifelse(grepl("district-seats-",ELLIBU$list_id),"district","list")
 
@@ -1341,6 +1359,7 @@
 				table(is.na(ELLIBU$selection_control_detailed)) 
 				ELLIBU$selection_control_detailed_fac <- factor(ELLIBU$selection_control_detailed,levels=c("low - DE district (aggregated at land level)","medium - DE list","medium - NL with different regional lists","high - NL with gen. homogenous regional lists","high - all swiss lists"))
 				table(ELLIBU$selection_control_detailed_fac)
+				
 			
 			## electoral uncertainty
 				ELLIBU$election_uncertainty <- NA
@@ -1349,7 +1368,8 @@
 				ELLIBU$party_size_cat_de[which(ELLIBU$party_size <= 75)] <- "small party"
 				ELLIBU$party_size_cat_de[which(ELLIBU$party_size > 75)] <- "big party"
 				table(ELLIBU$party_size_cat_de)
-				table(ELLIBU[which(ELLIBU$country == "DE"),]$party_size_cat_de,ELLIBU[which(ELLIBU$country == "DE"),]$nat_party_id)
+				table(ELLIBU$party_size_cat_de,ELLIBU$country)
+				table(ELLIBU[which(ELLIBU$country == "DE"),]$party_size_cat_de,ELLIBU[which(ELLIBU$country == "DE"),]$nat_party_id) # why die Linke more then 75 seats? --
 			
 				# low uncertainty - german regional lists for small parties + all Dutch election lists
 				ELLIBU$election_uncertainty[which(ELLIBU$country == "DE" & ELLIBU$type == "list" & ELLIBU$party_size_cat_de == "small party")] <- "low electoral uncertainty"
@@ -1374,9 +1394,13 @@
 				ELLIBU$election_uncertainty_detailed <- NA
 			
 				# low uncertainty - german regional lists for small parties + all Dutch election lists
+				
+				table(ELLIBU$country,ELLIBU$type,ELLIBU$party_size_cat_de) # right, so small parties where removed all together!
+				
 				ELLIBU$election_uncertainty_detailed[which(ELLIBU$country == "DE" & ELLIBU$type == "list" & ELLIBU$party_size_cat_de == "small party")] <- "low unc. - DE list small parties"
 				ELLIBU$election_uncertainty_detailed[which(ELLIBU$country == "NL")] <- "low unc. - NL all lists"
-				ELLIBU$election_uncertainty_detailed[which(ELLIBU$country == "DE" & ELLIBU$type == "district" & ELLIBU$party_size_cat_de == "small party")] <- "low unc. - DE district small parties"
+				ELLIBU$election_uncertainty_detailed[which(ELLIBU$country == "DE" & ELLIBU$type == "district" & ELLIBU$party_size_cat_de == "small party")] <- "low unc. - DE district small parties" # this one should indeed have been removed
+				table(ELLIBU$election_uncertainty_detailed)
 				
 				# checking the cutoff
 				hist(ELLIBU$party_size[which(ELLIBU$country == "DE")])
@@ -1395,7 +1419,6 @@
 				table(ELLIBU$election_uncertainty_detailed_fac)
 			
 		### now also, using the information from above, move some Dutch cases away from the single-list variable, because there is actually quite some diversity!
-			table()
 			table(ELLIBU$keylisttypes,ELLIBU$countryld)
 			table(ELLIBU$percentage95simular)
 			
@@ -1483,7 +1506,17 @@
 				hist(ELLIBU$ambition_realisation_gap[which(ELLIBU$country =="NL")]) # lets add this to the overleaf file
 					
 				# key descriptive relating to Philip suggestion
+				
+				# reordering things for the graphic
+				ELLIBU$selection_control <- factor(ELLIBU$selection_control, levels=c("low selection control","medium selection control","high selection control"))
+				table(ELLIBU$selection_control)
+				table(ELLIBU$selection_control,ELLIBU$selection_control_detailed_fac)
+				
+				table(ELLIBU$selection_control_detailed_fac)
+				ELLIBU$selection_control_detailed_fac <- factor(ELLIBU$selection_control_detailed_fac, levels=c("low - DE district (aggregated at land level)","medium - DE list","medium - NL with different regional lists","high - NL with gen. homogenous regional lists"))
+				
 				boxplot(ELLIBU$ambition_realisation_gap~ELLIBU$selection_control, main="abs(% women elected into parliament - % from quota)")
+				beanplot(ELLIBU$ambition_realisation_gap~ELLIBU$selection_control, main="abs(% women elected into parliament - % from quota)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
 				beanplot(ELLIBU$ambition_realisation_gap~ELLIBU$selection_control_detailed_fac, main="abs(% women elected into parliament - % from quota)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
 				
 				# variance per group
@@ -1532,7 +1565,7 @@
 				table(ELLIBU$selection_control_fac)
 				boxplot(ELLIBU$ambition_selection_gap~ELLIBU$selection_control_fac, main="% of women selected onto the list - % from quota")
 				beanplot(ELLIBU$ambition_selection_gap~ELLIBU$selection_control_fac, main="abs(% of women selected onto the list - % from quota)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
-				beanplot(ELLIBU$ambition_selection_gap~ELLIBU$selection_control_fac, main="abs(% of women selected onto the list - % from quota)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
+				beanplot(ELLIBU$ambition_selection_gap~ELLIBU$selection_control_detailed_fac, main="abs(% of women selected onto the list - % from quota)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
 				
 				# variance per group
 				var(ELLIBU[which(ELLIBU$selection_control == "high selection control"),]$ambition_selection_gap)
@@ -1546,7 +1579,7 @@
 						boxplot(ELLIBU$ambition_selection_gap~ELLIBU$typeandquota, main="% of women selected onto the list - % from quota")
 						
 				## and a quick regression model
-					m1 <- lm(	ambition_selection_gap~selection_control_fac
+					m1 <- lm(ambition_selection_gap~selection_control_fac
 								
 						
 								,data=ELLIBU)
@@ -1559,8 +1592,14 @@
 								,data=ELLIBU)
 					summary(m2)
 					
+					m3 <- lm(	ambition_selection_gap~
+								selection_control_fac +
+							#	party_size_cat_de +
+								quota_percentage
+								,data=ELLIBU)
+					summary(m3)
 					
-					
+					stargazer(m1,m2,type="text",intercept.bottom=FALSE)
 					stargazer(m1,m2,intercept.bottom=FALSE)
 				
 				head(ELLIBU)
@@ -1590,7 +1629,7 @@
 				
 				# variance per group
 				table(ELLIBU$election_uncertainty)
-				var(ELLIBU[which(ELLIBU$election_uncertainty == "low electoral uncertainty"),]$selection_election_gap)
+				var(ELLIBU[which(ELLIBU$election_uncertainty == "low electoral uncertainty"),]$selection_election_gap,na.rm=T)
 				var(ELLIBU[which(ELLIBU$election_uncertainty == "high electoral uncertainty"),]$selection_election_gap)
 				levene.test(ELLIBU$selection_election_gap,ELLIBU$election_uncertainty)
 				table(ELLIBU$election_uncertainty)
@@ -1609,19 +1648,27 @@
 				
 				
 				# and a simple regresion model
+				
+					ELLIBU$party_size_cat_de <- factor(ELLIBU$party_size_cat_de, levels=c("big party","small party"))
+					table(ELLIBU$party_size_cat_de,is.na(ELLIBU$selection_election_gap))
+					table(ELLIBU$party_size_cat_de,ELLIBU$quota_percentage)
+					table(ELLIBU$party_size_cat_de,ELLIBU$election_uncertainty)
+					
+				
 					mb1 <- lm(selection_election_gap~election_uncertainty
-								
-						
 								,data=ELLIBU)
 					summary(mb1)
 					
 					mb2 <- lm(	selection_election_gap~
 								election_uncertainty +
-								party_size_cat_de +
+								# party_size_cat_de # cannot be included anymore because perfectly co-lineair with election_uncertainty 
 								quota_percentage
 								,data=ELLIBU)
 					summary(mb2)
 					
+					lm(	selection_election_gap~
+								party_size_cat_de
+								,data=ELLIBU)
 					
 					stargazer(mb1,mb2,type="text",intercept.bottom=FALSE)
 					stargazer(mb1,mb2,intercept.bottom=FALSE)
