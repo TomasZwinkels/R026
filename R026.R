@@ -1191,74 +1191,128 @@
 		
 				# create a selection of all relevant election lists to compare - relevant lists are all lists from the same party in the same election
 				
-					# in a loop
-						meanpersdifferentresvec <- vector()
-						percentage95simularresvec <- vector()
-
-						pb <- txtProgressBar(min = 1, max = nrow(ELLIBU), style = 3)
-						for(j in 1:nrow(ELLIBU))
-						{
-							mylistid <- ELLIBU$list_id[j]
-							mypartyid <- ELLIBU$party_id[which(ELLIBU$list_id == mylistid)][1]
-							myparliamentid <- ELLIBU$parliament_id[which(ELLIBU$list_id == mylistid)][1]
-							
-							RELLISTS <- ELLIBU[which(ELLIBU$party_id == mypartyid & ELLIBU$parliament_id == myparliamentid),]
+					readline(prompt="Press [enter] to continue")
+					 
+				
+					# so this takes - a lot - of time to run, so it only does when you explicity tell it to and suggests you to when the dataversion has changed
+					
+					# by default we are not running this!
+					runOMagain <- FALSE
+					# check version numbers though!
 						
-						# only continue when we have values here, otherwise set result to NA # with option to only run this for NL
-						if(nchar(mylistid) > 0 & nchar(mypartyid) > 0 & nchar(myparliamentid) > 0)
+						# is there maybe a newer version then the latest one saved?
+						
+							# function to get the latest run
+								
+							getlatestrun <- function()
 							{
-							# get the average % difference and percentage of lists that is more then 95% simular
+								# fitst lets figure out what the newest time-stamp is
+								filenames <- list.files("INDA")
+								
+								# split
+								filenamesmat <- as.data.frame(t(as.data.frame(strsplit(filenames,"_"))))
+								colnames(filenamesmat) <- c("mydate","mytime","filetype") 
+								filenamesmat$mydate <- as.numeric(as.character(filenamesmat$mydate))
+								filenamesmat$mytime <- as.numeric(as.character(filenamesmat$mytime))
+								
+								latestrun <- paste(max(filenamesmat$mydate),"_",sprintf("%04d",max(filenamesmat$mytime)),sep="")
 							
-								# should I maybe exclude myself from the analysis here?
-									RELLISTS <- RELLISTS[which(!RELLISTS$list_id == mylistid),]
-									
-									# only continue when there are any other lists to compare myself with, otherwise set results to no difference
-									if(nrow(RELLISTS)>0)
-									{
-										mypersids <- getpersidarrayforlistid(mylistid)
-										localresvec <- vector()
-										number95simular <- 0 # reset
-										for(i in 1:nrow(RELLISTS))
+								return(latestrun)
+							}
+						
+					if(!readLines("PCC/dataversion.txt") == readLines(paste("INDA/",latestrun,"_dataversion.txt",sep=""))) # check if the version used in the latest run is the same as the currently used data version in the r-script
+					{
+						runOMagain = askYesNo("!Warning! The last stored data from the loop that does the OM on the elections lists is not the same as the current data version used for the R-script, do you want to run the loop again?! - this takes about 1.5 hours ")
+					}
+					
+					if(runOMagain)
+					{
+							# in a loop
+							meanpersdifferentresvec <- vector()
+							percentage95simularresvec <- vector()
+
+							pb <- txtProgressBar(min = 1, max = nrow(ELLIBU), style = 3)
+							for(j in 1:nrow(ELLIBU))
+							{
+								mylistid <- ELLIBU$list_id[j]
+								mypartyid <- ELLIBU$party_id[which(ELLIBU$list_id == mylistid)][1]
+								myparliamentid <- ELLIBU$parliament_id[which(ELLIBU$list_id == mylistid)][1]
+								
+								RELLISTS <- ELLIBU[which(ELLIBU$party_id == mypartyid & ELLIBU$parliament_id == myparliamentid),]
+							
+							# only continue when we have values here, otherwise set result to NA # with option to only run this for NL
+							if(nchar(mylistid) > 0 & nchar(mypartyid) > 0 & nchar(myparliamentid) > 0)
+								{
+								# get the average % difference and percentage of lists that is more then 95% simular
+								
+									# should I maybe exclude myself from the analysis here?
+										RELLISTS <- RELLISTS[which(!RELLISTS$list_id == mylistid),]
+										
+										# only continue when there are any other lists to compare myself with, otherwise set results to no difference
+										if(nrow(RELLISTS)>0)
 										{
-											# for one list entry
-											otherspersids <- getpersidarrayforlistid(RELLISTS[i,]$list_id)
-											
-											# only continue when there are any people with these list ids in ELEN, otherwise: NA
-											if(!(otherspersids == "" | mypersids == ""))
+											mypersids <- getpersidarrayforlistid(mylistid)
+											localresvec <- vector()
+											number95simular <- 0 # reset
+											for(i in 1:nrow(RELLISTS))
 											{
-												# get the distance between them
-												disthere <- getindeldistfortwoarrays(strsplit(mypersids,";")[[1]],strsplit(otherspersids,";")[[1]])
+												# for one list entry
+												otherspersids <- getpersidarrayforlistid(RELLISTS[i,]$list_id)
 												
-												# calculate the relative percentage that needs to be replaced and return
-												localresvec[i] <- (disthere/length(strsplit(mypersids,";")[[1]]))
-												
-												# if disthere larger then 95% then update counter
-												if(disthere <= 0.05)
+												# only continue when there are any people with these list ids in ELEN, otherwise: NA
+												if(!(otherspersids == "" | mypersids == ""))
 												{
-													number95simular <- number95simular + 1
+													# get the distance between them
+													disthere <- getindeldistfortwoarrays(strsplit(mypersids,";")[[1]],strsplit(otherspersids,";")[[1]])
+													
+													# calculate the relative percentage that needs to be replaced and return
+													localresvec[i] <- (disthere/length(strsplit(mypersids,";")[[1]]))
+													
+													# if disthere larger then 95% then update counter
+													if(disthere <= 0.05)
+													{
+														number95simular <- number95simular + 1
+													}
+												} else {
+													localresvec[i] <- NA
 												}
-											} else {
-												localresvec[i] <- NA
 											}
+											averagepersdifferent <- mean(localresvec,na.rm=TRUE)
+											percentagesimular <- number95simular / length(localresvec)
+										
+											meanpersdifferentresvec[j] <- averagepersdifferent
+											percentage95simularresvec[j] <- percentagesimular
+										} else {
+											meanpersdifferentresvec[j] <- 0
+											percentage95simularresvec[j] <- 1
 										}
-										averagepersdifferent <- mean(localresvec,na.rm=TRUE)
-										percentagesimular <- number95simular / length(localresvec)
-									
-										meanpersdifferentresvec[j] <- averagepersdifferent
-										percentage95simularresvec[j] <- percentagesimular
 									} else {
-										meanpersdifferentresvec[j] <- 0
-										percentage95simularresvec[j] <- 1
+										meanpersdifferentresvec[j] <- NA
+										percentage95simularresvec[j] <- NA
 									}
-								} else {
-									meanpersdifferentresvec[j] <- NA
-									percentage95simularresvec[j] <- NA
-								}
-								setTxtProgressBar(pb, j)
+									setTxtProgressBar(pb, j)
+							}
+							close(pb)
+							meanpersdifferentresvec
+							percentage95simularresvec
+							
+							write.csv(meanpersdifferentresvec,file=paste("INDA/",format(now(), "%Y%m%d_%H%M_"),"meanpersdifferentresvec.csv",sep=""))
+							write.csv(percentage95simularresvec,file=paste("INDA/",format(now(), "%Y%m%d_%H%M_"),"percentage95simularresvec.csv",sep=""))
+							file.copy("PCC/dataversion.txt",paste("INDA/",format(now(), "%Y%m%d_%H%M_"),"dataversion.txt",sep=""),overwrite=TRUE)
+							
+						{
+						else # what to do when we are NOT running the analysis again
+						{
+							# then load the latest of these files
+								latestrun <- getlatestrun()
+								
+								meanpersdifferentresvectemp <- read.csv(paste("INDA/",latestrun,"_meanpersdifferentresvec.csv",sep=""))
+								meanpersdifferentresvec <- meanpersdifferentresvectemp[,2]
+								
+								percentage95simularresvectemp <- read.csv(paste("INDA/",latestrun,"_percentage95simularresvec.csv",sep=""))
+								percentage95simularresvec <- percentage95simularresvectemp[,2]
 						}
-						close(pb)
-						meanpersdifferentresvec
-						percentage95simularresvec
+
 
 		ELLIBU$meanpersdifferent <- meanpersdifferentresvec
 		ELLIBU$percentage95simular <- percentage95simularresvec
