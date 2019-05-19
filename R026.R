@@ -717,32 +717,68 @@
 						# for some of the very last entries shown here
 						tail(ELENBU)
 						wasdoublegangertminxsuccesfull(ELENBU$list_id_old[163045],ELENBU$listplace[163045],1) # check manually and I think this is correct
-	
-						# and in a loop, for each ELEN position
-						resvec <- vector()
-						pb <- txtProgressBar(min = 1, max = nrow(ELENBU), style = 3)
-						for(i in 1:nrow(ELENBU))
-						{
-							resvec[i] <- wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],1) | wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],2) | wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],3) # if in one of the previous three elections then it counts as electable
-							setTxtProgressBar(pb, i)
-						}
-						close(pb)
+			
+						# same as below with the OM, also here I want to only run this bit of very time consuming code when it really is nessary
 						
-						# and a faster version set to not run that at the moment does not work
-						if(FALSE)
-						{
-							cores=detectCores()
-							cl <- makeCluster(cores[1]-1) #not to overload the computer
-							registerDoParallel(cl)
+							# function to get the latest run
+								
+							getlatestrun <- function(type)
+							{
+								# fitst lets figure out what the newest time-stamp is
+								filenames <- list.files(paste("INDA/",type,sep=""))
+								
+								# split
+								filenamesmat <- as.data.frame(t(as.data.frame(strsplit(filenames,"_"))))
+								colnames(filenamesmat) <- c("mydate","mytime","filetype") 
+								filenamesmat$mydate <- as.numeric(as.character(filenamesmat$mydate))
+								filenamesmat$mytime <- as.numeric(as.character(filenamesmat$mytime))
+								
+								latestrun <- paste(max(filenamesmat$mydate),"_",sprintf("%04d",max(filenamesmat$mytime)),sep="")
 							
-							resvec2 <- vector()
-							resvec2 <- foreach(i=1:nrow(ELENBU), .combine='c') %dopar%
-										{
-											wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],1) | wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],2) | wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],3)
-										}
+								return(latestrun)
+							}
+						
+						# the default is to not run
+						runDGagain <- FALSE
+						
+						latestrun <- getlatestrun("DG")
+						
+						# check if the version match
+						if(!readLines("PCC/dataversion.txt") == readLines(paste("INDA/DG/",latestrun,"_dataversion.txt",sep=""))) # check if the version used in the latest run is the same as the currently used data version in the r-script
+						{
+							runDGagain = askYesNo("!Warning! The last stored data from the loop that does the OM on the elections lists is not the same as the current data version used for the R-script, do you want to run the loop again?! - this takes about 1.5 hours ")
 						}
 						
-						ELENBU$electable <- ifelse(resvec,"electable","not electable")
+						# we can ofcourse also manually say we want do (not) run it again!
+						
+						# runDGagain = FALSE
+						# runDGagain = TRUE
+						
+						if(runDGagain)
+						{
+								# and in a loop, for each ELEN position
+								resvecelect <- vector()
+								pb <- txtProgressBar(min = 1, max = nrow(ELENBU), style = 3)
+								for(i in 1:nrow(ELENBU))
+								{
+									resvecelect[i] <- wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],1) | wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],2) | wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],3) # if in one of the previous three elections then it counts as electable
+									setTxtProgressBar(pb, i)
+								}
+								close(pb)
+								
+								write.csv(resvecelect,file=paste("INDA/DG/",format(now(), "%Y%m%d_%H%M_"),"resvecelect.csv",sep=""))
+								file.copy("PCC/dataversion.txt",paste("INDA/DG/",format(now(), "%Y%m%d_%H%M_"),"dataversion.txt",sep=""),overwrite=TRUE)
+						}
+						else # what to do when we are NOT running the loop again
+						{
+							# then load the latest of these files
+								latestrun <- getlatestrun("DG")
+								
+								resvecelecttemp <- read.csv(paste("INDA/DG/",latestrun,"_resvec.csv",sep=""))
+								resvecelect <- resvecelecttemp[,2]
+						)
+						
+						ELENBU$electable <- ifelse(resvecelect,"electable","not electable")
 						table(ELENBU$electable)
 						
 						tail(ELENBU)
@@ -1193,7 +1229,6 @@
 				
 					readline(prompt="Press [enter] to continue")
 					 
-				
 					# so this takes - a lot - of time to run, so it only does when you explicity tell it to and suggests you to when the dataversion has changed
 					
 					# by default we are not running this!
@@ -1201,26 +1236,10 @@
 					# check version numbers though!
 						
 						# is there maybe a newer version then the latest one saved?
+					
+					latestrun <- getlatestrun("OM")
 						
-							# function to get the latest run
-								
-							getlatestrun <- function()
-							{
-								# fitst lets figure out what the newest time-stamp is
-								filenames <- list.files("INDA")
-								
-								# split
-								filenamesmat <- as.data.frame(t(as.data.frame(strsplit(filenames,"_"))))
-								colnames(filenamesmat) <- c("mydate","mytime","filetype") 
-								filenamesmat$mydate <- as.numeric(as.character(filenamesmat$mydate))
-								filenamesmat$mytime <- as.numeric(as.character(filenamesmat$mytime))
-								
-								latestrun <- paste(max(filenamesmat$mydate),"_",sprintf("%04d",max(filenamesmat$mytime)),sep="")
-							
-								return(latestrun)
-							}
-						
-					if(!readLines("PCC/dataversion.txt") == readLines(paste("INDA/",latestrun,"_dataversion.txt",sep=""))) # check if the version used in the latest run is the same as the currently used data version in the r-script
+					if(!readLines("PCC/dataversion.txt") == readLines(paste("INDA/OM/",latestrun,"_dataversion.txt",sep=""))) # check if the version used in the latest run is the same as the currently used data version in the r-script
 					{
 						runOMagain = askYesNo("!Warning! The last stored data from the loop that does the OM on the elections lists is not the same as the current data version used for the R-script, do you want to run the loop again?! - this takes about 1.5 hours ")
 					}
@@ -1296,20 +1315,20 @@
 							meanpersdifferentresvec
 							percentage95simularresvec
 							
-							write.csv(meanpersdifferentresvec,file=paste("INDA/",format(now(), "%Y%m%d_%H%M_"),"meanpersdifferentresvec.csv",sep=""))
-							write.csv(percentage95simularresvec,file=paste("INDA/",format(now(), "%Y%m%d_%H%M_"),"percentage95simularresvec.csv",sep=""))
-							file.copy("PCC/dataversion.txt",paste("INDA/",format(now(), "%Y%m%d_%H%M_"),"dataversion.txt",sep=""),overwrite=TRUE)
+							write.csv(meanpersdifferentresvec,file=paste("INDA/OM/",format(now(), "%Y%m%d_%H%M_"),"meanpersdifferentresvec.csv",sep=""))
+							write.csv(percentage95simularresvec,file=paste("INDA/OM/",format(now(), "%Y%m%d_%H%M_"),"percentage95simularresvec.csv",sep=""))
+							file.copy("PCC/dataversion.txt",paste("INDA/OM/",format(now(), "%Y%m%d_%H%M_"),"dataversion.txt",sep=""),overwrite=TRUE)
 							
 						{
 						else # what to do when we are NOT running the analysis again
 						{
 							# then load the latest of these files
-								latestrun <- getlatestrun()
+								latestrun <- getlatestrun("OM")
 								
-								meanpersdifferentresvectemp <- read.csv(paste("INDA/",latestrun,"_meanpersdifferentresvec.csv",sep=""))
+								meanpersdifferentresvectemp <- read.csv(paste("INDA/OM/",latestrun,"_meanpersdifferentresvec.csv",sep=""))
 								meanpersdifferentresvec <- meanpersdifferentresvectemp[,2]
 								
-								percentage95simularresvectemp <- read.csv(paste("INDA/",latestrun,"_percentage95simularresvec.csv",sep=""))
+								percentage95simularresvectemp <- read.csv(paste("INDA/OM/",latestrun,"_percentage95simularresvec.csv",sep=""))
 								percentage95simularresvec <- percentage95simularresvectemp[,2]
 						}
 
