@@ -119,6 +119,12 @@
 			PARLBU$leg_period_start_posoxctformat <- as.POSIXct(as.character(PARLBU$leg_period_start),format=c("%d%b%Y"))
 			PARLBU$leg_period_end_posoxctformat <- as.POSIXct(as.character(PARLBU$leg_period_end),format=c("%d%b%Y"))
 			
+			# excluding all of the regional parliaments
+			head(PARLBU)
+			nrow(PARLBU)
+			PARLBU <- PARLBU[which(PARLBU$level == "NT"),]
+			nrow(PARLBU)
+			
 		# get all of the German parliamentary RESE episodes sub-selected so we can merge these in on date
 		
 			# lets do some generic RESE cleaning, for now and for later
@@ -149,6 +155,7 @@
 				head(RESERED)
 				tail(RESERED)
 				table(RESERED$country)
+				table(is.na(RESERED$pers_id)) # no missings here
 			
 			# get internal r-date format here as well
 			
@@ -171,9 +178,28 @@
 							")
 			head(FPAREBU)
 			nrow(FPAREBU)
-			table(FPAREBU$parliament_id) # alright, this looks a lot more reasonable
+			table(FPAREBU$parliament_id) # alright, this looks a lot more reasonable' although a lot of emtpy?
 			head(FPAREBU)
+			
+			FPAREBU_NL <- FPAREBU[which(FPAREBU$country_abb == "NL"),]
+			table(FPAREBU_NL$parliament_id)
+			
+			# merge in the gender from POLI
+			TEMP <- sqldf("SELECT FPAREBU_NL.*, POLI.gender
+						FROM FPAREBU_NL LEFT JOIN POLI
+						ON
+						FPAREBU_NL.pers_id = POLI.pers_id
+						")
+			table(table(TEMP$parliament_id) == table(FPAREBU_NL$parliament_id))
+			table(is.na(TEMP$gender))
+			
+			table(TEMP$parliament_id,TEMP$gender)
+			table(TEMP$parliament_id,is.na(TEMP$gender))
 		
+			# so lets get all of the members from the last parliament, and just look at them manually.
+			TEMP[which(TEMP$parliament_id == "NL_NT-TK_2017"),]
+		
+
 			# create a parliamentary episode ID 			
 			FPAREBU$fake_parl_episode_id <- paste(FPAREBU$pers_id,FPAREBU$parliament_id,sep="__")
 			length(unique(FPAREBU$fake_parl_episode_id)) # does not match!, several people occur double
@@ -245,16 +271,7 @@
 			# number of CH MPS in 2007 - 2015
 			length(unique(PARE[which(PARE$parliament_id == "CH_NT-NR_2007" | PARE$parliament_id == "CH_NT-NR_2011"),]$pers_id))
 	
-			
-			
-
-	# some inspections here with numbers for the project extension
-	
-		
-	
-	
-
-	# we start with getting ELEN level data-frames
+	# we then start with getting ELEN level data-frames
 		nrow(ELEN)
 		ELEN$country <- substr(ELEN$elec_entry_id,1,2)
 		table(ELEN$country)
@@ -731,9 +748,13 @@
 								filenamesmat <- as.data.frame(t(as.data.frame(strsplit(filenames,"_"))))
 								colnames(filenamesmat) <- c("mydate","mytime","filetype") 
 								filenamesmat$mydate <- as.numeric(as.character(filenamesmat$mydate))
-								filenamesmat$mytime <- as.numeric(as.character(filenamesmat$mytime))
 								
-								latestrun <- paste(max(filenamesmat$mydate),"_",sprintf("%04d",max(filenamesmat$mytime)),sep="")
+								# this only among those that already have the highest date
+								filenamesmatred <- filenamesmat[which(filenamesmat$mydate == max(filenamesmat$mydate)),]
+								
+								filenamesmatred$mytime <- as.numeric(as.character(filenamesmatred$mytime))
+								
+								latestrun <- paste(max(filenamesmatred$mydate),"_",sprintf("%04d",max(filenamesmatred$mytime)),sep="")
 							
 								return(latestrun)
 							}
@@ -768,13 +789,12 @@
 								
 								write.csv(resvecelect,file=paste("INDA/DG/",format(now(), "%Y%m%d_%H%M_"),"resvecelect.csv",sep=""))
 								file.copy("PCC/dataversion.txt",paste("INDA/DG/",format(now(), "%Y%m%d_%H%M_"),"dataversion.txt",sep=""),overwrite=TRUE)
-						}
-						else # what to do when we are NOT running the loop again
+						} else # what to do when we are NOT running the loop again
 						{
 							# then load the latest of these files
 								latestrun <- getlatestrun("DG")
 								
-								resvecelecttemp <- read.csv(paste("INDA/DG/",latestrun,"_resvec.csv",sep=""))
+								resvecelecttemp <- read.csv(paste("INDA/DG/",latestrun,"_resvecelect.csv",sep=""))
 								resvecelect <- resvecelecttemp[,2]
 						)
 						
@@ -1169,7 +1189,7 @@
 				return(paste(ELENBUME$pers_id,collapse=";"))
 			}
 	
-			getpersidarrayforlistid(ELLIBU$list_id[9686]) # inspections seems promissing
+			getpersidarrayforlistid(ELLIBU$list_id[4000]) # inspections seems promissing
 			tail(ELLIBU)
 			
 		## step 2:
@@ -1184,28 +1204,33 @@
 					# first lets get a current party dictionary
 					local_dictionary <- unique(c(local_pers_id_array,other_pers_id_array))
 					
-					# create data format as input for the seqdef function
-					
-						# create
-						LOCALSEQDAT <- as.data.frame(rbind(local_pers_id_array,other_pers_id_array))
-						longestarraylength <- max(length(local_pers_id_array),length(other_pers_id_array))
-						colnames(LOCALSEQDAT) <- seq(from=1,to=longestarraylength,by=1)
+					if(!length(local_dictionary) == 1)
+					{
+						# create data format as input for the seqdef function
 						
-						# set NA values to avoid repitition
-						if (!length(local_pers_id_array) == longestarraylength)
-						{
-							LOCALSEQDAT[1,][(length(local_pers_id_array)+1):longestarraylength] <- NA
-						}
-						if (!length(other_pers_id_array) == longestarraylength)
-						{
-							LOCALSEQDAT[2,][(length(other_pers_id_array)+1):longestarraylength] <- NA
-						}
-					
-					submat <- matrix(1L, nrow = length(local_dictionary) , ncol = length(local_dictionary))
-					diag(submat) <- 0
-					
-					LocalSeqObj <- suppressWarnings(suppressMessages(seqdef(LOCALSEQDAT,states=local_dictionary)))
-					resultingindeldist <- suppressMessages(seqdist(LocalSeqObj,method="OM", indel=1,sm=submat))[2,1]
+							# create
+							LOCALSEQDAT <- as.data.frame(rbind(local_pers_id_array,other_pers_id_array))
+							longestarraylength <- max(length(local_pers_id_array),length(other_pers_id_array))
+							colnames(LOCALSEQDAT) <- seq(from=1,to=longestarraylength,by=1)
+							
+							# set NA values to avoid repitition
+							if (!length(local_pers_id_array) == longestarraylength)
+							{
+								LOCALSEQDAT[1,][(length(local_pers_id_array)+1):longestarraylength] <- NA
+							}
+							if (!length(other_pers_id_array) == longestarraylength)
+							{
+								LOCALSEQDAT[2,][(length(other_pers_id_array)+1):longestarraylength] <- NA
+							}
+						
+						submat <- matrix(1L, nrow = length(local_dictionary) , ncol = length(local_dictionary))
+						diag(submat) <- 0
+						
+						LocalSeqObj <- suppressWarnings(suppressMessages(seqdef(LOCALSEQDAT,states=local_dictionary)))
+						resultingindeldist <- suppressMessages(seqdist(LocalSeqObj,method="OM", indel=1,sm=submat))[2,1]
+					} else {
+						resultingindeldist = 0
+					}
 					
 					return(resultingindeldist)
 				}
@@ -1213,6 +1238,7 @@
 			# testing
 			aa <- strsplit(getpersidarrayforlistid(ELLIBU$list_id[200]),";")[[1]]
 			bb <- sort(strsplit(getpersidarrayforlistid(ELLIBU$list_id[900]),";")[[1]])
+			
 			getindeldistfortwoarrays(aa,bb)
 		
 		## step 3: 
@@ -1244,13 +1270,18 @@
 						runOMagain = askYesNo("!Warning! The last stored data from the loop that does the OM on the elections lists is not the same as the current data version used for the R-script, do you want to run the loop again?! - this takes about 1.5 hours ")
 					}
 					
+					# setting this manualy is ofcourse also possible
+					# runOMagain <- FALSE
+					# runOMagain <- TRUE
+					
 					if(runOMagain)
-					{
+						{
 							# in a loop
 							meanpersdifferentresvec <- vector()
 							percentage95simularresvec <- vector()
 
 							pb <- txtProgressBar(min = 1, max = nrow(ELLIBU), style = 3)
+							j=5248
 							for(j in 1:nrow(ELLIBU))
 							{
 								mylistid <- ELLIBU$list_id[j]
@@ -1319,8 +1350,7 @@
 							write.csv(percentage95simularresvec,file=paste("INDA/OM/",format(now(), "%Y%m%d_%H%M_"),"percentage95simularresvec.csv",sep=""))
 							file.copy("PCC/dataversion.txt",paste("INDA/OM/",format(now(), "%Y%m%d_%H%M_"),"dataversion.txt",sep=""),overwrite=TRUE)
 							
-						{
-						else # what to do when we are NOT running the analysis again
+						} else # what to do when we are NOT running the analysis again
 						{
 							# then load the latest of these files
 								latestrun <- getlatestrun("OM")
@@ -1342,6 +1372,11 @@
 		table(ELLIBUNL$party_id)
 		table(ELLIBUNL$party_id,ELLIBUNL$parliament_id)
 		boxplot(ELLIBUNL$meanpersdifferent~ELLIBUNL$parliament_id)
+		
+		aggregate(ELLIBUNL$meanpersdifferent, by=list(ELLIBUNL$parliament_id), meannarm)
+		
+		ELLIBUNL[which(ELLIBUNL$parliament_id == "NL_NT-TK_1989"),]
+		
 		
 		table(ELLIBU$percentage95simular)
 		
@@ -1976,9 +2011,7 @@
 				geom_smooth(method='lm') +
 				scale_x_continuous(limits = c(0, 0.6)) +
 				geom_abline()
-	
-	
-	
+
 		## on the relation
 		
 			# reduce the sample to not include 0,0 observations
@@ -2014,9 +2047,6 @@
 					geom_abline()
 			
 		
-	
-		
-				
 ######################################################################################
 ###################################### MODELS ########################################
 ######################################################################################
