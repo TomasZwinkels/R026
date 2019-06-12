@@ -795,9 +795,12 @@
 				ELENBU <- ELENBUTEMP
 				nrow(ELENBU)
 		
-######################################################################################
-#################################### DATA AGGREGATION ###################################
-######################################################################################	
+
+		#################################### DATA AGGREGATION starts here ###################################
+	
+	##############################################
+	# DATA 8: get percentage of women on the list, with gender taken from ELENBU
+	##############################################
 	
 	##### aggregation on the ELLI level ######
 			GCELLI <- as.data.frame.matrix(table(ELENBU$list_id,ELENBU$genderguesses)) 
@@ -884,13 +887,6 @@
 			nrow(ENL)
 			boxplot(ENL$ratio_on_list~droplevels(ENL$parliament_id)) 
 			
-			# why this drop in NL at the end? 2012 election lists not imported yet I suppose?
-			ELLIBU[which(ELLIBU$parliament_id == "NL_NT-TK_2012"),]$parliament_id[1] == ELLIBUCOMP[which(ELLIBUCOMP$parliament_id == "NL_NT-TK_2012"),]$parliament_id[1]
-			
-			ELLIBU[which(ELLIBU$parliament_id == "NL_NT-TK_2012"),]
-			ELLIBUCOMP[which(ELLIBUCOMP$parliament_id == "NL_NT-TK_2012"),] # alright, so here a lot of cases are missing!
-			ELENBU[which(ELENBU$list_id == "NL_NT-TK_2012__NL_NT-TK_2012__Netherlands[13|20]__Partij-van-de-Arbeid"),]
-			
 			ECH <- ELLIBUCOMP[which(ELLIBUCOMP$country == "CH"),]
 			nrow(ECH)
 			boxplot(ECH$ratio_on_list~droplevels(ECH$parliament_id))
@@ -900,7 +896,12 @@
 	######### creation of bunch of variables before reduction to analytical sample ###################
 	##################################################################################################
 	
-	##### if the party id is not a national party, get the mother party id ###
+	##############################################
+	# DATA 9: building up additional ELLI variables
+	##############################################
+	
+		# 
+		##### if the party id is not a national party, get the mother party id ###
 		
 			ELLIBU[0:20,]
 			head(ELLIBU[which(ELLIBU$party_id ==""),])
@@ -928,15 +929,17 @@
 			table(ELLIBU$nat_party_id)
 			ELLIBU$nat_party_id <- ifelse(ELLIBU$nat_party_id == "lookup",NA,ELLIBU$nat_party_id)
 			
-			# some further fixing up and cleanup of the national party ids
+			# some further fixing up and cleanup of the national party ids?
 
 			table(ELLIBU$nat_party_id) # inspection suggests that the empty values left here are due to regional party ids that do not occur in PART?
 			table(is.na(ELLIBU$nat_party_id)) # still 2500 missings here..
 			table(ELLIBU$party_id_nat_equiv) # still about 1838 empty
 			table(is.na(ELLIBU$party_id_nat_equiv)) # values for all here, for whatever its worth
 
-			
-	##### gender aggregations #######
+	
+	##############################################
+	# DATA 10: ELLIBU gets number elected from PARE
+	##############################################
 	
 			GCPARE <- as.data.frame.matrix(table(ELENBURED$list_id,ELENBURED$genderguesses)) # is this correct? We calculate the ratio of men/women for each list that lead to anybody being elected
 			GCPARE$list_id <- rownames(GCPARE)
@@ -964,6 +967,10 @@
 		# lets make a variable that indicates if anybody from the list was elected at all - can be used for exclusion below
 		ELLIBU$anycandidateselected <- ifelse(ELLIBU$list_id %in% GCPARE$list_id,"yes","nobody")
 		table(ELLIBU$anycandidateselected)
+
+	##############################################
+	# DATA 11: ELLIBU gets number elected from PARE
+	##############################################
 
 	##### get a was there a quota variable so it can be used to reduce to the analytical sample #####
 
@@ -1015,6 +1022,7 @@
 			table(ELLIBU$quota_now)
 			table(is.na(ELLIBU$quota_now),ELLIBU$country)
 
+
 	##### get district magnitude in (for now just number of people that got elected from this district in this parliament - needs to be done before the reduction to the anlytical sample
 		
 			# step 1: this issue has be solved above, kept district ids in so that they can be used here!
@@ -1044,7 +1052,6 @@
 
 			# also here, get the national party versions for ELENBURED, lets use party_id_from_elli_nat_equiv for this?! - if coded is needed again later you can take it from above
 
-			
 			table(ELENBURED$party_id_from_elli_nat_equiv)
 		
 			resvec <- vector()
@@ -1068,20 +1075,9 @@
 			tail(ELLIBU[which(ELLIBU$party_size == 0 & ELLIBU$country == "CH"),])
 
 
-	##### make a script that creates a 'electable' position variable
-		
-		# first get parliament tmin1, tmin2 and tmin3 (previous parliament and the one for that)
-		# cut short! - pauzed for now # 
-		head(ELLIBU)
-		
-		# get the previous parliament from PARL
-		TEMP4 <- sqldf("SELECT ELLIBU.* , PARL.previous_parliament
-						FROM ELLIBU LEFT JOIN PARL
-						ON ELLIBU.parliament_id = PARL.parliament_id
-						")
-	##################################################################################################
-	################################# reduction to analytical sample #################################
-	##################################################################################################
+######################################################################################
+#################################### REDUCTION TO ANALYTICAL SAMPLE ##################
+######################################################################################
 
 		# reduction of the election list data, ratio elected has already been merged in, so this is the only reduction needed?
 		
