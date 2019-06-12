@@ -2,6 +2,13 @@
 #################################### SETUP ###########################################
 ######################################################################################
 
+	###
+	
+		# !!at a later stage please search for '#fixlater' in the document, that are some data issues indentified that are currently left unfixed!!
+	
+	###
+
+
 	# change the language and date formatting to English if it is not already
 		Sys.setenv(LANG = "EN")
 		Sys.setlocale("LC_TIME", "English") # key, without this conversion to POSIXct does not work
@@ -107,11 +114,14 @@
 					QUOT$quot_ep_startdate_posoxctformat <- as.POSIXct(as.character(QUOT$quot_ep_startdate),format=c("%d%b%Y"))
 					QUOT$quot_ep_enddate_posoxctformat <- as.POSIXct(as.character(QUOT$quot_ep_enddate),format=c("%d%b%Y"))
 				
+				
 ######################################################################################
-#################################### DATA ############################################
+#################################### DATA BUILDING ###################################
 ######################################################################################
 	
-	# new approach to getting PARE data
+	##############################################
+	# DATA 1: new approach to getting PARE data
+	##############################################
 	
 		# generate PARE type data on basis of RESE		
 		# get the dates properly formatted into this
@@ -178,211 +188,279 @@
 							")
 			head(FPAREBU)
 			nrow(FPAREBU)
-			table(FPAREBU$parliament_id) # alright, this looks a lot more reasonable' although a lot of emtpy?
+			table(FPAREBU$parliament_id) # alright, this looks a lot more reasonable' although a lot of emtpy / small for earlier swiss years.
 			head(FPAREBU)
-			
-			FPAREBU_NL <- FPAREBU[which(FPAREBU$country_abb == "NL"),]
-			table(FPAREBU_NL$parliament_id)
-			
-			# merge in the gender from POLI
-			TEMP <- sqldf("SELECT FPAREBU_NL.*, POLI.gender
-						FROM FPAREBU_NL LEFT JOIN POLI
-						ON
-						FPAREBU_NL.pers_id = POLI.pers_id
-						")
-			table(table(TEMP$parliament_id) == table(FPAREBU_NL$parliament_id))
-			table(is.na(TEMP$gender))
-			
-			table(TEMP$parliament_id,TEMP$gender)
-			table(TEMP$parliament_id,is.na(TEMP$gender))
 		
-			# so lets get all of the members from the last parliament, and just look at them manually.
-			TEMP[which(TEMP$parliament_id == "NL_NT-TK_2017"),]
-		
-
-			# create a parliamentary episode ID 			
+		# add a fake parliamentary episode ID
+			nrow(FPAREBU)
 			FPAREBU$fake_parl_episode_id <- paste(FPAREBU$pers_id,FPAREBU$parliament_id,sep="__")
 			length(unique(FPAREBU$fake_parl_episode_id)) # does not match!, several people occur double
-			DUB <- FPAREBU[which(duplicated(FPAREBU$fake_parl_episode_id)),] # these are the problematic cases
-			nrow(DUB) # NOTE TO SELF: you can parse theses cases to Adrian to fix # 93 cases!
-			UNI <- FPAREBU %>% distinct(fake_parl_episode_id, .keep_all = TRUE)
-			nrow(UNI)
-			head(UNI)
+			DUB <- FPAREBU[which(duplicated(FPAREBU$fake_parl_episode_id)),] # these are the problematic cases ## #fixlater!
+			nrow(DUB) # NOTE TO SELF: you can parse theses cases to Adrian to fix # 88 cases! # some inspection myself suggest that these are re-entries into the same parliament.
 			
-			# get info from PAREWRONG if it exists
+			# for now, 
+			nrow(FPAREBU)
+			FPAREBU <- FPAREBU %>% distinct(fake_parl_episode_id, .keep_all = TRUE)
+			nrow(FPAREBU)
+		
+		# remove parliaments for which no matches exist
+			FPAREBU <- FPAREBU[which(!is.na(FPAREBU$pers_id)),]
+			nrow(FPAREBU)
+		
+		# finally, lets merge in data from PAREWRONG if there is any for the fake parliamentary episode
 			
 			# first check that one for duplicates as well
-			nrow(PAREWRONG)
-			length(unique(PAREWRONG$parl_episode_id)) # so there are duplicates here as well that I should remove
-			PAREWRONG[which(duplicated(PAREWRONG$parl_episode_id)),]
+				nrow(PAREWRONG)
+				length(unique(PAREWRONG$parl_episode_id)) # so there are duplicates here as well that I should remove
+				PAREWRONG[which(duplicated(PAREWRONG$parl_episode_id)),]
 			
-			PAREWRONGRED <- PAREWRONG %>% distinct(parl_episode_id, .keep_all = TRUE)
-			nrow(PAREWRONGRED) # alright, looking promissing
+			# so also reduce this one before the merge to avoid duplicate matches
+				PAREWRONGRED <- PAREWRONG %>% distinct(parl_episode_id, .keep_all = TRUE)
+				nrow(PAREWRONGRED) # alright, looking promissing
 			
-			TEMP <- sqldf("SELECT UNI.fake_parl_episode_id, PAREWRONGRED.*
-						   FROM UNI LEFT JOIN PAREWRONGRED
-						   ON UNI.fake_parl_episode_id = PAREWRONGRED.parl_episode_id
+			# now, lets merge in what we have there
+				TEMP <- sqldf("SELECT FPAREBU.fake_parl_episode_id, PAREWRONGRED.*
+						   FROM FPAREBU LEFT JOIN PAREWRONGRED
+						   ON FPAREBU.fake_parl_episode_id = PAREWRONGRED.parl_episode_id
 						 ")
-			nrow(TEMP) # alright number is looking good
+				nrow(TEMP) # alright number is looking good, so lets write this result to FPAREBU
+				tail(TEMP)
 			
-			# everyboyd in this new PARE file was in parliament at same point, so lets indicate that
-			table(TEMP$member_ofthisparliament_atsomepoint)
-			TEMP$member_ofthisparliament_atsomepoint <- "yes"
-			table(TEMP$member_ofthisparliament_atsomepoint)
+				FPAREBU <- TEMP
 			
-			# so lets make this our PARE for this script
-			PARE <- TEMP
-			
-		# number of people in POLI that are (not) MPS per country - numbers for the project extension
+			# everybody in this new FPAREBU file was in parliament at same point, so lets indicate that
+				table(FPAREBU$member_ofthisparliament_atsomepoint)
+				FPAREBU$member_ofthisparliament_atsomepoint <- "yes"
+				table(FPAREBU$member_ofthisparliament_atsomepoint)
 
-			# number of MPS in each country in total
-			head(PARE)
-			nrow(PARE)
-			PARE$country <- substr(PARE$fake_parl_episode_id,1,2)
-			table(PARE$country)
-			sum(table(PARE$country))
+	##############################################
+	# DATA 3: the buildup of the ELEN data-frame
+	##############################################
 			
-			nrow(POLI)
-			POLI$country <- substr(POLI$pers_id,1,2)
-			table(POLI$country)
-			sum(table(POLI$country))
-			
-			# DE
-			DEmpvec <- unique(PARE[which(PARE$country == "DE"),]$pers_id)
-			length(DEmpvec)
-			DEpolivec <- POLI$pers_id[which(POLI$country == "DE")]
-			length(which(!DEpolivec %in% DEmpvec))
-			
-			# CH
-			CHmpvec <- unique(PARE[which(PARE$country == "CH"),]$pers_id)
-			length(CHmpvec)
-			CHpolivec <- POLI$pers_id[which(POLI$country == "CH")]
-			length(which(!CHpolivec %in% CHmpvec))
-			
-			# NL
-			NLmpvec <- unique(PARE[which(PARE$country == "NL"),]$pers_id)
-			length(NLmpvec)
-			NLpolivec <- POLI$pers_id[which(POLI$country == "NL")]
-			length(which(!NLpolivec %in% NLmpvec))
-			
-			# number of DE MPS in 1998 - 2016
-			length(unique(PARE[which(PARE$parliament_id == "DE_NT-BT_1998" | PARE$parliament_id == "DE_NT-BT_2002" | PARE$parliament_id == "DE_NT-BT_2005"|PARE$parliament_id == "DE_NT-BT_2009"),]$pers_id))
-	
-			# number of CH MPS in 2007 - 2015
-			length(unique(PARE[which(PARE$parliament_id == "CH_NT-NR_2007" | PARE$parliament_id == "CH_NT-NR_2011"),]$pers_id))
-	
-	# we then start with getting ELEN level data-frames
 		nrow(ELEN)
 		ELEN$country <- substr(ELEN$elec_entry_id,1,2)
 		table(ELEN$country)
 		
-		ELENBU <- sqldf("SELECT elec_entry_id, list_id, pers_id, listplace, country
-						FROM ELEN
-						")
-	
-	# then we merge a couple of POLI level things to inspect
-		ELENBU <- sqldf("SELECT ELENBU.*, POLI.last_name, POLI.first_name, POLI.gender, POLI.birth_date
-						FROM ELENBU LEFT JOIN POLI
-						ON
-						ELENBU.pers_id = POLI.pers_id
-						")
-		nrow(ELENBU)
-		head(ELENBU)
-		tail(ELENBU)
+		# first selection of variables of interest
+			ELENBU <- sqldf("SELECT elec_entry_id, list_id, pers_id, listplace, country
+							FROM ELEN
+							")
 		
-	# merge in some ELLI characteristics
-		ELENBU <- sqldf("SELECT ELENBU.*, ELLI.list_name, ELLI.parliament_id, ELLI.district_id, ELLI.list_length, ELLI.party_id as 'party_id_from_elli'
-						FROM ELENBU LEFT JOIN ELLI
-						ON
-						ELENBU.list_id = ELLI.list_id
-						")
-		nrow(ELENBU) 
-		head(ELENBU)
-		tail(ELENBU)
-	
-	# merge in some PARL data
-		ELENBU <- sqldf("SELECT ELENBU.*, PARL.leg_period_start, PARL.leg_period_end
-						FROM ELENBU LEFT JOIN PARL
-						ON
-						ELENBU.parliament_id = PARL.parliament_id
-						")
-		nrow(ELENBU)
-		head(ELENBU)
-	
-	# and party membership from MEME
-	
-		## please be aware that this is something of which we know there are issues
-		## something which is also interesting is that party is taken from MEME, but we also have a lot of people in here that where just candidates right? --> indeed, now added these above, this is just party id from MEME
-	
-		# prepare the date formats
-								
-			ELENBU$leg_period_start_posoxctformat <- as.POSIXct(as.character(ELENBU$leg_period_start),format=c("%d%b%Y"))
-			ELENBU$leg_period_start_monthlater <- ELENBU$leg_period_start_posoxctformat + months(1)
-								
-			ELENBU$leg_period_end_posoxctformat <- as.POSIXct(as.character(ELENBU$leg_period_end),format=c("%d%b%Y"))
-			ELENBU$leg_period_end_monthearlier <- ELENBU$leg_period_end_posoxctformat - months(1)
+		# then we merge a couple of POLI level things to inspect
+			ELENBU <- sqldf("SELECT ELENBU.*, POLI.last_name, POLI.first_name, POLI.gender, POLI.birth_date
+							FROM ELENBU LEFT JOIN POLI
+							ON
+							ELENBU.pers_id = POLI.pers_id
+							")
+			nrow(ELENBU)
 			head(ELENBU)
-	
-		# below, we also need the party
+			tail(ELENBU)
 			
-			# get some date formats set
-			ELENBU$leg_period_start_twoweekslater_posoxctformat <- ELENBU$leg_period_start_posoxctformat + weeks(2) # and a version two weeks later to make the query below slightly less sensitive
-			MEME$memep_startdate_posoxctformat <- as.POSIXct(as.character(MEME$memep_startdate),format=c("%d%b%Y"))
-			MEME$memep_enddate_posoxctformat <- as.POSIXct(as.character(MEME$memep_enddate),format=c("%d%b%Y"))
-						
-		# do the merge of party ids from meme
-			ELENBU <- sqldf("SELECT ELENBU.*, MEME.party_id as 'party_id_from_meme'
-						     FROM ELENBU LEFT JOIN MEME 
-							ON ELENBU.pers_id = MEME.pers_id AND ELENBU.leg_period_start_twoweekslater_posoxctformat BETWEEN MEME.memep_startdate_posoxctformat and MEME.memep_enddate_posoxctformat")
+		# merge in some ELLI characteristics
+			ELENBU <- sqldf("SELECT ELENBU.*, ELLI.list_name, ELLI.parliament_id, ELLI.district_id, ELLI.list_length, ELLI.party_id as 'party_id_from_elli'
+							FROM ELENBU LEFT JOIN ELLI
+							ON
+							ELENBU.list_id = ELLI.list_id
+							")
+			nrow(ELENBU) 
+			head(ELENBU)
+			tail(ELENBU)
+		
+		# merge in some PARL data
+			ELENBU <- sqldf("SELECT ELENBU.*, PARL.leg_period_start, PARL.leg_period_end
+							FROM ELENBU LEFT JOIN PARL
+							ON
+							ELENBU.parliament_id = PARL.parliament_id
+							")
 			nrow(ELENBU)
 			head(ELENBU)
 		
-			table(ELENBU$party_id_from_meme)
-			summary(ELENBU$party_id_from_meme)
-			table(is.na(ELENBU$party_id_from_meme)) # right, so indeed the far majority here is missing!
-			
-		# now lets compare these party ids!
+		# and party membership from MEME
 		
-			#set empty values as missing
+			## please be aware that this is something of which we know there are issues, although Adrian has by now fixed a lot of these!
+			## something which is also interesting is that party is taken from MEME, but we also have a lot of people in here that where just candidates right? 
+				## --> indeed, now added these above, this is just party id from MEME
+		
+			# prepare the date formats in both ELENBU and MEME
+									
+				# start and end of the legistlative period, including a month later and two weeks later
+					ELENBU$leg_period_start_posoxctformat <- as.POSIXct(as.character(ELENBU$leg_period_start),format=c("%d%b%Y"))
+					ELENBU$leg_period_start_monthlater <- ELENBU$leg_period_start_posoxctformat + months(1)
+					ELENBU$leg_period_end_posoxctformat <- as.POSIXct(as.character(ELENBU$leg_period_end),format=c("%d%b%Y"))
+					ELENBU$leg_period_end_monthearlier <- ELENBU$leg_period_end_posoxctformat - months(1)
+					ELENBU$leg_period_start_twoweekslater_posoxctformat <- ELENBU$leg_period_start_posoxctformat + weeks(2) # and a version two weeks later to make the query below slightly less sensitive
+					head(ELENBU)
 				
-				# in elli
-					table(ELENBU$party_id_from_elli)
-					ELENBU$party_id_from_elli[which(ELENBU$party_id_from_elli == "")] <- NA
-					table(ELENBU$party_id_from_elli)
-				# in meme?
-					table(ELENBU$party_id_from_meme) # all NA already
-		
-			ELENBU$samepartyid <- ifelse(ELENBU$party_id_from_elli==ELENBU$party_id_from_meme,TRUE,FALSE)
-			table(ELENBU$samepartyid)
-			head(ELENBU[which(ELENBU$samepartyid == FALSE),]) # lots of cases where this is not the case
-			tail(ELENBU[which(ELENBU$samepartyid == FALSE),])
+				# start and end dates of the membership eppisodes
+					MEME$memep_startdate_posoxctformat <- as.POSIXct(as.character(MEME$memep_startdate),format=c("%d%b%Y"))
+					MEME$memep_enddate_posoxctformat <- as.POSIXct(as.character(MEME$memep_enddate),format=c("%d%b%Y"))
+							
+			# do the merge of party ids from meme
+				ELENBU <- sqldf("SELECT ELENBU.*, MEME.party_id as 'party_id_from_meme'
+								 FROM ELENBU LEFT JOIN MEME 
+								ON ELENBU.pers_id = MEME.pers_id AND ELENBU.leg_period_start_twoweekslater_posoxctformat BETWEEN MEME.memep_startdate_posoxctformat and MEME.memep_enddate_posoxctformat")
+				nrow(ELENBU)
+				head(ELENBU)
+			
+				table(ELENBU$party_id_from_meme)
+				summary(ELENBU$party_id_from_meme)
+				table(is.na(ELENBU$party_id_from_meme)) # right, so indeed the far majority here is missing!
+				
+			# now lets compare these party ids!
+			
+				# first also set empty values as missing
+					
+					# in elli
+						table(ELENBU$party_id_from_elli)
+						ELENBU$party_id_from_elli[which(ELENBU$party_id_from_elli == "")] <- NA
+						table(ELENBU$party_id_from_elli)
+					
+					# in meme?
+						table(ELENBU$party_id_from_meme) # all NA already
+			
+				ELENBU$samepartyid <- ifelse(ELENBU$party_id_from_elli==ELENBU$party_id_from_meme,TRUE,FALSE)
+				table(ELENBU$samepartyid) # lots of cases where the party id is not the same
+				head(ELENBU[which(ELENBU$samepartyid == FALSE),]) 
+				tail(ELENBU[which(ELENBU$samepartyid == FALSE),])
 
-		# quite some seem to be due to the national equivalent issue, so lets get one of those
-			ELENBU$party_id_from_elli_nat_equiv <- gsub("RE-[A-Z]{2}","NT",ELENBU$party_id_from_elli)
-			table(ELENBU$party_id_from_elli_nat_equiv)
+			# quite some seem to be due to the national equivalent issue, so lets get a variable with national party equivalents
+				ELENBU$party_id_from_elli_nat_equiv <- gsub("RE-[A-Z]{2}","NT",ELENBU$party_id_from_elli)
+				table(ELENBU$party_id_from_elli_nat_equiv)
+				
+				ELENBU$party_id_from_meme_nat_equiv <- gsub("RE-[A-Z]{2}","NT",ELENBU$party_id_from_meme)
+				table(ELENBU$party_id_from_meme_nat_equiv)
+				
+				ELENBU$samepartyid <- ifelse(ELENBU$party_id_from_elli_nat_equiv==ELENBU$party_id_from_meme_nat_equiv,TRUE,FALSE)
+				
+				# inspection of these results
+				
+					table(ELENBU$samepartyid) # still 382 cases where this is not case #fixlater! - probably really are manual matches that just need to be set proper
+					ELENBUNOTSAME <- ELENBU[which(ELENBU$samepartyid == FALSE),]
+					nrow(ELENBUNOTSAME)
+					head(ELENBUNOTSAME) 
+					tail(ELENBUNOTSAME)
+					table(ELENBUNOTSAME$country)
+					table(ELENBUNOTSAME$party_id_from_meme_nat_equiv)
+					
+					table(ELENBUNOTSAME$party_id_from_meme_nat_equiv)
+	
+					ELENBUNOTSAME[which(ELENBUNOTSAME$party_id_from_meme_nat_equiv == "NL_GL_NT"),]
 			
-			ELENBU$party_id_from_meme_nat_equiv <- gsub("RE-[A-Z]{2}","NT",ELENBU$party_id_from_meme)
-			table(ELENBU$party_id_from_meme_nat_equiv)
+			# combining these two party indicators, taking the election list one as the most reliable one
+				
+				ELENBU$party_id_from_elliandmeme <- ifelse(is.na(ELENBU$party_id_from_elli_nat_equiv),ELENBU$party_id_from_meme_nat_equiv,ELENBU$party_id_from_elli_nat_equiv)
+				table(is.na(ELENBU$party_id_from_elli_nat_equiv))
+				table(is.na(ELENBU$party_id_from_meme_nat_equiv))
+				table(is.na(ELENBU$party_id_from_elliandmeme)) # ok, so this only ads very little extra information (30 cases or so) but that is fine :)
 			
-			ELENBU$samepartyid <- ifelse(ELENBU$party_id_from_elli_nat_equiv==ELENBU$party_id_from_meme_nat_equiv,TRUE,FALSE)
+		####################
+		# DATA 3.1: we analyse the percentages of german district seats on the level over their landes, hence we need to merge these together - 
+		####################
 			
-			table(ELENBU$samepartyid) # still 530 cases where this is not case
-			ELENBUNOTSAME <- ELENBU[which(ELENBU$samepartyid == FALSE),]
-			nrow(ELENBUNOTSAME)
-			head(ELENBUNOTSAME) 
-			tail(ELENBUNOTSAME)
-			table(ELENBUNOTSAME$country)
-			table(ELENBUNOTSAME$party_id_from_meme_nat_equiv)
-			ELENBUNOTSAME[which(ELENBUNOTSAME$party_id_from_meme_nat_equiv == "NL_GL_NT"),]
+			# we do this by simply overwriting the list ids with a generalised one
 		
-		# combining these two party indicators, taking the election list one as the most reliable one
+				# ELENBU > elected MPS
+			table(ELENBU[which(ELENBU$country == "DE"),]$list_id)
 			
-			ELENBU$party_id_from_elliandmeme <- ifelse(is.na(ELENBU$party_id_from_elli_nat_equiv),ELENBU$party_id_from_meme_nat_equiv,ELENBU$party_id_from_elli_nat_equiv)
-			table(is.na(ELENBU$party_id_from_elli_nat_equiv))
-			table(is.na(ELENBU$party_id_from_meme_nat_equiv))
-			table(is.na(ELENBU$party_id_from_elliandmeme)) # ok, so this only ads very little extra information but that is fine :)
+			# so, what we would like is to have an adjusted version of the list id, that aggregates the district types to their bundesland
+				
+				# lets start with taking the region_abb from ELDI
+				nrow(ELENBU)
+				TEMP <- sqldf("SELECT ELENBU.*, ELDI.region_abb
+							   FROM ELENBU LEFT JOIN ELDI
+							   ON ELENBU.district_id = ELDI.district_id
+							  ")
+				nrow(TEMP)
+				table(TEMP$region_abb)
+				ELENBU <- TEMP
+
+			# then for the german district candidates, we replace the list_id with another version on basis of this district abbreviation
+				resvec <- vector()
+				ELENBU$list_id <- as.character(ELENBU$list_id)
+				for(i in 1:nrow(ELENBU))
+				{
+
+					# loop throught the replacement here
+						if (grepl("district-",ELENBU$list_name[i])) # if this is a district, then replace the list_id
+						{ 
+							resvec[i] <-  gsub("__.+__district-.+",paste("__district-seats-",ELENBU$region_abb[i],"__",ELENBU$party_id_from_elli_nat_equiv[i],sep=""),ELENBU$list_id[i])
+						} else { #otherwise keep the current one
+							resvec[i] <- ELENBU$list_id[i]
+						}
+				}
 			
-	############ gender guessing (if necessary) e.t.c. ##############
+			# lets add the result to another aggregation variable and OVERWRITE the general list id with this one
+				ELENBU$list_id_aggr <- resvec
+				ELENBU$list_id_old <- ELENBU$list_id
+				ELENBU$list_id <- ELENBU$list_id_aggr
+		
+	##############################################
+	# DATA 4: the buildup of the ELLI data-frame
+	##############################################
+	
+		####################
+		# DATA 4.1: we analyse the percentages of german district seats on the level over their landes, also in ELLI this combination needs to be made
+		####################
+		
+			# we do this by simply overwriting the list ids with a generalised one
+	
+				head(ELLI)
+				tail(ELLI)
+				ELLI[10000:10010,]
+				
+				# also get the region abbreviation in here 
+					nrow(ELLI)
+					TEMP2 <- sqldf("SELECT ELLI.*, ELDI.region_abb
+								   FROM ELLI LEFT JOIN ELDI
+								   ON ELLI.district_id = ELDI.district_id
+								  ")
+					nrow(TEMP2) # one double district id somewhere?
+					table(TEMP2$region_abb)
+					ELLI <- TEMP2
+				
+				# get a national party equivalent into ELLI as well, we need this below to generate the ID
+					ELLI$party_id_nat_equiv <- gsub("RE-[A-Z]{2}","NT",ELLI$party_id)
+					
+					resvec2 <- vector()
+					ELLI$list_id <- as.character(ELLI$list_id)
+					for(i in 1:nrow(ELLI))
+					{
+
+						# loop throught the replacement here
+							if (grepl("district-",ELLI$list_name[i])) # if this is a district, then replace the list_id
+							{ 
+								resvec2[i] <-  gsub("__.+__district-.+",paste("__district-seats-",ELLI$region_abb[i],"__",ELLI$party_id_nat_equiv[i],sep=""),ELLI$list_id[i])
+							} else { #otherwise keep the current one
+								resvec2[i] <- ELLI$list_id[i]
+							}
+					}	
+
+			# OVERWRITE here!
+				ELLI$list_id_aggr <- resvec2
+				ELLI$list_id_old <- ELLI$list_id
+				ELLI$list_id <- ELLI$list_id_aggr
+				
+			# now for ELLI, we also need to combine thse values? Because this is technically only ONE list now
+				
+				# only thing really needs to happen for that is to remove the district id and to then select all the unique rows?
+				# lets think of a better way to do this, that keeps the district id in?!
+				
+					ELLI$country <- substr(ELLI$list_id,1,2)
+					table(is.na(ELLI$country))
+				
+					ELLIBU <- sqldf("SELECT list_id, list_name, parliament_id, list_length, country, party_id, party_id_nat_equiv, district_id
+								FROM ELLI
+								")
+					
+					# this is where the magic happens
+					nrow(ELLIBU)
+					ELLIBU <- ELLIBU[!duplicated(ELLIBU$list_id),] # seems rather simular (was 9714 before).. probably some other duplicates! .. fixes the issue for below already?
+					nrow(ELLIBU)
+					table(is.na(ELLIBU$country))
+			
+	##############################################
+	# DATA 5: gender guessing on basis on namelist when nessary
+	##############################################
 	
 		ELENBU$gender[which(ELENBU$gender == "")] <- NA
 		
@@ -392,23 +470,23 @@
 		table(is.na(ELENBU$gender),ELENBU$country)
 		
 		# now let's use the Dutch girl names list
-		NL_girlnames = read.csv("NL_girlnames.csv", header = FALSE, sep = ";")
-		colnames(NL_girlnames) <- c("name")
-		head(NL_girlnames)
-		tail(NL_girlnames)
-		nrow(NL_girlnames)
+			NL_girlnames = read.csv("NL_girlnames.csv", header = FALSE, sep = ";")
+			colnames(NL_girlnames) <- c("name")
+			head(NL_girlnames)
+			tail(NL_girlnames)
+			nrow(NL_girlnames)
 		
-		NL_boynames = read.csv("NL_boynames.csv", header = FALSE, sep = ";")
-		colnames(NL_boynames) <- c("name")
-		head(NL_boynames)
-		tail(NL_boynames)
-		nrow(NL_boynames)
+			NL_boynames = read.csv("NL_boynames.csv", header = FALSE, sep = ";")
+			colnames(NL_boynames) <- c("name")
+			head(NL_boynames)
+			tail(NL_boynames)
+			nrow(NL_boynames)
 
 		# example check
-		TEST <- ELENBU[which(ELENBU$country == "NL"),]
-		head(TEST)
-		TEST$first_name[1] %in% NL_boynames$name
-		TEST$first_name[1] %in% NL_girlnames$name
+			TEST <- ELENBU[which(ELENBU$country == "NL"),]
+			head(TEST)
+			TEST$first_name[1] %in% NL_boynames$name
+			TEST$first_name[1] %in% NL_girlnames$name
 
 		resvec <- vector()
 		for(i in 1:nrow(ELENBU))
@@ -432,125 +510,27 @@
 		}
 		table(resvec)
 		
-		ELENBU$genderguesses <- resvec
+		# writing the result to ELENBU
+			ELENBU$genderguesses <- resvec
 		
-		table(ELENBU$gender)
-		table(ELENBU$genderguesses)
-		table(ELENBU$gender,ELENBU$genderguesses)
-		
-		table(is.na(ELENBU$gender))
-		table(is.na(ELENBU$genderguesses))
-		
-		table(is.na(ELENBU$genderguesses),ELENBU$country) # so, decent amounts of missingness per country still
-		prop.table(table(is.na(ELENBU$genderguesses),ELENBU$country),2) # about 13% in CH and NL and 5% in DE
-	
-		table(is.na(ELENBU$genderguesses),ELENBU$list_id) 
-		prop.table(table(is.na(ELENBU$genderguesses),ELENBU$list_id),2) 
-	
-	
-	##################################################################################################
-	########################## German distric seats get combined here ################################ <- this got moved up from down below
-	##################################################################################################
-
-	# ELENBU > elected MPS
-		table(ELENBU[which(ELENBU$country == "DE"),]$list_id)
-		
-		# so, what we would like is to have an adjusted version of the list id, that aggregates the district types to their bundesland
+		# inspection of the result
+			table(ELENBU$gender)
+			table(ELENBU$genderguesses)
+			table(ELENBU$gender,ELENBU$genderguesses)
 			
-			# lets start with taking the region_abb from ELDI
-			nrow(ELENBU)
-			TEMP <- sqldf("SELECT ELENBU.*, ELDI.region_abb
-			               FROM ELENBU LEFT JOIN ELDI
-						   ON ELENBU.district_id = ELDI.district_id
-						  ")
-			nrow(TEMP)
-			table(TEMP$region_abb)
-			ELENBU <- TEMP
-
-		# then for the german district candidates, we replace the list_id with another version on basis of this district abbreviation
-			resvec <- vector()
-			ELENBU$list_id <- as.character(ELENBU$list_id)
-			for(i in 1:nrow(ELENBU))
-			{
-
-				# loop throught the replacement here
-					if (grepl("district-",ELENBU$list_name[i])) # if this is a district, then replace the list_id
-					{ 
-						resvec[i] <-  gsub("__.+__district-.+",paste("__district-seats-",ELENBU$region_abb[i],"__",ELENBU$party_id_from_elli_nat_equiv[i],sep=""),ELENBU$list_id[i])
-					} else { #otherwise keep the current one
-						resvec[i] <- ELENBU$list_id[i]
-					}
-			}
-		
-		# lets add the result to another aggregation variable and OVERWRITE the general list id with this one
-			ELENBU$list_id_aggr <- resvec
-			ELENBU$list_id_old <- ELENBU$list_id
-			ELENBU$list_id <- ELENBU$list_id_aggr
-		
-	## this same thing needs to be done in the ELLI data! ## 
-		head(ELLI)
-		tail(ELLI)
-		ELLI[10000:10010,]
-		
-		# also get the region abbreviation in here 
-			nrow(ELLI)
-			TEMP2 <- sqldf("SELECT ELLI.*, ELDI.region_abb
-			               FROM ELLI LEFT JOIN ELDI
-						   ON ELLI.district_id = ELDI.district_id
-						  ")
-			nrow(TEMP2) # one double district id somewhere?
-			table(TEMP2$region_abb)
-			ELLI <- TEMP2
-		
-		# get a national party equivalent into ELLI as well, we need this below to generate the ID
-			ELLI$party_id_nat_equiv <- gsub("RE-[A-Z]{2}","NT",ELLI$party_id)
+			table(is.na(ELENBU$gender))
+			table(is.na(ELENBU$genderguesses))
 			
-			resvec2 <- vector()
-			ELLI$list_id <- as.character(ELLI$list_id)
-			for(i in 1:nrow(ELLI))
-			{
-
-				# loop throught the replacement here
-					if (grepl("district-",ELLI$list_name[i])) # if this is a district, then replace the list_id
-					{ 
-						resvec2[i] <-  gsub("__.+__district-.+",paste("__district-seats-",ELLI$region_abb[i],"__",ELLI$party_id_nat_equiv[i],sep=""),ELLI$list_id[i])
-					} else { #otherwise keep the current one
-						resvec2[i] <- ELLI$list_id[i]
-					}
-			}	
-
-	# OVERWRITE here!
-		ELLI$list_id_aggr <- resvec2
-		ELLI$list_id_old <- ELLI$list_id
-		ELLI$list_id <- ELLI$list_id_aggr
+			table(is.na(ELENBU$genderguesses),ELENBU$country) # so, decent amounts of missingness per country still
+			prop.table(table(is.na(ELENBU$genderguesses),ELENBU$country),2) # about 13% in CH and NL and 5% in DE
 		
-	# now for ELLI, we also need to combine thse values? Because this is technically only ONE list now
-		
-		# only thing really needs to happen for that is to remove the district id and to then select all the unique rows?
-		# lets think of a better way to do this, that keeps the district id in?!
-		
-			ELLI$country <- substr(ELLI$list_id,1,2)
-			table(is.na(ELLI$country))
-		
-			ELLIBU <- sqldf("SELECT list_id, list_name, parliament_id, list_length, country, party_id, party_id_nat_equiv, district_id
-						FROM ELLI
-						")
-			# this is where the magic happens
-			nrow(ELLIBU)
-			ELLIBU <- ELLIBU[!duplicated(ELLIBU$list_id),] # seems rather simular (was 9714 before).. probably some other duplicates! .. fixes the issue for below already?
-			nrow(ELLIBU)
-			table(is.na(ELLIBU$country))
+			table(is.na(ELENBU$genderguesses),ELENBU$list_id) 
+			prop.table(table(is.na(ELENBU$genderguesses),ELENBU$list_id),2) 
 	
-	##################################################################################################
-	################### find out which of these people entered parliament_id #########################
-	##################################################################################################
-		
-		# get an 'in parliament' # Please note that PARE now is the PARE that is being generated from RESE! see around line ~95 until ~178
-		
-			nrow(PARE)
-			PARERED <- PARE[which(PARE$member_ofthisparliament_atsomepoint == "yes"),]
-			nrow(PARERED)
-			
+	##############################################
+	# DATA 6: find out which of these people entered parliament straight at the start
+	##############################################
+				
 			# make a fictional parliament id
 			table(is.na(ELENBU$pers_id))
 			table(is.na(ELENBU$parliament_id)) # 30 parliament ids missing!
@@ -611,13 +591,16 @@
 											)
 										)
 										")
-					nrow(ELENBURED)
-					table(ELENBURED$in_parliament) # should be 100?% - seem to be not the case because above fictional_parl_episode_id are not created for everybody because some ELEN entries do not match with ELLI, I have asked Adrian to check this
+				nrow(ELENBURED)
+				table(ELENBURED$in_parliament) # should be 100?% 
+				# seem to be not the case because above fictional_parl_episode_id are not created for everybody because some ELEN entries do not match with ELLI, I have asked Adrian to check this #fixlater
 	
-					ELENBURED[which(ELENBURED$in_parliament == "no"),]
+				ELENBURED[which(ELENBURED$in_parliament == "no"),]
 	
-		# NEW electable positions, we need to know this because we want to actually reduce ELEN because we only want the aggregates on the ELLI level for electable positions? <- was suggestion from previous email..
-		
+	##############################################
+	# DATA 7: find out what ELEN positions are actually 'electable' because we are reducing our data to these positions
+	##############################################
+	
 			# my suggested approach to this is to find your 'double ganger' in the last two elections, to see how (s)he did
 			
 			# find everybody there double gangers, you are a double ganger when
@@ -796,7 +779,7 @@
 								
 								resvecelecttemp <- read.csv(paste("INDA/DG/",latestrun,"_resvecelect.csv",sep=""))
 								resvecelect <- resvecelecttemp[,2]
-						)
+						}
 						
 						ELENBU$electable <- ifelse(resvecelect,"electable","not electable")
 						table(ELENBU$electable)
@@ -811,11 +794,11 @@
 				nrow(ELENBUTEMP)
 				ELENBU <- ELENBUTEMP
 				nrow(ELENBU)
-
-	##################################################################################################
-	###################################### aggregation here ##########################################
-	##################################################################################################
 		
+######################################################################################
+#################################### DATA AGGREGATION ###################################
+######################################################################################	
+	
 	##### aggregation on the ELLI level ######
 			GCELLI <- as.data.frame.matrix(table(ELENBU$list_id,ELENBU$genderguesses)) 
 				# so, note to future self: if there is missingness here it is simply ignored. only known cases are counted
@@ -833,7 +816,7 @@
 					
 			hist(GCELLI$ratio) # so this is the ratio of men/women on the election lists
 
-		# merge into the ELLI level data-frame which above was given the same abbreviated list ids, this data-frame was reduced above
+		# merge into the ELLI level data-frame which above was given the same abbreviated list ids, this data-frame was reduced above to get a ratio on list variable which we need later!
 			
 			ELLIBU <- sqldf("SELECT ELLIBU.*, GCELLI.f, GCELLI.m, GCELLI.ratio as 'ratio_on_list'
 						FROM ELLIBU LEFT JOIN GCELLI
@@ -846,7 +829,7 @@
 			tail(ELLIBU)
 			table(ELLIBU$parliament_id) # this looks a lot better now
 			length(unique(ELLIBU$list_id))
-			nrow(ELLIBU) # close enough for now
+			nrow(ELLIBU) # bang on
 			
 		# get a count of the number of people in each faction
 			MemVec <- as.matrix(table(ELENBU$list_id)) # also this list id has been replaced with the aggregate one
@@ -868,7 +851,7 @@
 			ELLIBU$sumcheck <- (ELLIBU$f+ELLIBU$m) - ELLIBU$list_member_count # right, so zero is good here! this means that the number of women and men together add up to the total number on the list
 			table(ELLIBU$sumcheck)
 			
-		# lets select the 'complete' cases: where these is not to little knowledge on the number of men and women
+		# lets select the 'complete' cases: where these is sufficient knowledge on the number of men and women
 			
 			nrow(ELLIBU)
 			ELLIBUCOMP <- ELLIBU
@@ -1096,8 +1079,6 @@
 						FROM ELLIBU LEFT JOIN PARL
 						ON ELLIBU.parliament_id = PARL.parliament_id
 						")
-			
-	
 	##################################################################################################
 	################################# reduction to analytical sample #################################
 	##################################################################################################
@@ -1166,16 +1147,15 @@
 				## this is where the reduction happens
 				table(ELLIBU$party_size,ELLIBU$type) # so, still plenty of cases in here with list seats won by small parties.
 				
-				ELLIBU <- ELLIBU[which(!(ELLIBU$party_size < 75 & ELLIBU$country == "DE" & ELLIBU$type == "district")),]
+			#	ELLIBU <- ELLIBU[which(!(ELLIBU$party_size < 75 & ELLIBU$country == "DE" & ELLIBU$type == "district")),]
 				nrow(ELLIBU)
 				
 				table(ELLIBU$party_id_nat_equiv)
 				table(ELLIBU$party_id_nat_equiv,ELLIBU$type) # looking alright to me
 		
-						
-						
+
 	##################################################################################################
-	############### adding some nuances for the Dutch election list data##############################
+	############### adding some nuances for the Dutch election list data ##############################
 	##################################################################################################	
 		
 		## step 1: make a function that generates an - ';' separated - list position ordered - array of all pers_ids occurring on a certain list (takes a list id as input)
@@ -1258,7 +1238,12 @@
 					# so this takes - a lot - of time to run, so it only does when you explicity tell it to and suggests you to when the dataversion has changed
 					
 					# by default we are not running this!
-					runOMagain <- FALSE
+						runOMagain <- FALSE
+				
+					# manual overwrite is possible (should be of by default!)
+					manualoverwrite <- ""
+					#  manualoverwrite <- "20190519_0845"
+				
 					# check version numbers though!
 						
 						# is there maybe a newer version then the latest one saved?
@@ -1353,8 +1338,14 @@
 						} else # what to do when we are NOT running the analysis again
 						{
 							# then load the latest of these files
+							if(!nchar(manualoverwrite) > 0)
+							{
 								latestrun <- getlatestrun("OM")
-								
+							} else {
+								latestrun <- manualoverwrite
+								}
+
+							
 								meanpersdifferentresvectemp <- read.csv(paste("INDA/OM/",latestrun,"_meanpersdifferentresvec.csv",sep=""))
 								meanpersdifferentresvec <- meanpersdifferentresvectemp[,2]
 								
@@ -1365,6 +1356,7 @@
 
 		ELLIBU$meanpersdifferent <- meanpersdifferentresvec
 		ELLIBU$percentage95simular <- percentage95simularresvec
+		nrow(ELLIBU)
 		
 		ELLIBUNL <- ELLIBU[which(ELLIBU$country == "NL"),]
 		boxplot(ELLIBUNL$meanpersdifferent~ELLIBUNL$parliament_id)
@@ -1398,7 +1390,7 @@
 		ELLIBU <- TEMP4
 		
 	##################################################################################################
-	################################# variable building here #########################################
+	################################# even more variable building here #########################################
 	##################################################################################################
 
 		### lets make the type one again, just a grepl on word district
@@ -1624,6 +1616,8 @@
 				ELLIBU$selection_control_detailed_fac <- factor(ELLIBU$selection_control_detailed_fac, levels=c("low - DE district (aggregated at land level)","medium - DE list","medium - NL with different regional lists","high - NL with gen. homogenous regional lists"))
 				
 				boxplot(ELLIBU$ambition_realisation_gap~ELLIBU$selection_control, main="abs(% women elected into parliament - % from quota)")
+				boxplot(ELLIBU$ambition_realisation_gap~ELLIBU$selection_control_detailed_fac, main="abs(% women elected into parliament - % from quota)")
+				
 				beanplot(ELLIBU$ambition_realisation_gap~ELLIBU$selection_control, main="abs(% women elected into parliament - % from quota)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
 				beanplot(ELLIBU$ambition_realisation_gap~ELLIBU$selection_control_detailed_fac, main="abs(% women elected into parliament - % from quota)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
 				
