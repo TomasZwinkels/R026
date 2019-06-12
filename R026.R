@@ -21,6 +21,7 @@
 		# install.packages("foreach")
 		# install.packages("foreach")
 		# install.packages("doParallel")
+		install.packages("lme4")
 	
 	# packages
 		library(sqldf)
@@ -36,6 +37,7 @@
 		library(stringr)
 		library(foreach)
 		library(doParallel)
+		library(lme4)
 		
 		
 	substrRight <- function(x, n)
@@ -1074,9 +1076,8 @@
 			head(ELLIBU[which(ELLIBU$party_size == 0 & ELLIBU$country == "CH"),])
 			tail(ELLIBU[which(ELLIBU$party_size == 0 & ELLIBU$country == "CH"),])
 
-
 ######################################################################################
-#################################### REDUCTION TO ANALYTICAL SAMPLE ##################
+#################################### RED A: REDUCTION TO ANALYTICAL SAMPLE ##################
 ######################################################################################
 
 		# reduction of the election list data, ratio elected has already been merged in, so this is the only reduction needed?
@@ -1091,6 +1092,7 @@
 			nrow(ELLIBU)
 			ELLIBU <- ELLIBU[which(!ELLIBU$intimeframe == "before 1981"),]
 			nrow(ELLIBU)
+			table(ELLIBU$party_id_nat_equiv)
 			
 		# get rid of all election lists from which nobody ever got eleced
 			table(ELLIBU$anycandidateselected)
@@ -1100,22 +1102,16 @@
 			nrow(ELLIBU)		
 		
 		# get rid of all observations for which there is no gender quota
-
 			table(ELLIBU$quota_now)
 			
 			nrow(ELLIBU)
 			ELLIBU <- ELLIBU[which(ELLIBU$quota_now == 1),]
 			nrow(ELLIBU) # 1270 election lists left
-		
-		# couple of inspections of key variables
-			head(ELLIBU)
-			tail(ELLIBU)
-			ELLIBU[500:510,]
 			
-			table(is.na(ELLIBU$ratio_on_list)) # complete
-			table(is.na(ELLIBU$ratio_elected)) # complete
-			table(is.na(ELLIBU$quota_percentage)) # complete
-			
+	###########################
+	# RED A1: dropping the district lists from small german parties.
+	###########################
+	
 		# NEW - get rid of German district candidates from SMALL parties (because they don’t stand any chance to win, there is nothing at stake.
 			# .. which is why the logic for selection is very likely very different from the other district candidates, and election does not exist).
 			
@@ -1140,19 +1136,40 @@
 			
 				nrow(ELLIBU)
 				
-				## this is where the reduction happens
-				table(ELLIBU$party_size,ELLIBU$type) # so, still plenty of cases in here with list seats won by small parties.
+				## this is where the reduction happens, two options
 				
-			#	ELLIBU <- ELLIBU[which(!(ELLIBU$party_size < 75 & ELLIBU$country == "DE" & ELLIBU$type == "district")),]
-				nrow(ELLIBU)
-				
-				table(ELLIBU$party_id_nat_equiv)
-				table(ELLIBU$party_id_nat_equiv,ELLIBU$type) # looking alright to me
-		
+					# option 1: do this really on size of a number, which is time-specific.
+						table(ELLIBU$party_size,ELLIBU$type) # so, still plenty of cases in here with list seats won by small parties.
+						
+						#	ELLIBU <- ELLIBU[which(!(ELLIBU$party_size < 75 & ELLIBU$country == "DE" & ELLIBU$type == "district")),] # this is the line that does the reduction
+							nrow(ELLIBU)
+						
+						table(ELLIBU$party_id_nat_equiv) # so, CU is also dropped here already... why?! > answer is that the election list data for CU is not yet in the data. Simply not done yet #fixlater
+						table(ELLIBU$party_id_nat_equiv,ELLIBU$type) # looking alright to me
+					
+					# option 2: do this on basis of party id's < option currently active!
+						boxplot(as.numeric(ELLIBU$party_size)~ELLIBU$party_id_nat_equiv)
+						
+							# alright so the 'small' parties in DE are: 
+							partiestoexcludesmalldistricsfromvec <- c("DE_B90|Gru_NT","DE_Li|PDS_NT")
+							table(ELLIBU$party_id_nat_equiv,ELLIBU$type)
+							ELLIBU <- ELLIBU[which(!((ELLIBU$party_id_nat_equiv %in% partiestoexcludesmalldistricsfromvec) & ELLIBU$type == "district")),] # this is the line that does the reduction
+							nrow(ELLIBU) # number seem to match
+	
+						# Philip suggested to also include CSU lists, but the CSU does not have a gender quota specified so is not in the data in the first place
+						
+				# couple of inspections of key variables after reduction
+					head(ELLIBU)
+					tail(ELLIBU)
+					ELLIBU[500:510,]
+					
+					table(is.na(ELLIBU$ratio_on_list)) # complete
+					table(is.na(ELLIBU$ratio_elected)) # complete
+					table(is.na(ELLIBU$quota_percentage)) # complete
 
-	##################################################################################################
-	############### adding some nuances for the Dutch election list data ##############################
-	##################################################################################################	
+	###########################
+	# RED A2: is OM etc to get Dutch election lists that are 100% simular so only the ones that actually vary are included 
+	###########################
 		
 		## step 1: make a function that generates an - ';' separated - list position ordered - array of all pers_ids occurring on a certain list (takes a list id as input)
 		
@@ -1171,8 +1188,7 @@
 		## step 2:
 
 			# split the arrays to use into a vector again
-			
-				
+
 				getindeldistfortwoarrays <- function(local_pers_id_array,other_pers_id_array)
 				{
 				# looked into doing this myself, but tricky, lets just used traminer for this
@@ -1365,11 +1381,9 @@
 		
 		ELLIBUNL[which(ELLIBUNL$parliament_id == "NL_NT-TK_1989"),]
 		
-		
 		table(ELLIBU$percentage95simular)
 		
-		######################################################################################
-		######### further sample restrictions, select unique election lists only #############
+		# all of this now results in further sample restriction, which is to select unique election lists only
 		
 		persidarrayvec <- vector()
 		for(i in 1:nrow(ELLIBU))
@@ -1676,29 +1690,62 @@
 					# break down to hard and soft quotas
 						boxplot(ELLIBU$ambition_selection_gap~ELLIBU$typeandquota, main="% of women selected onto the list - % from quota")
 						
-				## and a quick regression model
-					m1 <- lm(ambition_selection_gap~selection_control_fac
-								
-						
+				## and in a regression model
+				
+					options(lmerControl=list(check.nobs.vs.rankZ = "warning",
+						 check.nobs.vs.nlev = "warning",
+						 check.nobs.vs.nRE = "warning",
+						 check.nlev.gtreq.5 = "warning",
+						 check.nlev.gtr.1 = "warning"))
+				
+					table(ELLIBU$selection_control_fac,ELLIBU$country)
+				
+					me <- lmer(ambition_selection_gap~1+
+								(1 | country),
+								,data=ELLIBU)
+					summary(me)
+				
+					m1 <- lmer(ambition_selection_gap~selection_control_fac+
+								(1 | country),
 								,data=ELLIBU)
 					summary(m1)
 					
-					m2 <- lm(	ambition_selection_gap~
+					table(ELLIBU$party_size_cat_de)
+					table(ELLIBU$country)
+					
+					ELLIBU$country <- droplevels(as.factor(ELLIBU$country))
+					
+					m2 <- lmer(	ambition_selection_gap~
 								selection_control_fac +
 								party_size_cat_de +
-								quota_percentage
-								,data=ELLIBU)
+								quota_percentage +
+								(1 | country),
+								data=ELLIBU)
 					summary(m2)
-					
-					m3 <- lm(	ambition_selection_gap~
-								selection_control_fac +
-							#	party_size_cat_de +
-								quota_percentage
-								,data=ELLIBU)
-					summary(m3)
 					
 					stargazer(m1,m2,type="text",intercept.bottom=FALSE)
 					stargazer(m1,m2,intercept.bottom=FALSE)
+			
+			### so, continuing the buildup of the model particualry a control for a general time trend seems rather important
+				
+				ELLIBU_DE <- ELLIBU[which(ELLIBU$country == "DE"),]
+				ELLIBU_NL <- ELLIBU[which(ELLIBU$country == "NL"),]
+				
+				boxplot(ELLIBU_DE$ambition_selection_gap~ELLIBU_DE$parliament_id)
+				
+					# inspection of some cases
+						ELLIBU[which(ELLIBU$parliament_id == "DE_NT-BT_1983"),] # only very few observations... 
+						ELLIBU[which(ELLIBU$parliament_id == "DE_NT-BT_1987"),] # only very few observations...
+
+						# checking if the numbers in general match
+						ELLIBU_DE_1987 <- ELLIBU[which(ELLIBU$parliament_id == "DE_NT-BT_1987"),]
+						sum(ELLIBU_DE_1987$f_elected) + sum(ELLIBU_DE_1987$m_elected) # 40, not 42, why? well: because two candidates selected via district seats probably?
+						
+				boxplot(ELLIBU_NL$ambition_selection_gap~ELLIBU_NL$parliament_id) # much more eradic pattern in the Netherlands
+				
+					# inspection of subcases
+					table(ELLIBU_NL$parliament_id)
+					ELLIBU[which(ELLIBU$parliament_id == "NL_NT-TK_2006"),]
 				
 				head(ELLIBU)
 			
@@ -1960,7 +2007,7 @@
 			
 			# quota times party size
 			table(ELLIBU$party_size_cat)
-			table(ELLIBU$quota_now)
+ 			table(ELLIBU$quota_now)
 			ELLIBU$quota_and_party_size <- ELLIBU$party_size_cat
 			ELLIBU$quota_and_party_size[which(ELLIBU$party_size_cat == "small" & ELLIBU$quota_now == 0)] <- "small - no quota"
 			ELLIBU$quota_and_party_size[which(ELLIBU$party_size_cat == "small" & ELLIBU$quota_now == 1)] <- "small - with quota"
