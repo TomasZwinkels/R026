@@ -14,14 +14,15 @@
 		Sys.setlocale("LC_TIME", "English") # key, without this conversion to POSIXct does not work
 		Sys.getlocale(category = "LC_ALL")
 		
-		setwd("C:/Users/turnerzw/Basel Powi Dropbox/R/R026_temp")
+	#	setwd("C:/Users/turnerzw/Basel Powi Dropbox/R/R026_temp")
 		setwd("F:/PolCa/Analysis/R/ProjectR026_control")
+		setwd("C:/Users/turnerzw/Basel Powi Dropbox/Tomas Zwinkels/F-drive-fork\R032")
 		getwd()
 	
 		# install.packages("foreach")
 		# install.packages("foreach")
 		# install.packages("doParallel")
-		install.packages("lme4")
+		#install.packages("lme4")
 	
 	# packages
 		library(sqldf)
