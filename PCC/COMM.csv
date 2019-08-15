@@ -1359,3 +1359,229 @@ DE_NT-BT_2002__CO|SpoA;DE_NT-BT_2002;Sportausschuss;CO;NA;SpoA;NA;NC;17oct2002;1
 DE_NT-BT_2002__CO|AfErAgrFor;DE_NT-BT_2002;Ausschuss für Ernahrung Landwirtschaft und Forsten;CO;NA;AfErAgrFor;NA;NC;17oct2002;17oct2005
 DE_NT-BT_2002__CO|AfBiWiTef;DE_NT-BT_2002;Ausschuss für Bildung Forschung und Technikfolgenabschatzung  ;CO;NA;AfBiWiTef;NA;NC;17oct2002;17oct2005
 DE_NT-BT_2002__CO|AfWiZsmA;DE_NT-BT_2002;Ausschuss für wirtschaftliche Zusammenarbeit;CO;NA;AfWiZsmA;NA;NC;17oct2002;17oct2005
+DE_NT-BT_1949__FA|LB;DE_NT-BT_1949;Leadership body;FA;NA;LB;NA;NC;NC;NC
+DE_NT-BT_1953__FA|LB;DE_NT-BT_1953;Leadership body;FA;NA;LB;NA;NC;NC;NC
+DE_NT-BT_1957__FA|LB;DE_NT-BT_1957;Leadership body;FA;NA;LB;NA;NC;NC;NC
+DE_NT-BT_1961__FA|LB;DE_NT-BT_1961;Leadership body;FA;NA;LB;NA;NC;NC;NC
+DE_NT-BT_1965__FA|LB;DE_NT-BT_1965;Leadership body;FA;NA;LB;NA;NC;NC;NC
+DE_NT-BT_1969__FA|LB;DE_NT-BT_1969;Leadership body;FA;NA;LB;NA;NC;NC;NC
+DE_NT-BT_1972__FA|LB;DE_NT-BT_1972;Leadership body;FA;NA;LB;NA;NC;NC;NC
+DE_NT-BT_1976__FA|LB;DE_NT-BT_1976;Leadership body;FA;NA;LB;NA;NC;NC;NC
+DE_NT-BT_1980__FA|LB;DE_NT-BT_1980;Leadership body;FA;NA;LB;NA;NC;NC;NC
+DE_NT-BT_1983__FA|LB;DE_NT-BT_1983;Leadership body;FA;NA;LB;NA;NC;NC;NC
+DE_NT-BT_1987__FA|LB;DE_NT-BT_1987;Leadership body;FA;NA;LB;NA;NC;NC;NC
+DE_NT-BT_1990__FA|LB;DE_NT-BT_1990;Leadership body;FA;NA;LB;NA;NC;NC;NC
+DE_NT-BT_1994__FA|LB;DE_NT-BT_1994;Leadership body;FA;NA;LB;NA;NC;NC;NC
+DE_NT-BT_1998__FA|LB;DE_NT-BT_1998;Leadership body;FA;NA;LB;NA;NC;NC;NC
+DE_NT-BT_2002__FA|LB;DE_NT-BT_2002;Leadership body;FA;NA;LB;NA;NC;NC;NC
+DE_NT-BT_2005__FA|LB;DE_NT-BT_2005;Leadership body;FA;NA;LB;NA;NC;NC;NC
+DE_NT-BT_2009__FA|LB;DE_NT-BT_2009;Leadership body;FA;NA;LB;NA;NC;NC;NC
+DE_NT-BT_2013__FA|LB;DE_NT-BT_2013;Leadership body;FA;NA;LB;NA;NC;NC;NC
+DE_NT-BT_2017__FA|LB;DE_NT-BT_2017;Leadership body;FA;NA;LB;NA;NC;NC;NC
+DE_NT-BT_1949__FA|WG;DE_NT-BT_1949;Working Groups;FA;NA;WG;NA;NC;NC;NC
+DE_NT-BT_1953__FA|WG;DE_NT-BT_1953;Working Groups;FA;NA;WG;NA;NC;NC;NC
+DE_NT-BT_1957__FA|WG;DE_NT-BT_1957;Working Groups;FA;NA;WG;NA;NC;NC;NC
+DE_NT-BT_1961__FA|WG;DE_NT-BT_1961;Working Groups;FA;NA;WG;NA;NC;NC;NC
+DE_NT-BT_1965__FA|WG;DE_NT-BT_1965;Working Groups;FA;NA;WG;NA;NC;NC;NC
+DE_NT-BT_1969__FA|WG;DE_NT-BT_1969;Working Groups;FA;NA;WG;NA;NC;NC;NC
+DE_NT-BT_1972__FA|WG;DE_NT-BT_1972;Working Groups;FA;NA;WG;NA;NC;NC;NC
+DE_NT-BT_1976__FA|WG;DE_NT-BT_1976;Working Groups;FA;NA;WG;NA;NC;NC;NC
+DE_NT-BT_1980__FA|WG;DE_NT-BT_1980;Working Groups;FA;NA;WG;NA;NC;NC;NC
+DE_NT-BT_1983__FA|WG;DE_NT-BT_1983;Working Groups;FA;NA;WG;NA;NC;NC;NC
+DE_NT-BT_1987__FA|WG;DE_NT-BT_1987;Working Groups;FA;NA;WG;NA;NC;NC;NC
+DE_NT-BT_1990__FA|WG;DE_NT-BT_1990;Working Groups;FA;NA;WG;NA;NC;NC;NC
+DE_NT-BT_1994__FA|WG;DE_NT-BT_1994;Working Groups;FA;NA;WG;NA;NC;NC;NC
+DE_NT-BT_1998__FA|WG;DE_NT-BT_1998;Working Groups;FA;NA;WG;NA;NC;NC;NC
+DE_NT-BT_2002__FA|WG;DE_NT-BT_2002;Working Groups;FA;NA;WG;NA;NC;NC;NC
+DE_NT-BT_2005__FA|WG;DE_NT-BT_2005;Working Groups;FA;NA;WG;NA;NC;NC;NC
+DE_NT-BT_2009__FA|WG;DE_NT-BT_2009;Working Groups;FA;NA;WG;NA;NC;NC;NC
+DE_NT-BT_2013__FA|WG;DE_NT-BT_2013;Working Groups;FA;NA;WG;NA;NC;NC;NC
+DE_NT-BT_2017__FA|WG;DE_NT-BT_2017;Working Groups;FA;NA;WG;NA;NC;NC;NC
+DE_NT-BT_1949__CO|AeR;DE_NT-BT_1949;Aeltestenrat;CO;NA;AeR;NA;NC;NC;NC
+DE_NT-BT_1953__CO|AeR;DE_NT-BT_1953;Aeltestenrat;CO;NA;AeR;NA;NC;NC;NC
+DE_NT-BT_1957__CO|AeR;DE_NT-BT_1957;Aeltestenrat;CO;NA;AeR;NA;NC;NC;NC
+DE_NT-BT_1961__CO|AeR;DE_NT-BT_1961;Aeltestenrat;CO;NA;AeR;NA;NC;NC;NC
+DE_NT-BT_1965__CO|AeR;DE_NT-BT_1965;Aeltestenrat;CO;NA;AeR;NA;NC;NC;NC
+DE_NT-BT_1969__CO|AeR;DE_NT-BT_1969;Aeltestenrat;CO;NA;AeR;NA;NC;NC;NC
+DE_NT-BT_1972__CO|AeR;DE_NT-BT_1972;Aeltestenrat;CO;NA;AeR;NA;NC;NC;NC
+DE_NT-BT_1976__CO|AeR;DE_NT-BT_1976;Aeltestenrat;CO;NA;AeR;NA;NC;NC;NC
+DE_NT-BT_1980__CO|AeR;DE_NT-BT_1980;Aeltestenrat;CO;NA;AeR;NA;NC;NC;NC
+DE_NT-BT_1983__CO|AeR;DE_NT-BT_1983;Aeltestenrat;CO;NA;AeR;NA;NC;NC;NC
+DE_NT-BT_1987__CO|AeR;DE_NT-BT_1987;Aeltestenrat;CO;NA;AeR;NA;NC;NC;NC
+DE_NT-BT_1990__CO|AeR;DE_NT-BT_1990;Aeltestenrat;CO;NA;AeR;NA;NC;NC;NC
+DE_NT-BT_1994__CO|AeR;DE_NT-BT_1994;Aeltestenrat;CO;NA;AeR;NA;NC;NC;NC
+DE_NT-BT_1998__CO|AeR;DE_NT-BT_1998;Aeltestenrat;CO;NA;AeR;NA;NC;NC;NC
+DE_NT-BT_2002__CO|AeR;DE_NT-BT_2002;Aeltestenrat;CO;NA;AeR;NA;NC;NC;NC
+DE_NT-BT_2005__CO|AeR;DE_NT-BT_2005;Aeltestenrat;CO;NA;AeR;NA;NC;NC;NC
+DE_NT-BT_2009__CO|AeR;DE_NT-BT_2009;Aeltestenrat;CO;NA;AeR;NA;NC;NC;NC
+DE_NT-BT_2013__CO|AeR;DE_NT-BT_2013;Aeltestenrat;CO;NA;AeR;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AeR;DE_NT-BT_2017;Aeltestenrat;CO;NA;AeR;NA;NC;NC;NC
+DE_NT-BT_1949__CO|AeR--SC|IK;DE_NT-BT_1949;Aeltestenrat für innere Angelegenheiten des Bundestages – Innere Kommission;CO;SC;AeR;IK;NC;NC;NC
+DE_NT-BT_1953__CO|AeR--SC|IK;DE_NT-BT_1953;Aeltestenrat für innere Angelegenheiten des Bundestages – Innere Kommission;CO;SC;AeR;IK;NC;NC;NC
+DE_NT-BT_1957__CO|AeR--SC|IK;DE_NT-BT_1957;Aeltestenrat für innere Angelegenheiten des Bundestages – Innere Kommission;CO;SC;AeR;IK;NC;NC;NC
+DE_NT-BT_1961__CO|AeR--SC|IK;DE_NT-BT_1961;Aeltestenrat für innere Angelegenheiten des Bundestages – Innere Kommission;CO;SC;AeR;IK;NC;NC;NC
+DE_NT-BT_1965__CO|AeR--SC|IK;DE_NT-BT_1965;Aeltestenrat für innere Angelegenheiten des Bundestages – Innere Kommission;CO;SC;AeR;IK;NC;NC;NC
+DE_NT-BT_1969__CO|AeR--SC|IK;DE_NT-BT_1969;Aeltestenrat für innere Angelegenheiten des Bundestages – Innere Kommission;CO;SC;AeR;IK;NC;NC;NC
+DE_NT-BT_1972__CO|AeR--SC|IK;DE_NT-BT_1972;Aeltestenrat für innere Angelegenheiten des Bundestages – Innere Kommission;CO;SC;AeR;IK;NC;NC;NC
+DE_NT-BT_1976__CO|AeR--SC|IK;DE_NT-BT_1976;Aeltestenrat für innere Angelegenheiten des Bundestages – Innere Kommission;CO;SC;AeR;IK;NC;NC;NC
+DE_NT-BT_1980__CO|AeR--SC|IK;DE_NT-BT_1980;Aeltestenrat für innere Angelegenheiten des Bundestages – Innere Kommission;CO;SC;AeR;IK;NC;NC;NC
+DE_NT-BT_1983__CO|AeR--SC|IK;DE_NT-BT_1983;Aeltestenrat für innere Angelegenheiten des Bundestages – Innere Kommission;CO;SC;AeR;IK;NC;NC;NC
+DE_NT-BT_1987__CO|AeR--SC|IK;DE_NT-BT_1987;Aeltestenrat für innere Angelegenheiten des Bundestages – Innere Kommission;CO;SC;AeR;IK;NC;NC;NC
+DE_NT-BT_1990__CO|AeR--SC|IK;DE_NT-BT_1990;Aeltestenrat für innere Angelegenheiten des Bundestages – Innere Kommission;CO;SC;AeR;IK;NC;NC;NC
+DE_NT-BT_1994__CO|AeR--SC|IK;DE_NT-BT_1994;Aeltestenrat für innere Angelegenheiten des Bundestages – Innere Kommission;CO;SC;AeR;IK;NC;NC;NC
+DE_NT-BT_1998__CO|AeR--SC|IK;DE_NT-BT_1998;Aeltestenrat für innere Angelegenheiten des Bundestages – Innere Kommission;CO;SC;AeR;IK;NC;NC;NC
+DE_NT-BT_2002__CO|AeR--SC|IK;DE_NT-BT_2002;Aeltestenrat für innere Angelegenheiten des Bundestages – Innere Kommission;CO;SC;AeR;IK;NC;NC;NC
+DE_NT-BT_2005__CO|AeR--SC|IK;DE_NT-BT_2005;Aeltestenrat für innere Angelegenheiten des Bundestages – Innere Kommission;CO;SC;AeR;IK;NC;NC;NC
+DE_NT-BT_2009__CO|AeR--SC|IK;DE_NT-BT_2009;Aeltestenrat für innere Angelegenheiten des Bundestages – Innere Kommission;CO;SC;AeR;IK;NC;NC;NC
+DE_NT-BT_2013__CO|AeR--SC|IK;DE_NT-BT_2013;Aeltestenrat für innere Angelegenheiten des Bundestages – Innere Kommission;CO;SC;AeR;IK;NC;NC;NC
+DE_NT-BT_2017__CO|AeR--SC|IK;DE_NT-BT_2017;Aeltestenrat für innere Angelegenheiten des Bundestages – Innere Kommission;CO;SC;AeR;IK;NC;NC;NC
+DE_NT-BT_1949__CO|AeR--SC|RdA;DE_NT-BT_1949;Aeltestenrat für die Rechtsstellung der Abgeordneten;CO;SC;AeR;RdA;NC;NC;NC
+DE_NT-BT_1953__CO|AeR--SC|RdA;DE_NT-BT_1953;Aeltestenrat für die Rechtsstellung der Abgeordneten;CO;SC;AeR;RdA;NC;NC;NC
+DE_NT-BT_1957__CO|AeR--SC|RdA;DE_NT-BT_1957;Aeltestenrat für die Rechtsstellung der Abgeordneten;CO;SC;AeR;RdA;NC;NC;NC
+DE_NT-BT_1961__CO|AeR--SC|RdA;DE_NT-BT_1961;Aeltestenrat für die Rechtsstellung der Abgeordneten;CO;SC;AeR;RdA;NC;NC;NC
+DE_NT-BT_1965__CO|AeR--SC|RdA;DE_NT-BT_1965;Aeltestenrat für die Rechtsstellung der Abgeordneten;CO;SC;AeR;RdA;NC;NC;NC
+DE_NT-BT_1969__CO|AeR--SC|RdA;DE_NT-BT_1969;Aeltestenrat für die Rechtsstellung der Abgeordneten;CO;SC;AeR;RdA;NC;NC;NC
+DE_NT-BT_1972__CO|AeR--SC|RdA;DE_NT-BT_1972;Aeltestenrat für die Rechtsstellung der Abgeordneten;CO;SC;AeR;RdA;NC;NC;NC
+DE_NT-BT_1976__CO|AeR--SC|RdA;DE_NT-BT_1976;Aeltestenrat für die Rechtsstellung der Abgeordneten;CO;SC;AeR;RdA;NC;NC;NC
+DE_NT-BT_1980__CO|AeR--SC|RdA;DE_NT-BT_1980;Aeltestenrat für die Rechtsstellung der Abgeordneten;CO;SC;AeR;RdA;NC;NC;NC
+DE_NT-BT_1983__CO|AeR--SC|RdA;DE_NT-BT_1983;Aeltestenrat für die Rechtsstellung der Abgeordneten;CO;SC;AeR;RdA;NC;NC;NC
+DE_NT-BT_1987__CO|AeR--SC|RdA;DE_NT-BT_1987;Aeltestenrat für die Rechtsstellung der Abgeordneten;CO;SC;AeR;RdA;NC;NC;NC
+DE_NT-BT_1990__CO|AeR--SC|RdA;DE_NT-BT_1990;Aeltestenrat für die Rechtsstellung der Abgeordneten;CO;SC;AeR;RdA;NC;NC;NC
+DE_NT-BT_1994__CO|AeR--SC|RdA;DE_NT-BT_1994;Aeltestenrat für die Rechtsstellung der Abgeordneten;CO;SC;AeR;RdA;NC;NC;NC
+DE_NT-BT_1998__CO|AeR--SC|RdA;DE_NT-BT_1998;Aeltestenrat für die Rechtsstellung der Abgeordneten;CO;SC;AeR;RdA;NC;NC;NC
+DE_NT-BT_2002__CO|AeR--SC|RdA;DE_NT-BT_2002;Aeltestenrat für die Rechtsstellung der Abgeordneten;CO;SC;AeR;RdA;NC;NC;NC
+DE_NT-BT_2005__CO|AeR--SC|RdA;DE_NT-BT_2005;Aeltestenrat für die Rechtsstellung der Abgeordneten;CO;SC;AeR;RdA;NC;NC;NC
+DE_NT-BT_2009__CO|AeR--SC|RdA;DE_NT-BT_2009;Aeltestenrat für die Rechtsstellung der Abgeordneten;CO;SC;AeR;RdA;NC;NC;NC
+DE_NT-BT_2013__CO|AeR--SC|RdA;DE_NT-BT_2013;Aeltestenrat für die Rechtsstellung der Abgeordneten;CO;SC;AeR;RdA;NC;NC;NC
+DE_NT-BT_2017__CO|AeR--SC|RdA;DE_NT-BT_2017;Aeltestenrat für die Rechtsstellung der Abgeordneten;CO;SC;AeR;RdA;NC;NC;NC
+DE_NT-BT_1949__CO|AeR--SC|AvMdA;DE_NT-BT_1949;Aeltestenrat für die Angelegenheiten von Mitarbeiterinnen und Mitarbeitern der Abgeordneten;CO;SC;AeR;AvMdA;NC;NC;NC
+DE_NT-BT_1953__CO|AeR--SC|AvMdA;DE_NT-BT_1953;Aeltestenrat für die Angelegenheiten von Mitarbeiterinnen und Mitarbeitern der Abgeordneten;CO;SC;AeR;AvMdA;NC;NC;NC
+DE_NT-BT_1957__CO|AeR--SC|AvMdA;DE_NT-BT_1957;Aeltestenrat für die Angelegenheiten von Mitarbeiterinnen und Mitarbeitern der Abgeordneten;CO;SC;AeR;AvMdA;NC;NC;NC
+DE_NT-BT_1961__CO|AeR--SC|AvMdA;DE_NT-BT_1961;Aeltestenrat für die Angelegenheiten von Mitarbeiterinnen und Mitarbeitern der Abgeordneten;CO;SC;AeR;AvMdA;NC;NC;NC
+DE_NT-BT_1965__CO|AeR--SC|AvMdA;DE_NT-BT_1965;Aeltestenrat für die Angelegenheiten von Mitarbeiterinnen und Mitarbeitern der Abgeordneten;CO;SC;AeR;AvMdA;NC;NC;NC
+DE_NT-BT_1969__CO|AeR--SC|AvMdA;DE_NT-BT_1969;Aeltestenrat für die Angelegenheiten von Mitarbeiterinnen und Mitarbeitern der Abgeordneten;CO;SC;AeR;AvMdA;NC;NC;NC
+DE_NT-BT_1972__CO|AeR--SC|AvMdA;DE_NT-BT_1972;Aeltestenrat für die Angelegenheiten von Mitarbeiterinnen und Mitarbeitern der Abgeordneten;CO;SC;AeR;AvMdA;NC;NC;NC
+DE_NT-BT_1976__CO|AeR--SC|AvMdA;DE_NT-BT_1976;Aeltestenrat für die Angelegenheiten von Mitarbeiterinnen und Mitarbeitern der Abgeordneten;CO;SC;AeR;AvMdA;NC;NC;NC
+DE_NT-BT_1980__CO|AeR--SC|AvMdA;DE_NT-BT_1980;Aeltestenrat für die Angelegenheiten von Mitarbeiterinnen und Mitarbeitern der Abgeordneten;CO;SC;AeR;AvMdA;NC;NC;NC
+DE_NT-BT_1983__CO|AeR--SC|AvMdA;DE_NT-BT_1983;Aeltestenrat für die Angelegenheiten von Mitarbeiterinnen und Mitarbeitern der Abgeordneten;CO;SC;AeR;AvMdA;NC;NC;NC
+DE_NT-BT_1987__CO|AeR--SC|AvMdA;DE_NT-BT_1987;Aeltestenrat für die Angelegenheiten von Mitarbeiterinnen und Mitarbeitern der Abgeordneten;CO;SC;AeR;AvMdA;NC;NC;NC
+DE_NT-BT_1990__CO|AeR--SC|AvMdA;DE_NT-BT_1990;Aeltestenrat für die Angelegenheiten von Mitarbeiterinnen und Mitarbeitern der Abgeordneten;CO;SC;AeR;AvMdA;NC;NC;NC
+DE_NT-BT_1994__CO|AeR--SC|AvMdA;DE_NT-BT_1994;Aeltestenrat für die Angelegenheiten von Mitarbeiterinnen und Mitarbeitern der Abgeordneten;CO;SC;AeR;AvMdA;NC;NC;NC
+DE_NT-BT_1998__CO|AeR--SC|AvMdA;DE_NT-BT_1998;Aeltestenrat für die Angelegenheiten von Mitarbeiterinnen und Mitarbeitern der Abgeordneten;CO;SC;AeR;AvMdA;NC;NC;NC
+DE_NT-BT_2002__CO|AeR--SC|AvMdA;DE_NT-BT_2002;Aeltestenrat für die Angelegenheiten von Mitarbeiterinnen und Mitarbeitern der Abgeordneten;CO;SC;AeR;AvMdA;NC;NC;NC
+DE_NT-BT_2005__CO|AeR--SC|AvMdA;DE_NT-BT_2005;Aeltestenrat für die Angelegenheiten von Mitarbeiterinnen und Mitarbeitern der Abgeordneten;CO;SC;AeR;AvMdA;NC;NC;NC
+DE_NT-BT_2009__CO|AeR--SC|AvMdA;DE_NT-BT_2009;Aeltestenrat für die Angelegenheiten von Mitarbeiterinnen und Mitarbeitern der Abgeordneten;CO;SC;AeR;AvMdA;NC;NC;NC
+DE_NT-BT_2013__CO|AeR--SC|AvMdA;DE_NT-BT_2013;Aeltestenrat für die Angelegenheiten von Mitarbeiterinnen und Mitarbeitern der Abgeordneten;CO;SC;AeR;AvMdA;NC;NC;NC
+DE_NT-BT_2017__CO|AeR--SC|AvMdA;DE_NT-BT_2017;Aeltestenrat für die Angelegenheiten von Mitarbeiterinnen und Mitarbeitern der Abgeordneten;CO;SC;AeR;AvMdA;NC;NC;NC
+DE_NT-BT_1949__CO|AeR--SC|nIKtm;DE_NT-BT_1949;Aeltestenrat für den Einsatz neuer Informations- und Kommunikationstechniken und -medien;CO;SC;AeR;nIKtm;NC;NC;NC
+DE_NT-BT_1953__CO|AeR--SC|nIKtm;DE_NT-BT_1953;Aeltestenrat für den Einsatz neuer Informations- und Kommunikationstechniken und -medien;CO;SC;AeR;nIKtm;NC;NC;NC
+DE_NT-BT_1957__CO|AeR--SC|nIKtm;DE_NT-BT_1957;Aeltestenrat für den Einsatz neuer Informations- und Kommunikationstechniken und -medien;CO;SC;AeR;nIKtm;NC;NC;NC
+DE_NT-BT_1961__CO|AeR--SC|nIKtm;DE_NT-BT_1961;Aeltestenrat für den Einsatz neuer Informations- und Kommunikationstechniken und -medien;CO;SC;AeR;nIKtm;NC;NC;NC
+DE_NT-BT_1965__CO|AeR--SC|nIKtm;DE_NT-BT_1965;Aeltestenrat für den Einsatz neuer Informations- und Kommunikationstechniken und -medien;CO;SC;AeR;nIKtm;NC;NC;NC
+DE_NT-BT_1969__CO|AeR--SC|nIKtm;DE_NT-BT_1969;Aeltestenrat für den Einsatz neuer Informations- und Kommunikationstechniken und -medien;CO;SC;AeR;nIKtm;NC;NC;NC
+DE_NT-BT_1972__CO|AeR--SC|nIKtm;DE_NT-BT_1972;Aeltestenrat für den Einsatz neuer Informations- und Kommunikationstechniken und -medien;CO;SC;AeR;nIKtm;NC;NC;NC
+DE_NT-BT_1976__CO|AeR--SC|nIKtm;DE_NT-BT_1976;Aeltestenrat für den Einsatz neuer Informations- und Kommunikationstechniken und -medien;CO;SC;AeR;nIKtm;NC;NC;NC
+DE_NT-BT_1980__CO|AeR--SC|nIKtm;DE_NT-BT_1980;Aeltestenrat für den Einsatz neuer Informations- und Kommunikationstechniken und -medien;CO;SC;AeR;nIKtm;NC;NC;NC
+DE_NT-BT_1983__CO|AeR--SC|nIKtm;DE_NT-BT_1983;Aeltestenrat für den Einsatz neuer Informations- und Kommunikationstechniken und -medien;CO;SC;AeR;nIKtm;NC;NC;NC
+DE_NT-BT_1987__CO|AeR--SC|nIKtm;DE_NT-BT_1987;Aeltestenrat für den Einsatz neuer Informations- und Kommunikationstechniken und -medien;CO;SC;AeR;nIKtm;NC;NC;NC
+DE_NT-BT_1990__CO|AeR--SC|nIKtm;DE_NT-BT_1990;Aeltestenrat für den Einsatz neuer Informations- und Kommunikationstechniken und -medien;CO;SC;AeR;nIKtm;NC;NC;NC
+DE_NT-BT_1994__CO|AeR--SC|nIKtm;DE_NT-BT_1994;Aeltestenrat für den Einsatz neuer Informations- und Kommunikationstechniken und -medien;CO;SC;AeR;nIKtm;NC;NC;NC
+DE_NT-BT_1998__CO|AeR--SC|nIKtm;DE_NT-BT_1998;Aeltestenrat für den Einsatz neuer Informations- und Kommunikationstechniken und -medien;CO;SC;AeR;nIKtm;NC;NC;NC
+DE_NT-BT_2002__CO|AeR--SC|nIKtm;DE_NT-BT_2002;Aeltestenrat für den Einsatz neuer Informations- und Kommunikationstechniken und -medien;CO;SC;AeR;nIKtm;NC;NC;NC
+DE_NT-BT_2005__CO|AeR--SC|nIKtm;DE_NT-BT_2005;Aeltestenrat für den Einsatz neuer Informations- und Kommunikationstechniken und -medien;CO;SC;AeR;nIKtm;NC;NC;NC
+DE_NT-BT_2009__CO|AeR--SC|nIKtm;DE_NT-BT_2009;Aeltestenrat für den Einsatz neuer Informations- und Kommunikationstechniken und -medien;CO;SC;AeR;nIKtm;NC;NC;NC
+DE_NT-BT_2013__CO|AeR--SC|nIKtm;DE_NT-BT_2013;Aeltestenrat für den Einsatz neuer Informations- und Kommunikationstechniken und -medien;CO;SC;AeR;nIKtm;NC;NC;NC
+DE_NT-BT_2017__CO|AeR--SC|nIKtm;DE_NT-BT_2017;Aeltestenrat für den Einsatz neuer Informations- und Kommunikationstechniken und -medien;CO;SC;AeR;nIKtm;NC;NC;NC
+DE_NT-BT_1949__CO|AeR--SC|BauRau;DE_NT-BT_1949;Aeltestenrat für Bau- und Raumangelegenheiten;CO;SC;AeR;BauRau;NC;NC;NC
+DE_NT-BT_1953__CO|AeR--SC|BauRau;DE_NT-BT_1953;Aeltestenrat für Bau- und Raumangelegenheiten;CO;SC;AeR;BauRau;NC;NC;NC
+DE_NT-BT_1957__CO|AeR--SC|BauRau;DE_NT-BT_1957;Aeltestenrat für Bau- und Raumangelegenheiten;CO;SC;AeR;BauRau;NC;NC;NC
+DE_NT-BT_1961__CO|AeR--SC|BauRau;DE_NT-BT_1961;Aeltestenrat für Bau- und Raumangelegenheiten;CO;SC;AeR;BauRau;NC;NC;NC
+DE_NT-BT_1965__CO|AeR--SC|BauRau;DE_NT-BT_1965;Aeltestenrat für Bau- und Raumangelegenheiten;CO;SC;AeR;BauRau;NC;NC;NC
+DE_NT-BT_1969__CO|AeR--SC|BauRau;DE_NT-BT_1969;Aeltestenrat für Bau- und Raumangelegenheiten;CO;SC;AeR;BauRau;NC;NC;NC
+DE_NT-BT_1972__CO|AeR--SC|BauRau;DE_NT-BT_1972;Aeltestenrat für Bau- und Raumangelegenheiten;CO;SC;AeR;BauRau;NC;NC;NC
+DE_NT-BT_1976__CO|AeR--SC|BauRau;DE_NT-BT_1976;Aeltestenrat für Bau- und Raumangelegenheiten;CO;SC;AeR;BauRau;NC;NC;NC
+DE_NT-BT_1980__CO|AeR--SC|BauRau;DE_NT-BT_1980;Aeltestenrat für Bau- und Raumangelegenheiten;CO;SC;AeR;BauRau;NC;NC;NC
+DE_NT-BT_1983__CO|AeR--SC|BauRau;DE_NT-BT_1983;Aeltestenrat für Bau- und Raumangelegenheiten;CO;SC;AeR;BauRau;NC;NC;NC
+DE_NT-BT_1987__CO|AeR--SC|BauRau;DE_NT-BT_1987;Aeltestenrat für Bau- und Raumangelegenheiten;CO;SC;AeR;BauRau;NC;NC;NC
+DE_NT-BT_1990__CO|AeR--SC|BauRau;DE_NT-BT_1990;Aeltestenrat für Bau- und Raumangelegenheiten;CO;SC;AeR;BauRau;NC;NC;NC
+DE_NT-BT_1994__CO|AeR--SC|BauRau;DE_NT-BT_1994;Aeltestenrat für Bau- und Raumangelegenheiten;CO;SC;AeR;BauRau;NC;NC;NC
+DE_NT-BT_1998__CO|AeR--SC|BauRau;DE_NT-BT_1998;Aeltestenrat für Bau- und Raumangelegenheiten;CO;SC;AeR;BauRau;NC;NC;NC
+DE_NT-BT_2002__CO|AeR--SC|BauRau;DE_NT-BT_2002;Aeltestenrat für Bau- und Raumangelegenheiten;CO;SC;AeR;BauRau;NC;NC;NC
+DE_NT-BT_2005__CO|AeR--SC|BauRau;DE_NT-BT_2005;Aeltestenrat für Bau- und Raumangelegenheiten;CO;SC;AeR;BauRau;NC;NC;NC
+DE_NT-BT_2009__CO|AeR--SC|BauRau;DE_NT-BT_2009;Aeltestenrat für Bau- und Raumangelegenheiten;CO;SC;AeR;BauRau;NC;NC;NC
+DE_NT-BT_2013__CO|AeR--SC|BauRau;DE_NT-BT_2013;Aeltestenrat für Bau- und Raumangelegenheiten;CO;SC;AeR;BauRau;NC;NC;NC
+DE_NT-BT_2017__CO|AeR--SC|BauRau;DE_NT-BT_2017;Aeltestenrat für Bau- und Raumangelegenheiten;CO;SC;AeR;BauRau;NC;NC;NC
+DE_NT-BT_1949__CO|AeR--SC|HaushaltE02;DE_NT-BT_1949;Aeltestenrat für den Haushalt (Einzelplan 02);CO;SC;AeR;HaushaltE02;NC;NC;NC
+DE_NT-BT_1953__CO|AeR--SC|HaushaltE02;DE_NT-BT_1953;Aeltestenrat für den Haushalt (Einzelplan 02);CO;SC;AeR;HaushaltE02;NC;NC;NC
+DE_NT-BT_1957__CO|AeR--SC|HaushaltE02;DE_NT-BT_1957;Aeltestenrat für den Haushalt (Einzelplan 02);CO;SC;AeR;HaushaltE02;NC;NC;NC
+DE_NT-BT_1961__CO|AeR--SC|HaushaltE02;DE_NT-BT_1961;Aeltestenrat für den Haushalt (Einzelplan 02);CO;SC;AeR;HaushaltE02;NC;NC;NC
+DE_NT-BT_1965__CO|AeR--SC|HaushaltE02;DE_NT-BT_1965;Aeltestenrat für den Haushalt (Einzelplan 02);CO;SC;AeR;HaushaltE02;NC;NC;NC
+DE_NT-BT_1969__CO|AeR--SC|HaushaltE02;DE_NT-BT_1969;Aeltestenrat für den Haushalt (Einzelplan 02);CO;SC;AeR;HaushaltE02;NC;NC;NC
+DE_NT-BT_1972__CO|AeR--SC|HaushaltE02;DE_NT-BT_1972;Aeltestenrat für den Haushalt (Einzelplan 02);CO;SC;AeR;HaushaltE02;NC;NC;NC
+DE_NT-BT_1976__CO|AeR--SC|HaushaltE02;DE_NT-BT_1976;Aeltestenrat für den Haushalt (Einzelplan 02);CO;SC;AeR;HaushaltE02;NC;NC;NC
+DE_NT-BT_1980__CO|AeR--SC|HaushaltE02;DE_NT-BT_1980;Aeltestenrat für den Haushalt (Einzelplan 02);CO;SC;AeR;HaushaltE02;NC;NC;NC
+DE_NT-BT_1983__CO|AeR--SC|HaushaltE02;DE_NT-BT_1983;Aeltestenrat für den Haushalt (Einzelplan 02);CO;SC;AeR;HaushaltE02;NC;NC;NC
+DE_NT-BT_1987__CO|AeR--SC|HaushaltE02;DE_NT-BT_1987;Aeltestenrat für den Haushalt (Einzelplan 02);CO;SC;AeR;HaushaltE02;NC;NC;NC
+DE_NT-BT_1990__CO|AeR--SC|HaushaltE02;DE_NT-BT_1990;Aeltestenrat für den Haushalt (Einzelplan 02);CO;SC;AeR;HaushaltE02;NC;NC;NC
+DE_NT-BT_1994__CO|AeR--SC|HaushaltE02;DE_NT-BT_1994;Aeltestenrat für den Haushalt (Einzelplan 02);CO;SC;AeR;HaushaltE02;NC;NC;NC
+DE_NT-BT_1998__CO|AeR--SC|HaushaltE02;DE_NT-BT_1998;Aeltestenrat für den Haushalt (Einzelplan 02);CO;SC;AeR;HaushaltE02;NC;NC;NC
+DE_NT-BT_2002__CO|AeR--SC|HaushaltE02;DE_NT-BT_2002;Aeltestenrat für den Haushalt (Einzelplan 02);CO;SC;AeR;HaushaltE02;NC;NC;NC
+DE_NT-BT_2005__CO|AeR--SC|HaushaltE02;DE_NT-BT_2005;Aeltestenrat für den Haushalt (Einzelplan 02);CO;SC;AeR;HaushaltE02;NC;NC;NC
+DE_NT-BT_2009__CO|AeR--SC|HaushaltE02;DE_NT-BT_2009;Aeltestenrat für den Haushalt (Einzelplan 02);CO;SC;AeR;HaushaltE02;NC;NC;NC
+DE_NT-BT_2013__CO|AeR--SC|HaushaltE02;DE_NT-BT_2013;Aeltestenrat für den Haushalt (Einzelplan 02);CO;SC;AeR;HaushaltE02;NC;NC;NC
+DE_NT-BT_2017__CO|AeR--SC|HaushaltE02;DE_NT-BT_2017;Aeltestenrat für den Haushalt (Einzelplan 02);CO;SC;AeR;HaushaltE02;NC;NC;NC
+DE_NT-BT_2017__CO|HptA;DE_NT-BT_2017;Hauptausschuss;CO;NA;HptA;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AuswA;DE_NT-BT_2017;Auswaertiger Ausschuss;CO;NA;AuswA;NA;NC;NC;NC
+DE_NT-BT_2017__CO|VgA;DE_NT-BT_2017;Verteidigungsausschuss;CO;NA;VgA;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AfWiZsmAEnt;DE_NT-BT_2017;Ausschuss fuer wirtschaftliche Zusammenarbeit und Entwicklung;CO;NA;AfWiZsmAEnt;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AfGes;DE_NT-BT_2017;Ausschuss fuer Gesundheit;CO;NA;AfGes;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AfBiWiTef;DE_NT-BT_2017;Ausschuss fuer Bildung Forschung und Technikfolgenabschaetzung;CO;NA;AfBiWiTef;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AfIn;DE_NT-BT_2017;Ausschuss fuer Inneres und Heimat;CO;NA;AfIn;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AfAEU;DE_NT-BT_2017;Ausschuss fuer die Angelegenheiten der Europaeischen Union;CO;NA;AfAEU;NA;NC;NC;NC
+DE_NT-BT_2017__CO|PetA;DE_NT-BT_2017;Petitionsausschuss;CO;NA;PetA;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AfMeReHuHi;DE_NT-BT_2017;Ausschuss fuer Menschenrechte und humanitaere Hilfe;CO;NA;AfMeReHuHi;NA;NC;NC;NC
+DE_NT-BT_2017__CO|FinanzA;DE_NT-BT_2017;Finanzausschuss;CO;NA;FinanzA;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AWirEne;DE_NT-BT_2017;Ausschuss fuer Wirtschaft und Energie;CO;NA;AWirEne;NA;NC;NC;NC
+DE_NT-BT_2017__CO|HaHaA;DE_NT-BT_2017;Haushaltsausschuss;CO;NA;HaHaA;NA;NC;NC;NC
+DE_NT-BT_2017__CO|SpoA;DE_NT-BT_2017;Sportausschuss;CO;NA;SpoA;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AErnLW;DE_NT-BT_2017;Ausschuss fuer Ernaehrung und Landwirtschaft;CO;NA;AErnLW;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AUmwNaSNukS;DE_NT-BT_2017;Ausschuss fuer Umwelt Naturschutz und nukleare Sicherheit;CO;NA;AUmwNaSNukS;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AArbSoz;DE_NT-BT_2017;Ausschuss fuer Arbeit und Soziales;CO;NA;AArbSoz;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AfFamSeFraJug;DE_NT-BT_2017;Ausschuss fuer Familie Senioren Frauen und Jugend;CO;NA;AfFamSeFraJug;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AReVbS;DE_NT-BT_2017;Ausschuss fuer Recht und Verbraucherschutz;CO;NA;AReVbS;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AfWaPrImGeO;DE_NT-BT_2017;Ausschuss fuer Wahlpruefung Immunitaet und Geschaeftsordnung;CO;NA;AfWaPrImGeO;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AfTou;DE_NT-BT_2017;Ausschuss fuer Tourismus;CO;NA;AfTou;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AVerDigIn;DE_NT-BT_2017;Ausschuss fuer Verkehr und digitale Infrastruktur;CO;NA;AVerDigIn;NA;NC;NC;NC
+DE_NT-BT_2017__CO|ADigAg;DE_NT-BT_2017;Ausschuss Digitale Agenda;CO;NA;ADigAg;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AfKulMed;DE_NT-BT_2017;Ausschuss fuer Kultur und Medien;CO;NA;AfKulMed;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AfErAgrFor;DE_NT-BT_2017;Ausschuss fuer Ernaehrung und Landwirtschaft;CO;NA;AfErAgrFor;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AfBaWoStaKo;DE_NT-BT_2017;Ausschuss fuer Bau Wohnen Stadtentwicklung und Kommunen;CO;NA;AfBaWoStaKo;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AWirEne--SC|UARegWiPoERPWiPl;DE_NT-BT_2017;UA Regionale Wirtschaftspolitik und ERP-Wirtschaftsplaene;CO;SC;AWirEne;UARegWiPoERPWiPl;NC;NC;NC
+DE_NT-BT_2017__CO|AuswA--SC|UAAKuPoBiPo;DE_NT-BT_2017;UA Auswaertige Kultur- und Bildungspolitik;CO;SC;AuswA;UAAKuPoBiPo;NC;NC;NC
+DE_NT-BT_2017__CO|AfFamSeFraJug--SC|UABueEng;DE_NT-BT_2017;UA Buergerschaftliches Engagement;CO;SC;AfFamSeFraJug;UABueEng;NC;NC;NC
+DE_NT-BT_2017__CO|AuswA--SC|UAVNIntOrgGlob;DE_NT-BT_2017;UA Vereinte Nationen internationale Organisationen und Globalisierung;CO;SC;AuswA;UAVNIntOrgGlob;NC;NC;NC
+DE_NT-BT_2017__CO|HaHaA--SC|RePrue;DE_NT-BT_2017;Rechnungspruefungsausschuss;CO;SC;HaHaA;RePrue;NC;NC;NC
+DE_NT-BT_2017__CO|HaHaA--SC|UAFdEU;DE_NT-BT_2017;UA zu Fragen der Europaeischen Union;CO;SC;HaHaA;UAFdEU;NC;NC;NC
+DE_NT-BT_2017__CO|AuswA--SC|UAZivKpKbVeHa;DE_NT-BT_2017;UA Zivile Krisenpraeventionen Konfliktbearb. und vernetztes Handeln;CO;SC;AuswA;UAZivKpKbVeHa;NC;NC;NC
+DE_NT-BT_2017__CO|AuswA--SC|UAAbrRuekoNiVer;DE_NT-BT_2017;UA Abruestung Ruestungskontrolle und Nichtverbreitung;CO;SC;AuswA;UAAbrRuekoNiVer;NC;NC;NC
+DE_NT-BT_2017__CO|WaPrA;DE_NT-BT_2017;Wahlpruefungsausschuss;CO;NA;WaPrA;NA;NC;NC;NC
+DE_NT-BT_2017__CO|AfFamSeFraJug--SC|KiKo;DE_NT-BT_2017;Kinderkommission;CO;SC;AfFamSeFraJug;KiKo;NC;NC;NC
+DE_NT-BT_2017__CO|AfGes--SC|UAGlobGes;DE_NT-BT_2017;UA Globale Gesundheit;CO;SC;AfGes;UAGlobGes;NC;NC;NC
+DE_NT-BT_2017__CO|AReVbS--SC|UAEuRe;DE_NT-BT_2017;UA Europarecht;CO;SC;AReVbS;UAEuRe;NC;NC;NC
+DE_NT-BT_2017__DL|PV-NATO;DE_NT-BT_2017;Deutsche Delegation in der Parlamentarischen Versammlung der NATO;DL;NA;PV-NATO;NA;NC;NC;NC
+DE_NT-BT_2017__DL|BNetzA;DE_NT-BT_2017;Beirat bei der Bundesnetzagentur fuer Elektrizitaet Gas Telekommunikation Post und Eisenbahnen;DL;NA;BNetzA;NA;NC;NC;NC
+DE_NT-BT_2017__DL|IPU;DE_NT-BT_2017;Deutsche Delegation in der Interparlamentarischen Union;DL;NA;IPU;NA;NC;NC;NC
+DE_NT-BT_2017__DL|PV-OSZE;DE_NT-BT_2017;Deutsche Delegation in der Parlamentarischen Versammlung der OSZE;DL;NA;PV-OSZE;NA;NC;NC;NC
+DE_NT-BT_2017__CO|ZFdG;DE_NT-BT_2017;Gremium nach § 23 c Abs. 8 des Zollfahndungsdienstgesetzes;CO;NA;ZFdG;NA;NC;NC;NC
+DE_NT-BT_2017__DL|BSPC;DE_NT-BT_2017;Ostseeparlamentarierkonferenz;DL;NA;BSPC;NA;NC;NC;NC
+DE_NT-BT_2017__DL|PABSEC;DE_NT-BT_2017;Parlamentarische Versammlung der Schwarzmeerwirtschaftskooperation PABSEC;DL;NA;PABSEC;NA;NC;NC;NC
+DE_NT-BT_2017__DL|PV-UfM;DE_NT-BT_2017;Parlamentarische Versammlung der Union fuer den Mittelmeerraum PV-UfM;DL;NA;PV-UfM;NA;NC;NC;NC
+DE_NT-BT_2017__DL|PBnE;DE_NT-BT_2017;Parlamentarischer Beirat fuer nachhaltige Entwicklung;DL;NA;PBnE;NA;NC;NC;NC
+DE_NT-BT_2017__CO|PKGr;DE_NT-BT_2017;Parlamentarisches Kontrollgremium;CO;NA;PKGr;NA;NC;NC;NC
+DE_NT-BT_2017__DL|ERD;DE_NT-BT_2017;Vertretung der Bundesrepublik Deutschland zur Parlamentarischen Versammlung des Europarates zugleich Vertreter in der Versammlung  der Westeuropaeischen Union;DL;NA;ERD;NA;NC;NC;NC
+DE_NT-BT_2017__DL|KfW;DE_NT-BT_2017;Verwaltungsrat der Kreditanstalt fuer Wiederaufbau;DL;NA;KfW;NA;NC;NC;NC
+DE_NT-BT_2017__CO|KuBe;DE_NT-BT_2017;Kunstbeierat;CO;NA;KuBe;NA;NC;NC;NC
+DE_NT-BT_2017__CO|Sivo;DE_NT-BT_2017;Sitzungsvorstand des Bundestages;CO;NA;Sivo;NA;NC;NC;NC
+DE_NT-BT_2017__CO|1Ua;DE_NT-BT_2017;1. Untersuchungsausschuss;CO;NA;1Ua;NA;NC;NC;NC
+DE_NT-BT_2017__CO|BeBudiAb;DE_NT-BT_2017;"Enquete-Kommission ""Berufliche Bildung in der digitalen Arbeitswelt""";CO;NA;BeBudiAb;NA;NC;NC;NC
+DE_NT-BT_2017__CO|KI;DE_NT-BT_2017;"Enquete-Kommission ""Kuenstliche Intelligenz – Gesellschaftliche Verantwortung und wirtschaftliche soziale und oekologische Potenziale""";CO;NA;KI;NA;NC;NC;NC
