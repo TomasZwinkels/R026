@@ -940,6 +940,18 @@
 			table(ELLIBU$party_id_nat_equiv) # still about 1838 empty
 			table(is.na(ELLIBU$party_id_nat_equiv)) # values for all here, for whatever its worth
 
+		## need the pargov ids as well
+		
+		TEMPX <- sqldf("SELECT ELLIBU.*, PART.party_parlgov_id
+						FROM ELLIBU LEFT JOIN PART
+						ON ELLIBU.party_id_nat_equiv = PART.party_id
+						")
+		head(TEMPX)
+		table(TEMPX$party_parlgov_id)
+		table(is.na(TEMPX$party_parlgov_id))
+		nrow(ELLIBU)
+		nrow(TEMPX)
+		ELLIBU <- TEMPX
 	
 	##############################################
 	# DATA 10: ELLIBU gets number elected from PARE
@@ -1424,6 +1436,73 @@
 			ELLIBU$keylisttypes[which(ELLIBU$keylisttypes == "NL")] <- "one-list"
 			table(ELLIBU$keylisttypes)
 			table(ELLIBU$keylisttypes,ELLIBU$countryld)
+			
+		### we would like to also have an image of party level electoral fluctuations,
+		
+			# script below requires
+			
+				# the parlgov id of a party
+				summary(droplevels(ELLIBU$party_parlgov_id)) # implemented this above now
+				
+				# an election year variable
+				summary(ELLIBU$year)
+				table(is.na(ELLIBU$year))
+				
+			# this data contains the voteshares for each election
+				PG_ELEC <- read.csv("parlgov_electiondata_DE-NL_1994-2015.csv", header = TRUE, sep = ";")
+				names(PG_ELEC)
+				names(PG_ELEC)[names(PG_ELEC)=="party_id"] <- "party_parlgov_id"
+				
+				# and only use the national elections
+				PG_ELEC <- PG_ELEC[which(PG_ELEC$election_type == "parliament"),]
+				nrow(PG_ELEC)
+				
+			# lets get share for one case
+			
+				head(ELLIBU)
+				myyear <-  ELLIBU$year[1]
+				myparlgovid <- ELLIBU$party_parlgov_id[1]
+				PG_ELEC$vote_share[which(PG_ELEC$party_parlgov_id == myparlgovid & PG_ELEC$election_year == myyear)]
+			
+			# only nati
+			
+			# merge in with query
+			TEMPY <- sqldf("SELECT ELLIBU.*, PG_ELEC.vote_share
+							FROM ELLIBU LEFT JOIN PG_ELEC
+							ON
+								ELLIBU.party_parlgov_id = PG_ELEC.party_parlgov_id
+								AND
+								ELLIBU.year = PG_ELEC.election_year
+						   ")
+			head(TEMPY)
+			nrow(TEMPY)
+			nrow(ELLIBU)
+			ELLIBU <- TEMPY 
+			
+			# so lets so him much vote share the national party last compared to the previous election
+				getvoteshareinpreviouselection <- function(ELLIBUparliament_election_id_tminspec)
+				{
+					voteshareinpreviouselection <- vector()
+					for(i in 1:nrow(ELLIBU)) #this for loop looks up, when the combination exists what the vote_share in the previous election was
+					{
+						if (length(table(PG_ELEC$party_parlgov_id==ELLIBU$party_parlgov_id[i] & as.character(PG_ELEC$election_id)==as.character(ELLIBUparliament_election_id_tminspec[i]))) > 1)
+						{		
+						voteshareinpreviouselection[i] <- PG_ELEC[which(PG_ELEC$party_parlgov_id==ELLIBU$party_parlgov_id[i] & as.character(PG_ELEC$election_id)==as.character(ELLIBUparliament_election_id_tminspec[i])), ]$vote_share
+						} else {
+						voteshareinpreviouselection[i] <- NA
+						}
+					}
+					return(voteshareinpreviouselection)
+				}	
+		
+			# between previous election (t minus 1)
+				
+				voteshareinpreviouselectresvectminus1 <- getvoteshareinpreviouselection(POLIAS$parliament_election_id_tmin1)
+				POLIAS$votesharelosttminus1 <- voteshareinpreviouselectresvectminus1 - POLIAS$vote_share
+				hist(POLIAS$votesharelosttminus1)
+				POLIAS$relativevotesharelosttminus1 <-  POLIAS$votesharelosttminus1 / voteshareinpreviouselectresvectminus1
+				hist(POLIAS$relativevotesharelosttminus1)
+			
 			
 	## NEW! selection and election control variables ###!
 
