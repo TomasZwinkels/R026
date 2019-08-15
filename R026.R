@@ -1445,6 +1445,8 @@
 				summary(droplevels(ELLIBU$party_parlgov_id)) # implemented this above now
 				
 				# an election year variable
+				ELLIBU$year <- as.numeric(substrRight(ELLIBU$parliament_id,4))
+				table(ELLIBU$year)
 				summary(ELLIBU$year)
 				table(is.na(ELLIBU$year))
 				
@@ -1477,31 +1479,51 @@
 			head(TEMPY)
 			nrow(TEMPY)
 			nrow(ELLIBU)
+			
+			TEMPY[which(is.na(TEMPY$vote_share)),]
+			
+			unique(ELLIBU[which(ELLIBU$parliament_id == "DE_NT-BT_2013"),]$nat_party_id)
+			unique(ELLIBU[which(ELLIBU$parliament_id == "DE_NT-BT_2017"),]$nat_party_id) # why is CDU missing in 2017?!
+			
 			ELLIBU <- TEMPY 
 			
 			# so lets so him much vote share the national party last compared to the previous election
-				getvoteshareinpreviouselection <- function(ELLIBUparliament_election_id_tminspec)
-				{
-					voteshareinpreviouselection <- vector()
-					for(i in 1:nrow(ELLIBU)) #this for loop looks up, when the combination exists what the vote_share in the previous election was
-					{
-						if (length(table(PG_ELEC$party_parlgov_id==ELLIBU$party_parlgov_id[i] & as.character(PG_ELEC$election_id)==as.character(ELLIBUparliament_election_id_tminspec[i]))) > 1)
-						{		
-						voteshareinpreviouselection[i] <- PG_ELEC[which(PG_ELEC$party_parlgov_id==ELLIBU$party_parlgov_id[i] & as.character(PG_ELEC$election_id)==as.character(ELLIBUparliament_election_id_tminspec[i])), ]$vote_share
-						} else {
-						voteshareinpreviouselection[i] <- NA
-						}
-					}
-					return(voteshareinpreviouselection)
-				}	
+
+				# first, lets get the previous parliament in and get the year that comes with it
+				TEMPXX <- sqldf("SELECT ELLIBU.*, PARL.previous_parliament
+								FROM ELLIBU LEFT JOIN PARL
+								ON ELLIBU.parliament_id = PARL.parliament_id
+								")
+
+				head(TEMPXX)
+				nrow(TEMPXX)
+				nrow(ELLIBU)
+				ELLIBU <- TEMPXX 
+
+				ELLIBU$previous_election_year <- as.numeric(substrRight(as.character(ELLIBU$previous_parliament),4))
+			
+			# then, do the exact same thing, but with the number from the previous election
+
+			TEMPYY <- sqldf("SELECT ELLIBU.*, PG_ELEC.vote_share as 'vote_share_previous'
+							FROM ELLIBU LEFT JOIN PG_ELEC
+							ON
+								ELLIBU.party_parlgov_id = PG_ELEC.party_parlgov_id
+								AND
+								ELLIBU.previous_election_year = PG_ELEC.election_year
+						   ")
+			head(TEMPYY)
+			nrow(TEMPYY)
+			nrow(ELLIBU)
+			ELLIBU <- TEMPYY 
 		
-			# between previous election (t minus 1)
-				
-				voteshareinpreviouselectresvectminus1 <- getvoteshareinpreviouselection(POLIAS$parliament_election_id_tmin1)
-				POLIAS$votesharelosttminus1 <- voteshareinpreviouselectresvectminus1 - POLIAS$vote_share
-				hist(POLIAS$votesharelosttminus1)
-				POLIAS$relativevotesharelosttminus1 <-  POLIAS$votesharelosttminus1 / voteshareinpreviouselectresvectminus1
-				hist(POLIAS$relativevotesharelosttminus1)
+			# now, calculate the 'drop'
+			
+			ELLIBU$vote_share_change <- ELLIBU$vote_share - ELLIBU$vote_share_previous
+			hist(ELLIBU$vote_share_change)
+			
+			# lets inspecting missing cases quickly
+			table(is.na(ELLIBU$vote_share_change))
+			ELLIBU[which(is.na(ELLIBU$vote_share_change)),]
 			
 			
 	## NEW! selection and election control variables ###!
@@ -2129,6 +2151,15 @@
 								data=ELLIBUTEMP)
 					summary(md)
 					
+					ELLIBUTEMP$vote_share_change_ten <- ELLIBUTEMP$vote_share_change / 10
+					hist(ELLIBUTEMP$vote_share_change_ten)
+					
+					ELLIBUTEMP$vote_share_increase <- ifelse(ELLIBUTEMP$vote_share_change_ten > 0, ELLIBUTEMP$vote_share_change_ten, 0)
+					ELLIBUTEMP$vote_share_lost <- ifelse(ELLIBUTEMP$vote_share_change_ten < 0, ELLIBUTEMP$vote_share_change_ten, 0)#
+					
+					hist(ELLIBUTEMP$vote_share_increase)
+					hist(ELLIBUTEMP$vote_share_lost)
+					
 					me <- lmer(selection_election_gap~
 							#	party_size_cat_de +
 							#	election_uncertainty +
@@ -2138,13 +2169,22 @@
 							#	quota_percentage +
 							#	quota_soft +
 								type +
-								country +
+					#			country +
+								vote_share_increase +
+								vote_share_lost +
 								(year_cent | country),
 								data=ELLIBUTEMP)
 					summary(me)
 					
+					hist(ELLIBU$vote_share_change)
+					
 					stargazer(mee,ma,mb,md,me,type="text",intercept.bottom=FALSE)
 					stargazer(mee,ma,mb,md,me,intercept.bottom=FALSE)
+					
+					ELLIBUDE <- ELLIBU[which(ELLIBU$country == "DE"),]
+					ELLIBUNL <- ELLIBU[which(ELLIBU$country == "NL"),]
+					boxplot(ELLIBUDE$selection_election_gap~ELLIBUDE$year)
+					boxplot(ELLIBUNL$selection_election_gap~ELLIBUNL$year)
 
 ######################################################################################
 ############################ OLD DESCRIPTIVE RESULTS #################################
