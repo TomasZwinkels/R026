@@ -14,15 +14,14 @@
 		Sys.setlocale("LC_TIME", "English") # key, without this conversion to POSIXct does not work
 		Sys.getlocale(category = "LC_ALL")
 		
-	#	setwd("C:/Users/turnerzw/Basel Powi Dropbox/R/R026_temp")
+		setwd("C:/Users/turnerzw/Basel Powi Dropbox/R/R026_temp")
 		setwd("F:/PolCa/Analysis/R/ProjectR026_control")
-		setwd("C:/Users/turnerzw/Basel Powi Dropbox/Tomas Zwinkels/F-drive-fork\R032")
 		getwd()
 	
 		# install.packages("foreach")
 		# install.packages("foreach")
 		# install.packages("doParallel")
-		#install.packages("lme4")
+		install.packages("lme4")
 	
 	# packages
 		library(sqldf)
@@ -1366,7 +1365,6 @@
 								percentage95simularresvec <- percentage95simularresvectemp[,2]
 						}
 
-
 		ELLIBU$meanpersdifferent <- meanpersdifferentresvec
 		ELLIBU$percentage95simular <- percentage95simularresvec
 		nrow(ELLIBU)
@@ -1506,7 +1504,7 @@
 			
 				# low uncertainty - german regional lists for small parties + all Dutch election lists
 				
-				table(ELLIBU$country,ELLIBU$type,ELLIBU$party_size_cat_de) # right, so small parties where removed all together!
+				table(ELLIBU$country,ELLIBU$type,ELLIBU$party_size_cat_de) # right, so small parties where removed all together! that is not what we would like right?
 				
 				ELLIBU$election_uncertainty_detailed[which(ELLIBU$country == "DE" & ELLIBU$type == "list" & ELLIBU$party_size_cat_de == "small party")] <- "low unc. - DE list small parties"
 				ELLIBU$election_uncertainty_detailed[which(ELLIBU$country == "NL")] <- "low unc. - NL all lists"
@@ -1528,6 +1526,10 @@
 				
 				ELLIBU$election_uncertainty_detailed_fac <- factor(ELLIBU$election_uncertainty_detailed)
 				table(ELLIBU$election_uncertainty_detailed_fac)
+				
+		## so a new attempt for an electoral uncertainty variable
+		
+			
 			
 		### now also, using the information from above, move some Dutch cases away from the single-list variable, because there is actually quite some diversity!
 			table(ELLIBU$keylisttypes,ELLIBU$countryld)
@@ -1718,7 +1720,7 @@
 					
 					m2 <- lmer(	ambition_selection_gap~
 								selection_control_fac +
-								party_size_cat_de +
+							#	party_size_cat +
 								quota_percentage +
 								(1 | country),
 								data=ELLIBU)
@@ -1727,28 +1729,97 @@
 					stargazer(m1,m2,type="text",intercept.bottom=FALSE)
 					stargazer(m1,m2,intercept.bottom=FALSE)
 			
-			### so, continuing the buildup of the model particualry a control for a general time trend seems rather important
-				
-				ELLIBU_DE <- ELLIBU[which(ELLIBU$country == "DE"),]
-				ELLIBU_NL <- ELLIBU[which(ELLIBU$country == "NL"),]
-				
-				boxplot(ELLIBU_DE$ambition_selection_gap~ELLIBU_DE$parliament_id)
-				
-					# inspection of some cases
-						ELLIBU[which(ELLIBU$parliament_id == "DE_NT-BT_1983"),] # only very few observations... 
-						ELLIBU[which(ELLIBU$parliament_id == "DE_NT-BT_1987"),] # only very few observations...
+					### so, continuing the buildup of the model particualry a control for a general time trend seems rather important
+					
+					ELLIBU_DE <- ELLIBU[which(ELLIBU$country == "DE"),]
+					ELLIBU_NL <- ELLIBU[which(ELLIBU$country == "NL"),]
+					
+					boxplot(ELLIBU_DE$ambition_selection_gap~ELLIBU_DE$parliament_id)
+					
+						# inspection of some cases
+							ELLIBU[which(ELLIBU$parliament_id == "DE_NT-BT_1983"),] # only very few observations... 
+							ELLIBU[which(ELLIBU$parliament_id == "DE_NT-BT_1987"),] # only very few observations...
 
-						# checking if the numbers in general match
-						ELLIBU_DE_1987 <- ELLIBU[which(ELLIBU$parliament_id == "DE_NT-BT_1987"),]
-						sum(ELLIBU_DE_1987$f_elected) + sum(ELLIBU_DE_1987$m_elected) # 40, not 42, why? well: because two candidates selected via district seats probably?
+							# checking if the numbers in general match
+							ELLIBU_DE_1987 <- ELLIBU[which(ELLIBU$parliament_id == "DE_NT-BT_1987"),]
+							sum(ELLIBU_DE_1987$f_elected) + sum(ELLIBU_DE_1987$m_elected) # 40, not 42, why? well: because two candidates selected via district seats probably?
+							
+					boxplot(ELLIBU_NL$ambition_selection_gap~ELLIBU_NL$parliament_id) # much more eradic pattern in the Netherlands
+					
+						# inspection of subcases
+						table(ELLIBU_NL$parliament_id)
+						ELLIBU[which(ELLIBU$parliament_id == "NL_NT-TK_2006"),]
+					
+					head(ELLIBU)
+					
+					# this suggest we should use different trend in the different countries, we see a small increase in DE and a small decrease in NL? In general it must be said that - especially in the earlier years - there are really not that many observations anymore
+					
+						# building up a time control
+							ELLIBU$year <- as.numeric(substrRight(ELLIBU$parliament_id,4))
+							hist(ELLIBU$year)
+							median(ELLIBU$year)
+							ELLIBU$year_cent <- ELLIBU$year - median(ELLIBU$year)
+							hist(ELLIBU$year_cent)
 						
-				boxplot(ELLIBU_NL$ambition_selection_gap~ELLIBU_NL$parliament_id) # much more eradic pattern in the Netherlands
+
+						# building up a proper way of controling for party size
+							hist(ELLIBU$party_size)
+							boxplot(ELLIBU$party_size~ELLIBU$country)
+						
+							# standardise within country
+							
+							desizeavg <- mean(ELLIBU$party_size[which(ELLIBU$country == "DE")])
+							nlsizeavg <- mean(ELLIBU$party_size[which(ELLIBU$country == "NL")])
+							desizesd <-  sd(ELLIBU$party_size[which(ELLIBU$country == "DE")])
+							nlsizesd <-  sd(ELLIBU$party_size[which(ELLIBU$country == "NL")])
+							
+							ELLIBU$party_size_country_stan <- ifelse(ELLIBU$country == "DE", (ELLIBU$party_size-desizeavg)/desizesd, (ELLIBU$party_size-nlsizeavg)/nlsizesd)
+							# check
+							mean(ELLIBU[which(ELLIBU$country == "DE"),]$party_size_country_stan)
+							sd(ELLIBU[which(ELLIBU$country == "DE"),]$party_size_country_stan) # looking good!
+							
+						# applying the same trick to district magnitude
+							hist(ELLIBU$district_magnitude)
+							
+							dedismagavg <- mean(ELLIBU$district_magnitude[which(ELLIBU$country == "DE")])
+							nldismagavg <- mean(ELLIBU$district_magnitude[which(ELLIBU$country == "NL")])
+							dedismagsd <-  sd(ELLIBU$district_magnitude[which(ELLIBU$country == "DE")])
+							nldismagsd <-  sd(ELLIBU$district_magnitude[which(ELLIBU$country == "NL")])
+							
+							ELLIBU$district_magnitude_country_stan <- ifelse(ELLIBU$country == "DE", (ELLIBU$district_magnitude-dedismagavg)/dedismagsd, (ELLIBU$district_magnitude-nldismagavg)/nldismagsd)
+							# check
+							mean(ELLIBU[which(ELLIBU$country == "DE"),]$district_magnitude_country_stan)
+							sd(ELLIBU[which(ELLIBU$country == "DE"),]$district_magnitude_country_stan) # looking good!
+						
 				
-					# inspection of subcases
-					table(ELLIBU_NL$parliament_id)
-					ELLIBU[which(ELLIBU$parliament_id == "NL_NT-TK_2006"),]
+					# this is the model with a variable slope for a time-trend per country
+					m3 <- lmer(	ambition_selection_gap~
+								selection_control_fac +
+								party_size_country_stan + # is country mean centered and country standard deviation scaled
+								(year_cent | country),
+								data=ELLIBU)
+					summary(m3)
+					
+					m4 <- lmer(	ambition_selection_gap~
+								selection_control_fac +
+								party_size_country_stan + # is country mean centered and country standard deviation scaled
+								district_magnitude_country_stan + # is country mean centered and country standard deviation scaled
+								quota_percentage +
+								quota_soft +
+								(year_cent | country),
+								data=ELLIBU)
+					summary(m4)
 				
-				head(ELLIBU)
+					stargazer(me,m1,m3,m4,type="text",intercept.bottom=FALSE)
+					
+					stargazer(me,m1,m3,m4,intercept.bottom=FALSE)
+					
+					# finally there was also the idea of adding district magnitude
+					
+						ELLIBU$district_magnitude
+				
+				
+				
 			
 			### selection to election gap (percentage selected - percentage elected)
 
@@ -1770,6 +1841,8 @@
 				hist(ELLIBU$selection_election_gap[which(ELLIBU$country =="NL")]) 
 				
 				boxplot(ELLIBU$selection_election_gap~ELLIBU$election_uncertainty, main="% women elected  into parliament - % women selected onto list")
+				boxplot(ELLIBU$selection_election_gap~ELLIBU$election_uncertainty_detailed_fac, main="% women elected  into parliament - % women selected onto list")
+				
 				beanplot(ELLIBU$selection_election_gap~ELLIBU$election_uncertainty, main="abs(% women elected  into parliament - % women selected onto list)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
 				beanplot(ELLIBU$selection_election_gap~ELLIBU$election_uncertainty_detailed_fac, main="abs(% women elected  into parliament - % women selected onto list)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
 				
@@ -1821,6 +1894,41 @@
 				
 				head(ELLIBU)
 				
+				# and the multi-level regression model
+				    mee <- lmer(selection_election_gap~1+
+								(1 | country),
+								,data=ELLIBU)
+					summary(mee)
+				
+					ma <- lmer(selection_election_gap~
+								election_uncertainty+
+							#	election_uncertainty_detailed +
+								(1 | country),
+								,data=ELLIBU)
+					summary(ma)
+				
+					mb <- lmer(selection_election_gap~
+								election_uncertainty +
+							#	election_uncertainty_detailed +
+								party_size_country_stan + # is country mean centered and country standard deviation scaled
+								district_magnitude_country_stan + # is country mean centered and country standard deviation scaled
+								(year_cent | country),
+								data=ELLIBU)
+					summary(mb)
+					
+					mc <- lmer(selection_election_gap~
+								election_uncertainty +
+							#	election_uncertainty_detailed +
+								party_size_country_stan + 
+								district_magnitude_country_stan +
+								quota_percentage +
+								quota_soft +
+								(year_cent | country),
+								data=ELLIBU)
+					summary(mc)
+					
+					stargazer(mee,ma,mb,mc,type="text",intercept.bottom=FALSE)
+					stargazer(mee,ma,mb,mc,intercept.bottom=FALSE)
 
 ######################################################################################
 ############################ OLD DESCRIPTIVE RESULTS #################################
