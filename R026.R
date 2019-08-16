@@ -16,7 +16,7 @@
 		
 		#setwd("C:/Users/turnerzw/Basel Powi Dropbox/R/R026_temp")
 		setwd("F:/PolCa/Analysis/R/ProjectR026_control")
-		setwd("C:/Users/turnerzw/Basel Powi Dropbox/Tomas Zwinkels/F-drive-fork\R032")
+		setwd("C:/Users/turnerzw/Basel Powi Dropbox/Tomas Zwinkels/F-drive-fork/R026")
 		getwd()
 	
 		# install.packages("foreach")
@@ -261,7 +261,7 @@
 			tail(ELENBU)
 			
 		# merge in some ELLI characteristics
-			ELENBU <- sqldf("SELECT ELENBU.*, ELLI.list_name, ELLI.parliament_id, ELLI.district_id, ELLI.list_length, ELLI.party_id as 'party_id_from_elli'
+			ELENBU <- sqldf("SELECT ELENBU.*, ELLI.list_name, ELLI.parliament_id, ELLI.district_id, ELLI.list_length, ELLI.district_id, ELLI.party_id as 'party_id_from_elli'
 							FROM ELENBU LEFT JOIN ELLI
 							ON
 							ELENBU.list_id = ELLI.list_id
@@ -543,7 +543,7 @@
 			ELENBU$fictional_parl_episode_id <- paste(ELENBU$pers_id,ELENBU$parliament_id,sep="__")
 			head(ELENBU)
 			
-			ELENBU$in_parliament <- ifelse(ELENBU$fictional_parl_episode_id %in% PARERED$parl_episode_id,"yes","no") 
+			ELENBU$in_parliament <- ifelse(ELENBU$fictional_parl_episode_id %in% FPAREBU$parl_episode_id,"yes","no") 
 			table(ELENBU$in_parliament) 
 			table(ELENBU$in_parliament)[2] / (table(ELENBU$in_parliament)[2]+table(ELENBU$in_parliament)[1]) # is roughly one third of the people on the election list that made it into parliament, that seems like a lot?
 			
@@ -666,7 +666,13 @@
 						
 					# function to match previous parliament
 						
-						wasdoublegangertminxsuccesfull <- function(local_list_id,local_list_position,howfarback)
+						# debugging, german BT CDU 2017
+						local_list_id = "DE_NT-BT_2017__DE_NT-BT_2017__Baden-Wuerttemberg__Christlich-Demokratische-Union-Deutschlands-in-Niedersachsen"
+						local_list_position = 1
+						howfarback = 1
+						local_natparty_id = "DE_CDU_NT"
+						
+						wasdoublegangertminxsuccesfull <- function(local_list_id,local_list_position,howfarback,local_natparty_id)
 						{
 						
 							# get the list id for my double ganger
@@ -702,9 +708,46 @@
 								
 								# now generate the list id for my double ganger
 								doublegangerfakelistid <- gsub(myparid,earlierparliament,local_list_id)
-							
+								doublegangerparty <- local_natparty_id
+								
+							# and the district id
+									doublegangerdistrictid <- str_extract(local_list_id, "__.+__") # first find the district id part of the complete list id
+									doublegangerdistrictid <- gsub(myparid,earlierparliament,doublegangerdistrictid)# then replace the parliament_id part
+									doublegangerdistrictid <- gsub("^__","",doublegangerdistrictid)	# then get rid of the __ and __ at the start and end of the remaining string
+									doublegangerdistrictid <- gsub("__$","",doublegangerdistrictid)	# then get rid of the __ and __ at the start and end of the remaining string
+									
 							# now get her pers_id
-								doublegangerpersid <- ELENBU[which(ELENBU$list_id_old == doublegangerfakelistid & ELENBU$listplace == local_list_position),]$pers_id
+								
+								#reset
+								doublegangerpersidvoteone <- ""
+								doublegangerpersidvotetwo <- ""
+								
+								doublegangerpersidvoteone <- ELENBU[which(ELENBU$list_id_old == doublegangerfakelistid & ELENBU$listplace == local_list_position),]$pers_id
+								doublegangerpersidvotetwo <- ELENBU[which(
+																		  ELENBU$listplace == local_list_position & 
+																		  ELENBU$party_id_from_elli_nat_equiv == doublegangerparty &
+																		  ELENBU$district_id == doublegangerdistrictid
+																    ),]$pers_id
+								
+								# if either one of the two is empty, go for the one with a value
+								if(length(doublegangerpersidvoteone) == 0 | length(doublegangerpersidvotetwo) == 0){
+						
+									if(length(doublegangerpersidvoteone) == 0){ # if one vote is empty, return the other one
+									
+										doublegangerpersid <- doublegangerpersidvotetwo
+									} else {
+										doublegangerpersid <- doublegangerpersidvoteone
+									}
+									
+								} else { # if both have values, check if they are the same, if not trow an error, otherwise pick any
+									if(doublegangerpersidvoteone == doublegangerpersidvotetwo)
+									{
+										doublegangerpersid <- doublegangerpersidvoteone
+									} else {
+										stop(paste(doublegangerpersidvoteone, " is not the same vote as ", doublegangerpersidvotetwo, "please check this entry and run the script again!",sep=""))
+									}
+								
+								}
 								
 							# now, finally, check if this person got a seat in parliament
 						
@@ -720,7 +763,7 @@
 						
 						# for some of the very last entries shown here
 						tail(ELENBU)
-						wasdoublegangertminxsuccesfull(ELENBU$list_id_old[163045],ELENBU$listplace[163045],1) # check manually and I think this is correct
+						wasdoublegangertminxsuccesfull(ELENBU$list_id_old[163045],ELENBU$listplace[163045],1,ELENBU$party_id_from_elli_nat_equiv[163045]) # check manually and I think this is correct
 			
 						# same as below with the OM, also here I want to only run this bit of very time consuming code when it really is nessary
 						
@@ -769,7 +812,7 @@
 								pb <- txtProgressBar(min = 1, max = nrow(ELENBU), style = 3)
 								for(i in 1:nrow(ELENBU))
 								{
-									resvecelect[i] <- wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],1) | wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],2) | wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],3) # if in one of the previous three elections then it counts as electable
+									resvecelect[i] <- wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],1,ELENBU$party_id_from_elli_nat_equiv[i]) | wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],2,ELENBU$party_id_from_elli_nat_equiv[i]) | wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],3,ELENBU$party_id_from_elli_nat_equiv[i]) # if in one of the previous three elections then it counts as electable
 									setTxtProgressBar(pb, i)
 								}
 								close(pb)
@@ -793,6 +836,10 @@
 						ELENBU[38061:38100,]
 			
 			# do the actual reduction, so that the aggregates below are based on only the 'electable' part of the election lists
+				# before this electable step, maybe then they are still in?!
+				
+				ELENBU[which(ELENBU$list_id == "DE_NT-BT_2017__DE_NT-BT_2017__Baden-Wuerttemberg__Christlich-Demokratische-Union-Deutschlands-in-Niedersachsen"),]
+				
 				nrow(ELENBU)
 				ELENBUTEMP <- ELENBU[which(ELENBU$electable == "electable"),]
 				nrow(ELENBUTEMP)
@@ -1188,6 +1235,9 @@
 		## step 1: make a function that generates an - ';' separated - list position ordered - array of all pers_ids occurring on a certain list (takes a list id as input)
 		
 			head(ELENBU)
+			
+			# testing what goes wrong we DE Bundestag
+			local_list_id = "DE_NT-BT_2017__DE_NT-BT_2017__Baden-Wuerttemberg__Christlich-Demokratische-Union-Deutschlands-in-Niedersachsen" # so, does not occur in ELENBU apparently?!
 				
 			getpersidarrayforlistid <- function(local_list_id)
 			{
@@ -1258,9 +1308,7 @@
 		
 		
 				# create a selection of all relevant election lists to compare - relevant lists are all lists from the same party in the same election
-				
-					readline(prompt="Press [enter] to continue")
-					 
+
 					# so this takes - a lot - of time to run, so it only does when you explicity tell it to and suggests you to when the dataversion has changed
 					
 					# by default we are not running this!
@@ -1406,11 +1454,29 @@
 		ELLIBU$persidarray <- persidarrayvec
 		tail(ELLIBU$persidarray)
 		
+		table(ELLIBU$parliament_id,ELLIBU$party_id_nat_equiv)
+		table(ELLIBU$parliament_id,ELLIBU$party_id)
+		
+		# inspect duplicated cases, just by the persidarray
+		duplicated(ELLIBU$persidarray)
+		
+		ELLIBU[which(ELLIBU$parliament_id == "DE_NT-BT_2017" & ELLIBU$party_id_nat_equiv == "DE_CDU_NT"),]
+		
+		# e.g.
+		ELLIBU[2,]
+		ELLIBU$persidarray[2]
+		# find all cases
+		ELLIBU[which(ELLIBU$persidarray == ELLIBU$persidarray[2]),]
+		TEMP4[which(TEMP4$persidarray == ELLIBU$persidarray[2]),] # so it seems the first one is kept -- intersting! pers_id_arrays are empty!
+		
 		nrow(ELLIBU)
-		TEMP4 <- ELLIBU %>% distinct(persidarray, .keep_all = TRUE)
+		TEMP4 <- ELLIBU %>% distinct(persidarray, .keep_all = TRUE) ## this where the 2017 CDU Bundestag members are dropped!! -- so what do we do here, when arrays are the same?!
 		nrow(TEMP4) # unfortunately loosing a lot of cases here... 
 		length(unique(ELLIBU$persidarray))
 		ELLIBU <- TEMP4
+		
+		table(ELLIBU$parliament_id,ELLIBU$party_id_nat_equiv)
+		table(ELLIBU$parliament_id,ELLIBU$party_id)
 		
 	##################################################################################################
 	################################# even more variable building here #########################################
@@ -1451,7 +1517,7 @@
 				table(is.na(ELLIBU$year))
 				
 			# this data contains the voteshares for each election
-				PG_ELEC <- read.csv("parlgov_electiondata_DE-NL_1994-2015.csv", header = TRUE, sep = ";")
+				PG_ELEC <- read.csv("parlgov_electiondata_20190815.csv", header = TRUE, sep = ";")
 				names(PG_ELEC)
 				names(PG_ELEC)[names(PG_ELEC)=="party_id"] <- "party_parlgov_id"
 				
