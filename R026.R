@@ -754,11 +754,16 @@
 								
 							# now, finally, check if this person got a seat in parliament for this election
 						
-							if(nrow(FPAREBU[which(FPAREBU$pers_id == doublegangerpersid & FPAREBU$parliament_id == earlierparliament),]) > 0)
+							if(!length(doublegangerpersid) == 0) # only do this when a double ganger was actually found! Otherwise we have no way to tell so we would like the script to return NA
 							{
-								return(TRUE)
+								if(nrow(FPAREBU[which(FPAREBU$pers_id == doublegangerpersid & FPAREBU$parliament_id == earlierparliament),]) > 0)
+								{
+									return(TRUE)
+								} else {
+									return(FALSE)
+								}
 							} else {
-								return(FALSE)
+							return(NA)
 							}
 						}
 						
