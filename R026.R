@@ -820,7 +820,17 @@
 								pb <- txtProgressBar(min = 1, max = nrow(ELENBU), style = 3)
 								for(i in 1:nrow(ELENBU))
 								{
-									resvecelect[i] <- wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],1,ELENBU$party_id_from_elli_nat_equiv[i]) | wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],2,ELENBU$party_id_from_elli_nat_equiv[i]) | wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],3,ELENBU$party_id_from_elli_nat_equiv[i]) # if in one of the previous three elections then it counts as electable
+									# this line does not deal well with having NA on one of these values, so lets make it more resilient to that
+									
+									successfulldoubleganger_tminus1 <- wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],1,ELENBU$party_id_from_elli_nat_equiv[i])
+									successfulldoubleganger_tminus2 <- wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],2,ELENBU$party_id_from_elli_nat_equiv[i])
+									successfulldoubleganger_tminus3 <- wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],3,ELENBU$party_id_from_elli_nat_equiv[i])
+									
+									successfulldoubleganger_tminus1 <- ifelse(is.na(successfulldoubleganger_tminus1),FALSE,TRUE)
+									successfulldoubleganger_tminus2 <- ifelse(is.na(successfulldoubleganger_tminus2),FALSE,TRUE)
+									successfulldoubleganger_tminus3 <- ifelse(is.na(successfulldoubleganger_tminus3),FALSE,TRUE)
+									
+									resvecelect[i] <- successfulldoubleganger_tminus1 | successfulldoubleganger_tminus2 | successfulldoubleganger_tminus3 # if in one of the previous three elections then it counts as electable
 									setTxtProgressBar(pb, i)
 								}
 								close(pb)
