@@ -725,12 +725,18 @@
 								doublegangerpersidvoteone <- ""
 								doublegangerpersidvotetwo <- ""
 								
-								doublegangerpersidvoteone <- ELENBU[which(ELENBU$list_id_old == doublegangerfakelistid & ELENBU$listplace == local_list_position),]$pers_id
+								doublegangerpersidvoteone <- ELENBU[which(ELENBU$list_id_old == doublegangerfakelistid & ELENBU$listplace == local_list_position),]$pers_id[1] # if there are multiple double-gangers, only use the first one?
 								doublegangerpersidvotetwo <- ELENBU[which(
 																		  ELENBU$listplace == local_list_position & 
 																		  ELENBU$party_id_from_elli_nat_equiv == doublegangerparty &
 																		  ELENBU$district_id == doublegangerdistrictid
-																    ),]$pers_id
+																    ),]$pers_id 
+								
+								# if there are multiple double-gangers, for now please break the script.							
+								if(length(doublegangerpersidvotetwo) > 1 | doublegangerpersidvotetwo) > 1)
+								{
+									stop("function was doing run - local_list_id:",local_list_id," - local_list_position:",local_list_position," - howfarback:",howfarback," - local_natparty_id",local_natparty_id,". However, two or more double gangers where detected, so execution has been stopped. Please inspect!, the value for doublegangerpersidvoteone is:",doublegangerpersidvoteone," and the value for doublegangerpersidvotetwo is: ",doublegangerpersidvotetwo,sep=""))
+								}
 								
 								# if either one of the two is empty, go for the one with a value
 								if(length(doublegangerpersidvoteone) == 0 | length(doublegangerpersidvotetwo) == 0){
