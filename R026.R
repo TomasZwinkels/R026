@@ -672,6 +672,9 @@
 						howfarback = 1
 						local_natparty_id = "DE_CDU_NT"
 						
+						
+						# get persid 
+						
 						wasdoublegangertminxsuccesfull <- function(local_list_id,local_list_position,howfarback,local_natparty_id)
 						{
 						
@@ -749,9 +752,9 @@
 								
 								}
 								
-							# now, finally, check if this person got a seat in parliament
+							# now, finally, check if this person got a seat in parliament for this election
 						
-							if(nrow(FPAREBU[which(FPAREBU$pers_id == doublegangerpersid),]) > 0)
+							if(nrow(FPAREBU[which(FPAREBU$pers_id == doublegangerpersid & FPAREBU$parliament_id == earlierparliament),]) > 0)
 							{
 								return(TRUE)
 							} else {
@@ -830,6 +833,7 @@
 						
 						ELENBU$electable <- ifelse(resvecelect,"electable","not electable")
 						table(ELENBU$electable)
+						table(is.na(ELENBU$electable))
 						
 						tail(ELENBU)
 						head(ELENBU[which(ELENBU$electable == "electable"),])
@@ -839,10 +843,15 @@
 				# before this electable step, maybe then they are still in?!
 				
 				ELENBU[which(ELENBU$list_id == "DE_NT-BT_2017__DE_NT-BT_2017__Baden-Wuerttemberg__Christlich-Demokratische-Union-Deutschlands-in-Niedersachsen"),]
+				head(ELENBU)
+				tail(ELENBU)
 				
 				nrow(ELENBU)
 				ELENBUTEMP <- ELENBU[which(ELENBU$electable == "electable"),]
 				nrow(ELENBUTEMP)
+				
+				table(ELENBUTEMP$parliament_id,ELENBUTEMP$party_id_from_elli_nat_equiv)
+				
 				ELENBU <- ELENBUTEMP # Here you can switch of the reduction to only electable!
 				nrow(ELENBU)
 		
