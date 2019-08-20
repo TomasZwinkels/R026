@@ -16,7 +16,7 @@
 		
 		#setwd("C:/Users/turnerzw/Basel Powi Dropbox/R/R026_temp")
 		setwd("F:/PolCa/Analysis/R/ProjectR026_control")
-		setwd("C:/Users/turnerzw/Basel Powi Dropbox/Tomas Zwinkels/F-drive-fork/R026")
+		#setwd("C:/Users/turnerzw/Basel Powi Dropbox/Tomas Zwinkels/F-drive-fork/R026")
 		getwd()
 	
 		# install.packages("foreach")
@@ -742,7 +742,7 @@
 																    ),]$pers_id 
 								
 								# if there are multiple double-gangers, for now please break the script.							
-								if(length(doublegangerpersidvoteone) > 1 | length(doublegangerpersidvotetwo) > 1)
+								if(length(unique(doublegangerpersidvoteone)) > 1 | length(unique(doublegangerpersidvotetwo)) > 1) # this is 'unique' because in the case of Dutch [8-12] number of vote indications e.t.c. for example we know we will get more then one hit. Which is not a problem for the script as long as this is the same person.
 								{
 									warning(paste("function was doing run - local_list_id:",local_list_id,
 											   " - local_list_position:",local_list_position,
