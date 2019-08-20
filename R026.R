@@ -95,6 +95,13 @@
 				POLI = read.csv("PCC/POLI.csv", header = TRUE, sep = ";")
 				summary(POLI)
 				names(POLI)
+				
+					# this script does not deal well with duplicate pers_ids in POLI, so are there any?!
+					length(POLI$pers_id)
+					length(unique(POLI$pers_id))
+					
+					POLI[which(duplicated(POLI$pers_id)),]
+					
 			
 				# import and inspect
 				RESE = read.csv("PCC/RESE.csv", header = TRUE, sep = ";")
@@ -605,6 +612,10 @@
 	# DATA 7: find out what ELEN positions are actually 'electable' because we are reducing our data to these positions
 	##############################################
 	
+			## ELEN integrity work
+			ELEN[which(ELEN$list_id == "NL_NT-TK_1982__NL_NT-TK_1982__Nijmegen__Partij-van-de-Arbeid"),]
+			ELENBU[which(ELENBU$list_id == "NL_NT-TK_1982__NL_NT-TK_1982__Nijmegen__Partij-van-de-Arbeid"),] # ok, here he is double?!
+	
 			# my suggested approach to this is to find your 'double ganger' in the last two elections, to see how (s)he did
 			
 			# find everybody there double gangers, you are a double ganger when
@@ -667,22 +678,20 @@
 					# function to match previous parliament
 						
 						# debugging, german BT CDU 2017
-						local_list_id = "DE_NT-BT_2017__DE_NT-BT_2017__Baden-Wuerttemberg__Christlich-Demokratische-Union-Deutschlands-in-Niedersachsen"
-						local_list_position = 1
-						howfarback = 1
-						local_natparty_id = "DE_CDU_NT"
-						
-						
-						# get persid 
+						local_list_id = "NL_NT-TK_1994__NL_NT-TK_1994__Nijmegen__Partij-van-de-Arbeid"
+						local_list_position = 25
+						howfarback = 3
+						local_natparty_id = "NL_PvdA_NT"
 						
 						wasdoublegangertminxsuccesfull <- function(local_list_id,local_list_position,howfarback,local_natparty_id)
-						{
+						{						
+							country <- substr(local_list_id,0,2)
 						
 							# get the list id for my double ganger
 						
 								# first, get parliament id
 								myparid <- substr(str_extract(local_list_id,".+?__"),0,nchar(str_extract(local_list_id,".+?__"))-2)
-							
+								
 								# find the previous parliament
 								earlierparliament <- NA # reset
 								if(howfarback == 1)
@@ -725,7 +734,7 @@
 								doublegangerpersidvoteone <- ""
 								doublegangerpersidvotetwo <- ""
 								
-								doublegangerpersidvoteone <- ELENBU[which(ELENBU$list_id_old == doublegangerfakelistid & ELENBU$listplace == local_list_position),]$pers_id[1] # if there are multiple double-gangers, only use the first one?
+								doublegangerpersidvoteone <- ELENBU[which(ELENBU$list_id_old == doublegangerfakelistid & ELENBU$listplace == local_list_position),]$pers_id
 								doublegangerpersidvotetwo <- ELENBU[which(
 																		  ELENBU$listplace == local_list_position & 
 																		  ELENBU$party_id_from_elli_nat_equiv == doublegangerparty &
@@ -733,9 +742,15 @@
 																    ),]$pers_id 
 								
 								# if there are multiple double-gangers, for now please break the script.							
-								if(length(doublegangerpersidvotetwo) > 1 | doublegangerpersidvotetwo) > 1)
+								if(length(doublegangerpersidvoteone) > 1 | length(doublegangerpersidvotetwo) > 1)
 								{
-									stop("function was doing run - local_list_id:",local_list_id," - local_list_position:",local_list_position," - howfarback:",howfarback," - local_natparty_id",local_natparty_id,". However, two or more double gangers where detected, so execution has been stopped. Please inspect!, the value for doublegangerpersidvoteone is:",doublegangerpersidvoteone," and the value for doublegangerpersidvotetwo is: ",doublegangerpersidvotetwo,sep=""))
+									warning(paste("function was doing run - local_list_id:",local_list_id,
+											   " - local_list_position:",local_list_position,
+											   " - howfarback:",howfarback,
+											   " - local_natparty_id:",local_natparty_id,
+											   ". However, two or more double gangers where detected, so execution has been stopped. Please inspect!, the value for doublegangerpersidvoteone is:",doublegangerpersidvoteone,
+											   " and the value for doublegangerpersidvotetwo is: ",doublegangerpersidvotetwo,
+											   sep=""))
 								}
 								
 								# if either one of the two is empty, go for the one with a value
@@ -777,8 +792,11 @@
 						
 						# for some of the very last entries shown here
 						tail(ELENBU)
-						wasdoublegangertminxsuccesfull(ELENBU$list_id_old[163045],ELENBU$listplace[163045],1,ELENBU$party_id_from_elli_nat_equiv[163045]) # check manually and I think this is correct
-			
+						start_time <- Sys.time()
+						wasdoublegangertminxsuccesfull(ELENBU$list_id_old[163000],ELENBU$listplace[163000],1,ELENBU$party_id_from_elli_nat_equiv[163000]) # check manually and I think this is correct
+						end_time <- Sys.time()
+						end_time - start_time
+						
 						# same as below with the OM, also here I want to only run this bit of very time consuming code when it really is nessary
 						
 							# function to get the latest run
@@ -822,7 +840,7 @@
 						if(runDGagain)
 						{
 								# and in a loop, for each ELEN position
-								resvecelect <- vector()
+								resvecelect <- vector(mode="logical",length=nrow(ELENBU))
 								pb <- txtProgressBar(min = 1, max = nrow(ELENBU), style = 3)
 								for(i in 1:nrow(ELENBU))
 								{
