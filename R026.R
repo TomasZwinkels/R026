@@ -678,10 +678,12 @@
 					# function to match previous parliament
 						
 						# debugging, german BT CDU 2017
-						local_list_id = "NL_NT-TK_1994__NL_NT-TK_1994__Nijmegen__Partij-van-de-Arbeid"
-						local_list_position = 25
+						local_list_id = "NL_NT-TK_2003__NL_NT-TK_2003__Nijmegen__Christen-Democratisch-Appel"
+						local_list_position = 70
 						howfarback = 3
-						local_natparty_id = "NL_PvdA_NT"
+						local_natparty_id = "NL_CDA_NT"
+						
+						wasdoublegangertminxsuccesfull(local_list_id,local_list_position,howfarback,local_natparty_id)
 						
 						wasdoublegangertminxsuccesfull <- function(local_list_id,local_list_position,howfarback,local_natparty_id)
 						{						
@@ -788,6 +790,8 @@
 							}
 						}
 						
+						
+						
 						# testing, proof is in the pudding!
 						
 						# for some of the very last entries shown here
@@ -850,9 +854,9 @@
 									successfulldoubleganger_tminus2 <- wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],2,ELENBU$party_id_from_elli_nat_equiv[i])
 									successfulldoubleganger_tminus3 <- wasdoublegangertminxsuccesfull(ELENBU$list_id_old[i],ELENBU$listplace[i],3,ELENBU$party_id_from_elli_nat_equiv[i])
 									
-									successfulldoubleganger_tminus1 <- ifelse(is.na(successfulldoubleganger_tminus1),FALSE,TRUE)
-									successfulldoubleganger_tminus2 <- ifelse(is.na(successfulldoubleganger_tminus2),FALSE,TRUE)
-									successfulldoubleganger_tminus3 <- ifelse(is.na(successfulldoubleganger_tminus3),FALSE,TRUE)
+									successfulldoubleganger_tminus1 <- ifelse(is.na(successfulldoubleganger_tminus1),FALSE,successfulldoubleganger_tminus1) # this is where this goes wrong?
+									successfulldoubleganger_tminus2 <- ifelse(is.na(successfulldoubleganger_tminus2),FALSE,successfulldoubleganger_tminus2)
+									successfulldoubleganger_tminus3 <- ifelse(is.na(successfulldoubleganger_tminus3),FALSE,successfulldoubleganger_tminus3)
 									
 									resvecelect[i] <- successfulldoubleganger_tminus1 | successfulldoubleganger_tminus2 | successfulldoubleganger_tminus3 # if in one of the previous three elections then it counts as electable
 									setTxtProgressBar(pb, i)
@@ -885,6 +889,8 @@
 				head(ELENBU)
 				tail(ELENBU)
 				
+				ELENBUTOT <- ELENBU
+				
 				nrow(ELENBU)
 				ELENBUTEMP <- ELENBU[which(ELENBU$electable == "electable"),]
 				nrow(ELENBUTEMP)
@@ -893,6 +899,20 @@
 				
 				ELENBU <- ELENBUTEMP # Here you can switch of the reduction to only electable!
 				nrow(ELENBU)
+				
+				
+			# some inspections, just to make sure that things are making sense here
+			
+				# list big party from NL
+					ELENBUTOT[which(ELENBUTOT$party_id_from_elliandmeme == "NL_CDA_NT" & ELENBUTOT$district_id == "NL_NT-TK_2003__Nijmegen"),]
+					ELENBUTOT[46160,]	
+				
+				# list big part from DE
+				
+				# list small party from NL
+				
+				# list small party drom DE
+				
 		
 
 		#################################### DATA AGGREGATION starts here ###################################
