@@ -21,7 +21,7 @@
 	
 		# install.packages("foreach")
 		# install.packages("foreach")
-		# install.packages("doParallel")
+		# install.packages("doParallel") 
 		#install.packages("lme4")
 	
 	# packages
@@ -683,6 +683,11 @@
 						howfarback = 3
 						local_natparty_id = "NL_CDA_NT"
 						
+						local_list_id = ELENBUTOT$list_id[44645]
+						local_list_position = ELENBUTOT$listplace[44645]
+						howfarback =  1
+						local_natparty_id =  ELENBUTOT$party_id_from_elli_nat_equiv[44645]
+						
 						wasdoublegangertminxsuccesfull(local_list_id,local_list_position,howfarback,local_natparty_id)
 						
 						wasdoublegangertminxsuccesfull <- function(local_list_id,local_list_position,howfarback,local_natparty_id)
@@ -905,12 +910,19 @@
 			
 				# list big party from NL
 					ELENBUTOT[which(ELENBUTOT$party_id_from_elliandmeme == "NL_CDA_NT" & ELENBUTOT$district_id == "NL_NT-TK_2003__Nijmegen"),]
-					ELENBUTOT[46160,]	
+					ELENBUTOT[44645,]
+					ELENBUTOT[44645,]$listplace
+					ELENBUTOT[44646,]	
 				
 				# list big part from DE
 				
 				# list small party from NL
-				
+					TD <- ELENBUTOT[which(ELENBUTOT$party_id_from_elliandmeme == "NL_GL_NT" & ELENBUTOT$district_id == "NL_NT-TK_2003__Tilburg"),]
+					TD[order(TD$listplace),]
+					ELENBUTOT[44645,]
+					ELENBUTOT[44645,]$listplace
+					ELENBUTOT[44646,]
+					
 				# list small party drom DE
 				
 		
@@ -1676,7 +1688,7 @@
 				ELLIBU$selection_control[which(ELLIBU$country == "NL" &  ELLIBU$meanpersdifferent < 0.2)] <- "high selection control" 
 				ELLIBU$selection_control[which(ELLIBU$country == "CH")] <- "high selection control" 
 				
-				# checking the distribution so I can pick a good pickoff for NL
+				# checking the distribution so I can pick a good cutoff for NL
 				hist(ELLIBU$meanpersdifferent[which(ELLIBU$country == "NL")],breaks=20)
 				hist(ELLIBU$meanpersdifferent[which(ELLIBU$country == "DE")]) # lets think about why the big values here!
 				hist(ELLIBU$meanpersdifferent[which(ELLIBU$country == "CH")],breaks=20)
@@ -1904,8 +1916,11 @@
 				
 				ELLIBU$ambition_selection_gap <- (ELLIBU$ratio_on_list - (ELLIBU$quota_percentage/100))
 				
+				ELLIBUINSPE <- ELLIBU[c("ambition_selection_gap","ratio_on_list","quota_percentage")]
+				head(ELLIBUINSPE)
+				
 				# and the absolute version as suggested
-#				ELLIBU$ambition_selection_gap <- abs(ELLIBU$ambition_selection_gap)
+#				ELLIBU$ambition_selection_gap <- abs(ELLIBU$ambition_selection_gap) # decision is real numbers indeed
 				
 				# inspection of the gap
 				table(is.na(ELLIBU$ambition_selection_gap)) # so, just as a note so self, quite a bit more cases because from many lists never anybody got elected?
@@ -1973,9 +1988,19 @@
 										,data=ELLIBU)
 							summary(m0)
 					
+					ELLIBU$type <- factor(ELLIBU$type, levels = c("list","district"))
+					
+					m05 <- lmer(ambition_selection_gap~
+										district_magnitude_country_stan + # is country mean centered and country standard deviation scaled
+										type +
+										(1 | country),
+										,data=ELLIBU)
+							summary(m05)
+					
 					
 					m1 <- lmer(ambition_selection_gap~
 								district_magnitude_country_stan + # is country mean centered and country standard deviation scaled
+							#	type +
 								selection_control_fac+
 								(1 | country),
 								,data=ELLIBU)
@@ -1993,6 +2018,7 @@
 			ELLIBU$quota_percentage_cent <- ELLIBU$quota_percentage - mean(ELLIBU$quota_percentage)
 					
 					m2 <- lmer(	ambition_selection_gap~
+							#	type +
 								selection_control_fac +
 								district_magnitude_country_stan + # is country mean centered and country standard deviation scaled
 							#	party_size_cat +
@@ -2060,6 +2086,7 @@
 					# this is the model with a variable slope for a time-trend per country
 					m3 <- lmer(	ambition_selection_gap~
 								district_magnitude_country_stan + # is country mean centered and country standard deviation scaled
+						#		type +
 								selection_control_fac +
 								party_size_country_stan + # is country mean centered and country standard deviation scaled
 								(year_cent | country),
@@ -2068,6 +2095,7 @@
 					
 					m4 <- lmer(	ambition_selection_gap~
 								district_magnitude_country_stan +
+						#		type +
 								selection_control_fac +
 								party_size_country_stan + # is country mean centered and country standard deviation scaled
 								quota_percentage_cent +
@@ -2076,7 +2104,7 @@
 								data=ELLIBU)
 					summary(m4)
 				
-					stargazer(me,m0,m1,m3,m4,type="text",intercept.bottom=FALSE)
+					stargazer(me,m0,m05,m1,m3,m4,type="text",intercept.bottom=FALSE)
 					
 					stargazer(me,m0,m1,m3,m4,intercept.bottom=FALSE)
 					
@@ -2160,7 +2188,7 @@
 				ELLIBU$selection_election_gap <- ELLIBU$ratio_elected - ELLIBU$ratio_on_list # negative numbers indicate that less women where elected then selected
 				
 				# and the absolute version as suggested
-				ELLIBU$selection_election_gap <- abs(ELLIBU$selection_election_gap)
+				ELLIBU$selection_election_gap <- abs(ELLIBU$selection_election_gap) # here we do take only electable positions
 				
 				# inspection
 				table(is.na(ELLIBU$selection_election_gap)) # very large number of NA here is the result of many election lists just not leading to anybody being elected
@@ -2236,55 +2264,33 @@
 				
 				# and the multi-level regression model
 				    mee <- lmer(selection_election_gap~1+
-								(1 | country),
+								(year_cent | country),
 								,data=ELLIBUTEMP)
 					summary(mee)
 				
 					ma <- lmer(selection_election_gap~
-							#	party_size_cat_de +
-							#	election_uncertainty+
-							#	election_uncertainty_detailed +
-								(1 | country),
+								district_magnitude_country_stan +
+								(year_cent | country),
 								,data=ELLIBUTEMP)
 					summary(ma)
 				
+					ELLIBUTEMP$type <- factor(ELLIBUTEMP$type, levels = c("list","district")) 
+				
 					mb <- lmer(selection_election_gap~
-							#	party_size_cat_de +
-							#	election_uncertainty +
-							#	election_uncertainty_detailed +
-								party_size_country_stan + # is country mean centered and country standard deviation scaled
-								district_magnitude_country_stan + # is country mean centered and country standard deviation scaled
+								district_magnitude_country_stan +
+								type +
 								(year_cent | country),
-								data=ELLIBUTEMP)
+								,data=ELLIBUTEMP)
 					summary(mb)
 					
 					mc <- lmer(selection_election_gap~
-							#	party_size_cat_de +
-							#	election_uncertainty +
-							#	election_uncertainty_detailed +
-								party_size_country_stan + 
 								district_magnitude_country_stan +
-							#	quota_percentage +
-							#	quota_soft +
+								type +
+								party_size_country_stan +
 								(year_cent | country),
-								data=ELLIBUTEMP)
+								,data=ELLIBUTEMP)
 					summary(mc)
 
-					ELLIBUTEMP$type <- factor(ELLIBUTEMP$type,levels = c("list","district"))
-
-					md <- lmer(selection_election_gap~
-							#	party_size_cat_de +
-							#	election_uncertainty +
-							#	election_uncertainty_detailed +
-								party_size_country_stan + 
-								district_magnitude_country_stan +
-							#	quota_percentage +
-							#	quota_soft +
-								type +
-								(year_cent | country),
-								data=ELLIBUTEMP)
-					summary(md)
-					
 					ELLIBUTEMP$vote_share_change_ten <- ELLIBUTEMP$vote_share_change / 10
 					hist(ELLIBUTEMP$vote_share_change_ten)
 					
@@ -2293,27 +2299,33 @@
 					
 					hist(ELLIBUTEMP$vote_share_increase)
 					hist(ELLIBUTEMP$vote_share_lost)
-					
-					me <- lmer(selection_election_gap~
-							#	party_size_cat_de +
-							#	election_uncertainty +
-							#	election_uncertainty_detailed +
-								party_size_country_stan + 
+
+					md <- lmer(selection_election_gap~
 								district_magnitude_country_stan +
-							#	quota_percentage +
-							#	quota_soft +
 								type +
-					#			country +
+								party_size_country_stan +
 								vote_share_increase +
 								vote_share_lost +
 								(year_cent | country),
-								data=ELLIBUTEMP)
+								,data=ELLIBUTEMP)
+					summary(md)
+
+					me <- lmer(selection_election_gap~
+								district_magnitude_country_stan +
+								type +
+								party_size_country_stan +
+								vote_share_increase +
+								vote_share_lost +
+								type*vote_share_increase*party_size_country_stan +
+								(year_cent | country),
+								,data=ELLIBUTEMP)
 					summary(me)
-					
-					hist(ELLIBU$vote_share_change)
 					
 					stargazer(mee,ma,mb,md,me,type="text",intercept.bottom=FALSE)
 					stargazer(mee,ma,mb,md,me,intercept.bottom=FALSE)
+					
+					# probaly some effect visualisations would be good here
+					
 					
 					ELLIBUDE <- ELLIBU[which(ELLIBU$country == "DE"),]
 					ELLIBUNL <- ELLIBU[which(ELLIBU$country == "NL"),]
