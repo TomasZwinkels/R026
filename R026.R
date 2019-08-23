@@ -902,7 +902,7 @@
 				
 				table(ELENBUTEMP$parliament_id,ELENBUTEMP$party_id_from_elli_nat_equiv)
 				
-				ELENBU <- ELENBUTEMP # Here you can switch of the reduction to only electable!
+##				ELENBU <- ELENBUTEMP # Here you can switch of the reduction to only electable!
 				nrow(ELENBU)
 				
 				
@@ -1698,8 +1698,30 @@
 				table(ELLIBU$selection_control,ELLIBU$country)
 				table(is.na(ELLIBU$selection_control)) 
 				
-				district_magnitude_country_stan
-			
+				ELLIBUSCNA <- ELLIBU[which(is.na(ELLIBU$selection_control)),]
+				ELLIBUSCNA$type
+				ELLIBUSCNA$meanpersdifferent # this is culprit - to get this out I need to inspect where the warnings are comming from when the OM script is ran
+				ELLIBUSCNA$country
+				
+				# temporary workaround! If you have NA we take the first selection control variable from a same party in a same election that does have a value
+				
+					resvec <- vector()
+					for(i in 1:nrow(ELLIBU))
+					{
+						if(is.na(ELLIBU$selection_control[i]))
+						{# only run if we do not already have a selection control variable
+							mypartyid <- ELLIBU$party_id_nat_equiv[i]
+							myelection <- ELLIBU$parliament_id[i]
+							mylistid <- ELLIBU$list_id[i]
+							
+							resvec[i] <- as.character(ELLIBU[which(ELLIBU$party_id_nat_equiv == mypartyid & ELLIBU$parliament_id == myelection & !ELLIBU$list_id == mylistid & !is.na(ELLIBU$selection_control)),]$selection_control[1])
+						} else {
+							resvec[i] <- NA
+						}
+					}
+					resvec
+					table(resvec) # ok, that hardly solves anything
+				
 			## selection control details
 				ELLIBU$selection_control_detailed <- NA
 				
@@ -1935,6 +1957,21 @@
 				boxplot(ELLIBU$ambition_selection_gap~ELLIBU$selection_control_fac, main="% of women selected onto the list - % from quota")
 				beanplot(ELLIBU$ambition_selection_gap~ELLIBU$selection_control_fac, main="abs(% of women selected onto the list - % from quota)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
 				beanplot(ELLIBU$ambition_selection_gap~ELLIBU$selection_control_detailed_fac, main="abs(% of women selected onto the list - % from quota)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
+				
+				# boxplot with dots, like in the paper, and maybe color per party?
+				
+				is.na(ELLIBU$selection_control_fac)
+				ELLIBU[which(is.na(ELLIBU$selection_control_fac)),]
+				
+				library(viridis)
+				
+				ggplot(data=subset(ELLIBU,!is.na(ELLIBU$selection_control_fac)), aes(x=selection_control_fac, y=ambition_selection_gap)) + 
+				geom_boxplot(aes(color=party_id_nat_equiv)) +
+				stat_summary(fun.y = mean, geom = "errorbar",aes(ymax = ..y.., ymin = ..y.., group = factor(selection_control_fac)),width = 0.5,size=1.5, linetype = "solid") +
+				scale_color_brewer(palette = "Dark2")
+				scale_color_viridis(discrete = TRUE, option = "D")
+				#geom_dotplot(binaxis='y', stackdir='center', dotsize=0.05)
+				
 				
 				# variance per group
 				var(ELLIBU[which(ELLIBU$selection_control == "high selection control"),]$ambition_selection_gap)
@@ -2261,6 +2298,22 @@
 					stargazer(mb1,mb2,intercept.bottom=FALSE)
 				
 				head(ELLIBUTEMP)
+				
+				# district magnitude effect descriptive
+					plot(ELLIBUTEMP$district_magnitude_country_stan,ELLIBUTEMP$selection_election_gap)
+					
+					ggplot(ELLIBUTEMP, aes(x=district_magnitude_country_stan, y=selection_election_gap,color=party_id_nat_equiv)) +
+					geom_point() + 
+					geom_smooth(method = lm, se = FALSE) +
+					geom_jitter()
+					
+					ggplot(data=subset(ELLIBUTEMP,ELLIBUTEMP$district_magnitude_country_stan < 2), aes(x=district_magnitude_country_stan, y=selection_election_gap,color=party_id_nat_equiv)) +
+					geom_point() + 
+					geom_smooth(method = lm, se = FALSE) +
+					geom_jitter()
+					
+				
+				
 				
 				# and the multi-level regression model
 				    mee <- lmer(selection_election_gap~1+
