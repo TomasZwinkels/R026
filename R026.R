@@ -902,7 +902,7 @@
 				
 				table(ELENBUTEMP$parliament_id,ELENBUTEMP$party_id_from_elli_nat_equiv)
 				
-##				ELENBU <- ELENBUTEMP # Here you can switch of the reduction to only electable!
+		##		ELENBU <- ELENBUTEMP # Here you can switch of the reduction to only electable!
 				nrow(ELENBU)
 				
 				
@@ -1881,7 +1881,7 @@
 				ELLIBU$ambition_realisation_gap <- (ELLIBU$ratio_elected - (ELLIBU$quota_percentage/100)) # negative numbers indicate that the quota was not reached (less women elected then specified)
 				
 				# using the absolute version as Philip suggested
-				ELLIBU$ambition_realisation_gap <- abs(ELLIBU$ambition_realisation_gap)
+		#		ELLIBU$ambition_realisation_gap <- abs(ELLIBU$ambition_realisation_gap)
 
 				# inspection of the gap
 				table(is.na(ELLIBU$ambition_realisation_gap))
@@ -2048,7 +2048,12 @@
 
 
 					ELLIBU$country <- droplevels(as.factor(ELLIBU$country))
-					
+		
+		# creating a 'linked list' variable
+			table(ELLIBU$party_id_nat_equiv)
+			ELLIBU$linkedlist <- ifelse(ELLIBU$party_id_nat_equiv == "DE_CDU_NT" | ELLIBU$party_id_nat_equiv == "DE_SPD_NT","linked","not-linked")
+			ELLIBU$linkedlist <- factor(ELLIBU$linkedlist,c("not-linked","linked"))
+			table(ELLIBU$linkedlist)
 							
 		# lets center the quota percentage!
 			hist(ELLIBU$quota_percentage)
@@ -2118,6 +2123,10 @@
 							# check
 							mean(ELLIBU[which(ELLIBU$country == "DE"),]$party_size_country_stan)
 							sd(ELLIBU[which(ELLIBU$country == "DE"),]$party_size_country_stan) # looking good!
+							
+							# alternatively, we can make this seat share
+							
+							table(FPAREBU$parliament_id)
 							
 				
 					# this is the model with a variable slope for a time-trend per country
@@ -2225,7 +2234,8 @@
 				ELLIBU$selection_election_gap <- ELLIBU$ratio_elected - ELLIBU$ratio_on_list # negative numbers indicate that less women where elected then selected
 				
 				# and the absolute version as suggested
-				ELLIBU$selection_election_gap <- abs(ELLIBU$selection_election_gap) # here we do take only electable positions
+			#	ELLIBU$selection_election_gap <- abs(ELLIBU$selection_election_gap) # here we select absolute values or 
+				ELLIBU$selection_election_gap_abs <- abs(ELLIBU$selection_election_gap) # here we select absolute values or 
 				
 				# inspection
 				table(is.na(ELLIBU$selection_election_gap)) # very large number of NA here is the result of many election lists just not leading to anybody being elected
@@ -2300,6 +2310,8 @@
 				head(ELLIBUTEMP)
 				
 				# district magnitude effect descriptive
+					plot(ELLIBUTEMP$district_magnitude,ELLIBUTEMP$selection_election_gap)
+				
 					plot(ELLIBUTEMP$district_magnitude_country_stan,ELLIBUTEMP$selection_election_gap)
 					
 					ggplot(ELLIBUTEMP, aes(x=district_magnitude_country_stan, y=selection_election_gap,color=party_id_nat_equiv)) +
@@ -2307,39 +2319,73 @@
 					geom_smooth(method = lm, se = FALSE) +
 					geom_jitter()
 					
+					ggplot(ELLIBUTEMP, aes(x=district_magnitude_country_stan)) + geom_histogram()
+					
 					ggplot(data=subset(ELLIBUTEMP,ELLIBUTEMP$district_magnitude_country_stan < 2), aes(x=district_magnitude_country_stan, y=selection_election_gap,color=party_id_nat_equiv)) +
 					geom_point() + 
 					geom_smooth(method = lm, se = FALSE) +
 					geom_jitter()
 					
+					ggplot(data=ELLIBUTEMP, aes(x=district_magnitude_country_stan, y=selection_election_gap_abs,color=party_id_nat_equiv)) +
+					geom_point() + 
+					geom_smooth(method = lm, se = FALSE) +
+					geom_jitter()
+					
+					ggplot(data=ELLIBUTEMP, aes(x=district_magnitude, y=selection_election_gap_abs,color=party_id_nat_equiv)) +
+					geom_point() + 
+					geom_smooth(method = lm, se = FALSE) +
+					geom_jitter()
+					
+					ggplot(data=ELLIBUTEMP, aes(x=district_magnitude, y=selection_election_gap,color=party_id_nat_equiv)) +
+					geom_point() + 
+					geom_smooth(method = lm, se = FALSE) +
+					geom_jitter()
+					
+					
+					
+					ggplot(ELLIBUTEMP, aes(x=district_magnitude)) + geom_histogram()
+				
+
+				
+				hist(ELLIBUTEMP$selection_election_gap)
 				
 				
 				
 				# and the multi-level regression model
-				    mee <- lmer(selection_election_gap~1+
+				    mee <- lmer(selection_election_gap_abs~1+ # selection_election_gap
 								(year_cent | country),
 								,data=ELLIBUTEMP)
 					summary(mee)
 				
-					ma <- lmer(selection_election_gap~
-								district_magnitude_country_stan +
+					ma <- lmer(selection_election_gap_abs~
+								district_magnitude +
 								(year_cent | country),
 								,data=ELLIBUTEMP)
 					summary(ma)
 				
 					ELLIBUTEMP$type <- factor(ELLIBUTEMP$type, levels = c("list","district")) 
+					ELLIBUTEMP$type <- ifelse(ELLIBUTEMP$type == "list", "list", "quasi-list")
 				
-					mb <- lmer(selection_election_gap~
-								district_magnitude_country_stan +
-								type +
+					mb <- lmer(selection_election_gap_abs~
+								district_magnitude + # district_magnitude_country_stan
+							#	type +
 								(year_cent | country),
 								,data=ELLIBUTEMP)
 					summary(mb)
 					
-					mc <- lmer(selection_election_gap~
-								district_magnitude_country_stan +
-								type +
-								party_size_country_stan +
+					hist(ELLIBUTEMP$party_size_country_stan)
+					hist(ELLIBUTEMP$vote_share)
+					
+					ELLIBUTEMP$vote_share_cent <- ELLIBUTEMP$vote_share - mean(ELLIBUTEMP$vote_share)
+					hist(ELLIBUTEMP$vote_share_cent)
+					
+					cor(ELLIBUTEMP$party_size_country_stan,ELLIBUTEMP$vote_share) # so indeed pretty much exactly the same thing.
+					
+					
+					mc <- lmer(selection_election_gap_abs~
+								district_magnitude +
+							#	type +
+								vote_share_cent +# party_size_country_stan +
 								(year_cent | country),
 								,data=ELLIBUTEMP)
 					summary(mc)
@@ -2353,28 +2399,31 @@
 					hist(ELLIBUTEMP$vote_share_increase)
 					hist(ELLIBUTEMP$vote_share_lost)
 
-					md <- lmer(selection_election_gap~
-								district_magnitude_country_stan +
-								type +
-								party_size_country_stan +
+					md <- lmer(selection_election_gap_abs~
+								district_magnitude +
+						#		type +
+								vote_share_cent +# party_size_country_stan +
 								vote_share_increase +
 								vote_share_lost +
 								(year_cent | country),
 								,data=ELLIBUTEMP)
 					summary(md)
 
-					me <- lmer(selection_election_gap~
-								district_magnitude_country_stan +
-								type +
-								party_size_country_stan +
+					table(ELLIBUTEMP$nat_party_id,ELLIBUTEMP$linkedlist)
+
+
+					me <- lmer(selection_election_gap_abs~
+								district_magnitude +
+						#		type +
+								vote_share_cent + #party_size_country_stan +
 								vote_share_increase +
 								vote_share_lost +
-								type*vote_share_increase*party_size_country_stan +
+								vote_share_increase*linkedlist +
 								(year_cent | country),
 								,data=ELLIBUTEMP)
 					summary(me)
 					
-					stargazer(mee,ma,mb,md,me,type="text",intercept.bottom=FALSE)
+					stargazer(mee,ma,md,me,type="text",intercept.bottom=FALSE)
 					stargazer(mee,ma,mb,md,me,intercept.bottom=FALSE)
 					
 					# probaly some effect visualisations would be good here
