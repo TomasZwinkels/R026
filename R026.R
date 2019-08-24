@@ -2352,24 +2352,24 @@
 				
 				
 				# and the multi-level regression model
-				    mee <- lmer(selection_election_gap_abs~1+ # selection_election_gap
-								(year_cent | country),
+				    mee <- lmer(selection_election_gap~1+ # selection_election_gap
+								(1 | country) + (1|nat_party_id),
 								,data=ELLIBUTEMP)
 					summary(mee)
 				
-					ma <- lmer(selection_election_gap_abs~
+					ma <- lmer(selection_election_gap~
 								district_magnitude +
-								(year_cent | country),
+								(1 | country) + (1|nat_party_id),
 								,data=ELLIBUTEMP)
 					summary(ma)
 				
 					ELLIBUTEMP$type <- factor(ELLIBUTEMP$type, levels = c("list","district")) 
 					ELLIBUTEMP$type <- ifelse(ELLIBUTEMP$type == "list", "list", "quasi-list")
 				
-					mb <- lmer(selection_election_gap_abs~
+					mb <- lmer(selection_election_gap~
 								district_magnitude + # district_magnitude_country_stan
 							#	type +
-								(year_cent | country),
+								(1 | country) + (1|nat_party_id),
 								,data=ELLIBUTEMP)
 					summary(mb)
 					
@@ -2382,11 +2382,11 @@
 					cor(ELLIBUTEMP$party_size_country_stan,ELLIBUTEMP$vote_share) # so indeed pretty much exactly the same thing.
 					
 					
-					mc <- lmer(selection_election_gap_abs~
+					mc <- lmer(selection_election_gap~
 								district_magnitude +
 							#	type +
 								vote_share_cent +# party_size_country_stan +
-								(year_cent | country),
+								(1 | country) + (1|nat_party_id),
 								,data=ELLIBUTEMP)
 					summary(mc)
 
@@ -2399,29 +2399,39 @@
 					hist(ELLIBUTEMP$vote_share_increase)
 					hist(ELLIBUTEMP$vote_share_lost)
 
-					md <- lmer(selection_election_gap_abs~
+					md <- lmer(selection_election_gap~
 								district_magnitude +
 						#		type +
 								vote_share_cent +# party_size_country_stan +
 								vote_share_increase +
 								vote_share_lost +
-								(year_cent | country),
+								year_cent +
+								I(year_cent^2)+
+								country +
+						#		nat_party_id +
+								(1 | country) + (1|nat_party_id),
 								,data=ELLIBUTEMP)
 					summary(md)
 
 					table(ELLIBUTEMP$nat_party_id,ELLIBUTEMP$linkedlist)
 
 
-					me <- lmer(selection_election_gap_abs~
+					me <- lmer(selection_election_gap~
 								district_magnitude +
 						#		type +
 								vote_share_cent + #party_size_country_stan +
 								vote_share_increase +
 								vote_share_lost +
+								year_cent+
+								I(year_cent^2)+
+								country +
+						#		nat_party_id +
 								vote_share_increase*linkedlist +
-								(year_cent | country),
+								(1 | country) + (1|nat_party_id),
 								,data=ELLIBUTEMP)
 					summary(me)
+					
+					# variance estimates e.t.c? < later!
 					
 					stargazer(mee,ma,md,me,type="text",intercept.bottom=FALSE)
 					stargazer(mee,ma,mb,md,me,intercept.bottom=FALSE)
