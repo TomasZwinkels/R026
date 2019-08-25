@@ -902,7 +902,7 @@
 				
 				table(ELENBUTEMP$parliament_id,ELENBUTEMP$party_id_from_elli_nat_equiv)
 				
-		##		ELENBU <- ELENBUTEMP # Here you can switch of the reduction to only electable!
+				ELENBU <- ELENBUTEMP # Here you can switch of the reduction to only electable!
 				nrow(ELENBU)
 				
 				
@@ -1965,11 +1965,15 @@
 				
 				library(viridis)
 				
+				ELLIBU$party_id_nat_equiv_short <- gsub("_NT","",ELLIBU$party_id_nat_equiv)
+				table(ELLIBU$party_id_nat_equiv_short )
+				
 				ggplot(data=subset(ELLIBU,!is.na(ELLIBU$selection_control_fac)), aes(x=selection_control_fac, y=ambition_selection_gap)) + 
-				geom_boxplot(aes(color=party_id_nat_equiv)) +
+				geom_boxplot(aes(color=party_id_nat_equiv_short)) +
 				stat_summary(fun.y = mean, geom = "errorbar",aes(ymax = ..y.., ymin = ..y.., group = factor(selection_control_fac)),width = 0.5,size=1.5, linetype = "solid") +
-				scale_color_brewer(palette = "Dark2")
-				scale_color_viridis(discrete = TRUE, option = "D")
+				scale_color_brewer(palette = "Dark2") +
+				labs(title = "Ambition selection gap whole list VS selection control", x = "Selection control", y = "Ambition select gap whole list", color = "Party\n") 
+				
 				#geom_dotplot(binaxis='y', stackdir='center', dotsize=0.05)
 				
 				
@@ -2020,7 +2024,7 @@
 							sd(ELLIBU[which(ELLIBU$country == "DE"),]$district_magnitude_country_stan) # looking good!
 					
 					m0 <- lmer(ambition_selection_gap~
-										district_magnitude_country_stan + # is country mean centered and country standard deviation scaled
+										district_magnitude + # is country mean centered and country standard deviation scaled
 										(1 | country),
 										,data=ELLIBU)
 							summary(m0)
@@ -2028,7 +2032,7 @@
 					ELLIBU$type <- factor(ELLIBU$type, levels = c("list","district"))
 					
 					m05 <- lmer(ambition_selection_gap~
-										district_magnitude_country_stan + # is country mean centered and country standard deviation scaled
+										district_magnitude + # is country mean centered and country standard deviation scaled
 										type +
 										(1 | country),
 										,data=ELLIBU)
@@ -2036,7 +2040,7 @@
 					
 					
 					m1 <- lmer(ambition_selection_gap~
-								district_magnitude_country_stan + # is country mean centered and country standard deviation scaled
+								district_magnitude + # is country mean centered and country standard deviation scaled
 							#	type +
 								selection_control_fac+
 								(1 | country),
@@ -2062,7 +2066,7 @@
 					m2 <- lmer(	ambition_selection_gap~
 							#	type +
 								selection_control_fac +
-								district_magnitude_country_stan + # is country mean centered and country standard deviation scaled
+								district_magnitude + # is country mean centered and country standard deviation scaled
 							#	party_size_cat +
 								quota_percentage_cent +
 								(1 | country),
@@ -2131,7 +2135,7 @@
 				
 					# this is the model with a variable slope for a time-trend per country
 					m3 <- lmer(	ambition_selection_gap~
-								district_magnitude_country_stan + # is country mean centered and country standard deviation scaled
+								district_magnitude + # is country mean centered and country standard deviation scaled
 						#		type +
 								selection_control_fac +
 								party_size_country_stan + # is country mean centered and country standard deviation scaled
@@ -2140,7 +2144,7 @@
 					summary(m3)
 					
 					m4 <- lmer(	ambition_selection_gap~
-								district_magnitude_country_stan +
+								district_magnitude +
 						#		type +
 								selection_control_fac +
 								party_size_country_stan + # is country mean centered and country standard deviation scaled
@@ -2150,7 +2154,28 @@
 								data=ELLIBU)
 					summary(m4)
 				
-					stargazer(me,m0,m05,m1,m3,m4,type="text",intercept.bottom=FALSE)
+					stargazer(me,m0,m1,m3,m4,type="text",intercept.bottom=FALSE)
+					
+					stargazer(
+								caption = "Regression model predicting ambition - selection gap with selection control",
+								me,
+								m0,
+								m1,
+								m3,
+								m4,
+								type="latex",
+								intercept.bottom=FALSE,
+								no.space=FALSE,
+								column.labels=(c("Empty","Dist.mag. ","Control","Quota")),
+								star.char = c(".", "*", "**", "***"),
+								star.cutoffs = c(0.1, 0.05, 0.01, 0.001),
+							#	keep.stat=c("ll"),
+							#	omit.stat=c("aic","bic"),
+								font.size = "small",
+								label = "SelecElecRegTab",
+								dep.var.labels = c("(Ratio on list - ambition)")
+							)
+					
 					
 					stargazer(me,m0,m1,m3,m4,intercept.bottom=FALSE)
 					
@@ -2231,7 +2256,14 @@
 			### selection to election gap (percentage selected - percentage elected)
 
 				# calculating this gap
+				mean(ELLIBU$ratio_elected)
+				mean(ELLIBU$ratio_on_list)
+
+				
+				
 				ELLIBU$selection_election_gap <- ELLIBU$ratio_elected - ELLIBU$ratio_on_list # negative numbers indicate that less women where elected then selected
+				ELLIBU$selection_election_gap <- ELLIBU$selection_election_gap * 100
+				
 				
 				# and the absolute version as suggested
 			#	ELLIBU$selection_election_gap <- abs(ELLIBU$selection_election_gap) # here we select absolute values or 
@@ -2336,12 +2368,35 @@
 					geom_smooth(method = lm, se = FALSE) +
 					geom_jitter()
 					
-					ggplot(data=ELLIBUTEMP, aes(x=district_magnitude, y=selection_election_gap,color=party_id_nat_equiv)) +
+					
+					My_Theme = theme(
+									  axis.title.x = element_text(size = 16),
+									  axis.text.x = element_text(size = 14),
+									  axis.title.y = element_text(size = 16),
+									  axis.text.y = element_text(size = 14))
+					
+					
+					# graphic to include!
+					ggplot(data=ELLIBUTEMP, aes(x=district_magnitude, y=selection_election_gap)) +
 					geom_point() + 
-					geom_smooth(method = lm, se = FALSE) +
-					geom_jitter()
+					geom_smooth(method = loess, se = FALSE) +
+					labs(title = "Selection election gap VS district magnitude, observed values", 
+					x = "District magnitude", 
+					y = "Selection-election gap whole list") +
+					My_Theme
+				
+				
 					
-					
+					# other graphic to include
+					ggplot(data=ELLIBUTEMP, aes(x=vote_share_increase, y=selection_election_gap,color=linkedlist)) +
+					geom_point() + 
+					geom_smooth(method = loess, se = FALSE) +
+					labs(title = "Selection election gap VS vote share increases, observed values", 
+					x = "Vote share increase", 
+					y = "Selection-election gap whole list") +
+					My_Theme
+				
+							
 					
 					ggplot(ELLIBUTEMP, aes(x=district_magnitude)) + geom_histogram()
 				
@@ -2352,6 +2407,29 @@
 				
 				
 				# and the multi-level regression model
+				
+					# we probably need to drop the vote share increase larger then 1 cases, outliers
+					nrow(ELLIBUTEMP)
+					ELLIBUTEMP <- ELLIBUTEMP[which(ELLIBUTEMP$vote_share_increase < 1),]
+					nrow(ELLIBUTEMP)
+					
+					# graphic to include!
+					ggplot(data=ELLIBUTEMP, aes(x=district_magnitude, y=selection_election_gap)) +
+					geom_point() + 
+					geom_smooth(method = loess, se = FALSE) +
+					geom_jitter()
+					
+					
+					# other graphic to include
+					ggplot(data=ELLIBUTEMP, aes(x=vote_share_increase, y=selection_election_gap,color=linkedlist)) +
+					geom_point() + 
+					geom_smooth(method = loess, se = FALSE) +
+					geom_jitter()					
+					
+					
+					
+					
+				
 				    mee <- lmer(selection_election_gap~1+ # selection_election_gap
 								(1 | country) + (1|nat_party_id),
 								,data=ELLIBUTEMP)
@@ -2425,7 +2503,7 @@
 								year_cent+
 								I(year_cent^2)+
 								country +
-						#		nat_party_id +
+							#	nat_party_id +
 								vote_share_increase*linkedlist +
 								(1 | country) + (1|nat_party_id),
 								,data=ELLIBUTEMP)
@@ -2434,7 +2512,42 @@
 					# variance estimates e.t.c? < later!
 					
 					stargazer(mee,ma,md,me,type="text",intercept.bottom=FALSE)
+					
+					# mecs <- me
+					anova(mecs,me)
+					
 					stargazer(mee,ma,mb,md,me,intercept.bottom=FALSE)
+					
+					
+					
+		# the big regression model in which everything from life comes together?
+		
+					stargazer(
+								caption = "Regression model predicting selection election gap with district magnitude, linked lists and controls",
+								mee,
+								ma,
+								md,
+								me,
+								type="latex",
+								intercept.bottom=FALSE,
+								no.space=FALSE,
+								column.labels=(c("Empty","Dist.mag. ","Controls","Linked lists")),
+								star.char = c(".", "*", "**", "***"),
+								star.cutoffs = c(0.1, 0.05, 0.01, 0.001),
+							#	keep.stat=c("ll"),
+							#	omit.stat=c("aic","bic"),
+								font.size = "small",
+								label = "SelecElecRegTab",
+								dep.var.labels = c("(ratio elected - ratio on list)")
+							)
+					
+					
+					
+					
+					
+					
+					
+					
 					
 					# probaly some effect visualisations would be good here
 					
@@ -2443,6 +2556,9 @@
 					ELLIBUNL <- ELLIBU[which(ELLIBU$country == "NL"),]
 					boxplot(ELLIBUDE$selection_election_gap~ELLIBUDE$year)
 					boxplot(ELLIBUNL$selection_election_gap~ELLIBUNL$year)
+
+
+			
 
 ######################################################################################
 ############################ OLD DESCRIPTIVE RESULTS #################################
