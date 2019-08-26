@@ -897,7 +897,7 @@
 				ELENBUTOT <- ELENBU
 				
 				nrow(ELENBU)
-				ELENBUTEMP <- ELENBU[which(ELENBU$electable == "electable"),]
+###				ELENBUTEMP <- ELENBU[which(ELENBU$electable == "electable"),] # switched to all positions now, because working second analysis
 				nrow(ELENBUTEMP)
 				
 				table(ELENBUTEMP$parliament_id,ELENBUTEMP$party_id_from_elli_nat_equiv)
@@ -935,14 +935,18 @@
 	
 	##### aggregation on the ELLI level ######
 			GCELLI <- as.data.frame.matrix(table(ELENBU$list_id,ELENBU$genderguesses)) 
-				# so, note to future self: if there is missingness here it is simply ignored. only known cases are counted
-				# ohter note, this list id has now above been replaced with the aggregate list id
+			head(GCELLI)
+			nrow(GCELLI) # so yes, really a lot that are simply not done because now genderguesses at all are availble
+			# so, note to future self: if there is missingness here it is simply ignored. only known cases are counted
+				# other note, this list id has now above been replaced with the aggregate list id # is this maybe where the issue is comming from!?
+			# I don't think this is the issue though, because here we still do have the ratio for a lot of them
 			
 			GCELLI$list_id <- rownames(GCELLI)		
 			GCELLI$country <- substr(GCELLI$list_id,1,2)
 			table(GCELLI$country)
 			table(is.na(GCELLI$country))
 			GCELLI$ratio <- GCELLI$f / (GCELLI$f+GCELLI$m)
+			summary(GCELLI$ratio)
 			
 			head(GCELLI[which(GCELLI$country == "DE"),])
 			tail(GCELLI[which(GCELLI$country == "DE"),])
@@ -952,13 +956,19 @@
 
 		# merge into the ELLI level data-frame which above was given the same abbreviated list ids, this data-frame was reduced above to get a ratio on list variable which we need later!
 			
+			head(ELLIBU)
+			table(ELLIBU$list_id %in% GCELLI$list_id) # alright, so a lot of list_ids do not occur!
+			
+			
 			ELLIBU <- sqldf("SELECT ELLIBU.*, GCELLI.f, GCELLI.m, GCELLI.ratio as 'ratio_on_list'
 						FROM ELLIBU LEFT JOIN GCELLI
 						ON
 						ELLIBU.list_id = GCELLI.list_id
 						")
+			summary(ELLIBU$ratio_on_list) # so indeed the majoruty is missing.. maybe genderguesses does not have what it needs?
 		
 			head(ELLIBU)
+			tail(ELLIBU)
 			ELLIBU[30:50,]
 			tail(ELLIBU)
 			table(ELLIBU$parliament_id) # this looks a lot better now
@@ -1813,7 +1823,7 @@
 			
 			ELLIBU$keylisttypes <- ifelse(ELLIBU$country == "NL" & ELLIBU$percentage95simular > 0.20,"party-list-secondary-districts",ELLIBU$keylisttypes)
 			table(ELLIBU$keylisttypes,ELLIBU$countryld) # 23 election lists from NL got moved to the other category
-				
+					summary(ELLIBU$ratio_on_list) 
 	### for all the list seats, get a variable as well that indicates what the percentage of women was on the district seats in this list its region << BROKEN now, fix later or DROP
 	
 		# for all the districts, get the region from ELDI
@@ -1972,7 +1982,7 @@
 				geom_boxplot(aes(color=party_id_nat_equiv_short)) +
 				stat_summary(fun.y = mean, geom = "errorbar",aes(ymax = ..y.., ymin = ..y.., group = factor(selection_control_fac)),width = 0.5,size=1.5, linetype = "solid") +
 				scale_color_brewer(palette = "Dark2") +
-				labs(title = "Ambition selection gap whole list VS selection control", x = "Selection control", y = "Ambition select gap whole list", color = "Party\n") 
+				labs(title = "Ambition selection gap electable VS selection control", x = "Selection control", y = "Ambition select gap electables", color = "Party\n") 
 				
 				#geom_dotplot(binaxis='y', stackdir='center', dotsize=0.05)
 				
@@ -2257,12 +2267,18 @@
 
 				# calculating this gap
 				mean(ELLIBU$ratio_elected)
-				mean(ELLIBU$ratio_on_list)
+				mean(ELLIBU$ratio_on_list,na.rm=TRUE)
+				summary(ELLIBU$ratio_on_list)
 
+				hist(ELLIBU$ratio_elected)
+				hist(ELLIBU$ratio_on_list)
 				
+				nrow(ELLIBU)
 				
 				ELLIBU$selection_election_gap <- ELLIBU$ratio_elected - ELLIBU$ratio_on_list # negative numbers indicate that less women where elected then selected
 				ELLIBU$selection_election_gap <- ELLIBU$selection_election_gap * 100
+				
+				mean(ELLIBU$selection_election_gap)
 				
 				
 				# and the absolute version as suggested
@@ -2317,7 +2333,7 @@
 					table(ELLIBU$district_magnitude,ELLIBU$parliament_id)
 					
 					nrow(ELLIBU)
-					ELLIBUTEMP <- ELLIBU[which(ELLIBU$type == "district"),]
+				##	ELLIBUTEMP <- ELLIBU[which(ELLIBU$type == "district"),]
 					ELLIBUTEMP <- ELLIBU
 					nrow(ELLIBUTEMP)
 				
@@ -2408,17 +2424,27 @@
 				
 				# and the multi-level regression model
 				
-					# we probably need to drop the vote share increase larger then 1 cases, outliers
-					nrow(ELLIBUTEMP)
-					ELLIBUTEMP <- ELLIBUTEMP[which(ELLIBUTEMP$vote_share_increase < 1),]
-					nrow(ELLIBUTEMP)
-					
+					ELLIBU$country <- droplevels(as.factor(ELLIBU$country))
+				
 					# graphic to include!
 					ggplot(data=ELLIBUTEMP, aes(x=district_magnitude, y=selection_election_gap)) +
 					geom_point() + 
 					geom_smooth(method = loess, se = FALSE) +
 					geom_jitter()
 					
+					ELLIBUTEMP$vote_share_change_ten <- ELLIBUTEMP$vote_share_change / 10
+					hist(ELLIBUTEMP$vote_share_change_ten)
+					
+					ELLIBUTEMP$vote_share_increase <- ifelse(ELLIBUTEMP$vote_share_change_ten > 0, ELLIBUTEMP$vote_share_change_ten, 0)
+					ELLIBUTEMP$vote_share_lost <- ifelse(ELLIBUTEMP$vote_share_change_ten < 0, ELLIBUTEMP$vote_share_change_ten, 0)#
+					
+					hist(ELLIBUTEMP$vote_share_increase)
+					hist(ELLIBUTEMP$vote_share_lost)
+					
+					# we probably need to drop the vote share increase larger then 1 cases, outliers
+					nrow(ELLIBUTEMP)
+					ELLIBUTEMP <- ELLIBUTEMP[which(ELLIBUTEMP$vote_share_increase < 1),]
+					nrow(ELLIBUTEMP)
 					
 					# other graphic to include
 					ggplot(data=ELLIBUTEMP, aes(x=vote_share_increase, y=selection_election_gap,color=linkedlist)) +
@@ -2426,10 +2452,6 @@
 					geom_smooth(method = loess, se = FALSE) +
 					geom_jitter()					
 					
-					
-					
-					
-				
 				    mee <- lmer(selection_election_gap~1+ # selection_election_gap
 								(1 | country) + (1|nat_party_id),
 								,data=ELLIBUTEMP)
@@ -2467,15 +2489,6 @@
 								(1 | country) + (1|nat_party_id),
 								,data=ELLIBUTEMP)
 					summary(mc)
-
-					ELLIBUTEMP$vote_share_change_ten <- ELLIBUTEMP$vote_share_change / 10
-					hist(ELLIBUTEMP$vote_share_change_ten)
-					
-					ELLIBUTEMP$vote_share_increase <- ifelse(ELLIBUTEMP$vote_share_change_ten > 0, ELLIBUTEMP$vote_share_change_ten, 0)
-					ELLIBUTEMP$vote_share_lost <- ifelse(ELLIBUTEMP$vote_share_change_ten < 0, ELLIBUTEMP$vote_share_change_ten, 0)#
-					
-					hist(ELLIBUTEMP$vote_share_increase)
-					hist(ELLIBUTEMP$vote_share_lost)
 
 					md <- lmer(selection_election_gap~
 								district_magnitude +
@@ -2528,7 +2541,7 @@
 								ma,
 								md,
 								me,
-								type="latex",
+								type="text",
 								intercept.bottom=FALSE,
 								no.space=FALSE,
 								column.labels=(c("Empty","Dist.mag. ","Controls","Linked lists")),
