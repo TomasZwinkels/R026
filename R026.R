@@ -158,7 +158,7 @@
 					
 				# deal with dates that are only years (select 1th of June)			
 					RESE$res_entry_start_cleaned <- ifelse(nchar(RESE$res_entry_start_cleaned) == 4,paste("01jun",RESE$res_entry_start_cleaned,sep=""),RESE$res_entry_start_cleaned)
-					RESE$res_entry_end_cleaned <- ifelse(nchar(RESE$res_entry_end_cleaned) == 4,paste("01jun",RESE$res_entry_start_cleaned,sep=""),RESE$res_entry_end_cleaned)
+					RESE$res_entry_end_cleaned <- ifelse(nchar(RESE$res_entry_end_cleaned) == 4,paste("01jun",RESE$res_entry_end_cleaned,sep=""),RESE$res_entry_end_cleaned)
 				
 					RESE$res_entry_start_posoxctformat <- as.POSIXct(as.character(RESE$res_entry_start_cleaned),format=c("%d%b%Y"))
 					RESE$res_entry_end_posoxctformat <- as.POSIXct(as.character(RESE$res_entry_end_cleaned),format=c("%d%b%Y"))
@@ -2065,9 +2065,10 @@
 		
 		# creating a 'linked list' variable
 			table(ELLIBU$party_id_nat_equiv)
-			ELLIBU$linkedlist <- ifelse(ELLIBU$party_id_nat_equiv == "DE_CDU_NT" | ELLIBU$party_id_nat_equiv == "DE_SPD_NT","linked","not-linked")
+			ELLIBU$linkedlist <- ifelse(((ELLIBU$party_id_nat_equiv == "DE_CDU_NT" | ELLIBU$party_id_nat_equiv== "DE_SPD_NT") & ELLIBU$type == "list"),"linked","not-linked")
 			ELLIBU$linkedlist <- factor(ELLIBU$linkedlist,c("not-linked","linked"))
 			table(ELLIBU$linkedlist)
+			table(ELLIBU$linkedlist,ELLIBU$nat_party_id)
 							
 		# lets center the quota percentage!
 			hist(ELLIBU$quota_percentage)
@@ -2280,6 +2281,18 @@
 				
 				mean(ELLIBU$selection_election_gap)
 				
+				DATDE <- ELLIBU[which(ELLIBU$country == "DE"),]
+				boxplot(DATDE$ratio_elected~DATDE$year)
+				DATDE$year_fac <- as.factor(DATDE$year)
+				
+					ggplot(DATDE, aes(x=year_fac, y=ratio_elected)) + 
+					 geom_boxplot()  +
+					 geom_smooth(method = "lm", se=TRUE, aes(group=1))
+				
+					ggplot(DATDE, aes(x=year_fac, y=ratio_on_list)) + 
+					 geom_boxplot()  +
+					 geom_smooth(method = "lm", se=TRUE, aes(group=1))
+				
 				
 				# and the absolute version as suggested
 			#	ELLIBU$selection_election_gap <- abs(ELLIBU$selection_election_gap) # here we select absolute values or 
@@ -2450,7 +2463,12 @@
 					ggplot(data=ELLIBUTEMP, aes(x=vote_share_increase, y=selection_election_gap,color=linkedlist)) +
 					geom_point() + 
 					geom_smooth(method = loess, se = FALSE) +
-					geom_jitter()					
+					geom_jitter()			
+
+
+					# some other graphics for Philip
+					table(ELLIBUTEMP$linkedlist,droplevels(as.factor(ELLIBUTEMP$nat_party_id)))
+					
 					
 				    mee <- lmer(selection_election_gap~1+ # selection_election_gap
 								(1 | country) + (1|nat_party_id),
@@ -2541,7 +2559,7 @@
 								ma,
 								md,
 								me,
-								type="text",
+								type="latex",
 								intercept.bottom=FALSE,
 								no.space=FALSE,
 								column.labels=(c("Empty","Dist.mag. ","Controls","Linked lists")),
