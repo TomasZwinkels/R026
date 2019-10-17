@@ -1187,7 +1187,8 @@
 			for(i in 1:nrow(ELLIBU))
 			{
 				mydistrict <- ELLIBU$district_id[i]	
-				resvec[i] <- nrow(ELENBURED[which(ELENBURED$district_id == mydistrict),])
+				myparliament <- ELLIBU$parliament_id[i]	# is included in the distric actually, so this is superfluous.
+				resvec[i] <- nrow(ELENBURED[which(ELENBURED$district_id == mydistrict & ELENBURED$parliament_id == myparliament),]) # this should also contain the restriction to the parliament?!! > this explains how I can can district magnitudes of '3' .. 
 			}
 			resvec
 			
@@ -1197,8 +1198,24 @@
 			table(ELLIBU$district_magnitude) 
 			hist(ELLIBU$district_magnitude)
 			## DO LATER > inspect the very large cases here?!
-			ELLIBU[which(ELLIBU$district_magnitude > 135),] # right, so this is actually correct, Dutch recent year cases. Indeed suggestions here 'towards one big district'
+	#		ELLIBU[which(ELLIBU$district_magnitude > 135),] # right, so this is actually correct, Dutch recent year cases. Indeed suggestions here 'towards one big district'
 			
+			# some inspections
+			
+				ELLIBU$type <- ifelse(grepl("district-",ELLIBU$list_id),"district","list")
+				table(ELLIBU$type)
+				
+				table(ELLIBU$district_magnitude,ELLIBU$type) # so what is going on with district types with district magnitue > 1? 
+				ELLIBU[which(ELLIBU$type == "district" & ELLIBU$district_magnitude == 6),] # e.g. list_id: 
+			
+				# so lets see how this work out in one one election and one overarching district
+				EX1 <- ELDI[which(ELDI$parliament_id == "DE_NT-BT_1998" & ELDI$region == "BW"),]
+				
+				# now, lets see what we have in ELLIBU on this
+				ELLIBU[which(ELLIBU$district_id %in% EX1$district_id),]
+				
+				
+				
 			##### ASK! Elena and Philip about where the '2' are comming from here?! use the i = 9030 case from above!
 			
 	##### get party size in (for now just number of people from this party that got elected in the parliament) << BROKEN now, fix later!
@@ -2589,7 +2606,11 @@
 					boxplot(ELLIBUNL$selection_election_gap~ELLIBUNL$year)
 
 
-			
+
+
+############ some info that was requested as input for some of our additional decisions
+
+	table(ELLIBUTEMP$district_magnitude,ELLIBUTEMP$type)
 
 ######################################################################################
 ############################ OLD DESCRIPTIVE RESULTS #################################
