@@ -60,7 +60,10 @@
 				ELDI = read.csv("PCC/ELDI.csv", header = TRUE, sep = ";")
 				summary(ELDI)
 				names(ELDI)
-							
+				
+				table(is.na(ELDI$country), is.na(ELDI$dist_magnitude))
+				table(ELDI$country, is.na(ELDI$dist_magnitude))
+					
 				# import and inspect
 				ELLI = read.csv("PCC/ELLI.csv", header = TRUE, sep = ";")
 				summary(ELLI)
@@ -168,10 +171,10 @@
 					# write in a column with a standerat indicator
 			
 				# do the reduction		
-				RESERED <- RESE[which((RESE$country == "DE" | RESE$country == "CH"| RESE$country == "NL") & RESE$political_function == "NT_LE_T3_NA_01" & (!(grepl("-SR_",RESE$parliament_id)) | is.na(RESE$parliament_id) )),] # also exclude standerat entries here with a grepl, they have the same political function code, if rows do not have a parliament ID, do not exclude them on basis of this
+				RESERED <- RESE[which((RESE$country == "DE" | RESE$country == "CH"| RESE$country == "NL") & (RESE$political_function == "NT_LE_T3_NA_01" | RESE$political_function == "NT_LE-LH_T3_NA_01") & (!(grepl("-SR_",RESE$parliament_id)) | is.na(RESE$parliament_id) )),] # also exclude standerat entries here with a grepl, they have the same political function code, if rows do not have a parliament ID, do not exclude them on basis of this
 				
 				# run this line if you want to exclude CH completly 
-				RESERED <- RESE[which((RESE$country == "DE" | RESE$country == "NL") & RESE$political_function == "NT_LE_T3_NA_01" & (!(grepl("-SR_",RESE$parliament_id)) | is.na(RESE$parliament_id) )),]
+				RESERED <- RESE[which((RESE$country == "DE" | RESE$country == "NL") & (RESE$political_function == "NT_LE_T3_NA_01" | RESE$political_function == "NT_LE-LH_T3_NA_01") & (!(grepl("-SR_",RESE$parliament_id)) | is.na(RESE$parliament_id) )),]
 				
 				head(RESERED)
 				tail(RESERED)
@@ -458,6 +461,7 @@
 				
 					ELLI$country <- substr(ELLI$list_id,1,2)
 					table(is.na(ELLI$country))
+					table(ELLI$country)
 				
 					ELLIBU <- sqldf("SELECT list_id, list_name, parliament_id, list_length, country, party_id, party_id_nat_equiv, district_id
 								FROM ELLI
@@ -468,6 +472,7 @@
 					ELLIBU <- ELLIBU[!duplicated(ELLIBU$list_id),] # seems rather simular (was 9714 before).. probably some other duplicates! .. fixes the issue for below already?
 					nrow(ELLIBU)
 					table(is.na(ELLIBU$country))
+					table(ELLI$country)
 			
 	##############################################
 	# DATA 5: gender guessing on basis on namelist when nessary
@@ -868,8 +873,8 @@
 								}
 								close(pb)
 								
-								write.csv(resvecelect,file=paste("INDA/DG/",format(now(), "%Y%m%d_%H%M_"),"resvecelect.csv",sep=""))
-								file.copy("PCC/dataversion.txt",paste("INDA/DG/",format(now(), "%Y%m%d_%H%M_"),"dataversion.txt",sep=""),overwrite=TRUE)
+								write.csv(resvecelect,file=paste(getwd(),"/INDA/DG/",format(now(), "%Y%m%d_%H%M_"),"resvecelect.csv",sep=""))
+								file.copy(paste(getwd(),"/PCC/dataversion.txt",sep=""),paste(getwd(),"/INDA/DG/",format(now(), "%Y%m%d_%H%M_"),"dataversion.txt",sep=""),overwrite=TRUE)
 						} else # what to do when we are NOT running the loop again
 						{
 							# then load the latest of these files
@@ -1173,51 +1178,31 @@
 			head(ELLIBU)
 			tail(ELLIBU)
 			table(ELLIBU$quota_now)
-			table(is.na(ELLIBU$quota_now),ELLIBU$country)
+			table(is.na(ELLIBU$quota_now),ELLIBU$country) # 0 for NL here simply means we have quota infor for all Dutch parties.
 
 
 	##### get district magnitude in (for now just number of people that got elected from this district in this parliament - needs to be done before the reduction to the anlytical sample
 		
-			# step 1: this issue has be solved above, kept district ids in so that they can be used here!
+			# step 1: this issue has been solved above, kept district ids in so that they can be used here!
 
 			ELLIBU[9030:9050,] # good to use for checks because bunch of district ids here that should get magnitude 1
 			
 			i = 9030
+			mydistrict <- "DE_NT-BT_2017__Erfurt-Weimar-Weimarer-Land-II"
 			resvec <- vector()
 			for(i in 1:nrow(ELLIBU))
 			{
 				mydistrict <- ELLIBU$district_id[i]	
-				myparliament <- ELLIBU$parliament_id[i]	# is included in the distric actually, so this is superfluous.
-				resvec[i] <- nrow(ELENBURED[which(ELENBURED$district_id == mydistrict & ELENBURED$parliament_id == myparliament),]) # this should also contain the restriction to the parliament?!! > this explains how I can can district magnitudes of '3' .. 
+				resvec[i] <- nrow(ELENBURED[which(ELENBURED$district_id == mydistrict),]) 
 			}
 			resvec
 			
-			ELLIBU$district_magnitude <- resvec
+			ELLIBU$nr_elected_from_district <- resvec
 			tail(ELLIBU)
 			head(ELLIBU)
-			table(ELLIBU$district_magnitude) 
-			hist(ELLIBU$district_magnitude)
-			## DO LATER > inspect the very large cases here?!
-	#		ELLIBU[which(ELLIBU$district_magnitude > 135),] # right, so this is actually correct, Dutch recent year cases. Indeed suggestions here 'towards one big district'
-			
-			# some inspections
-			
-				ELLIBU$type <- ifelse(grepl("district-",ELLIBU$list_id),"district","list")
-				table(ELLIBU$type)
+			table(ELLIBU$nr_elected_from_district) # in earlier versions of the script this used to be called district magnitude, now I am replacing this with proper values from ELDI
+			hist(ELLIBU$nr_elected_from_district)
 				
-				table(ELLIBU$district_magnitude,ELLIBU$type) # so what is going on with district types with district magnitue > 1? 
-				ELLIBU[which(ELLIBU$type == "district" & ELLIBU$district_magnitude == 6),] # e.g. list_id: 
-			
-				# so lets see how this work out in one one election and one overarching district
-				EX1 <- ELDI[which(ELDI$parliament_id == "DE_NT-BT_1998" & ELDI$region == "BW"),]
-				
-				# now, lets see what we have in ELLIBU on this
-				ELLIBU[which(ELLIBU$district_id %in% EX1$district_id),]
-				
-				
-				
-			##### ASK! Elena and Philip about where the '2' are comming from here?! use the i = 9030 case from above!
-			
 	##### get party size in (for now just number of people from this party that got elected in the parliament) << BROKEN now, fix later!
 
 			# also here, get the national party versions for ELENBURED, lets use party_id_from_elli_nat_equiv for this?! - if coded is needed again later you can take it from above
@@ -1261,13 +1246,15 @@
 			ELLIBU <- ELLIBU[which(!ELLIBU$intimeframe == "before 1981"),]
 			nrow(ELLIBU)
 			table(ELLIBU$party_id_nat_equiv)
+			table(ELLIBU$country)
 			
-		# get rid of all election lists from which nobody ever got eleced
+		# get rid of all election lists from which nobody ever got eleced # here it goes wrong!
 			table(ELLIBU$anycandidateselected)
 			
 			nrow(ELLIBU)
 			ELLIBU <- ELLIBU[which(!ELLIBU$anycandidateselected == "nobody"),]
 			nrow(ELLIBU)		
+			table(ELLIBU$country)
 		
 		# get rid of all observations for which there is no gender quota
 			table(ELLIBU$quota_now)
@@ -1512,9 +1499,9 @@
 							meanpersdifferentresvec
 							percentage95simularresvec
 							
-							write.csv(meanpersdifferentresvec,file=paste("INDA/OM/",format(now(), "%Y%m%d_%H%M_"),"meanpersdifferentresvec.csv",sep=""))
-							write.csv(percentage95simularresvec,file=paste("INDA/OM/",format(now(), "%Y%m%d_%H%M_"),"percentage95simularresvec.csv",sep=""))
-							file.copy("PCC/dataversion.txt",paste("INDA/OM/",format(now(), "%Y%m%d_%H%M_"),"dataversion.txt",sep=""),overwrite=TRUE)
+							write.csv(meanpersdifferentresvec,file=paste(getwd(),"/INDA/OM/",format(now(), "%Y%m%d_%H%M_"),"meanpersdifferentresvec.csv",sep=""))
+							write.csv(percentage95simularresvec,file=paste(getwd(),"/INDA/OM/",format(now(), "%Y%m%d_%H%M_"),"percentage95simularresvec.csv",sep=""))
+							file.copy(paste(getwd(),"/PCC/dataversion.txt",sep=""),paste(getwd(),"/INDA/OM/",format(now(), "%Y%m%d_%H%M_"),"dataversion.txt",sep=""),overwrite=TRUE)
 							
 						} else # what to do when we are NOT running the analysis again
 						{
@@ -1843,14 +1830,19 @@
 					summary(ELLIBU$ratio_on_list) 
 	### for all the list seats, get a variable as well that indicates what the percentage of women was on the district seats in this list its region << BROKEN now, fix later or DROP
 	
-		# for all the districts, get the region from ELDI
+		# for all the districts, get the region and district magnitude from ELDI
 			nrow(ELLIBU)
-			ELLIBU <- sqldf("SELECT ELLIBU.*, ELDI.region_abb
+			ELLIBU <- sqldf("SELECT ELLIBU.*, ELDI.region_abb, ELDI.dist_magnitude
 					       FROM ELLIBU LEFT JOIN ELDI 
 					       ON ELLIBU.district_id = ELDI.district_id	
 						   ")
 			nrow(ELLIBU)
 			head(ELLIBU)
+			
+			table(ELLIBU$country)
+			table(ELLIBU$country,is.na(ELLIBU$dist_magnitude))
+			
+			
 
 		# get a list of all district candidates in this region
 			
@@ -2035,6 +2027,9 @@
 					
 						# let's get a country standardised version of district magnitude(moved from below)
 					
+							# using the new district magnitude measure!
+							ELLIBU$district_magnitude <- ELLIBU$dist_magnitude 
+					
 							hist(ELLIBU$district_magnitude)
 							hist(ELLIBU$district_magnitude[which(ELLIBU$country == "DE")])
 							hist(ELLIBU$district_magnitude[which(ELLIBU$country == "NL")])
@@ -2178,7 +2173,10 @@
 								party_size_country_stan + # is country mean centered and country standard deviation scaled
 								quota_percentage_cent +
 								quota_soft +
-								(year_cent | country),
+								country +
+							#	(year_cent | country) +
+								(1 | year_cent) +
+								(1 | country),
 								data=ELLIBU)
 					summary(m4)
 				
@@ -2191,7 +2189,7 @@
 								m1,
 								m3,
 								m4,
-								type="latex",
+								type="text",
 								intercept.bottom=FALSE,
 								no.space=FALSE,
 								column.labels=(c("Empty","Dist.mag. ","Control","Quota")),
@@ -2206,6 +2204,14 @@
 					
 					
 					stargazer(me,m0,m1,m3,m4,intercept.bottom=FALSE)
+					
+			# to answer the question if small parties are still excluded?
+			names(ELLIBU)
+			summary(ELLIBU$party_size)
+			hist(ELLIBU$party_size)
+			
+			table(ELLIBU$party_id_nat_equiv_short, ELLIBU$type)
+					
 					
 			# strategy to get a ranking of 'cynism'? (how big the ambition / selection gap is for different parties?)
 			
@@ -2482,6 +2488,20 @@
 					geom_smooth(method = loess, se = FALSE) +
 					geom_jitter()			
 
+					# district_magnitude, reset
+					
+						# total number of list places is always the district_magnitude take from max list lenght in secundary disctricts -- number of list > in Philip his data it was coded how they entered; 'member_type'.
+							# -- north-rhein-westfalia should have 70: 
+							# -- for quasi lists: 
+								# option 1: set all too 1 -- does not make sense >  we do stick to the label > we need to make this dillema transparent. 'the selectors are faced with this uncertainty' 
+								# option 2: set to 70
+								# option 3: just say 'district magnitude does not play a role' - maybe this means we need two models?
+							# quasi list for small parties as a measure of symbolic representation.
+
+
+					# lets add an interaction between vote_share_increase and vote_share_lost 
+
+					# NL, maybe we should run after 1992 -- see if findings get stronger?
 
 					# some other graphics for Philip
 					table(ELLIBUTEMP$linkedlist,droplevels(as.factor(ELLIBUTEMP$nat_party_id)))
