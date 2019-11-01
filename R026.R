@@ -444,7 +444,7 @@
 							if (grepl("district-",ELLI$list_name[i])) # if this is a district, then replace the list_id
 							{ 
 								resvec2[i] <-  gsub("__.+__district-.+",paste("__district-seats-",ELLI$region_abb[i],"__",ELLI$party_id_nat_equiv[i],sep=""),ELLI$list_id[i])
-							} else { #otherwise keep the current one
+							} else { #otherwise keep the current oneF
 								resvec2[i] <- ELLI$list_id[i]
 							}
 					}	
@@ -902,7 +902,7 @@
 				ELENBUTOT <- ELENBU
 				
 				nrow(ELENBU)
-###				ELENBUTEMP <- ELENBU[which(ELENBU$electable == "electable"),] # switched to all positions now, because working second analysis
+			##	ELENBUTEMP <- ELENBU[which(ELENBU$electable == "electable"),] # switched to all positions now, because working second analysis
 				nrow(ELENBUTEMP)
 				
 				table(ELENBUTEMP$parliament_id,ELENBUTEMP$party_id_from_elli_nat_equiv)
@@ -1693,13 +1693,13 @@
 				
 				# low, german district seats
 				ELLIBU$selection_control[which(ELLIBU$country == "DE" & ELLIBU$type == "district")] <- "low selection control"
+				ELLIBU$selection_control[which(ELLIBU$country == "NL" &  ELLIBU$meanpersdifferent >= 0.5)] <- "low selection control"  # used to be "medium selection control"
 				
 				# medium, german regional list seats + Dutch lists with regional variation
 				ELLIBU$selection_control[which(ELLIBU$country == "DE" & ELLIBU$type == "list")] <- "medium selection control"
-				ELLIBU$selection_control[which(ELLIBU$country == "NL" &  ELLIBU$meanpersdifferent >= 0.2)] <- "medium selection control" 
 
 				# high, Dutch centralised national lists + all swiss lists
-				ELLIBU$selection_control[which(ELLIBU$country == "NL" &  ELLIBU$meanpersdifferent < 0.2)] <- "high selection control" 
+				ELLIBU$selection_control[which(ELLIBU$country == "NL" &  ELLIBU$meanpersdifferent < 0.5)] <- "high selection control" 
 				ELLIBU$selection_control[which(ELLIBU$country == "CH")] <- "high selection control" 
 				
 				# checking the distribution so I can pick a good cutoff for NL
@@ -1955,7 +1955,7 @@
 				table(is.na(ELLIBU$quota_percentage)) # ok, so hardly any quotas
 				table(is.na(ELLIBU$quota_percentage),is.na())
 				
-				ELLIBU$ambition_selection_gap <- (ELLIBU$ratio_on_list - (ELLIBU$quota_percentage/100))
+				ELLIBU$ambition_selection_gap <- (ELLIBU$ratio_on_list - (ELLIBU$quota_percentage/100)) * 100
 				
 				ELLIBUINSPE <- ELLIBU[c("ambition_selection_gap","ratio_on_list","quota_percentage")]
 				head(ELLIBUINSPE)
@@ -1991,7 +1991,10 @@
 				geom_boxplot(aes(color=party_id_nat_equiv_short)) +
 				stat_summary(fun.y = mean, geom = "errorbar",aes(ymax = ..y.., ymin = ..y.., group = factor(selection_control_fac)),width = 0.5,size=1.5, linetype = "solid") +
 				scale_color_brewer(palette = "Dark2") +
-				labs(title = "Ambition selection gap electable VS selection control", x = "Selection control", y = "Ambition select gap electables", color = "Party\n") 
+				labs(title = "Selection ambition gap by selection control", x = "Selection control", y = "(Selection - ambition) gap electables", color = "Party\n") +
+				geom_text(aes(x=0.7,y=37.5,label="overshot"),angle=0) + 
+				geom_text(aes(x=0.7,y=-37.5,label="undershot"),angle=0) +
+				geom_hline(yintercept=0,linetype="dashed")				
 				
 				#geom_dotplot(binaxis='y', stackdir='center', dotsize=0.05)
 				
@@ -2130,7 +2133,13 @@
 							median(ELLIBU$year)
 							ELLIBU$year_cent <- ELLIBU$year - median(ELLIBU$year)
 							hist(ELLIBU$year_cent)
-						
+							
+						# inspect this per country
+							
+							ELLIBU$year_fac <- as.factor(ELLIBU$year)
+							ggplot(data=ELLIBU,aes(y=ambition_selection_gap,x=year,color=country)) +
+							geom_point() +
+							geom_smooth()
 
 						# building up a proper way of controling for party size
 							hist(ELLIBU$party_size)
@@ -2173,7 +2182,8 @@
 								party_size_country_stan + # is country mean centered and country standard deviation scaled
 								quota_percentage_cent +
 								quota_soft +
-								country +
+							#	country +
+							#	year_cent +
 							#	(year_cent | country) +
 								(1 | year_cent) +
 								(1 | country),
@@ -2182,14 +2192,106 @@
 				
 					stargazer(me,m0,m1,m3,m4,type="text",intercept.bottom=FALSE)
 					
+					m5 <- lmer(	ambition_selection_gap~
+								district_magnitude +
+						#		type +
+								selection_control_fac +
+								party_size_country_stan + # is country mean centered and country standard deviation scaled
+								quota_percentage_cent +
+								quota_soft +
+								country *
+								year_cent +
+							#	(year_cent | country) +
+								(1 | year_cent) +
+								(1 | country),
+								data=ELLIBU)
+					summary(m5)
+		
+		# how about Germany only checking?!
+
+		# new model buildup! - general controls first, then time controls, only then the selecgtion control stuff
+
+			m1 <- lmer(	ambition_selection_gap~
+								district_magnitude +
+			#					type +
+								quota_percentage_cent +
+								quota_soft +
+								party_size_country_stan +
+								(1 | year_cent) +
+								(1 | country),
+								data=ELLIBU)
+					summary(m1)
+					stargazer(me,m1,type="text")
+					
+			m2 <- lmer(	ambition_selection_gap~
+								district_magnitude +
+			#					type +
+								quota_percentage_cent +
+								quota_soft +
+								party_size_country_stan +
+							#	I(year_cent^2) +
+								country * year_cent +
+								(1 | year_cent) +
+								(1 | country),
+								data=ELLIBU)
+					summary(m2)
+					stargazer(me,m1,m2,type="text",intercept.bottom=FALSE)
+			
+			# time NL!, same model as above but without issue of droped levels in the next step?
+			ELLIBU$timeNL <- ifelse(ELLIBU$country == "DE",0,ELLIBU$year_cent)
+			table(ELLIBU$timeNL,ELLIBU$country)
+			
+			m3 <- lmer(	ambition_selection_gap~
+								district_magnitude +
+			#					type +
+								quota_percentage_cent +
+								quota_soft +
+								party_size_country_stan +
+								timeNL + # replaces the interaction
+								(1 | year_cent) +
+								(1 | country),
+								data=ELLIBU)
+					summary(m3)
+					stargazer(me,m1,m2,m3,type="text",intercept.bottom=FALSE)
+			# key check here: model 'as good'?!
+			anova(m3,m2) # yes it is!
+			
+			m4 <- lmer(	ambition_selection_gap~
+								district_magnitude +
+			#					type +
+								quota_percentage_cent +
+								quota_soft +
+								party_size_country_stan +
+								timeNL + 
+								selection_control_fac +
+								(1 | year_cent) +
+								(1 | country),
+								data=ELLIBU)
+					summary(m4)
+					stargazer(me,m1,m3,m4,type="text",intercept.bottom=FALSE) # and then the effect of selection control seems to disappear... good question now is: how 'fair' is this model?!
+		
+			m5 <- lmer(	ambition_selection_gap~
+								district_magnitude +
+								quota_percentage_cent +
+								quota_soft +
+								party_size_country_stan +
+								timeNL + 
+								selection_control_fac +
+								type +
+								(1 | year_cent) +
+								(1 | country),
+								data=ELLIBU)
+					summary(m4)
+					stargazer(me,m1,m3,m4,type="text",intercept.bottom=FALSE)
+		
 					stargazer(
-								caption = "Regression model predicting ambition - selection gap with selection control",
+								caption = "Regression model predicting selection - ambition gap with selection control",
 								me,
-								m0,
 								m1,
 								m3,
 								m4,
-								type="text",
+								m5,
+								type="latex",
 								intercept.bottom=FALSE,
 								no.space=FALSE,
 								column.labels=(c("Empty","Dist.mag. ","Control","Quota")),
@@ -2318,7 +2420,7 @@
 				
 				
 				# and the absolute version as suggested
-			#	ELLIBU$selection_election_gap <- abs(ELLIBU$selection_election_gap) # here we select absolute values or 
+				ELLIBU$selection_election_gap <- abs(ELLIBU$selection_election_gap) # here we select absolute values or 
 				ELLIBU$selection_election_gap_abs <- abs(ELLIBU$selection_election_gap) # here we select absolute values or 
 				
 				# inspection
@@ -2429,14 +2531,13 @@
 					
 					
 					# graphic to include!
-					ggplot(data=ELLIBUTEMP, aes(x=district_magnitude, y=selection_election_gap)) +
+					ggplot(data=ELLIBUTEMP, aes(x=district_magnitude, y=selection_election_gap,color=country)) +
 					geom_point() + 
 					geom_smooth(method = loess, se = FALSE) +
-					labs(title = "Selection election gap VS district magnitude, observed values", 
+					labs(title = "election selection gap VS district magnitude, observed values", 
 					x = "District magnitude", 
-					y = "Selection-election gap whole list") +
+					y = "(Election-selection) gap whole list") +
 					My_Theme
-				
 				
 					
 					# other graphic to include
@@ -2552,7 +2653,7 @@
 								vote_share_increase +
 								vote_share_lost +
 								year_cent +
-								I(year_cent^2)+
+						#		I(year_cent^2)+
 								country +
 						#		nat_party_id +
 								(1 | country) + (1|nat_party_id),
@@ -2569,10 +2670,11 @@
 								vote_share_increase +
 								vote_share_lost +
 								year_cent+
-								I(year_cent^2)+
+						#		I(year_cent^2)+
 								country +
 							#	nat_party_id +
 								vote_share_increase*linkedlist +
+								vote_share_lost*linkedlist +
 								(1 | country) + (1|nat_party_id),
 								,data=ELLIBUTEMP)
 					summary(me)
@@ -2588,7 +2690,7 @@
 					
 					
 					
-		# the big regression model in which everything from life comes together?
+		# the big regression model in which everything in life comes together?
 		
 					stargazer(
 								caption = "Regression model predicting selection election gap with district magnitude, linked lists and controls",
@@ -2596,7 +2698,7 @@
 								ma,
 								md,
 								me,
-								type="latex",
+								type="text",
 								intercept.bottom=FALSE,
 								no.space=FALSE,
 								column.labels=(c("Empty","Dist.mag. ","Controls","Linked lists")),
