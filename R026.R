@@ -1998,6 +1998,9 @@
 				
 				#geom_dotplot(binaxis='y', stackdir='center', dotsize=0.05)
 				
+				# in the high category, how large are these groups? -- maybe time controls are needed? People care less in recent years?
+				table(ELLIBU$selection_control_fac,ELLIBU$party_id_nat_equiv_short) # so we can see here that is is basically the PvdA that drives the whole effect? -- supprising as they have a zipper quota?!!
+				
 				
 				# variance per group
 				var(ELLIBU[which(ELLIBU$selection_control == "high selection control"),]$ambition_selection_gap)
@@ -2285,8 +2288,27 @@
 								(1 | year_cent) +
 								(1 | country),
 								data=ELLIBU)
-					summary(m4)
-					stargazer(me,m1,m3,m4,type="text",intercept.bottom=FALSE)
+					summary(m5)
+					stargazer(me,m1,m3,m5,type="text",intercept.bottom=FALSE)
+					
+			# some additional attemps to see what is going on whith the high control condition...  how about party dummies?
+			
+			m6 <- lmer(	ambition_selection_gap~
+								district_magnitude +
+								quota_percentage_cent +
+								quota_soft_fact +
+								quota_zipper +
+								party_size_country_stan +
+								timeNL + 
+								selection_control_fac +
+							#	party_id_nat_equiv_short + # should be consider the inclusion of a party fixed effect?!
+							 	parliament_id + # parliament fixed effects do seem to 'solve?!' issue... big estimate for high control now... model not reliable, but intersing massive negative etiamtes for ealy years in NL.. timeNL does not yet capture the time-trend properly?!
+							(1 | parliament_id) +
+								(1 | country),
+							#	(1 | party_id_nat_equiv_short), # this model suggests that a random effect for party is quite a good idea?!
+								data=ELLIBU)
+					summary(m6)
+					stargazer(me,m1,m3,m4,m6,type="text",intercept.bottom=FALSE)				
 		
 					stargazer(
 								caption = "Regression model predicting selection - ambition gap with selection control",
