@@ -902,7 +902,7 @@
 				ELENBUTOT <- ELENBU
 				
 				nrow(ELENBU)
-			##	ELENBUTEMP <- ELENBU[which(ELENBU$electable == "electable"),] # switched to all positions now, because working second analysis
+				ELENBUTEMP <- ELENBU[which(ELENBU$electable == "electable"),] # switched to all positions now, because working second analysis
 				nrow(ELENBUTEMP)
 				
 				table(ELENBUTEMP$parliament_id,ELENBUTEMP$party_id_from_elli_nat_equiv)
@@ -2291,7 +2291,7 @@
 								m3,
 								m4,
 								m5,
-								type="latex",
+								type="text",
 								intercept.bottom=FALSE,
 								no.space=FALSE,
 								column.labels=(c("Empty","Dist.mag. ","Control","Quota")),
@@ -2668,13 +2668,13 @@
 						#		type +
 								vote_share_cent + #party_size_country_stan +
 								vote_share_increase +
-								vote_share_lost +
+						#		vote_share_lost +
 								year_cent+
 						#		I(year_cent^2)+
 								country +
 							#	nat_party_id +
 								vote_share_increase*linkedlist +
-								vote_share_lost*linkedlist +
+						#		vote_share_lost*linkedlist +
 								(1 | country) + (1|nat_party_id),
 								,data=ELLIBUTEMP)
 					summary(me)
