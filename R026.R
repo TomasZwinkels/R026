@@ -2175,13 +2175,17 @@
 								data=ELLIBU)
 					summary(m3)
 					
+					# lets recode quota soft
+					ELLIBU$quota_soft_fact <- factor(ifelse(ELLIBU$quota_soft == 1,"soft","hard"),levels=c("soft","hard"))
+					table(ELLIBU$quota_soft_fact)
+					
 					m4 <- lmer(	ambition_selection_gap~
 								district_magnitude +
 						#		type +
 								selection_control_fac +
 								party_size_country_stan + # is country mean centered and country standard deviation scaled
 								quota_percentage_cent +
-								quota_soft +
+								quota_soft_fact +
 							#	country +
 							#	year_cent +
 							#	(year_cent | country) +
@@ -2198,7 +2202,7 @@
 								selection_control_fac +
 								party_size_country_stan + # is country mean centered and country standard deviation scaled
 								quota_percentage_cent +
-								quota_soft +
+								quota_soft_fact +
 								country *
 								year_cent +
 							#	(year_cent | country) +
@@ -2215,7 +2219,7 @@
 								district_magnitude +
 			#					type +
 								quota_percentage_cent +
-								quota_soft +
+								quota_soft_fact +
 								party_size_country_stan +
 								(1 | year_cent) +
 								(1 | country),
@@ -2227,7 +2231,7 @@
 								district_magnitude +
 			#					type +
 								quota_percentage_cent +
-								quota_soft +
+								quota_soft_fact +
 								party_size_country_stan +
 							#	I(year_cent^2) +
 								country * year_cent +
@@ -2245,7 +2249,7 @@
 								district_magnitude +
 			#					type +
 								quota_percentage_cent +
-								quota_soft +
+								quota_soft_fact +
 								party_size_country_stan +
 								timeNL + # replaces the interaction
 								(1 | year_cent) +
@@ -2260,7 +2264,7 @@
 								district_magnitude +
 			#					type +
 								quota_percentage_cent +
-								quota_soft +
+								quota_soft_fact +
 								party_size_country_stan +
 								timeNL + 
 								selection_control_fac +
@@ -2273,7 +2277,7 @@
 			m5 <- lmer(	ambition_selection_gap~
 								district_magnitude +
 								quota_percentage_cent +
-								quota_soft +
+								quota_soft_fact +
 								party_size_country_stan +
 								timeNL + 
 								selection_control_fac +
