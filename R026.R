@@ -228,7 +228,7 @@
 			FPAREBU2$fake_parl_episode_id <- paste(FPAREBU2$pers_id,FPAREBU2$parliament_id,sep="__")
 			length(unique(FPAREBU$fake_parl_episode_id)) # does not match!, several people occur double
 			DUB <- FPAREBU[which(duplicated(FPAREBU$fake_parl_episode_id)),] # these are the problematic cases ## #fixlater!
-			nrow(DUB) # NOTE TO SELF: you can parse theses cases to Adrian to fix # 88 cases! # some inspection myself suggest that these are re-entries into the same parliament.
+			nrow(DUB) # NOTE TO SELF: you can parse theses cases to Adrian to fix # 88 cases! # some inspection myself suggest that these are re-entries into the same parliament. #fixlater
 			
 			# for now, 
 			nrow(FPAREBU)
@@ -240,8 +240,8 @@
 			FPAREBU <- FPAREBU[which(!is.na(FPAREBU$pers_id)),]
 			nrow(FPAREBU)
 			
-			table(FPAREBU$parliament_id[which(FPAREBU$parliament_id %in% unique(POPABU$parliament_id))]) # so, these are not exacty the same...
-			# ACTUALLY, I THINK THIS OPPERATIONALISATION HERE  MIGHT INCLUDE LATE ENTERANTS, WE PROBABLY DO NOT WANT THAT RIGHT?!
+			table(FPAREBU$parliament_id[which(FPAREBU$parliament_id %in% unique(POPABU$parliament_id))]) # so, these are not exacty the same... POPABU here is from 'lesson 1' script, just to check the consistency, when I checked this the result was exactly the same (when using the data loaded in this environment!)
+			# ACTUALLY, I THINK THIS OPPERATIONALISATION HERE  MIGHT INCLUDE LATE ENTERANTS, WE PROBABLY DO NOT WANT THAT RIGHT?! > no worries, this is dealth with later! 
 			
 			table(FPAREBU2$parliament_id[which(FPAREBU2$parliament_id %in% unique(POPABU$parliament_id))]) # yes, not it is exactly the same! -- so, the decision is: focus on only right after the election or not?!
 		
@@ -256,6 +256,7 @@
 			# so also reduce this one before the merge to avoid duplicate matches
 				PAREWRONGRED <- PAREWRONG %>% distinct(parl_episode_id, .keep_all = TRUE)
 				nrow(PAREWRONGRED) # alright, looking promissing
+				head(PAREWRONGRED)
 			
 			# now, lets merge in what we have there
 				TEMP <- sqldf("SELECT FPAREBU.fake_parl_episode_id, PAREWRONGRED.*
@@ -265,8 +266,13 @@
 				nrow(TEMP) # alright number is looking good, so lets write this result to FPAREBU
 				tail(TEMP)
 			
+				table(is.na(FPAREBU$pers_id))
 				FPAREBU <- TEMP
-			
+				table(is.na(FPAREBU$pers_id)) # why?! > looks like this is because there are RESE entries for earlier years e.t.c in FPAREBU that are not in PARE! - lets see what happens when we just leave merge out?!
+				ISSUE <- FPAREBU[which(!FPAREBU$fake_parl_episode_id %in% PAREWRONGRED$parl_episode_id),]
+				nrow(ISSUE)
+				head(ISSUE)
+				
 			# everybody in this new FPAREBU file was in parliament at same point, so lets indicate that
 				table(FPAREBU$member_ofthisparliament_atsomepoint)
 				FPAREBU$member_ofthisparliament_atsomepoint <- "yes"
@@ -605,6 +611,8 @@
 			length(gendertodo)
 			GENDERTODO <- as.data.frame(cbind(pers_id=gendertodo, country=substr(gendertodo,0,2)))
 			head(GENDERTODO)
+			
+			prop.table(table(is.na(ELENBU$genderwithguesses),ELENBU$country),2)
 			table(GENDERTODO$country)
 			
 	
@@ -684,7 +692,7 @@
 				table(is.na((ELENBURED$fictional_parl_episode_id)))
 	
 	
-				ELENBURED[which(ELENBURED$in_parliament == "no"),]
+				ELENBURED[which(ELENBURED$in_parliament == "no"),] #fixlater > so if there are still cases here even with the updated data..
 	
 	##############################################
 	# DATA 7: find out what ELEN positions are actually 'electable' because we are reducing our data to these positions
@@ -759,10 +767,10 @@
 						howfarback = 3
 						local_natparty_id = "NL_CDA_NT"
 						
-						local_list_id = ELENBUTOT$list_id[44645]
-						local_list_position = ELENBUTOT$listplace[44645]
+						local_list_id = ELENBUTOT$list_id[1]
+						local_list_position = ELENBUTOT$listplace[1]
 						howfarback =  1
-						local_natparty_id =  ELENBUTOT$party_id_from_elli_nat_equiv[44645]
+						local_natparty_id =  ELENBUTOT$party_id_from_elli_nat_equiv[1]
 						
 						wasdoublegangertminxsuccesfull(local_list_id,local_list_position,howfarback,local_natparty_id)
 						
@@ -840,13 +848,22 @@
 								if(length(doublegangerpersidvoteone) == 0 & length(doublegangerpersidvotetwo) == 0){
 									
 									mismatchreason <- "" # reset
+									# is the 'old' list id the same? 
+									if(nrow(ELENBU[which(ELENBU$list_id_old == doublegangerfakelistid
+													     ),]) == 0)
+									{
+										mismatchreason <- "list_id: no match"
+									} else {
+										mismatchreason <- "list_id: match"
+									}
+									
 									# are their any district matches 
 									if(nrow(ELENBU[which(ELENBU$district_id == doublegangerdistrictid
 													     ),]) == 0)
 									{
-										mismatchreason <- "district: not found"
+										mismatchreason <- " -- district: not found"
 									} else {
-										mismatchreason <- "district: found"
+										mismatchreason <- " -- district: found"
 									}
 									
 									# are their any party matches in this district?
@@ -915,7 +932,7 @@
 							return(mismatchreason)
 							}
 						}
-												
+						# why are there FPAREBU$pers_id entries that are NA?!
 						
 						
 						# testing: proof is in the pudding!
@@ -966,7 +983,7 @@
 						# we can ofcourse also manually say we want do (not) run it again!
 						
 						# runDGagain = FALSE
-						# runDGagain = TRUE
+						runDGagain = TRUE
 						
 						if(runDGagain)
 						{
@@ -1061,10 +1078,7 @@
 					TD[order(TD$listplace),]
 					ELENBUTOT[44645,]
 					ELENBUTOT[44645,]$listplace
-					ELENBUTOT[44646,]
-					
-				# list small party drom DE
-				
+					ELENBUTOT[44646,]				
 		
 
 		#################################### DATA AGGREGATION starts here ###################################
@@ -2131,12 +2145,12 @@
 				table(ELLIBU$party_id_nat_equiv_short )
 				
 				ggplot(data=subset(ELLIBU,!is.na(ELLIBU$selection_control_fac)), aes(x=selection_control_fac, y=ambition_selection_gap)) + 
-				geom_boxplot(aes(color=party_id_nat_equiv_short)) +
+				geom_boxplot(aes(),color=party_id_nat_equiv_short) +
 				stat_summary(fun.y = mean, geom = "errorbar",aes(ymax = ..y.., ymin = ..y.., group = factor(selection_control_fac)),width = 0.5,size=1.5, linetype = "solid") +
 				scale_color_brewer(palette = "Dark2") +
 				labs(title = "Selection ambition gap by selection control", x = "Selection control", y = "(Selection - ambition) gap electables", color = "Party\n") +
-				geom_text(aes(x=0.7,y=37.5,label="overshot"),angle=0) + 
-				geom_text(aes(x=0.7,y=-37.5,label="undershot"),angle=0) +
+				geom_text(aes(x=0.7,y=37.5,label="overshooting"),angle=0) + 
+				geom_text(aes(x=0.7,y=-37.5,label="undershooting"),angle=0) +
 				geom_hline(yintercept=0,linetype="dashed")				
 				
 				#geom_dotplot(binaxis='y', stackdir='center', dotsize=0.05)
