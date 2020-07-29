@@ -841,28 +841,42 @@
 									
 									mismatchreason <- "" # reset
 									# are their any district matches 
-									if(nrow(ELENBU[which(
-														 ELENBU$district_id == doublegangerdistrictid
+									if(nrow(ELENBU[which(ELENBU$district_id == doublegangerdistrictid
 													     ),]) == 0)
 									{
-									mismatchreason <- "-district not found"
+										mismatchreason <- "district: not found"
+									} else {
+										mismatchreason <- "district: found"
 									}
+									
 									# are their any party matches in this district?
-									if(nrow(ELENBU[which(
-																		  ELENBU$party_id_from_elli_nat_equiv == doublegangerparty &
-																		  ELENBU$district_id == doublegangerdistrictid 
-																    ),]) == 0)
+									if(nrow(ELENBU[which(ELENBU$party_id_from_elli_nat_equiv == doublegangerparty),]) == 0)
 									{
-									mismatchreason <- paste(mismatchreason, "-party not found", sep="")
+										mismatchreason <- paste(mismatchreason, " -- party: not found", sep="")
+									} else {
+										mismatchreason <- paste(mismatchreason, " -- party: found", sep="")
 									}
-									# are their any list position matches (is not, pick the lowest list position that is a match?! -- this happens in recent years in the Netherlands where list are of varying length!)
-									if(nrow(ELENBU[which(
-																		  ELENBU$listplace == local_list_position & 
-																		  ELENBU$party_id_from_elli_nat_equiv == doublegangerparty &
-																		  ELENBU$district_id == doublegangerdistrictid # Q: check here, are all of the district IDs still in ELENBU at this stage?!
-																    ),]) == 0)
+									
+									# does the party district combination exist?
+									if(nrow(ELENBU[which(ELENBU$district_id == doublegangerdistrictid & 
+														 ELENBU$party_id_from_elli_nat_equiv == doublegangerparty),]
+														 ) == 0)
 									{
-									mismatchreason <- paste(mismatchreason, "-list position not found", sep="")
+										mismatchreason <- paste(mismatchreason, " -- party/district combo: not found", sep="")
+									} else {
+										mismatchreason <- paste(mismatchreason, " -- party/district combo: found", sep="")
+									}
+									
+									
+									# are their any list position matches for this group? (if not, pick the lowest list position that is a match?! -- this happens in recent years in the Netherlands where list are of varying length!)
+									if(nrow(ELENBU[which(ELENBU$district_id == doublegangerdistrictid & 
+														 ELENBU$party_id_from_elli_nat_equiv == doublegangerparty & 
+														 ELENBU$listplace == local_list_position),]
+														 ) == 0)
+									{
+										mismatchreason <- paste(mismatchreason, " -- list position: not found for this party and district", sep="")
+									} else {
+										mismatchreason <- paste(mismatchreason, " -- list position: found found for this party and district", sep="")
 									}
 	
 								}
@@ -909,6 +923,7 @@
 						# for some of the very last entries shown here
 						tail(ELENBU)
 						start_time <- Sys.time()
+						ELENBU[163000,]
 						wasdoublegangertminxsuccesfull(ELENBU$list_id_old[163000],ELENBU$listplace[163000],1,ELENBU$party_id_from_elli_nat_equiv[163000]) # check manually and I think this is correct
 						end_time <- Sys.time()
 						end_time - start_time
@@ -951,7 +966,7 @@
 						# we can ofcourse also manually say we want do (not) run it again!
 						
 						# runDGagain = FALSE
-						runDGagain = TRUE
+						# runDGagain = TRUE
 						
 						if(runDGagain)
 						{
@@ -970,15 +985,23 @@
 								}
 								close(pb)
 								
+								tail(successfulldoubleganger_tminus1_vec)
+								head(successfulldoubleganger_tminus2_vec)
+								head(successfulldoubleganger_tminus3_vec)
+								
+								
+								table(successfulldoubleganger_tminus1_vec)
+								table(successfulldoubleganger_tminus2_vec)
+								table(successfulldoubleganger_tminus3_vec)
+								
 								resvecelect <- vector(mode="logical",length=nrow(ELENBU))
 								pb <- txtProgressBar(min = 1, max = nrow(ELENBU), style = 3)
 								for(i in 1:nrow(ELENBU))
 								{
-									# this line does not deal well with having NA on one of these values, so lets make it more resilient to that
-									
-									successfulldoubleganger_tminus1 <- ifelse(is.na(successfulldoubleganger_tminus1_vec[i])|,FALSE,successfulldoubleganger_tminus1_vec[i]) # this is where this goes wrong?
-									successfulldoubleganger_tminus2 <- ifelse(is.na(successfulldoubleganger_tminus2_vec[i])|,FALSE,successfulldoubleganger_tminus2_vec[i])
-									successfulldoubleganger_tminus3 <- ifelse(is.na(successfulldoubleganger_tminus3_vec[i])|,FALSE,successfulldoubleganger_tminus3_vec[i])
+									# because we included characters as well we need to turn this into a logical again
+									successfulldoubleganger_tminus1 <- ifelse(successfulldoubleganger_tminus1_vec[i] == "TRUE",TRUE,FALSE) 
+									successfulldoubleganger_tminus2 <- ifelse(successfulldoubleganger_tminus2_vec[i] == "TRUE",TRUE,FALSE) 
+									successfulldoubleganger_tminus3 <- ifelse(successfulldoubleganger_tminus3_vec[i] == "TRUE",TRUE,FALSE) 
 									
 									resvecelect[i] <- successfulldoubleganger_tminus1 | successfulldoubleganger_tminus2 | successfulldoubleganger_tminus3 # if in one of the previous three elections then it counts as electable
 									setTxtProgressBar(pb, i)
@@ -1411,7 +1434,7 @@
 			
 				nrow(ELLIBU)
 				
-				## this is where the reduction happens, two options
+				## this is where the reduction happens, two options (the second of which is currently used)
 				
 					# option 1: do this really on size of a number, which is time-specific.
 						table(ELLIBU$party_size,ELLIBU$type) # so, still plenty of cases in here with list seats won by small parties.
@@ -1685,7 +1708,7 @@
 		
 		nrow(ELLIBU)
 		TEMP4 <- ELLIBU %>% distinct(persidarray, .keep_all = TRUE) ## this where the 2017 CDU Bundestag members are dropped!! -- so what do we do here, when arrays are the same?!
-		nrow(TEMP4) # unfortunately loosing a lot of cases here... 
+		nrow(TEMP4) # so indeed, quite some overlap here between a lot of lists so it is good we exclude these?
 		length(unique(ELLIBU$persidarray))
 		ELLIBU <- TEMP4
 		
@@ -1796,7 +1819,7 @@
 			nrow(ELLIBU)
 			ELLIBU <- TEMPYY 
 		
-			# now, calculate the 'drop'
+			# now, calculate the 'drop'  (note for later: if you look up you see this is based on the voteshare according to parlgov.
 			
 			ELLIBU$vote_share_change <- ELLIBU$vote_share - ELLIBU$vote_share_previous
 			hist(ELLIBU$vote_share_change)
@@ -1964,7 +1987,7 @@
 			
 			
 
-		# get a list of all district candidates in this region
+		# get a list of all district candidates in this region to get an image of the percentage of MPS of this list that also have district seats.
 			
 			myregion <- "SN"
 			myparliament <- "DE_NT-BT_2009"
