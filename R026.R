@@ -820,10 +820,10 @@
 					# function to match previous parliament
 						
 						# some variable values that can be used for debugging
-						local_list_id = "NL_NT-TK_2003__NL_NT-TK_2003__Nijmegen__Christen-Democratisch-Appel" #fixlater, check after data update if this goes alright with in the new version of the data the district id only being in their once!
-						local_list_position = 70
-						howfarback = 3
-						local_natparty_id = "NL_CDA_NT"
+                        local_list_id = "NL_NT-TK_1994__Nijmegen__03may1994__Christen-Democratisch-Appel" #fixlater, check after data update if this goes alright with in the new version of the data the district id only being in their once!
+                        local_list_position = 70
+                        howfarback = 1
+                        local_natparty_id = "NL_CDA_NT"
 						
 						local_list_id = ELENBU$list_id_old[54193]
 						local_list_position = ELENBU$listplace[54193]
@@ -891,6 +891,16 @@
 									
 									
 							# now get her pers_id (Q: why are there two votes here?! again?! ) -- seems that vote two is for the districts!
+                                
+                                # lets relax the 'list position' assumption
+                                
+                                    # if their is a list_id match (more needed?) but no list_place match, set the local list positions to be the heightest number (lowest position)
+                                    if(any(ELENBU$list_id_old == doublegangerfakelistid) & !any(ELENBU$list_id_old == doublegangerfakelistid & ELENBU$listplace == local_list_position))
+                                    {
+                                        local_list_position_updated <- max(as.numeric(ELENBU[which(ELENBU$list_id_old == doublegangerfakelistid),]$listplace))
+                                    } else {
+                                        local_list_position_updated <- local_list_position
+                                    }
 								
 								#reset
 								doublegangerpersidvoteone <- ""
