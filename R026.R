@@ -16,13 +16,24 @@
 		
 		#setwd("C:/Users/turnerzw/Basel Powi Dropbox/R/R026_temp")
 		setwd("F:/PolCa/Analysis/R/ProjectR026_control")
-		#setwd("C:/Users/turnerzw/Basel Powi Dropbox/Tomas Zwinkels/F-drive-fork/R026")
+		setwd("C:/Users/turnerzw/Basel Powi Dropbox/Remote GW17PC05/PCP_Quotas_Paper/Analysis/ProjectR026_control")
 		getwd()
 	
-		# install.packages("foreach")
-		# install.packages("foreach")
-		# install.packages("doParallel") 
-		#install.packages("lme4")
+		install.packages("sqldf")
+		install.packages("stringr")
+		install.packages("lubridate")
+		install.packages("ggplot2")
+		install.packages("stargazer")
+		install.packages("dplyr")
+		install.packages("reshape")
+		install.packages("TraMineR")
+		install.packages("lawstat")
+		install.packages("beanplot")
+		install.packages("stringr")
+		install.packages("foreach")
+		install.packages("doParallel")
+		install.packages("lme4")
+		install.packages("car")
 	
 	# packages
 		library(sqldf)
@@ -90,6 +101,12 @@
 				names(PARL)
 				
 				# import and inspect
+				ELEC = read.csv("PCC/ELEC.csv", header = TRUE, sep = ";")
+				summary(ELEC)
+				names(ELEC)
+				
+				
+				# import and inspect
 				PART = read.csv("PCC/PART.csv", header = TRUE, sep = ";")
 				summary(PART)
 				names(PART)
@@ -148,6 +165,23 @@
 			nrow(PARLBU)
 			PARLBU <- PARLBU[which(PARLBU$level == "NT"),]
 			nrow(PARLBU)
+			
+			ELECBU <- ELEC[which(!duplicated(ELEC$parliament_id)),]
+			ELECBU$country <- substr(ELECBU$elec_id,1,2)
+			head(ELECBU[which(ELECBU$country == "NL"),])
+			
+			TEMPX <- sqldf("SELECT PARLBU.*, ELECBU.election_date
+						   FROM PARLBU LEFT JOIN ELECBU
+						   ON 
+						   PARLBU.parliament_id = ELECBU.parliament_id
+						   ")
+			nrow(TEMPX)
+			nrow(PARLBU)
+			head(PARLBU)	
+			PARLBU <- TEMPX			
+			head(PARLBU)			   
+			
+		# below we also need the date for the election
 			
 		# get all of the German parliamentary RESE episodes sub-selected so we can merge these in on date
 		
@@ -267,7 +301,7 @@
 				tail(TEMP)
 			
 				table(is.na(FPAREBU$pers_id))
-				FPAREBU <- TEMP
+			#	FPAREBU <- TEMP
 				table(is.na(FPAREBU$pers_id)) # why?! > looks like this is because there are RESE entries for earlier years e.t.c in FPAREBU that are not in PARE! - lets see what happens when we just leave merge out?!
 				ISSUE <- FPAREBU[which(!FPAREBU$fake_parl_episode_id %in% PAREWRONGRED$parl_episode_id),]
 				nrow(ISSUE)
@@ -289,9 +323,13 @@
 		ELEN$country <- substr(ELEN$elec_entry_id,1,2)
 		table(ELEN$country)
 		
+		# do a country reduction, to make sure that we are not trowing energy and fixing and calculating things that are not important for later.
+			ELENBU <- ELEN[which(ELEN$country == "DE" | ELEN$country == "NL"),]
+			table(ELENBU$country)
+		
 		# first selection of variables of interest
 			ELENBU <- sqldf("SELECT elec_entry_id, list_id, pers_id, listplace, country
-							FROM ELEN
+							FROM ELENBU
 							")
 		
 		# then we merge a couple of POLI level things to inspect
@@ -301,8 +339,11 @@
 							ELENBU.pers_id = POLI.pers_id
 							")
 			nrow(ELENBU)
+			table(ELENBU$country)
 			head(ELENBU)
 			tail(ELENBU)
+			
+			ELLI[which(duplicated(ELLI$list_id)),]
 			
 		# merge in some ELLI characteristics
 			ELENBU <- sqldf("SELECT ELENBU.*, ELLI.list_name, ELLI.parliament_id, ELLI.district_id, ELLI.list_length, ELLI.district_id, ELLI.party_id as 'party_id_from_elli'
@@ -310,7 +351,7 @@
 							ON
 							ELENBU.list_id = ELLI.list_id
 							")
-			nrow(ELENBU) 
+			nrow(ELENBU) # here we are seeing an increase in cases! why?! #fixed!
 			head(ELENBU)
 			tail(ELENBU)
 		
@@ -453,6 +494,13 @@
 		# DATA 4.1: we analyse the percentages of german district seats on the level over their landes, also in ELLI this combination needs to be made
 		####################
 		
+			# adding country reduction here as well
+				ELLI$country <- substr(ELLI$list_id,0,2)
+				table(ELLI$country)
+				nrow(ELLI)
+				ELLI <- ELLI[which(ELLI$country == "DE" | ELLI$country == "NL"),]
+				nrow(ELLI)
+	
 			# also here we do this by simply overwriting the list ids with a generalised one
 	
 				head(ELLI)
@@ -559,6 +607,7 @@
 		# combine these
 			girlnames <- rbind(NL_girlnames,DE_girlnames)
 			boynames <- rbind(NL_boynames,DE_boynames)
+			nrow(boynames)
 
 		# example check
 			TEST <- ELENBU[which(ELENBU$country == "NL"),]
@@ -569,13 +618,13 @@
 		resvec <- vector()
 		for(i in 1:nrow(ELENBU))
 		{
-			if(ELENBU$country[i] == "NL" & is.na(ELENBU$gender[i])) # only do this when you are in NL and do not know the gender (lets remove the country limitation here! #fixlater)
+			if(is.na(ELENBU$gender[i])) # only do this when you do not know the gender
 			{
-				if(ELENBU$first_name[i] %in% NL_boynames$name & !(ELENBU$first_name[i] %in% NL_girlnames$name)) # if this name occurs in the boyname list and not in girlname list, then set gender to m
+				if(ELENBU$first_name[i] %in% boynames$name & !(ELENBU$first_name[i] %in% girlnames$name)) # if this name occurs in the boyname list and not in girlname list, then set gender to m
 				{
 				resvec[i] <- "m"
 				} else {
-					if(ELENBU$first_name[i] %in% NL_girlnames$name & !(ELENBU$first_name[i] %in% NL_boynames$name)) # if this name occurs in the girlname list and not in boyname list, then set gender to f
+					if(ELENBU$first_name[i] %in% girlnames$name & !(ELENBU$first_name[i] %in% boynames$name)) # if this name occurs in the girlname list and not in boyname list, then set gender to f
 					{
 							resvec[i] <- "f"
 					} else {
@@ -601,6 +650,11 @@
 			
 			table(is.na(ELENBU$genderwithguesses),ELENBU$country) # so, decent amounts of missingness per country still
 			prop.table(table(is.na(ELENBU$genderwithguesses),ELENBU$country),2) # about 13% in CH and NL and 5% in DE
+			
+			DECAS <- ELENBU[which(is.na(ELENBU$genderwithguesses)),]
+			table(DECAS$parliament_id)
+			
+			DECAS[which(DECAS$parliament_id == "DE_NT-BT_2013"),]$first_name[0:40]
 		
 			table(is.na(ELENBU$genderwithguesses),ELENBU$list_id) 
 			prop.table(table(is.na(ELENBU$genderwithguesses),ELENBU$list_id),2) 
@@ -751,13 +805,17 @@
 						
 							# for which first the trick from above needs to be applied
 							ELEN$type <- ifelse(grepl("district-",ELEN$list_id),"district","list")
-
+							ELENBU$type <- ifelse(grepl("district-",ELENBU$list_id),"district","list")
 					
 					# german district seats get list position NA, but lets make this '1' where it needs to be
 
 						head(ELEN[which(ELEN$country == "DE", ELEN$type == "district"),])
 						ELEN$listplace <- ifelse(ELEN$country == "DE" & ELEN$type == "district",1,ELEN$listplace)
 						table(ELEN[which(ELEN$country == "DE", ELEN$type == "district"),]$listplace)
+						
+						head(ELENBU[which(ELENBU$country == "DE", ELENBU$type == "district"),])
+						ELENBU$listplace <- ifelse(ELENBU$country == "DE" & ELENBU$type == "district",1,ELENBU$listplace)
+						table(ELENBU[which(ELENBU$country == "DE", ELENBU$type == "district"),]$listplace)
 						
 					# function to match previous parliament
 						
@@ -767,10 +825,10 @@
 						howfarback = 3
 						local_natparty_id = "NL_CDA_NT"
 						
-						local_list_id = ELENBUTOT$list_id[1]
-						local_list_position = ELENBUTOT$listplace[1]
+						local_list_id = ELENBU$list_id_old[54193]
+						local_list_position = ELENBU$listplace[54193]
 						howfarback =  1
-						local_natparty_id =  ELENBUTOT$party_id_from_elli_nat_equiv[1]
+						local_natparty_id =  ELENBU$party_id_from_elli_nat_equiv[54193]
 						
 						wasdoublegangertminxsuccesfull(local_list_id,local_list_position,howfarback,local_natparty_id)
 						
@@ -782,27 +840,32 @@
 						
 								# first, get parliament id
 								myparid <- substr(str_extract(local_list_id,".+?__"),0,nchar(str_extract(local_list_id,".+?__"))-2)
+								myelectiondate <- str_extract(local_list_id,"[0-9]{2}[a-z]{3}[0-9]{4}")
 								
 								# find the previous parliament
 								earlierparliament <- NA # reset
+								earlierelectiondate <- NA # reset
+								dateofearlierelection <- 
 								if(howfarback == 1)
 								{
-									earlierparliament <- as.character(PARL[which(PARL$parliament_id == myparid),]$previous_parliament)
-								} 
-								else 
-								{
+									earlierparliament <- as.character(PARLBU[which(PARLBU$parliament_id == myparid),]$previous_parliament)
+									earlierelectiondate <- as.character(PARLBU[which(PARLBU$parliament_id == earlierparliament),]$election_date)
+								} else {
 									if(howfarback == 2)
 									{
-										earlierparliament <- as.character(PARL[which(PARL$parliament_id == myparid),]$previous_parliament)
-										earlierparliament <- as.character(PARL[which(PARL$parliament_id == earlierparliament),]$previous_parliament)
-									} 
-									else 
-									{
+										earlierparliament <- as.character(PARLBU[which(PARLBU$parliament_id == myparid),]$previous_parliament)
+										earlierparliament <- as.character(PARLBU[which(PARLBU$parliament_id == earlierparliament),]$previous_parliament)
+										
+										earlierelectiondate <- as.character(PARLBU[which(PARLBU$parliament_id == earlierparliament),]$election_date)
+										
+									} else {
 										if(howfarback == 3)
 										{
-										earlierparliament <- as.character(PARL[which(PARL$parliament_id == myparid),]$previous_parliament)
-										earlierparliament <- as.character(PARL[which(PARL$parliament_id == earlierparliament),]$previous_parliament)
-										earlierparliament <- as.character(PARL[which(PARL$parliament_id == earlierparliament),]$previous_parliament)
+										earlierparliament <- as.character(PARLBU[which(PARLBU$parliament_id == myparid),]$previous_parliament)
+										earlierparliament <- as.character(PARLBU[which(PARLBU$parliament_id == earlierparliament),]$previous_parliament)
+										earlierparliament <- as.character(PARLBU[which(PARLBU$parliament_id == earlierparliament),]$previous_parliament)
+										
+										earlierelectiondate <- as.character(PARLBU[which(PARLBU$parliament_id == earlierparliament),]$election_date)
 										}
 										
 									}
@@ -810,14 +873,22 @@
 								}
 								
 								# now generate the list id for my double ganger
-								doublegangerfakelistid <- gsub(myparid,earlierparliament,local_list_id)
+									
+									# first we replace the parliament
+									doublegangerfakelistid <- gsub(myparid,earlierparliament,local_list_id) # this is where this goes wrong! We need to update the date as well with the new list id formats!
+								
+									# then we replace the date of the election
+									doublegangerfakelistid <- gsub(myelectiondate,earlierelectiondate,doublegangerfakelistid)
+									
 								doublegangerparty <- local_natparty_id
 								
 							# and the district id
-									doublegangerdistrictid <- str_extract(local_list_id, "__.+__") # first find the district id part of the complete list id
+									doublegangerdistrictid <- str_extract(local_list_id, ".*?__.*?__") # first find the district id part of the complete list id < this need to be adjusted after the new formatting of the list ids
 									doublegangerdistrictid <- gsub(myparid,earlierparliament,doublegangerdistrictid)# then replace the parliament_id part
+									
 									doublegangerdistrictid <- gsub("^__","",doublegangerdistrictid)	# then get rid of the __ and __ at the start and end of the remaining string
 									doublegangerdistrictid <- gsub("__$","",doublegangerdistrictid)	# then get rid of the __ and __ at the start and end of the remaining string
+									
 									
 							# now get her pers_id (Q: why are there two votes here?! again?! ) -- seems that vote two is for the districts!
 								
@@ -861,9 +932,9 @@
 									if(nrow(ELENBU[which(ELENBU$district_id == doublegangerdistrictid
 													     ),]) == 0)
 									{
-										mismatchreason <- " -- district: not found"
+										mismatchreason <- paste(mismatchreason," -- district: not found",sep="")
 									} else {
-										mismatchreason <- " -- district: found"
+										mismatchreason <- paste(mismatchreason," -- district: found",sep="")
 									}
 									
 									# are their any party matches in this district?
@@ -885,7 +956,7 @@
 									}
 									
 									
-									# are their any list position matches for this group? (if not, pick the lowest list position that is a match?! -- this happens in recent years in the Netherlands where list are of varying length!)
+									# are their any list position matches for this group? (if not, better would be to pick the lowest list position that is a match?! -- this happens in recent years in the Netherlands where list are of varying length!)
 									if(nrow(ELENBU[which(ELENBU$district_id == doublegangerdistrictid & 
 														 ELENBU$party_id_from_elli_nat_equiv == doublegangerparty & 
 														 ELENBU$listplace == local_list_position),]
@@ -977,10 +1048,15 @@
 						# check if the version match
 						if(!readLines("PCC/dataversion.txt") == readLines(paste("INDA/DG/",latestrun,"_dataversion.txt",sep=""))) # check if the version used in the latest run is the same as the currently used data version in the r-script
 						{
-							runDGagain = askYesNo("!Warning! The last stored data from the loop that does the OM on the elections lists is not the same as the current data version used for the R-script, do you want to run the loop again?! - this takes about 1.5 hours ")
+							runDGagain = askYesNo("!Warning! The last stored data from the loop that does the Doppelganger detection is not the same as the current data version used for the R-script, do you want to run the DG loop again?! - this takes about 2 hours ")
 						}
 						
 						# we can ofcourse also manually say we want do (not) run it again!
+						
+						nrow(ELENBU)
+						# this bit can be ran to subsample ELENBU for debugging purposes
+						# ELENBU <- sample_n(ELENBU,2000)
+						nrow(ELENBU)
 						
 						# runDGagain = FALSE
 						runDGagain = TRUE
@@ -1036,6 +1112,34 @@
 								resvecelect <- resvecelecttemp[,2]
 						}
 						
+						table(successfulldoubleganger_tminus1_vec)
+						sum(table(successfulldoubleganger_tminus1_vec))
+						table(successfulldoubleganger_tminus1_vec) / sum(table(successfulldoubleganger_tminus1_vec))
+						
+						ELENBU$firstissue <- successfulldoubleganger_tminus1_vec
+						ISSUES <- ELENBU[which(ELENBU$firstissue == "list_id: match -- district: found -- party: found -- party/district combo: found -- list position: not found for this party and district"),]
+						head(ISSUES[which(ISSUES$country == "DE"),])
+						table(ISSUES$country)
+						table(ISSUES$country,ISSUES$firstissue)
+						
+						ISSUES2 <- ELENBU[which(ELENBU$firstissue == "list_id: no match -- district: found -- party: found -- party/district combo: not found -- list position: not found for this party and district"),]
+						head(ISSUES2)
+						table(ISSUES2$country)
+						table(ISSUES2$country,ISSUES2$firstissue)
+						
+						ISSUES3 <- ELENBU[which(ELENBU$firstissue == "list_id: no match -- district: not found -- party: found -- party/district combo: not found -- list position: not found for this party and district"),]
+						head(ISSUES3)
+						table(ISSUES3$country)
+						table(ISSUES3$country,ISSUES3$firstissue)
+						
+						table(successfulldoubleganger_tminus2_vec)
+						table(successfulldoubleganger_tminus3_vec)
+						
+						install.packages("writexl")
+						library("writexl")
+						write_xlsx(ELENBU,"./ELENBU.xlsx")
+						
+						
 						ELENBU$electable <- ifelse(resvecelect,"electable","not electable")
 						table(ELENBU$electable)
 						table(is.na(ELENBU$electable))
@@ -1045,9 +1149,8 @@
 						ELENBU[38061:38100,]
 			
 			# do the actual reduction, so that the aggregates below are based on only the 'electable' part of the election lists
-				# before this electable step, maybe then they are still in?!
 				
-				ELENBU[which(ELENBU$list_id == "DE_NT-BT_2017__DE_NT-BT_2017__Baden-Wuerttemberg__Christlich-Demokratische-Union-Deutschlands-in-Niedersachsen"),]
+				ELENBU[which(ELENBU$list_id == "DE_NT-BT_2017__Baden-Wuerttemberg__Christlich-Demokratische-Union-Deutschlands-in-Niedersachsen"),]
 				head(ELENBU)
 				tail(ELENBU)
 				
@@ -1281,7 +1384,6 @@
 		# lets make a variable that indicates if anybody from the list was elected at all - can be used for exclusion below
 		ELLIBU$anycandidateselected <- ifelse(ELLIBU$list_id %in% GCPARE$list_id,"yes","nobody")
 		table(ELLIBU$anycandidateselected)
-		table(is.na(ELLIBU$anycandidateselected)) #fix later
 
 	##############################################
 	# DATA 11: ELLIBU gets a couple of other additional variables
@@ -1475,7 +1577,7 @@
 					tail(ELLIBU)
 					ELLIBU[500:510,]
 					
-					table(is.na(ELLIBU$ratio_on_list)) # complete
+					table(is.na(ELLIBU$ratio_on_list)) # not complete! #fixlater
 					table(is.na(ELLIBU$ratio_elected)) # complete
 					table(is.na(ELLIBU$quota_percentage)) # complete
 
@@ -1488,7 +1590,7 @@
 			head(ELENBU)
 			
 			# testing what goes wrong we DE Bundestag
-			local_list_id = "DE_NT-BT_2017__DE_NT-BT_2017__Baden-Wuerttemberg__Christlich-Demokratische-Union-Deutschlands-in-Niedersachsen" # so, does not occur in ELENBU apparently?!
+			local_list_id = "DE_NT-BT_2017__Baden-Wuerttemberg__Christlich-Demokratische-Union-Deutschlands-in-Niedersachsen" # so, does not occur in ELENBU apparently?!
 				
 			getpersidarrayforlistid <- function(local_list_id)
 			{
@@ -1582,7 +1684,7 @@
 					
 					# setting this manualy is ofcourse also possible
 					# runOMagain <- FALSE
-					# runOMagain <- TRUE
+					runOMagain <- TRUE
 					
 					if(runOMagain)
 						{
@@ -1591,7 +1693,7 @@
 							percentage95simularresvec <- vector()
 
 							pb <- txtProgressBar(min = 1, max = nrow(ELLIBU), style = 3)
-							j=5248
+							j=1000
 							for(j in 1:nrow(ELLIBU))
 							{
 								mylistid <- ELLIBU$list_id[j]
@@ -2145,7 +2247,7 @@
 				table(ELLIBU$party_id_nat_equiv_short )
 				
 				ggplot(data=subset(ELLIBU,!is.na(ELLIBU$selection_control_fac)), aes(x=selection_control_fac, y=ambition_selection_gap)) + 
-				geom_boxplot(aes(),color=party_id_nat_equiv_short) +
+				geom_boxplot(aes(color=party_id_nat_equiv_short),) +
 				stat_summary(fun.y = mean, geom = "errorbar",aes(ymax = ..y.., ymin = ..y.., group = factor(selection_control_fac)),width = 0.5,size=1.5, linetype = "solid") +
 				scale_color_brewer(palette = "Dark2") +
 				labs(title = "Selection ambition gap by selection control", x = "Selection control", y = "(Selection - ambition) gap electables", color = "Party\n") +
@@ -2480,7 +2582,7 @@
 								m3,
 								m4,
 							#	m5,
-								type="latex",
+								type="text",
 								intercept.bottom=FALSE,
 								no.space=FALSE,
 								column.labels=(c("Empty","Dist.mag. ","Control","Quota")),
@@ -2889,7 +2991,7 @@
 								ma,
 								md,
 								me,
-								type="latex",
+								type="text",
 								intercept.bottom=FALSE,
 								no.space=FALSE,
 								column.labels=(c("Empty","Dist.mag. ","Controls","Linked lists")),

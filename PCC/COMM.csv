@@ -1585,3 +1585,539 @@ DE_NT-BT_2017__CO|Sivo;DE_NT-BT_2017;Sitzungsvorstand des Bundestages;CO;NA;Sivo
 DE_NT-BT_2017__CO|1Ua;DE_NT-BT_2017;1. Untersuchungsausschuss;CO;NA;1Ua;NA;NC;NC;NC
 DE_NT-BT_2017__CO|BeBudiAb;DE_NT-BT_2017;"Enquete-Kommission ""Berufliche Bildung in der digitalen Arbeitswelt""";CO;NA;BeBudiAb;NA;NC;NC;NC
 DE_NT-BT_2017__CO|KI;DE_NT-BT_2017;"Enquete-Kommission ""Kuenstliche Intelligenz – Gesellschaftliche Verantwortung und wirtschaftliche soziale und oekologische Potenziale""";CO;NA;KI;NA;NC;NC;NC
+UK_RE-SC_2003__CO|AHS;UK_RE-SC_2003;Ad Hoc Standards Committee;CO;;AHS;;NC;02jun2005;20jun2005
+UK_RE-SC_2003__CO|AB;UK_RE-SC_2003;Airdrie-Bathgate Railway and Linked Improvements Bill Committee;CO;;AB;;NC;15jun2006;02apr2007
+UK_RE-SC_1999__CO|AU;UK_RE-SC_1999;Audit Committee;CO;;AU;;NC;17jun1999;31mar2003
+UK_RE-SC_2003__CO|AU;UK_RE-SC_2003;Audit Committee;CO;;AU;;NC;04jun2003;02apr2007
+UK_RE-SC_2007__CO|AU;UK_RE-SC_2007;Audit Committee;CO;;AU;;NC;13jun2007;10dec2008
+UK_RE-SC_2003__CO|BAIRD;UK_RE-SC_2003;Baird Trust Reorganisation Bill Committee;CO;;BAIRD;;NC;16mar2005;19jul2005
+UK_RE-SC_1999__CO|CC;UK_RE-SC_1999;Commissioner for Children and Young People (Scotland) Bill Committee;CO;;CC;;NC;16jan2003;26mar2003
+UK_RE-SC_2003__CO|COM;UK_RE-SC_2003;Communities Committee;CO;;COM;;NC;04jun2003;02apr2007
+UK_RE-SC_2007__CO|EET;UK_RE-SC_2007;Economy, Energy and Tourism Committee;CO;;EET;;NC;13jun2007;22mar2011
+UK_RE-SC_2003__CO|EARL;UK_RE-SC_2003;Edinburgh Airport Rail Link Bill Committee;CO;;EARL;;NC;30mar2006;02apr2007
+UK_RE-SC_2003__CO|ED1;UK_RE-SC_2003;Edinburgh Tram (Line One) Bill Committee;CO;;ED1;;NC;16jun2004;08may2006
+UK_RE-SC_2003__CO|ED2;UK_RE-SC_2003;Edinburgh Tram (Line Two) Bill Committee;CO;;ED2;;NC;16jun2004;27apr2006
+UK_RE-SC_2003__CO|ED;UK_RE-SC_2003;Education Committee;CO;;ED;;NC;04jun2003;02apr2007
+UK_RE-SC_1999__CO|ED;UK_RE-SC_1999;Education, Culture and Sport Committee;CO;;ED;;NC;17jun1999;31mar2003
+UK_RE-SC_2007__CO|ELLC;UK_RE-SC_2007;Education, Lifelong Learning and Culture Committee;CO;;ELLC;;NC;13jun2007;22mar2011
+UK_RE-SC_2003__CO|EC;UK_RE-SC_2003;Enterprise and Culture Committee;CO;;EC;;NC;04jun2003;02apr2007
+UK_RE-SC_1999__CO|EL;UK_RE-SC_1999;Enterprise and Lifelong Learning Committee;CO;;EL;;NC;17jun1999;31mar2003
+UK_RE-SC_2003__CO|ERD;UK_RE-SC_2003;Environment and Rural Development Committee;CO;;ERD;;NC;04jun2003;02apr2007
+UK_RE-SC_1999__CO|EO;UK_RE-SC_1999;Equal Opportunities Committee;CO;;EO;;NC;17jun1999;31mar2003
+UK_RE-SC_2003__CO|EO;UK_RE-SC_2003;Equal Opportunities Committee;CO;;EO;;NC;04jun2003;02apr2007
+UK_RE-SC_2007__CO|EO;UK_RE-SC_2007;Equal Opportunities Committee;CO;;EO;;NC;13jun2007;22mar2011
+UK_RE-SC_1999__CO|EU;UK_RE-SC_1999;European and External Relations Committee / European Committee (until 5 March 2004);CO;;EU;;NC;17jun1999;31mar2003
+UK_RE-SC_2003__CO|EU;UK_RE-SC_2003;European and External Relations Committee;CO;;EU;;NC;04jun2003;02apr2007
+UK_RE-SC_2007__CO|EU;UK_RE-SC_2007;European and External Relations Committee;CO;;EU;;NC;13jun2007;22mar2011
+UK_RE-SC_1999__CO|FI;UK_RE-SC_1999;Finance Committee;CO;;FI;;NC;17jun1999;31mar2003
+UK_RE-SC_2003__CO|FI;UK_RE-SC_2003;Finance Committee;CO;;FI;;NC;04jun2003;02apr2007
+UK_RE-SC_2007__CO|FI;UK_RE-SC_2007;Finance Committee;CO;;FI;;NC;13jun2007;22mar2011
+UK_RE-SC_2003__CO|GARL;UK_RE-SC_2003;Glasgow Airport Rail Link Bill Committee;CO;;GARL;;NC;01mar2006;02apr2007
+UK_RE-SC_1999__CO|HE;UK_RE-SC_1999;Health and Community Care Committee;CO;;HE;;NC;17jun1999;31mar2003
+UK_RE-SC_2007__CO|HS;UK_RE-SC_2007;Health and Sport Committee;CO;;HS;;NC;13jun2007;22mar2011
+UK_RE-SC_2003__CO|HC;UK_RE-SC_2003;Health Committee;CO;;HC;;NC;04jun2003;02apr2007
+UK_RE-SC_2003__CO|MI;UK_RE-SC_2003;Interests of Members of the Scottish Parliament Bill Committee;CO;;MI;;NC;15dec2005;15mar2006
+UK_RE-SC_1999__CO|J1;UK_RE-SC_1999;Justice 1 Committee;CO;;J1;;NC;08jan2001;31mar2003
+UK_RE-SC_2003__CO|J1;UK_RE-SC_2003;Justice 1 Committee;CO;;J1;;NC;04jun2003;02apr2007
+UK_RE-SC_1999__CO|J2;UK_RE-SC_1999;Justice 2 Committee;CO;;J2;;NC;08jan2001;31mar2003
+UK_RE-SC_2003__CO|J2;UK_RE-SC_2003;Justice 2 Committee;CO;;J2;;NC;04jun2003;02apr2007
+UK_RE-SC_2003__CO|J2--SC|J2SC;UK_RE-SC_2003;Justice 2 Sub-Committee;CO;SC;J2;J2SC;NC;28jun2006;15dec2006
+UK_RE-SC_1999__CO|JH;UK_RE-SC_1999;Justice and Home Affairs Committee;CO;;JH;;NC;17jun1999;07jan2001
+UK_RE-SC_2007__CO|J;UK_RE-SC_2007;Justice Committee;CO;;J;;NC;13jun2007;22mar2011
+UK_RE-SC_2007__CO|LGC;UK_RE-SC_2007;Local Government and Communities Committee;CO;;LGC;;NC;13jun2007;22mar2011
+UK_RE-SC_2003__CO|LGT;UK_RE-SC_2003;Local Government and Transport Committee;CO;;LGT;;NC;04jun2003;02apr2007
+UK_RE-SC_1999__CO|LG;UK_RE-SC_1999;Local Government Committee;CO;;LG;;NC;17jun1999;31mar2003
+UK_RE-SC_1999__CO|NG;UK_RE-SC_1999;National Galleries of Scotland Bill Committee;CO;;NG;;NC;05dec2002;26mar2003
+UK_RE-SC_1999__CO|PR;UK_RE-SC_1999;Procedures Committee;CO;;PR;;NC;17jun1999;31mar2003
+UK_RE-SC_2003__CO|PR;UK_RE-SC_2003;Procedures Committee;CO;;PR;;NC;04jun2003;02apr2007
+UK_RE-SC_2007__CO|PR;UK_RE-SC_2007;Procedures Committee;CO;;PR;;NC;13jun2007;28sep2007
+UK_RE-SC_2007__CO|PA;UK_RE-SC_2007;Public Audit Committee;CO;;PA;;NC;11dec2008;22mar2011
+UK_RE-SC_1999__CO|PE;UK_RE-SC_1999;Public Petitions Committee;CO;;PE;;NC;17jun1999;31mar2003
+UK_RE-SC_2003__CO|PE;UK_RE-SC_2003;Public Petitions Committee;CO;;PE;;NC;04jun2003;02apr2007
+UK_RE-SC_2007__CO|PE;UK_RE-SC_2007;Public Petitions Committee;CO;;PE;;NC;13jun2007;22mar2011
+UK_RE-SC_2007__CO|RSSB;UK_RE-SC_2007;Review of SPCB Supported Bodies Committee;CO;;RSSB;;NC;13nov2008;19jul2010
+UK_RE-SC_1999__CO|RR;UK_RE-SC_1999;Robin Rigg Offshore Wind Farm (Navigation and Fishing) (Scotland) Bill Committee;CO;;RR;;NC;03oct2002;31mar2003
+UK_RE-SC_2007__CO|RAE;UK_RE-SC_2007;Rural Affairs and Environment Committee;CO;;RAE;;NC;13jun2007;22mar2011
+UK_RE-SC_1999__CO|RA;UK_RE-SC_1999;Rural Affairs Committee;CO;;RA;;NC;17jun1999;07jan2001
+UK_RE-SC_1999__CO|RD;UK_RE-SC_1999;Rural Development Committee;CO;;RD;;NC;08jan2001;31mar2003
+UK_RE-SC_1999__CO|SF;UK_RE-SC_1999;Salmon and Freshwater Fisheries (Consolidation) (Scotland) Bill Committee;CO;;SF;;NC;05dec2002;26mar2003
+UK_RE-SC_2007__CO|SPPS;UK_RE-SC_2007;Scottish Parliamentary Pension Scheme Committee;CO;;SPPS;;NC;27jun2007;22jan2009
+UK_RE-SC_2007__CO|SPPB;UK_RE-SC_2007;Scottish Parliamentary Pensions Bill Committee;CO;;SPPB;;NC;13nov2008;22jan2009
+UK_RE-SC_1999__CO|SC;UK_RE-SC_1999;Scottish Parliamentary Standards Commissioner Bill Committee;CO;;SC;;NC;07mar2002;27jun2002
+UK_RE-SC_1999__CO|SJ;UK_RE-SC_1999;Social Justice Committee;CO;;SJ;;NC;08jan2001;31mar2003
+UK_RE-SC_2003__CO|ST;UK_RE-SC_2003;Standards and Public Appointments Committee / Standards Committee (until 18 March 2005);CO;;ST;;NC;04jun2003;02apr2007
+UK_RE-SC_2007__CO|ST;UK_RE-SC_2007;Standards and Public Appointments Committee;CO;;ST;;NC;13jun2007;28sep2007
+UK_RE-SC_1999__CO|ST;UK_RE-SC_1999;Standards Committee;CO;;ST;;NC;17jun1999;31mar2003
+UK_RE-SC_2007__CO|SPPA;UK_RE-SC_2007;Standards, Procedures and Public Appointments Committee;CO;;SPPA;;NC;28sep2007;22mar2011
+UK_RE-SC_2003__CO|SAK;UK_RE-SC_2003;Stirling-Alloa-Kincardine Railway and Linked Improvements Bill Committee;CO;;SAK;;NC;10sep2003;10aug2004
+UK_RE-SC_1999__CO|SL;UK_RE-SC_1999;Subordinate Legislation Committee;CO;;SL;;NC;17jun1999;31mar2003
+UK_RE-SC_2003__CO|SL;UK_RE-SC_2003;Subordinate Legislation Committee;CO;;SL;;NC;04jun2003;02apr2007
+UK_RE-SC_2007__CO|SL;UK_RE-SC_2007;Subordinate Legislation Committee;CO;;SL;;NC;13jun2007;22mar2011
+UK_RE-SC_1999__CO|TE;UK_RE-SC_1999;Transport and the Environment Committee;CO;;TE;;NC;17jun1999;31mar2003
+UK_RE-SC_2007__CO|TIC;UK_RE-SC_2007;Transport, Infrastructure and Climate Change Committee;CO;;TIC;;NC;13jun2007;22mar2011
+UK_RE-SC_2007__CO|URE;UK_RE-SC_2007;Ure Elder Fund Transfer and Dissolution Bill Committee;CO;;URE;;NC;26nov2009;09apr2010
+UK_RE-SC_2007__CO|FCB;UK_RE-SC_2007;Forth Crossing Bill Committee;CO;;FCB;;NC;27jan2010;20jan2011
+UK_RE-SC_2007__CO|ELA;UK_RE-SC_2007;End of Life Assistance (Scotland) Bill Committee;CO;;ELA;;NC;10feb2010;02dec2010
+UK_RE-SC_2007__CO|WSH;UK_RE-SC_2007;William Simpson`s Home (Transfer of Property etc.) (Scotland) Bill Committee;CO;;WSH;;NC;18mar2010;27jul2010
+UK_RE-SC_2007__CO|SCO;UK_RE-SC_2007;Scotland Bill Committee;CO;;SCO;;NC;01dec2010;22mar2011
+UK_RE-SC_2011__CO|ICI;UK_RE-SC_2011;Infrastructure and Capital Investment Committee;CO;;ICI;;NC;01jun2011;23mar2016
+UK_RE-SC_2011__CO|RACCE;UK_RE-SC_2011;Rural Affairs, Climate Change and Environment Committee;CO;;RACCE;;NC;01jun2011;23mar2016
+UK_RE-SC_2011__CO|LGR;UK_RE-SC_2011;Local Government and Regeneration Committee;CO;;LGR;;NC;01jun2011;23mar2016
+UK_RE-SC_2011__CO|EC;UK_RE-SC_2011;Education and Culture Committee;CO;;EC;;NC;01jun2011;23mar2016
+UK_RE-SC_2011__CO|EO;UK_RE-SC_2011;Equal Opportunities Committee;CO;;EO;;NC;01jun2011;23mar2016
+UK_RE-SC_2011__CO|EU;UK_RE-SC_2011;European and External Relations Committee;CO;;EU;;NC;01jun2011;23mar2016
+UK_RE-SC_2011__CO|FI;UK_RE-SC_2011;Finance Committee;CO;;FI;;NC;01jun2011;23mar2016
+UK_RE-SC_2011__CO|PA;UK_RE-SC_2011;Public Audit Committee;CO;;PA;;NC;01jun2011;23mar2016
+UK_RE-SC_2011__CO|PPC;UK_RE-SC_2011;Public Petitions Committee;CO;;PPC;;NC;01jun2011;23mar2016
+UK_RE-SC_2011__CO|SPPA;UK_RE-SC_2011;Standards, Procedures and Public Appointments Committee;CO;;SPPA;;NC;01jun2011;23mar2016
+UK_RE-SC_2011__CO|SL;UK_RE-SC_2011;Subordinate Legislation Committee;CO;;SL;;NC;01jun2011;04jun2013
+UK_RE-SC_2011__CO|EET;UK_RE-SC_2011;Economy, Energy and Tourism Committee;CO;;EET;;NC;01jun2011;23mar2016
+UK_RE-SC_2011__CO|HS;UK_RE-SC_2011;Health and Sport Committee;CO;;HS;;NC;01jun2011;23mar2016
+UK_RE-SC_2011__CO|J;UK_RE-SC_2011;Justice Committee;CO;;J;;NC;01jun2011;23mar2016
+UK_RE-SC_2011__CO|SCO;UK_RE-SC_2011;Scotland Bill Committee;CO;;SCO;;NC;09jun2011;01may2012
+UK_RE-SC_2011__CO|WR;UK_RE-SC_2011;Welfare Reform Committee;CO;;WR;;NC;25jan2012;23mar2016
+UK_RE-SC_2011__CO|REF;UK_RE-SC_2011;Referendum (Scotland) Bill Committee;CO;;REF;;NC;23oct2012;29oct2014
+UK_RE-SC_2011__CO|NTS;UK_RE-SC_2011;National Trust for Scotland (Governance etc.) Bill Committee;CO;;NTS;;NC;23jan2013;23may2013
+UK_RE-SC_2011__CO|J--SC|JSP;UK_RE-SC_2011;Justice Sub-Committee on Policing;CO;SC;J;JSP;NC;13mar2013;23mar2016
+UK_RE-SC_2011__CO|EPP;UK_RE-SC_2011;City of Edinburgh Council (Portobello Park) Bill Committee;CO;;EPP;;NC;29may2013;26jun2014
+UK_RE-SC_2011__CO|DPLR;UK_RE-SC_2011;Delegated Powers and Law Reform Committee;CO;;DPLR;;NC;05jun2013;23mar2016
+UK_RE-SC_2011__CO|BC;UK_RE-SC_2011;Burrell Collection (Lending and Borrowing) (Scotland) Bill Committee;CO;;BC;;NC;12jun2013;21jan2014
+UK_RE-SC_2011__CO|LLI;UK_RE-SC_2011;City of Edinburgh Council (Leith Links and Surplus Fire Fund) Bill Committee;CO;;LLI;;NC;18sep2013;18feb2014
+UK_RE-SC_2011__CO|DFP;UK_RE-SC_2011;Devolution (Further Powers) Committee;CO;;DFP;;NC;29oct2014;23mar2016
+UK_RE-SC_2011__CO|PPB;UK_RE-SC_2011;Pentland Hills Regional Park Boundary Bill Committee;CO;;PPB;;NC;17jun2015;26jan2016
+UK_RE-SC_2003__CO|WAV;UK_RE-SC_2003;Waverley Railway (Scotland) Bill Committee;CO;;WAV;;NC;21jan2004;24jul2006
+UK_RE-SC_2011__CO|NGS;UK_RE-SC_2011;National Galleries of Scotland Bill Committee;CO;;NGS;;NC;02sep2015;19jan2016
+UK_RE-SC_2011__CO|IM;UK_RE-SC_2011;Interests of Members of the Scottish Parliament (Amendment) Bill Committee;CO;;IM;;NC;22sep2015;17dec2015
+UK_RE-SC_1999__CO|HS;UK_RE-SC_1999;Social Inclusion Housing and Voluntary Sector Committee;CO;;HS;;NC;17jun1999;07jan2001
+UK_RE-SC_2016__CO|EJFW;UK_RE-SC_2016;Economy, Jobs and Fair Work Committee;CO;;EJFW;;NC;01jun2016;06sep2018
+UK_RE-SC_2016__CO|ES;UK_RE-SC_2016;Education and Skills Committee;CO;;ES;;NC;01jun2016;NC
+UK_RE-SC_2016__CO|HS;UK_RE-SC_2016;Health and Sport Committee;CO;;HS;;NC;01jun2016;NC
+UK_RE-SC_2016__CO|REC;UK_RE-SC_2016;Rural Economy and Connectivity Committee;CO;;REC;;NC;01jun2016;NC
+UK_RE-SC_2016__CO|J;UK_RE-SC_2016;Justice Committee;CO;;J;;NC;01jun2016;NC
+UK_RE-SC_2016__CO|LGC;UK_RE-SC_2016;Local Government and Communities Committee;CO;;LGC;;NC;01jun2016;NC
+UK_RE-SC_2016__CO|ECCLR;UK_RE-SC_2016;Environment, Climate Change and Land Reform Committee;CO;;ECCLR;;NC;01jun2016;NC
+UK_RE-SC_2016__CO|SSC;UK_RE-SC_2016;Social Security Committee;CO;;SSC;;NC;01jun2016;NC
+UK_RE-SC_2016__CO|EERC;UK_RE-SC_2016;European and External Relations Committee;CO;;EERC;;NC;01jun2016;29sep2016
+UK_RE-SC_2016__CO|FI;UK_RE-SC_2016;Finance Committee;CO;;FI;;NC;01jun2016;29sep2016
+UK_RE-SC_2016__CO|PA;UK_RE-SC_2016;Public Audit Committee;CO;;PA;;NC;01jun2016;29sep2016
+UK_RE-SC_2016__CO|PPC;UK_RE-SC_2016;Public Petitions Committee;CO;;PPC;;NC;01jun2016;NC
+UK_RE-SC_2016__CO|SPPA;UK_RE-SC_2016;Standards, Procedures and Public Appointments Committee;CO;;SPPA;;NC;01jun2016;NC
+UK_RE-SC_2016__CO|DPLR;UK_RE-SC_2016;Delegated Powers and Law Reform Committee;CO;;DPLR;;NC;01jun2016;NC
+UK_RE-SC_2016__CO|EO;UK_RE-SC_2016;Equal Opportunities Committee;CO;;EO;;NC;01jun2016;29sep2016
+UK_RE-SC_2016__CO|FCC;UK_RE-SC_2016;Finance and Constitution Committee;CO;;FCC;;NC;29sep2016;NC
+UK_RE-SC_2016__CO|PAPLS;UK_RE-SC_2016;Public Audit and Post-legislative Scrutiny Committee;CO;;PAPLS;;NC;29sep2016;NC
+UK_RE-SC_2016__CO|EHRiC;UK_RE-SC_2016;Equalities and Human Rights Committee;CO;;EHRiC;;NC;29sep2016;NC
+UK_RE-SC_2016__CO|CTEERC;UK_RE-SC_2016;Culture, Tourism, Europe and External Relations Committee;CO;;CTEERC;;NC;29sep2016;06sep2018
+UK_RE-SC_2016__CO|J--SC|JSP;UK_RE-SC_2016;Justice Sub-Committee on Policing;CO;SC;J;JSP;NC;06oct2016;NC
+UK_RE-SC_2016__CO|EBW;UK_RE-SC_2016;Edinburgh Bakers' Widows' Fund Bill Committee;CO;;EBW;;NC;19apr2017;21nov2017
+UK_RE-SC_2016__CO|POI;UK_RE-SC_2016;Pow of Inchaffray Drainage Commission (Scotland) Bill Committee;CO;;POI;;NC;19apr2017;13dec2018
+UK_RE-SC_2016__CO|WSD;UK_RE-SC_2016;Writers to the Signet Dependants' Annuity Fund Amendment (Scotland) Bill Committee;CO;;WSD;;NC;14jun2017;14dec2017
+UK_RE-SC_2016__CO|CTEEA;UK_RE-SC_2016;Culture, Tourism, Europe and External Affairs Committee;CO;;CTEEA;;NC;06sep2018;NC
+UK_RE-SC_2016__CO|EEFW;UK_RE-SC_2016;Economy, Energy and Fair Work Committee;CO;;EEFW;;NC;06sep2018;NC
+UK_RE-SC_2016__CO|HH;UK_RE-SC_2016;Hutchesons' Hospital Transfer and Dissolution (Scotland) Bill Committee;CO;;HH;;NC;12sep2018;25apr2019
+UK_RE-SC_2016__CO|SGHHC;UK_RE-SC_2016;Committee on the Scottish Government Handling of Harassment Complaints;CO;;SGHHC;;NC;06feb2019;NC
+UK_RE-SC_2016__CO|SSCS;UK_RE-SC_2016;Solicitors in the Supreme Courts of Scotland (Amendment) Bill Committee;CO;;SSCS;;NC;31oct2019;NC
+UK_RE-SC_2016__CO|CVD;UK_RE-SC_2016;COVID-19 Committee;CO;;CVD;;NC;21apr2020;NC
+UK_RE-SC_1999__AG|ABE;UK_RE-SC_1999;Cross-Party Architecture and the Built Environment Group of the Scottish Parliament;AG;;ABE;;NC;12sep2000;31mar2003
+UK_RE-SC_1999__AG|AgriHorti;UK_RE-SC_1999;Scottish Parliament Cross-Party Group on Agriculture and Horticulture;AG;;AgriHorti;;NC;31may2000;31mar2003
+UK_RE-SC_1999__AG|ASD;UK_RE-SC_1999;Cross-Party Group on Autistic Spectrum Disorder;AG;;ASD;;NC;12sep2000;31mar2003
+UK_RE-SC_1999__AG|Asthma;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Asthma;AG;;Asthma;;NC;08may2001;31mar2003
+UK_RE-SC_1999__AG|AW;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Animal Welfare;AG;;AW;;NC;23feb2000;31mar2003
+UK_RE-SC_1999__AG|BEES;UK_RE-SC_1999;Cross-Party Group on Business Economy Environment and Society in the Scottish Parliament;AG;;BEES;;NC;07nov2002;31mar2003
+UK_RE-SC_1999__AG|BR;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Borders Rail;AG;;BR;;NC;09feb2000;31mar2003
+UK_RE-SC_1999__AG|Cancer;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Cancer;AG;;Cancer;;NC;08may2001;31mar2003
+UK_RE-SC_1999__AG|Carers;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Carers;AG;;Carers;;NC;12sep2000;31mar2003
+UK_RE-SC_1999__AG|Children;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Children;AG;;Children;;NC;23feb2000;31mar2003
+UK_RE-SC_1999__AG|CI;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Consumer Issues;AG;;CI;;NC;08may2001;31mar2003
+UK_RE-SC_1999__AG|CIES;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Citizenship Income Economy and Society;AG;;CIES;;NC;08mar2000;31mar2003
+UK_RE-SC_1999__AG|CM;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Culture and the Media;AG;;CM;;NC;22mar2000;31mar2003
+UK_RE-SC_1999__AG|CP;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Chronic Pain;AG;;CP;;NC;26apr2001;31mar2003
+UK_RE-SC_1999__AG|Crofting;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Crofting;AG;;Crofting;;NC;31may2000;31mar2003
+UK_RE-SC_1999__AG|Cuba;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Cuba;AG;;Cuba;;NC;16jan2002;31mar2003
+UK_RE-SC_1999__AG|Cycling;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Cycling;AG;;Cycling;;NC;24oct2000;31mar2003
+UK_RE-SC_1999__AG|CYP;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Children and Young People;AG;;CYP;;NC;08mar2000;31mar2003
+UK_RE-SC_1999__AG|Deafness;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Deafness;AG;;Deafness;;NC;24oct2000;31mar2003
+UK_RE-SC_1999__AG|Disability;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Disability;AG;;Disability;;NC;24oct2000;31mar2003
+UK_RE-SC_1999__AG|DM;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Drug Misuse;AG;;DM;;NC;28jun2000;31mar2003
+UK_RE-SC_1999__AG|Epilepsy;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Epilepsy;AG;;Epilepsy;;NC;22mar2000;31mar2003
+UK_RE-SC_1999__AG|Gaelic;UK_RE-SC_1999;Buidheann Thar-phàrtaidh Gàidhlig Ann Am Pàrlamaid Alba;AG;;Gaelic;;NC;28jun2000;31mar2003
+UK_RE-SC_1999__AG|HR;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Human Rights;AG;;HR;;NC;12sep2000;31mar2003
+UK_RE-SC_1999__AG|ID;UK_RE-SC_1999;Cross-Party International Development Group of the Scottish Parliament;AG;;ID;;NC;12sep2000;31mar2003
+UK_RE-SC_1999__AG|ITI;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on International Trade and Investment;AG;;ITI;;NC;06feb2002;31mar2003
+UK_RE-SC_1999__AG|KD;UK_RE-SC_1999;Cross-Party Group on Kidney Disease;AG;;KD;;NC;28jun2002;31mar2003
+UK_RE-SC_1999__AG|LD;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament for Learning Disability;AG;;LD;;NC;27jun2002;31mar2003
+UK_RE-SC_1999__AG|ME;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on M.E.;AG;;ME;;NC;06mar2001;31mar2003
+UK_RE-SC_1999__AG|MH;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Mental Health;AG;;MH;;NC;15feb2001;31mar2003
+UK_RE-SC_1999__AG|MVAWC;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Mens Violence Against Women and Children;AG;;MVAWC;;NC;31may2000;31mar2003
+UK_RE-SC_1999__AG|ND;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Nuclear Disarmament;AG;;ND;;NC;24oct2000;31mar2003
+UK_RE-SC_1999__AG|OG;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Oil and Gas;AG;;OG;;NC;09feb2000;31mar2003
+UK_RE-SC_1999__AG|OPAA;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Older People, Age and Ageing;AG;;OPAA;;NC;09feb2000;31mar2003
+UK_RE-SC_1999__AG|Palestine;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Palestine;AG;;Palestine;;NC;22oct2001;31mar2003
+UK_RE-SC_1999__AG|PC;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Palliative Care;AG;;PC;;NC;31mar2000;31mar2003
+UK_RE-SC_1999__AG|RAS;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Refugees and Asylum Seekers;AG;;RAS;;NC;14jun2000;31mar2003
+UK_RE-SC_1999__AG|RE;UK_RE-SC_1999;Scottish Parliament Renewable Energy Group;AG;;RE;;NC;05apr2000;31mar2003
+UK_RE-SC_1999__AG|SCMI;UK_RE-SC_1999;Cross-Party Group on the Scottish Contemporary Music Industry;AG;;SCMI;;NC;18dec2000;31mar2003
+UK_RE-SC_1999__AG|Scots;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on the Scots language;AG;;Scots;;NC;08feb2001;31mar2003
+UK_RE-SC_1999__AG|SCSA;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Survivors of Childhood Sexual Abuse;AG;;SCSA;;NC;21nov2000;31mar2003
+UK_RE-SC_1999__AG|Shipbuilding;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Shipbuilding;AG;;Shipbuilding;;NC;05apr2000;31mar2003
+UK_RE-SC_1999__AG|SPIKE;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Information Knowledge and Enlightenment (SPIKE);AG;;SPIKE;;NC;03may2000;31mar2003
+UK_RE-SC_1999__AG|Sports;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Sports;AG;;Sports;;NC;05apr2000;31mar2003
+UK_RE-SC_1999__AG|SRSS;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Strategic Rail Services for Scotland;AG;;SRSS;;NC;14jun2000;31mar2003
+UK_RE-SC_1999__AG|STA;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Scottish Traditional Arts;AG;;STA;;NC;19dec2000;31mar2003
+UK_RE-SC_1999__AG|TC;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Tobacco Control;AG;;TC;;NC;23feb2000;31mar2003
+UK_RE-SC_1999__AG|TCF;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Textiles Clothing and Footwear;AG;;TCF;;NC;18dec2002;31mar2003
+UK_RE-SC_1999__AG|Tourism;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Tourism;AG;;Tourism;;NC;21nov2000;31mar2003
+UK_RE-SC_1999__AG|VI;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Visual Impairment;AG;;VI;;NC;22nov2001;31mar2003
+UK_RE-SC_1999__AG|Women;UK_RE-SC_1999;Cross-Party Group in the Scottish Parliament on Women;AG;;Women;;NC;05may2000;31mar2003
+UK_RE-SC_2003__AG|ABE;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Architecture and the Built Environment;AG;;ABE;;NC;07oct2003;02apr2007
+UK_RE-SC_2003__AG|AffHousing;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Affordable Housing;AG;;AffHousing;;NC;21jun2003;02apr2007
+UK_RE-SC_2003__AG|ASD;UK_RE-SC_2003;Cross-Party Group on Autistic Spectrum Disorder;AG;;ASD;;NC;11jun2003;02apr2007
+UK_RE-SC_2003__AG|Asthma;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Asthma;AG;;Asthma;;NC;11jun2003;02apr2007
+UK_RE-SC_2003__AG|AW;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Animal Welfare;AG;;AW;;NC;04jun2003;02apr2007
+UK_RE-SC_2003__AG|BR;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Borders Rail;AG;;BR;;NC;04jun2003;02apr2007
+UK_RE-SC_2003__AG|Cancer;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Cancer;AG;;Cancer;;NC;28may2003;02apr2007
+UK_RE-SC_2003__AG|Carers;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Carers;AG;;Carers;;NC;19dec2006;02apr2007
+UK_RE-SC_2003__AG|CM;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Culture and the Media;AG;;CM;;NC;18jun2003;02apr2007
+UK_RE-SC_2003__AG|CNI;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on the Civil Nuclear Industry;AG;;CNI;;NC;22feb2005;02apr2007
+UK_RE-SC_2003__AG|Cons;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament for Construction;AG;;Cons;;NC;08oct2003;02apr2007
+UK_RE-SC_2003__AG|CoPS;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on a Culture of Peace in Scotland;AG;;CoPS;;NC;08sep2005;02apr2007
+UK_RE-SC_2003__AG|CP;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Chronic Pain;AG;;CP;;NC;20nov2003;02apr2007
+UK_RE-SC_2003__AG|Crofting;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Crofting;AG;;Crofting;;NC;18jun2003;02apr2007
+UK_RE-SC_2003__AG|Cuba;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Cuba;AG;;Cuba;;NC;10dec2003;02apr2007
+UK_RE-SC_2003__AG|Cycling;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Cycling;AG;;Cycling;;NC;10sep2003;02apr2007
+UK_RE-SC_2003__AG|CYP;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Children and Young People;AG;;CYP;;NC;04sep2003;02apr2007
+UK_RE-SC_2003__AG|DAM;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Drug and Alcohol Misuse;AG;;DAM;;NC;04jun2003;02apr2007
+UK_RE-SC_2003__AG|Deafness;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Deafness;AG;;Deafness;;NC;24sep2003;02apr2007
+UK_RE-SC_2003__AG|Debt;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Tackling Debt;AG;;Debt;;NC;01jun2004;02apr2007
+UK_RE-SC_2003__AG|Diabetes;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Diabetes;AG;;Diabetes;;NC;14dec2004;02apr2007
+UK_RE-SC_2003__AG|Disability;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Disability;AG;;Disability;;NC;26feb2004;02apr2007
+UK_RE-SC_2003__AG|Dyslexia;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Dyslexia;AG;;Dyslexia;;NC;04nov2005;02apr2007
+UK_RE-SC_2003__AG|Epilepsy;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Epilepsy;AG;;Epilepsy;;NC;18jun2003;02apr2007
+UK_RE-SC_2003__AG|ERH;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Electro-magnetic Radiation and Health;AG;;ERH;;NC;17jan2006;02apr2007
+UK_RE-SC_2003__AG|FB;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Funerals and Bereavement;AG;;FB;;NC;04mar2005;02apr2007
+UK_RE-SC_2003__AG|Food;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Food;AG;;Food;;NC;14dec2004;02apr2007
+UK_RE-SC_2003__AG|FS;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Fertility Services;AG;;FS;;NC;29nov2005;02apr2007
+UK_RE-SC_2003__AG|Gaelic;UK_RE-SC_2003;Buidheann Thar-Phartaidh na Gàidhlig;AG;;Gaelic;;NC;18jun2003;02apr2007
+UK_RE-SC_2003__AG|GC;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Glasgow Crossrail;AG;;GC;;NC;01jun2005;02apr2007
+UK_RE-SC_2003__AG|Golf;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Golf;AG;;Golf;;NC;21mar2006;02apr2007
+UK_RE-SC_2003__AG|HR;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Human Rights;AG;;HR;;NC;17jul2003;02apr2007
+UK_RE-SC_2003__AG|ID;UK_RE-SC_2003;Cross-Party International Development Group of the Scottish Parliament;AG;;ID;;NC;09oct2003;02apr2007
+UK_RE-SC_2003__AG|KD;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Kidney Disease;AG;;KD;;NC;25jun2003;02apr2007
+UK_RE-SC_2003__AG|LCLSSS;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Loss of Consultant Led Services in Scotland -Solutions;AG;;LCLSSS;;NC;14dec2004;02apr2007
+UK_RE-SC_2003__AG|LD;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament for Learning Disability;AG;;LD;;NC;18jun2003;02apr2007
+UK_RE-SC_2003__AG|Lupus;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Lupus;AG;;Lupus;;NC;16oct2004;02apr2007
+UK_RE-SC_2003__AG|Malawi;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Malawi;AG;;Malawi;;NC;04nov2005;02apr2007
+UK_RE-SC_2003__AG|ME;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on M.E.;AG;;ME;;NC;21may2003;02apr2007
+UK_RE-SC_2003__AG|MH;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Mental Health;AG;;MH;;NC;18jun2003;02apr2007
+UK_RE-SC_2003__AG|MVAWC;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Mens Violence Against Women and Children;AG;;MVAWC;;NC;04jun2003;02apr2007
+UK_RE-SC_2003__AG|ND;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Nuclear Disarmament;AG;;ND;;NC;06nov2003;02apr2007
+UK_RE-SC_2003__AG|OG;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Oil and Gas;AG;;OG;;NC;11jun2003;02apr2007
+UK_RE-SC_2003__AG|OPAA;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Older People, Age and Ageing;AG;;OPAA;;NC;12nov2003;02apr2007
+UK_RE-SC_2003__AG|Palestine;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Palestine;AG;;Palestine;;NC;31may2003;02apr2007
+UK_RE-SC_2003__AG|PC;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Palliative Care;AG;;PC;;NC;11jun2003;02apr2007
+UK_RE-SC_2003__AG|RAS;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Refugees and Asylum Seekers;AG;;RAS;;NC;11jun2003;02apr2007
+UK_RE-SC_2003__AG|RE;UK_RE-SC_2003;Renewable Energy Group;AG;;RE;;NC;04jun2003;23may2006
+UK_RE-SC_2003__AG|REEE;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Renewable Energy and Energy Efficiency;AG;;REEE;;NC;23may2006;02apr2007
+UK_RE-SC_2003__AG|RP;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Rural Policy;AG;;RP;;NC;29nov2005;02apr2007
+UK_RE-SC_2003__AG|SCMI;UK_RE-SC_2003;Cross-Party Group on the Scottish Contemporary Music Industry;AG;;SCMI;;NC;01oct2003;02apr2007
+UK_RE-SC_2003__AG|Scots;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on the Scots language;AG;;Scots;;NC;04nov2003;02apr2007
+UK_RE-SC_2003__AG|SCSA;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Survivors of Childhood Sexual Abuse;AG;;SCSA;;NC;25jun2003;02apr2007
+UK_RE-SC_2003__AG|SE;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on the Scottish Economy;AG;;SE;;NC;01sep2003;02apr2007
+UK_RE-SC_2003__AG|SFF;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Scotland's Financial Future;AG;;SFF;;NC;20jun2006;02apr2007
+UK_RE-SC_2003__AG|SFFP;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Sustainable Forestry and Forest Products;AG;;SFFP;;NC;25jan2005;02apr2007
+UK_RE-SC_2003__AG|SH;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Sexual Health;AG;;SH;;NC;08oct2003;02apr2007
+UK_RE-SC_2003__AG|Sports;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Sports;AG;;Sports;;NC;01jun2003;02apr2007
+UK_RE-SC_2003__AG|SRSS;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Strategic Rail Services for Scotland;AG;;SRSS;;NC;25jun2003;02apr2007
+UK_RE-SC_2003__AG|STA;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Scottish Traditional Arts;AG;;STA;;NC;18jun2003;02apr2007
+UK_RE-SC_2003__AG|SustTrans;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Sustainable Transport;AG;;SustTrans;;NC;25jan2005;02apr2007
+UK_RE-SC_2003__AG|SWP;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Scottish Writing and Publishing;AG;;SWP;;NC;01jun2005;02apr2007
+UK_RE-SC_2003__AG|TC;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Tobacco Control;AG;;TC;;NC;18jun2003;02apr2007
+UK_RE-SC_2003__AG|TCF;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Textiles Clothing and Footwear;AG;;TCF;;NC;25jun2003;02apr2007
+UK_RE-SC_2003__AG|TD;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Tartan Day;AG;;TD;;NC;14dec2004;02apr2007
+UK_RE-SC_2003__AG|Tibet;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Tibet;AG;;Tibet;;NC;29jan2004;02apr2007
+UK_RE-SC_2003__AG|VI;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Visual Impairment;AG;;VI;;NC;11sep2003;02apr2007
+UK_RE-SC_2003__AG|WM;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Wastes Management;AG;;WM;;NC;10sep2003;02apr2007
+UK_RE-SC_2003__AG|Women;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Women;AG;;Women;;NC;25sep2003;02apr2007
+UK_RE-SC_2003__AG|YPSNEET;UK_RE-SC_2003;Cross-Party Group in the Scottish Parliament on Young People in Scotland Not in Education, Employment or Training;AG;;YPSNEET;;NC;24oct2006;02apr2007
+UK_RE-SC_2007__AG|ABE;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Architecture and the Built Environment;AG;;ABE;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|AD;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Alzheimer's Disease;AG;;AD;;NC;30oct2007;22mar2011
+UK_RE-SC_2007__AG|ASR;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Asylum Seekers and Refugees;AG;;ASR;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|Asthma;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Asthma;AG;;Asthma;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|AW;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Animal Welfare;AG;;AW;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|BBI;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Beer and the Brewing Industry;AG;;BBI;;NC;27jan2009;22mar2011
+UK_RE-SC_2007__AG|Cancer;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Cancer;AG;;Cancer;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|Carers;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Carers;AG;;Carers;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|Caribbean;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on the Caribbean;AG;;Caribbean;;NC;17nov2009;22mar2011
+UK_RE-SC_2007__AG|CC;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Climate Change;AG;;CC;;NC;15jan2008;22mar2011
+UK_RE-SC_2007__AG|CHDS;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Coronary Heart Disease and Stroke;AG;;CHDS;;NC;28oct2008;22mar2011
+UK_RE-SC_2007__AG|China;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on China;AG;;China;;NC;22apr2008;22mar2011
+UK_RE-SC_2007__AG|CM;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Culture and Media;AG;;CM;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|CNE;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Civil Nuclear Energy;AG;;CNE;;NC;23feb2008;22mar2011
+UK_RE-SC_2007__AG|Cons;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Construction;AG;;Cons;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|Coop;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Co-operatives;AG;;Coop;;NC;28oct2008;22mar2011
+UK_RE-SC_2007__AG|CP;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Chronic Pain;AG;;CP;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|CredUni;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Credit Unions;AG;;CredUni;;NC;28apr2009;22mar2011
+UK_RE-SC_2007__AG|Crofting;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Crofting;AG;;Crofting;;NC;02oct2007;22mar2011
+UK_RE-SC_2007__AG|Cuba;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Cuba;AG;;Cuba;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|CYP;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Children and Young People;AG;;CYP;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|DAM;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Drug and Alcohol Misuse;AG;;DAM;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|DDH;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Coeliac Disease and DH;AG;;DDH;;NC;30oct2007;22mar2011
+UK_RE-SC_2007__AG|Deafness;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Deafness;AG;;Deafness;;NC;02oct2007;22mar2011
+UK_RE-SC_2007__AG|Debt;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Tackling Debt;AG;;Debt;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|Diabetes;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Diabetes;AG;;Diabetes;;NC;30oct2007;22mar2011
+UK_RE-SC_2007__AG|Disability;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Disability;AG;;Disability;;NC;18mar2008;22mar2011
+UK_RE-SC_2007__AG|DP;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Digital Participation;AG;;DP;;NC;08dec2009;22mar2011
+UK_RE-SC_2007__AG|Dyslexia;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Dyslexia;AG;;Dyslexia;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|Epilepsy;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Epilepsy;AG;;Epilepsy;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|FB;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Funerals and Bereavement;AG;;FB;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|Food;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Food;AG;;Food;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|FT;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Fair Trade;AG;;FT;;NC;20apr2010;22mar2011
+UK_RE-SC_2007__AG|Gaelic;UK_RE-SC_2007;Buidheann Thar-Phartaidh na Gàidhlig;AG;;Gaelic;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|Golf;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Golf;AG;;Golf;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|HDS;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Heart Disease and Stroke;AG;;HDS;;NC;31mar2009;22mar2011
+UK_RE-SC_2007__AG|Housing;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Housing;AG;;Housing;;NC;15jan2008;22mar2011
+UK_RE-SC_2007__AG|HRCL;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Human Rights and Civil Liberties;AG;;HRCL;;NC;20nov2007;22mar2011
+UK_RE-SC_2007__AG|IC;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Industrial Communities;AG;;IC;;NC;29sep2009;22mar2011
+UK_RE-SC_2007__AG|ID;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on International Development;AG;;ID;;NC;30oct2007;22mar2011
+UK_RE-SC_2007__AG|LD;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Learning Disability;AG;;LD;;NC;11dec2007;22mar2011
+UK_RE-SC_2007__AG|LS;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Life Sciences;AG;;LS;;NC;22apr2008;22mar2011
+UK_RE-SC_2007__AG|Malawi;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Malawi;AG;;Malawi;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|MD;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Muscular Dystrophy;AG;;MD;;NC;02mar2010;22mar2011
+UK_RE-SC_2007__AG|ME;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on M.E.;AG;;ME;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|MH;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Mental Health;AG;;MH;;NC;02oct2007;22mar2011
+UK_RE-SC_2007__AG|MVAWC;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Mens Violence Against Women and Children;AG;;MVAWC;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|ND;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Nuclear Disarmament;AG;;ND;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|Obesity;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Obesity;AG;;Obesity;;NC;22apr2008;22mar2011
+UK_RE-SC_2007__AG|OG;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Oil and Gas;AG;;OG;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|OPAA;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Older People, Age and Ageing;AG;;OPAA;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|Palestine;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Palestine;AG;;Palestine;;NC;11dec2007;22mar2011
+UK_RE-SC_2007__AG|PC;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Palliative Care;AG;;PC;;NC;02oct2007;22mar2011
+UK_RE-SC_2007__AG|Poland;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Poland;AG;;Poland;;NC;09jun2009;22mar2011
+UK_RE-SC_2007__AG|PPA;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Psoriasis and Psoriatic Arthritis;AG;;PPA;;NC;19jan2010;22mar2011
+UK_RE-SC_2007__AG|RacEq;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Racial Equality in Scotland;AG;;RacEq;;NC;24jun2008;22mar2011
+UK_RE-SC_2007__AG|RBMT;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Recreational Boating and Marine Tourism;AG;;RBMT;;NC;09jun2009;22mar2011
+UK_RE-SC_2007__AG|REEE;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Renewable Energy and Energy Efficiency;AG;;REEE;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|RP;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Rural Policy;AG;;RP;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|Russia;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Russia;AG;;Russia;;NC;13may2008;22mar2011
+UK_RE-SC_2007__AG|SciTech;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Science and Technology;AG;;SciTech;;NC;26feb2008;22mar2011
+UK_RE-SC_2007__AG|SCM;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Scottish Contemporary Music;AG;;SCM;;NC;20nov2007;22mar2011
+UK_RE-SC_2007__AG|Scots;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on the Scots language;AG;;Scots;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|SCSA;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Survivors of Childhood Sexual Abuse;AG;;SCSA;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|SE;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on the Scottish Economy;AG;;SE;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|SH;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Sexual Health;AG;;SH;;NC;11dec2007;22mar2011
+UK_RE-SC_2007__AG|Skills;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Skills;AG;;Skills;;NC;24jun2008;22mar2011
+UK_RE-SC_2007__AG|Sport;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Sport;AG;;Sport;;NC;30oct2007;22mar2011
+UK_RE-SC_2007__AG|SU;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Scottish Universities;AG;;SU;;NC;28apr2009;22mar2011
+UK_RE-SC_2007__AG|SVS;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Supporting Veterans in Scotland;AG;;SVS;;NC;02sep2008;22mar2011
+UK_RE-SC_2007__AG|Taiwan;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Taiwan;AG;;Taiwan;;NC;19jan2010;22mar2011
+UK_RE-SC_2007__AG|TC;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Tobacco Control;AG;;TC;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|TCCD;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Town and City Centre Development;AG;;TCCD;;NC;28apr2009;22mar2011
+UK_RE-SC_2007__AG|TD;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Tartan Day;AG;;TD;;NC;13aug2007;22mar2011
+UK_RE-SC_2007__AG|Tibet;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Tibet;AG;;Tibet;;NC;15jan2008;22mar2011
+UK_RE-SC_2007__AG|VI;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Visual Impairment;AG;;VI;;NC;11dec2007;22mar2011
+UK_RE-SC_2007__AG|WM;UK_RE-SC_2007;Cross-Party Group in the Scottish Parliament on Wastes Management;AG;;WM;;NC;13aug2007;22mar2011
+UK_RE-SC_2011__AG|ABE;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Architecture and the Built Environment;AG;;ABE;;NC;13sep2011;23mar2016
+UK_RE-SC_2011__AG|AFV;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Armed Forces Veterans;AG;;AFV;;NC;26oct2011;23mar2016
+UK_RE-SC_2011__AG|AL;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Adult Learning;AG;;AL;;NC;16sep2013;23mar2016
+UK_RE-SC_2011__AG|AMC;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Arthritis and Musculoskeletal Conditions;AG;;AMC;;NC;25apr2012;23mar2016
+UK_RE-SC_2011__AG|APSA;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Accident Prevention and Safety Awareness;AG;;APSA;;NC;09may2013;23mar2016
+UK_RE-SC_2011__AG|ASCSA;UK_RE-SC_2011;Cross-party Group in the Scottish Parliament on Adult Survivors of Childhood Sexual Abuse;AG;;ASCSA;;NC;12sep2011;23mar2016
+UK_RE-SC_2011__AG|Asthma;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Asthma;AG;;Asthma;;NC;14dec2011;23mar2016
+UK_RE-SC_2011__AG|Aviation;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Aviation;AG;;Aviation;;NC;20jun2012;23mar2016
+UK_RE-SC_2011__AG|AW;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Animal Welfare;AG;;AW;;NC;05sep2011;23mar2016
+UK_RE-SC_2011__AG|BBI;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Beer and the Brewing Industry;AG;;BBI;;NC;09aug2011;16sep2013
+UK_RE-SC_2011__AG|CA;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Consumer Affairs;AG;;CA;;NC;17jun2015;23mar2016
+UK_RE-SC_2011__AG|Cancer;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Cancer;AG;;Cancer;;NC;07sep2011;23mar2016
+UK_RE-SC_2011__AG|Carers;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Carers;AG;;Carers;;NC;09aug2011;23mar2016
+UK_RE-SC_2011__AG|Caribbean;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Caribbean;AG;;Caribbean;;NC;05sep2011;23mar2016
+UK_RE-SC_2011__AG|China;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on China;AG;;China;;NC;26oct2011;23mar2016
+UK_RE-SC_2011__AG|CollUni;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Colleges and Universities;AG;;CollUni;;NC;09nov2011;23mar2016
+UK_RE-SC_2011__AG|Cons;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Construction;AG;;Cons;;NC;13sep2011;23mar2016
+UK_RE-SC_2011__AG|Coop;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Co-operatives;AG;;Coop;;NC;11aug2011;23mar2016
+UK_RE-SC_2011__AG|CP;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Chronic Pain;AG;;CP;;NC;05sep2011;23mar2016
+UK_RE-SC_2011__AG|CredUni;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Credit Unions;AG;;CredUni;;NC;09aug2011;23mar2016
+UK_RE-SC_2011__AG|Crofting;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Crofting;AG;;Crofting;;NC;09aug2011;23mar2016
+UK_RE-SC_2011__AG|Cuba;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Cuba;AG;;Cuba;;NC;09aug2011;23mar2016
+UK_RE-SC_2011__AG|Culture;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Culture;AG;;Culture;;NC;27sep2013;23mar2016
+UK_RE-SC_2011__AG|Cycling;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Cycling;AG;;Cycling;;NC;12jun2012;23mar2016
+UK_RE-SC_2011__AG|CYP;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Children and Young People;AG;;CYP;;NC;05sep2011;23mar2016
+UK_RE-SC_2011__AG|DAM;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Drug and Alcohol Misuse;AG;;DAM;;NC;05sep2011;23mar2016
+UK_RE-SC_2011__AG|Deafness;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Deafness;AG;;Deafness;;NC;13sep2011;23mar2016
+UK_RE-SC_2011__AG|Dementia;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Dementia;AG;;Dementia;;NC;27mar2012;23mar2016
+UK_RE-SC_2011__AG|Diabetes;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Diabetes;AG;;Diabetes;;NC;09aug2011;23mar2016
+UK_RE-SC_2011__AG|Disability;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Disability;AG;;Disability;;NC;09aug2011;23mar2016
+UK_RE-SC_2011__AG|DP;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Digital Participation;AG;;DP;;NC;11aug2011;23mar2016
+UK_RE-SC_2011__AG|Dyslexia;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Dyslexia;AG;;Dyslexia;;NC;13sep2011;23mar2016
+UK_RE-SC_2011__AG|Epilepsy;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Epilepsy;AG;;Epilepsy;;NC;18aug2011;23mar2016
+UK_RE-SC_2011__AG|FAI;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Families Affected by Imprisonment;AG;;FAI;;NC;23nov2011;23mar2016
+UK_RE-SC_2011__AG|FB;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Funerals and Bereavement;AG;;FB;;NC;18jan2012;23mar2016
+UK_RE-SC_2011__AG|Food;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Food;AG;;Food;;NC;09aug2011;23mar2016
+UK_RE-SC_2011__AG|France;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on France;AG;;France;;NC;27sep2013;23mar2016
+UK_RE-SC_2011__AG|FT;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Fair Trade;AG;;FT;;NC;09aug2011;23mar2016
+UK_RE-SC_2011__AG|Gaelic;UK_RE-SC_2011;Buidheann Thar-Phartaidh na Gàidhlig;AG;;Gaelic;;NC;13sep2011;23mar2016
+UK_RE-SC_2011__AG|Germany;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Germany;AG;;Germany;;NC;18jan2012;23mar2016
+UK_RE-SC_2011__AG|Golf;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Golf;AG;;Golf;;NC;30sep2011;23mar2016
+UK_RE-SC_2011__AG|HDS;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Heart Disease and Stroke;AG;;HDS;;NC;09aug2011;23mar2016
+UK_RE-SC_2011__AG|HI;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Health Inequalities;AG;;HI;;NC;26oct2011;23mar2016
+UK_RE-SC_2011__AG|Housing;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Housing;AG;;Housing;;NC;23nov2011;23mar2016
+UK_RE-SC_2011__AG|HR;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Human Rights;AG;;HR;;NC;05sep2011;23mar2016
+UK_RE-SC_2011__AG|HT;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Human Trafficking;AG;;HT;;NC;22may2012;23mar2016
+UK_RE-SC_2011__AG|IC;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Industrial Communities;AG;;IC;;NC;09aug2011;23mar2016
+UK_RE-SC_2011__AG|ID;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on International Development;AG;;ID;;NC;11aug2011;23mar2016
+UK_RE-SC_2011__AG|Japan;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Japan;AG;;Japan;;NC;07jan2014;26nov2015
+UK_RE-SC_2011__AG|LD;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Learning Disability;AG;;LD;;NC;23nov2011;23mar2016
+UK_RE-SC_2011__AG|LS;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Life Sciences;AG;;LS;;NC;13sep2011;12jun2015
+UK_RE-SC_2011__AG|Lupus;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Lupus;AG;;Lupus;;NC;29feb2012;10may2013
+UK_RE-SC_2011__AG|Malawi;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Malawi;AG;;Malawi;;NC;09aug2011;23mar2016
+UK_RE-SC_2011__AG|MD;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Muscular Dystrophy;AG;;MD;;NC;09aug2011;23mar2016
+UK_RE-SC_2011__AG|ME;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on M.E.;AG;;ME;;NC;13sep2011;02nov2012
+UK_RE-SC_2011__AG|MESA;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Middle East and South Asia;AG;;MESA;;NC;31jan2012;23mar2016
+UK_RE-SC_2011__AG|MH;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Mental Health;AG;;MH;;NC;05sep2011;23mar2016
+UK_RE-SC_2011__AG|MS;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on MS;AG;;MS;;NC;10oct2013;23mar2016
+UK_RE-SC_2011__AG|MVAWC;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Men's Violence Against Women and Children;AG;;MVAWC;;NC;07dec2011;23mar2016
+UK_RE-SC_2011__AG|ND;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Nuclear Disarmament;AG;;ND;;NC;09aug2011;23mar2016
+UK_RE-SC_2011__AG|OG;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Oil and Gas;AG;;OG;;NC;29feb2012;23mar2016
+UK_RE-SC_2011__AG|OPAA;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Older People, Age and Ageing;AG;;OPAA;;NC;24aug2011;23mar2016
+UK_RE-SC_2011__AG|Pakistan;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Pakistan;AG;;Pakistan;;NC;22may2012;23mar2016
+UK_RE-SC_2011__AG|Palestine;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Palestine;AG;;Palestine;;NC;13sep2011;23mar2016
+UK_RE-SC_2011__AG|PC;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Palliative Care;AG;;PC;;NC;09aug2011;23mar2016
+UK_RE-SC_2011__AG|PH;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Park Homes;AG;;PH;;NC;29feb2012;26nov2015
+UK_RE-SC_2011__AG|PI;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Postal Issues;AG;;PI;;NC;13sep2012;23mar2016
+UK_RE-SC_2011__AG|Poland;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Poland;AG;;Poland;;NC;13sep2011;23mar2016
+UK_RE-SC_2011__AG|PPA;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Psoriasis and Psoriatic Arthritis;AG;;PPA;;NC;09aug2011;06nov2014
+UK_RE-SC_2011__AG|RacEq;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Racial Equality in Scotland;AG;;RacEq;;NC;09aug2011;23mar2016
+UK_RE-SC_2011__AG|Rail;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Rail;AG;;Rail;;NC;06jan2013;23mar2016
+UK_RE-SC_2011__AG|RBMT;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Recreational Boating and Marine Tourism;AG;;RBMT;;NC;13sep2011;23mar2016
+UK_RE-SC_2011__AG|RD;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Rare Diseases;AG;;RD;;NC;16sep2013;23mar2016
+UK_RE-SC_2011__AG|REEE;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Renewable Energy and Energy Efficiency;AG;;REEE;;NC;29sep2011;23mar2016
+UK_RE-SC_2011__AG|RF;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Religious Freedom;AG;;RF;;NC;15sep2015;23mar2016
+UK_RE-SC_2011__AG|RP;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Rural Policy;AG;;RP;;NC;26oct2011;23mar2016
+UK_RE-SC_2011__AG|Russia;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Russia;AG;;Russia;;NC;29feb2012;05feb2016
+UK_RE-SC_2011__AG|SARC;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Skin and Associated Rheumatic Conditions;AG;;SARC;;NC;06nov2014;23mar2016
+UK_RE-SC_2011__AG|SciTech;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Science and Technology;AG;;SciTech;;NC;25apr2012;23mar2016
+UK_RE-SC_2011__AG|Scots;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Scots language;AG;;Scots;;NC;25apr2012;15oct2014
+UK_RE-SC_2011__AG|SE;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Scottish Economy;AG;;SE;;NC;19nov2013;23mar2016
+UK_RE-SC_2011__AG|SH;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Sexual Health;AG;;SH;;NC;31jan2012;23mar2016
+UK_RE-SC_2011__AG|Skills;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Skills;AG;;Skills;;NC;09aug2011;23mar2016
+UK_RE-SC_2011__AG|SocEnt;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Social Enterprise;AG;;SocEnt;;NC;13sep2011;23mar2016
+UK_RE-SC_2011__AG|Sport;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Sport;AG;;Sport;;NC;26sep2011;23mar2016
+UK_RE-SC_2011__AG|SSG;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Scottish Showmen's Guild;AG;;SSG;;NC;26oct2011;23mar2016
+UK_RE-SC_2011__AG|SW;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Scotch Whisky;AG;;SW;;NC;30sep2011;23mar2016
+UK_RE-SC_2011__AG|Taiwan;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Taiwan;AG;;Taiwan;;NC;09aug2011;23mar2016
+UK_RE-SC_2011__AG|TC;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Tobacco Control;AG;;TC;;NC;26oct2011;20dec2012
+UK_RE-SC_2011__AG|TH;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Tobacco and Health;AG;;TH;;NC;20dec2012;23mar2016
+UK_RE-SC_2011__AG|Tibet;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Tibet;AG;;Tibet;;NC;27mar2012;23mar2016
+UK_RE-SC_2011__AG|Tourism;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Tourism;AG;;Tourism;;NC;02apr2015;23mar2016
+UK_RE-SC_2011__AG|TTC;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Towns and Town Centres;AG;;TTC;;NC;15mar2013;23mar2016
+UK_RE-SC_2011__AG|Turkey;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Turkey;AG;;Turkey;;NC;09may2014;23mar2016
+UK_RE-SC_2011__AG|VGT;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Video Games Technology;AG;;VGT;;NC;18jan2012;26nov2015
+UK_RE-SC_2011__AG|VI;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Visual Impairment;AG;;VI;;NC;26oct2011;23mar2016
+UK_RE-SC_2011__AG|VVS;UK_RE-SC_2011;Cross-Party Group in the Scottish Parliament on Volunteering and the Voluntary Sector;AG;;VVS;;NC;26oct2011;23mar2016
+UK_RE-SC_2016__AG|ABE;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Architecture and the Built Environment;AG;;ABE;;NC;22nov2016;NC
+UK_RE-SC_2016__AG|AFVC;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Armed Forces and Veterans Community;AG;;AFVC;;NC;21sep2016;NC
+UK_RE-SC_2016__AG|AMC;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Arthritis and Musculoskeletal Conditions;AG;;AMC;;NC;14sep2016;NC
+UK_RE-SC_2016__AG|APSA;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Accident Prevention and Safety Awareness;AG;;APSA;;NC;08jun2016;NC
+UK_RE-SC_2016__AG|ASCSA;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Adult Survivors of Childhood Sexual Abuse;AG;;ASCSA;;NC;18oct2016;NC
+UK_RE-SC_2016__AG|Autism;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Autism;AG;;Autism;;NC;14nov2017;NC
+UK_RE-SC_2016__AG|Aviation;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Aviation;AG;;Aviation;;NC;27oct2016;NC
+UK_RE-SC_2016__AG|AW;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Animal Welfare;AG;;AW;;NC;14jun2016;NC
+UK_RE-SC_2016__AG|BI;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Basic Income;AG;;BI;;NC;10may2018;NC
+UK_RE-SC_2016__AG|BP;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Beer and Pubs;AG;;BP;;NC;12jan2017;NC
+UK_RE-SC_2016__AG|BREXIT;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on BREXIT;AG;;BREXIT;;NC;29nov2016;26jul2019
+UK_RE-SC_2016__AG|Cancer;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Cancer;AG;;Cancer;;NC;24oct2016;NC
+UK_RE-SC_2016__AG|Carers;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Carers;AG;;Carers;;NC;29jun2016;NC
+UK_RE-SC_2016__AG|China;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on China;AG;;China;;NC;14sep2016;NC
+UK_RE-SC_2016__AG|CollUni;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Colleges and Universities;AG;;CollUni;;NC;18oct2016;NC
+UK_RE-SC_2016__AG|Cons;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Construction;AG;;Cons;;NC;27sep2016;NC
+UK_RE-SC_2016__AG|Coop;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Co-Operatives;AG;;Coop;;NC;27oct2016;NC
+UK_RE-SC_2016__AG|CP;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Chronic Pain;AG;;CP;;NC;27oct2016;NC
+UK_RE-SC_2016__AG|CPHEERE;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Consumer Protection for Home Energy Efficiency and Renewable Energy;AG;;CPHEERE;;NC;04oct2017;NC
+UK_RE-SC_2016__AG|CredUni;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Credit Unions;AG;;CredUni;;NC;26oct2016;NC
+UK_RE-SC_2016__AG|Crofting;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Crofting;AG;;Crofting;;NC;29jun2016;NC
+UK_RE-SC_2016__AG|CSE;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Commercial Sexual Exploitation;AG;;CSE;;NC;23nov2016;NC
+UK_RE-SC_2016__AG|CSSS;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Combatting Sectarianism in Scottish Society;AG;;CSSS;;NC;27jun2018;19mar2020
+UK_RE-SC_2016__AG|Cuba;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Cuba;AG;;Cuba;;NC;21sep2016;NC
+UK_RE-SC_2016__AG|Culture;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Culture;AG;;Culture;;NC;06sep2016;NC
+UK_RE-SC_2016__AG|CWB;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Cycling, Walking and Buses;AG;;CWB;;NC;07dec2016;NC
+UK_RE-SC_2016__AG|CYP;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Children and Young People;AG;;CYP;;NC;07jun2016;NC
+UK_RE-SC_2016__AG|DAM;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Drug and Alcohol Misuse;AG;;DAM;;NC;27oct2016;NC
+UK_RE-SC_2016__AG|Deafness;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Deafness;AG;;Deafness;;NC;13sep2016;NC
+UK_RE-SC_2016__AG|Dementia;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Dementia;AG;;Dementia;;NC;31jan2017;NC
+UK_RE-SC_2016__AG|Diabetes;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Diabetes;AG;;Diabetes;;NC;21sep2016;NC
+UK_RE-SC_2016__AG|Disability;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Disability;AG;;Disability;;NC;20sep2016;NC
+UK_RE-SC_2016__AG|DP;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Digital Participation;AG;;DP;;NC;13oct2016;NC
+UK_RE-SC_2016__AG|Dyslexia;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Dyslexia;AG;;Dyslexia;;NC;26oct2016;NC
+UK_RE-SC_2016__AG|ELC;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on End of Life Choices;AG;;ELC;;NC;06dec2016;NC
+UK_RE-SC_2016__AG|Epilepsy;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Epilepsy;AG;;Epilepsy;;NC;08sep2016;NC
+UK_RE-SC_2016__AG|FAI;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Families Affected by Imprisonment;AG;;FAI;;NC;21sep2016;NC
+UK_RE-SC_2016__AG|FB;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Funerals and Bereavement;AG;;FB;;NC;28oct2016;NC
+UK_RE-SC_2016__AG|FFS;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Future of Football in Scotland;AG;;FFS;;NC;14mar2017;NC
+UK_RE-SC_2016__AG|Fishing;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Fishing;AG;;Fishing;;NC;07feb2017;NC
+UK_RE-SC_2016__AG|Food;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Food;AG;;Food;;NC;07sep2016;NC
+UK_RE-SC_2016__AG|FRB;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Freedom of Religion or Belief;AG;;FRB;;NC;21feb2017;NC
+UK_RE-SC_2016__AG|FT;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Fair Trade;AG;;FT;;NC;31oct2016;NC
+UK_RE-SC_2016__AG|Gaelic;UK_RE-SC_2016;Buidheann Thar-Phartaidh na Gàidhlig;AG;;Gaelic;;NC;15jun2016;NC
+UK_RE-SC_2016__AG|Germany;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Germany;AG;;Germany;;NC;28oct2016;NC
+UK_RE-SC_2016__AG|Govanhill;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Govanhill;AG;;Govanhill;;NC;25apr2017;NC
+UK_RE-SC_2016__AG|HDS;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Heart Disease and Stroke;AG;;HDS;;NC;08dec2016;NC
+UK_RE-SC_2016__AG|HI;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Health Inequalities;AG;;HI;;NC;26oct2016;NC
+UK_RE-SC_2016__AG|Housing;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Housing;AG;;Housing;;NC;28oct2016;NC
+UK_RE-SC_2016__AG|HT;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Human Trafficking;AG;;HT;;NC;27oct2016;NC
+UK_RE-SC_2016__AG|IBD;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Inflammatory Bowel Disease;AG;;IBD;;NC;22feb2017;NC
+UK_RE-SC_2016__AG|IC;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Industrial Communities;AG;;IC;;NC;15jun2016;NC
+UK_RE-SC_2016__AG|ICS;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Independent Convenience Stores;AG;;ICS;;NC;21sep2016;NC
+UK_RE-SC_2016__AG|ID;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on International Development;AG;;ID;;NC;27oct2016;NC
+UK_RE-SC_2016__AG|ISHB;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Improving Scotland’s Health: 2021 and Beyond;AG;;ISHB;;NC;02nov2016;NC
+UK_RE-SC_2016__AG|Israel;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Building Bridges with Israel;AG;;Israel;;NC;26sep2016;NC
+UK_RE-SC_2016__AG|Japan;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Japan;AG;;Japan;;NC;23oct2018;NC
+UK_RE-SC_2016__AG|Kurdistan;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Kurdistan;AG;;Kurdistan;;NC;27oct2016;NC
+UK_RE-SC_2016__AG|LD;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Learning Disability;AG;;LD;;NC;21sep2016;NC
+UK_RE-SC_2016__AG|LGBTI;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on LGBTI+;AG;;LGBTI;;NC;28sep2016;NC
+UK_RE-SC_2016__AG|LH;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Lung Health;AG;;LH;;NC;01nov2016;NC
+UK_RE-SC_2016__AG|LS;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Life Sciences;AG;;LS;;NC;28nov2017;NC
+UK_RE-SC_2016__AG|Malawi;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Malawi;AG;;Malawi;;NC;07sep2016;NC
+UK_RE-SC_2016__AG|MD;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Muscular Dystrophy;AG;;MD;;NC;15jun2016;NC
+UK_RE-SC_2016__AG|MH;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Mental Health;AG;;MH;;NC;26oct2016;NC
+UK_RE-SC_2016__AG|MS;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on MS;AG;;MS;;NC;15sep2016;NC
+UK_RE-SC_2016__AG|Music;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Music;AG;;Music;;NC;21feb2018;NC
+UK_RE-SC_2016__AG|MVAWC;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Men's Violence Against Women and Children;AG;;MVAWC;;NC;24oct2016;NC
+UK_RE-SC_2016__AG|NC;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Nordic Countries;AG;;NC;;NC;14dec2016;NC
+UK_RE-SC_2016__AG|ND;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Nuclear Disarmament;AG;;ND;;NC;17nov2016;NC
+UK_RE-SC_2016__AG|OG;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Oil and Gas;AG;;OG;;NC;14sep2016;NC
+UK_RE-SC_2016__AG|OPAA;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Older People, Age and Ageing;AG;;OPAA;;NC;13sep2016;NC
+UK_RE-SC_2016__AG|Pakistan;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Pakistan;AG;;Pakistan;;NC;08jun2016;NC
+UK_RE-SC_2016__AG|Palestine;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Palestine;AG;;Palestine;;NC;29jun2016;NC
+UK_RE-SC_2016__AG|PC;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Palliative Care;AG;;PC;;NC;16sep2016;NC
+UK_RE-SC_2016__AG|PHACE;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Prevention and Healing of Adverse Childhood Experiences;AG;;PHACE;;NC;13jun2018;NC
+UK_RE-SC_2016__AG|Poland;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Poland;AG;;Poland;;NC;24oct2016;NC
+UK_RE-SC_2016__AG|RacEq;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Racial Equality;AG;;RacEq;;NC;20sep2016;NC
+UK_RE-SC_2016__AG|Rail;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Rail;AG;;Rail;;NC;28oct2016;NC
+UK_RE-SC_2016__AG|RBMT;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Recreational Boating and Marine Tourism;AG;;RBMT;;NC;29jun2016;NC
+UK_RE-SC_2016__AG|REEE;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Renewable Energy and Energy Efficiency ;AG;;REEE;;NC;15sep2016;NC
+UK_RE-SC_2016__AG|RGUC;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Rare, Genetic and Undiagnosed Conditions;AG;;RGUC;;NC;28mar2017;NC
+UK_RE-SC_2016__AG|RP;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Rural Policy;AG;;RP;;NC;28sep2016;NC
+UK_RE-SC_2016__AG|Russia;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Russia;AG;;Russia;;NC;28oct2016;NC
+UK_RE-SC_2016__AG|SAD;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on St Andrew’s Day;AG;;SAD;;NC;19sep2018;NC
+UK_RE-SC_2016__AG|SciTech;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Science and Technology;AG;;SciTech;;NC;06sep2016;NC
+UK_RE-SC_2016__AG|SGTC;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Scottish Gypsy/Traveller Community;AG;;SGTC;;NC;13jun2018;NC
+UK_RE-SC_2016__AG|SHBBV;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Sexual Health and Blood Borne Viruses;AG;;SHBBV;;NC;14dec2016;NC
+UK_RE-SC_2016__AG|SHBI;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Scottish Horseracing and Bloodstock Industries;AG;;SHBI;;NC;26oct2016;NC
+UK_RE-SC_2016__AG|Skills;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Skills;AG;;Skills;;NC;28oct2016;NC
+UK_RE-SC_2016__AG|SocEnt;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Social Enterprise;AG;;SocEnt;;NC;27mar2018;NC
+UK_RE-SC_2016__AG|SP;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Shared Parenting;AG;;SP;;NC;17jan2018;NC
+UK_RE-SC_2016__AG|Sport;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Sport;AG;;Sport;;NC;27oct2016;NC
+UK_RE-SC_2016__AG|SS;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Social Science;AG;;SS;;NC;28feb2017;NC
+UK_RE-SC_2016__AG|SSG;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Scottish Showmen's Guild;AG;;SSG;;NC;28jun2016;NC
+UK_RE-SC_2016__AG|SW;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Scotch Whisky;AG;;SW;;NC;13sep2016;NC
+UK_RE-SC_2016__AG|Taiwan;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Taiwan;AG;;Taiwan;;NC;14jun2016;NC
+UK_RE-SC_2016__AG|TI;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Tackling Islamophobia;AG;;TI;;NC;30jan2018;NC
+UK_RE-SC_2016__AG|Tibet;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Tibet;AG;;Tibet;;NC;12oct2016;NC
+UK_RE-SC_2016__AG|Tourism;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Tourism;AG;;Tourism;;NC;14jun2016;NC
+UK_RE-SC_2016__AG|TTC;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Towns and Town Centres;AG;;TTC;;NC;21sep2016;NC
+UK_RE-SC_2016__AG|USA;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on USA;AG;;USA;;NC;24apr2019;NC
+UK_RE-SC_2016__AG|VI;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Visual Impairment;AG;;VI;;NC;13sep2016;NC
+UK_RE-SC_2016__AG|Volunteering;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Volunteering;AG;;Volunteering;;NC;28jun2016;NC
+UK_RE-SC_2016__AG|WASPI;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on WASPI;AG;;WASPI;;NC;22feb2017;NC
+UK_RE-SC_2016__AG|WE;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Women in Enterprise;AG;;WE;;NC;28sep2016;NC
+UK_RE-SC_2016__AG|WH;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Women's Health;AG;;WH;;NC;11may2017;NC
+UK_RE-SC_2016__AG|WJ;UK_RE-SC_2016;Cross-Party Group in the Scottish Parliament on Women's Justice;AG;;WJ;;NC;16may2018;NC
