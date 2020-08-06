@@ -567,6 +567,11 @@
 					table(is.na(ELLIBU$country))
 					table(is.na(ELLIBU$list_id))
 					table(ELLI$country)
+					
+			# also for ELLIBU, get rid of all lists with 'Netherlands' as the district as these are simply aggregated lists here with the intention to collect the number of votes per MP
+				nrow(ELLIBU)
+				ELLIBU  <- ELLIBU[which(!grepl("Netherlands", ELLIBU$district_id, ignore.case=TRUE)),]
+				nrow(ELLIBU)
 			
 	##############################################
 	# DATA 5: gender guessing on basis on namelist when nessary
@@ -825,10 +830,10 @@
                         howfarback = 1
                         local_natparty_id = "NL_CDA_NT"
 						
-						local_list_id = ELENBU$list_id_old[54193]
-						local_list_position = ELENBU$listplace[54193]
+						local_list_id = ELENBU$list_id_old[22373]
+						local_list_position = ELENBU$listplace[22373]
 						howfarback =  1
-						local_natparty_id =  ELENBU$party_id_from_elli_nat_equiv[54193]
+						local_natparty_id =  ELENBU$party_id_from_elli_nat_equiv[22373]
 						
 						wasdoublegangertminxsuccesfull(local_list_id,local_list_position,howfarback,local_natparty_id)
 						
@@ -906,9 +911,9 @@
 								doublegangerpersidvoteone <- ""
 								doublegangerpersidvotetwo <- ""
 								
-								doublegangerpersidvoteone <- ELENBU[which(ELENBU$list_id_old == doublegangerfakelistid & ELENBU$listplace == local_list_position),]$pers_id
+								doublegangerpersidvoteone <- ELENBU[which(ELENBU$list_id_old == doublegangerfakelistid & ELENBU$listplace == local_list_position_updated),]$pers_id
 								doublegangerpersidvotetwo <- ELENBU[which(
-																		  ELENBU$listplace == local_list_position & 
+																		  ELENBU$listplace == local_list_position_updated & 
 																		  ELENBU$party_id_from_elli_nat_equiv == doublegangerparty &
 																		  ELENBU$district_id == doublegangerdistrictid # Q: check here, are all of the district IDs still in ELENBU at this stage?!
 																    ),]$pers_id 
@@ -917,7 +922,7 @@
 								if(length(unique(doublegangerpersidvoteone)) > 1 | length(unique(doublegangerpersidvotetwo)) > 1) # this is 'unique' because in the case of Dutch [8-12] number of vote indications e.t.c. for example we know we will get more then one hit. Which is not a problem for the script as long as this is the same person.
 								{
 									warning(paste("function was doing run - local_list_id:",local_list_id,
-											   " - local_list_position:",local_list_position,
+											   " - local_list_position_updated:",local_list_position_updated,
 											   " - howfarback:",howfarback,
 											   " - local_natparty_id:",local_natparty_id,
 											   ". However, two or more double gangers where detected, so execution has been stopped. Please inspect!, the value for doublegangerpersidvoteone is:",doublegangerpersidvoteone,
@@ -1069,7 +1074,7 @@
 						nrow(ELENBU)
 						
 						# runDGagain = FALSE
-						runDGagain = TRUE
+						# runDGagain = TRUE
 						
 						if(runDGagain)
 						{
@@ -1145,14 +1150,19 @@
 						table(successfulldoubleganger_tminus2_vec)
 						table(successfulldoubleganger_tminus3_vec)
 						
-						install.packages("writexl")
-						library("writexl")
-						write_xlsx(ELENBU,"./ELENBU.xlsx")
+						ELENBU$firstissue <- successfulldoubleganger_tminus1_vec
+						ELENBU$secondissue <- successfulldoubleganger_tminus2_vec
+						ELENBU$thirdissue <- successfulldoubleganger_tminus3_vec
 						
 						
 						ELENBU$electable <- ifelse(resvecelect,"electable","not electable")
 						table(ELENBU$electable)
 						table(is.na(ELENBU$electable))
+						
+						head(ELENBU)
+						install.packages("writexl")
+						library("writexl")
+						write_xlsx(ELENBU,"./ELENBU_20200804-1724.xlsx")
 						
 						tail(ELENBU)
 						head(ELENBU[which(ELENBU$electable == "electable"),])
@@ -1175,6 +1185,80 @@
 				ELENBU <- ELENBUTEMP # Here you can switch of the reduction to only electable!
 				nrow(ELENBU)
 				
+			# analyse the remaining size of the issue, mainly by filtering on the relevant parties
+			
+				focuspartiesbelowvec <- c("DE_B90|Gru_NT","DE_CDU_NT","DE_CSU_NT","DE_Li|PDS_NT","NL_CDA_NT","NL_GL_NT","NL_PvdA_NT")
+				
+				table(ELENBUTOT$firstissue)
+				ELENBUTOT$nojudgementpossible <- !((ELENBUTOT$firstissue == "TRUE" | ELENBUTOT$firstissue == "FALSE") | 
+												 (ELENBUTOT$secondissue == "TRUE" | ELENBUTOT$secondissue == "FALSE") | 
+												 (ELENBUTOT$thirdissue == "TRUE" | ELENBUTOT$thirdissue == "FALSE"))
+				ELENBUTOT[0:20,]
+				table(ELENBUTOT$nojudgementpossible)
+				
+				ELENBUISSUESLEFT <- ELENBUTOT[which((ELENBUTOT$party_id_from_elliandmeme %in% focuspartiesbelowvec) &
+												     ELENBUTOT$nojudgementpossible & 
+													 !(ELENBUTOT$parliament_id == "NL_NT-TK_1981") & 
+													 !(ELENBUTOT$parliament_id == "NL_NT-TK_1982") & 
+													 ! grepl("Netherlands", ELENBUTOT$district_id, ignore.case=TRUE)   # rest is temp!
+												#	 !(ELENBUTOT$district_id == "NL_NT-TK_1986__Lelystad") & 
+												#	 !(ELENBUTOT$district_id == "NL_NT-TK_2012__Bonaire") &
+												#	 ! grepl("06sep1989__GroenLinks", ELENBUTOT$elec_entry_id, ignore.case=TRUE) &
+												#	 ! grepl("05oct1980__Buendnis-90-Die-Gruenen", ELENBUTOT$elec_entry_id, ignore.case=TRUE) &
+												#	 ! grepl("05oct1980__district-B90|Gru", ELENBUTOT$elec_entry_id, ignore.case=TRUE) &
+												#	 ! grepl("Berlin__02dec1990", ELENBUTOT$elec_entry_id, ignore.case=TRUE) & 
+												#	 ! grepl("02dec1990__Die-Linke-Partei-des", ELENBUTOT$elec_entry_id, ignore.case=TRUE)
+													 ),]
+				nrow(ELENBUISSUESLEFT)
+				nrow(ELENBUTOT)
+				nrow(ELENBUISSUESLEFT) / nrow(ELENBUTOT)
+				
+				# issue left distribution accross countries
+				prop.table(table(ELENBUISSUESLEFT$country))
+				
+				# kinds of issues left
+				table(ELENBUISSUESLEFT$firstissue,ELENBUISSUESLEFT$country)
+				prop.table(table(ELENBUISSUESLEFT$firstissue,ELENBUISSUESLEFT$country),2)
+
+				# inspect the most prominent issues left
+				I1 <- ELENBUISSUESLEFT[which(ELENBUISSUESLEFT$firstissue == "list_id: no match -- district: found -- party: found -- party/district combo: not found -- list position: not found for this party and district"),]
+				nrow(I1)
+				head(I1)
+				tail(I1)
+				# quite some 1981 in the Netherlands, but we do not use that year!, so lets filter it out above!
+				
+					# outline of issues
+					
+						# NL > nice, for sure, the issues below are the only issues left now! Doppelganger could be found for all(!) other cases
+							# new electoral district: Lelystad in 1986 - 60 cases
+							nrow(ELENBUISSUESLEFT[which(ELENBUISSUESLEFT$district_id == "NL_NT-TK_1986__Lelystad"),])
+							
+							# new electoral district: Bonaire in 2012 - 178 cases
+							nrow(ELENBUISSUESLEFT[which(ELENBUISSUESLEFT$district_id == "NL_NT-TK_2012__Bonaire"),])
+							
+							# new party : groenlinks in 1989
+							nrow(ELENBUISSUESLEFT[which(grepl("06sep1989__GroenLinks", ELENBUISSUESLEFT$elec_entry_id, ignore.case=TRUE)),]) # 570 cases
+				
+						# DE
+							
+							# a lot of these are issues with new districts, I think this is the list
+							unique(I1$district_id)
+							
+							# new party: Buendnis-90-Die-Gruenen in 1980
+							nrow(ELENBUISSUESLEFT[which(grepl("05oct1980__Buendnis-90-Die-Gruenen", ELENBUISSUESLEFT$elec_entry_id, ignore.case=TRUE)),]) # 166 cases
+							nrow(ELENBUISSUESLEFT[which(grepl("05oct1980__district-B90|Gru", ELENBUISSUESLEFT$elec_entry_id, ignore.case=TRUE)),]) # 646 cases
+							
+							
+							# new party: die Linke in 1990
+							nrow(ELENBUISSUESLEFT[which(grepl("02dec1990__Die-Linke-Partei-des", ELENBUISSUESLEFT$elec_entry_id, ignore.case=TRUE)),]) # 143 cases
+							
+							
+							# 1990 Berlin issue
+							nrow(ELENBUISSUESLEFT[which(grepl("Berlin__02dec1990", ELENBUISSUESLEFT$elec_entry_id, ignore.case=TRUE)),]) # 40 cases
+				
+							# 419 cases where German parties did not run any candidates in this district in the previous 3 elections
+							unique(I1$list_id)
+				
 				
 			# some inspections, just to make sure that things are making sense here
 			
@@ -1194,6 +1278,8 @@
 					ELENBUTOT[44646,]				
 		
 
+			# 
+
 		#################################### DATA AGGREGATION starts here ###################################
 	
 	##############################################
@@ -1201,12 +1287,15 @@
 	##############################################
 	
 	##### aggregation on the ELLI level ######
+	
+			length(unique(ELENBU$list_id))
+	
 			GCELLI <- as.data.frame.matrix(table(ELENBU$list_id,ELENBU$genderwithguesses)) 
 			head(GCELLI)
-			nrow(GCELLI) # so yes, really a lot that are simply not done because now genderwithguesses at all are availble
-			# so, note to future self: if there is missingness here it is simply ignored. only known cases are counted
-				# other note, this list id has now above been replaced with the aggregate list id # is this maybe where the issue is comming from!?
-			# I don't think this is the issue though, because here we still do have the ratio for a lot of them
+			nrow(GCELLI)
+			
+			# does this give us a value for every single list?
+			nrow(GCELLI) == length(unique(ELENBU$list_id)) # yes it does!
 			
 			GCELLI$list_id <- rownames(GCELLI)		
 			GCELLI$country <- substr(GCELLI$list_id,1,2)
@@ -1375,6 +1464,8 @@
 			
 			GCPARE$ratio <- GCPARE$f / (GCPARE$f+GCPARE$m)
 			hist(GCPARE$ratio)
+			
+			
 			
 		# now merge this in into the ELLI data we made above - looks like something is going wrong here?!
 		
@@ -1694,7 +1785,7 @@
 					
 					# setting this manualy is ofcourse also possible
 					# runOMagain <- FALSE
-					runOMagain <- TRUE
+					# runOMagain <- TRUE
 					
 					if(runOMagain)
 						{
