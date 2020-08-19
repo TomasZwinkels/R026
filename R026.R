@@ -19,21 +19,22 @@
 		setwd("C:/Users/turnerzw/Basel Powi Dropbox/Remote GW17PC05/PCP_Quotas_Paper/Analysis/ProjectR026_control")
 		getwd()
 	
-		install.packages("sqldf")
-		install.packages("stringr")
-		install.packages("lubridate")
-		install.packages("ggplot2")
-		install.packages("stargazer")
-		install.packages("dplyr")
-		install.packages("reshape")
-		install.packages("TraMineR")
-		install.packages("lawstat")
-		install.packages("beanplot")
-		install.packages("stringr")
-		install.packages("foreach")
-		install.packages("doParallel")
-		install.packages("lme4")
-		install.packages("car")
+	#	install.packages("sqldf")
+	#	install.packages("stringr")
+	#	install.packages("lubridate")
+	#	install.packages("ggplot2")
+	#	install.packages("stargazer")
+	#	install.packages("dplyr")
+	#	install.packages("reshape")
+	#	install.packages("TraMineR")
+	#	install.packages("lawstat")
+	#	install.packages("beanplot")
+	#	install.packages("stringr")
+	#	install.packages("foreach")
+	#	install.packages("doParallel")
+	#	install.packages("lme4")
+	#	install.packages("car")
+	#	install.packages("ggpubr")
 	
 	# packages
 		library(sqldf)
@@ -51,6 +52,7 @@
 		library(doParallel)
 		library(lme4)
 		library(car)
+		library(ggpubr)
 		
 		
 	substrRight <- function(x, n)
@@ -261,8 +263,8 @@
 			FPAREBU$fake_parl_episode_id <- paste(FPAREBU$pers_id,FPAREBU$parliament_id,sep="__")
 			FPAREBU2$fake_parl_episode_id <- paste(FPAREBU2$pers_id,FPAREBU2$parliament_id,sep="__")
 			length(unique(FPAREBU$fake_parl_episode_id)) # does not match!, several people occur double
-			DUB <- FPAREBU[which(duplicated(FPAREBU$fake_parl_episode_id)),] # these are the problematic cases ## #fixlater!
-			nrow(DUB) # NOTE TO SELF: you can parse theses cases to Adrian to fix # 88 cases! # some inspection myself suggest that these are re-entries into the same parliament. #fixlater
+			DUB <- FPAREBU[which(duplicated(FPAREBU$fake_parl_episode_id)),] # these are the problematic cases, not however, that because we remove these duplicates below this is not really an issue for this analysis. So will mark this as if 'fixed for now'
+			nrow(DUB) 
 			
 			# for now, 
 			nrow(FPAREBU)
@@ -274,8 +276,7 @@
 			FPAREBU <- FPAREBU[which(!is.na(FPAREBU$pers_id)),]
 			nrow(FPAREBU)
 			
-			table(FPAREBU$parliament_id[which(FPAREBU$parliament_id %in% unique(POPABU$parliament_id))]) # so, these are not exacty the same... POPABU here is from 'lesson 1' script, just to check the consistency, when I checked this the result was exactly the same (when using the data loaded in this environment!)
-			# ACTUALLY, I THINK THIS OPPERATIONALISATION HERE  MIGHT INCLUDE LATE ENTERANTS, WE PROBABLY DO NOT WANT THAT RIGHT?! > no worries, this is dealth with later! 
+			table(FPAREBU$parliament_id[which(FPAREBU$parliament_id %in% unique(POPABU$parliament_id))]) # there was a note about late entrants here, please note that this has now been fixed!
 			
 			table(FPAREBU2$parliament_id[which(FPAREBU2$parliament_id %in% unique(POPABU$parliament_id))]) # yes, not it is exactly the same! -- so, the decision is: focus on only right after the election or not?!
 		
@@ -343,7 +344,7 @@
 			head(ELENBU)
 			tail(ELENBU)
 			
-			ELLI[which(duplicated(ELLI$list_id)),]
+		#	ELLI[which(duplicated(ELLI$list_id)),]
 			
 		# merge in some ELLI characteristics
 			ELENBU <- sqldf("SELECT ELENBU.*, ELLI.list_name, ELLI.parliament_id, ELLI.district_id, ELLI.list_length, ELLI.district_id, ELLI.party_id as 'party_id_from_elli'
@@ -351,7 +352,7 @@
 							ON
 							ELENBU.list_id = ELLI.list_id
 							")
-			nrow(ELENBU) # here we are seeing an increase in cases! why?! #fixed!
+			nrow(ELENBU) # here there used to be an increase in cases but I fixed this in the data recently.
 			head(ELENBU)
 			tail(ELENBU)
 		
@@ -424,17 +425,10 @@
 				
 				# inspection of these results
 				
-					table(ELENBU$samepartyid) # still 382 cases where this is not case #fixlater! - probably really are manual matches that just need to be set proper
+					table(ELENBU$samepartyid) # 10 cases left #fixlater! - maybe!
 					ELENBUNOTSAME <- ELENBU[which(ELENBU$samepartyid == FALSE),]
-					nrow(ELENBUNOTSAME)
-					head(ELENBUNOTSAME) 
-					tail(ELENBUNOTSAME)
-					table(ELENBUNOTSAME$country)
-					table(ELENBUNOTSAME$party_id_from_meme_nat_equiv)
-					
-					table(ELENBUNOTSAME$party_id_from_meme_nat_equiv)
-	
-					ELENBUNOTSAME[which(ELENBUNOTSAME$party_id_from_meme_nat_equiv == "NL_GL_NT"),]
+					ELENBUNOTSAME
+
 			
 			# combining these two party indicators, taking the election list one as the most reliable one
 				
@@ -1160,8 +1154,8 @@
 						table(is.na(ELENBU$electable))
 						
 						head(ELENBU)
-						install.packages("writexl")
-						library("writexl")
+						install.packages("xlsx")
+						library("xlsx")
 						write_xlsx(ELENBU,"./ELENBU_20200804-1724.xlsx")
 						
 						tail(ELENBU)
@@ -1187,7 +1181,7 @@
 				
 			# analyse the remaining size of the issue, mainly by filtering on the relevant parties
 			
-				focuspartiesbelowvec <- c("DE_B90|Gru_NT","DE_CDU_NT","DE_CSU_NT","DE_Li|PDS_NT","NL_CDA_NT","NL_GL_NT","NL_PvdA_NT")
+				focuspartiesbelowvec <- c("DE_B90|Gru_NT","DE_CDU_NT","DE_CSU_NT","DE_Li|PDS_NT","DE_SPD_NT","NL_CDA_NT","NL_GL_NT","NL_PvdA_NT")
 				
 				table(ELENBUTOT$firstissue)
 				ELENBUTOT$nojudgementpossible <- !((ELENBUTOT$firstissue == "TRUE" | ELENBUTOT$firstissue == "FALSE") | 
@@ -1351,6 +1345,46 @@
 			ELLIBU$sumcheck <- (ELLIBU$f+ELLIBU$m) - ELLIBU$list_member_count # right, so zero is good here! this means that the number of women and men together add up to the total number on the list
 			table(ELLIBU$sumcheck)
 			
+			# how big is this issue among the actual parties we are interested in?
+			table(ELLIBU$party_id_nat_equiv)
+			table(is.na(ELLIBU$party_id_nat_equiv))
+			
+			table(ELLIBU$sumcheck[which(ELLIBU$party_id_nat_equiv %in% focuspartiesbelowvec)])
+			ELLIBU[which(ELLIBU$sumcheck < -10),] # a lot of NL 2012... does that make sense? : yes it does, a lot entries with only innitials.. this is pulling NL CDA down very probably! - I do think we should maybe still invest time into this!
+			
+			# lets make a todolist here! - pers_ids for which I need a full first name
+			
+				# Complete Name Search Needed
+				CNSN <- ELENBU[which(is.na(ELENBU$genderwithguesses)),]
+				nrow(CNSN)
+				head(CNSN)
+				length(unique(CNSN$pers_id)) # only 370 cases!
+				persidstocheck <- unique(CNSN$pers_id)
+
+			# to make things easier, lets enricht things a but here!
+			
+				# first, some obvious additions to the keyword list are in place - need to add these to the gender keyword lists!
+				 # male: Chris, Jan, Herman, Otto, Frank, Martin, Michael, Peter, Paul, Simon, Teun, Frank, Johannes, Reinhard, Ludwig, Christian, Dirk, Olaf, Daniel, Jens, Otto
+				 # female: Andrea, Anka, Anna, Heike, Melanie, Caroline, Julia, Maria, Elske, Ulrike, Anke, Evelyn
+				
+				# then there are the remainind Dutch 'single innitial' cases
+				persidstocheck[which(grepl("_[A-Z]_",persidstocheck))]
+				length(persidstocheck[which(grepl("_[A-Z]_",persidstocheck))])
+				
+				CNSN2 <- as.data.frame(persidstocheck[which(grepl("_[A-Z]_",persidstocheck))])
+				colnames(CNSN2) <- "pers_id"
+				CNSN3 <- sqldf("SELECT CNSN2.pers_id, min(ELEN.list_id)
+						FROM CNSN2 LEFT JOIN ELEN
+						ON
+						CNSN2.pers_id = ELEN.pers_id
+						GROUP BY CNSN2.pers_id
+						")
+				nrow(CNSN2)
+				nrow(CNSN3)
+				
+				# export
+				write_xlsx(CNSN3,"./PoliticiansForWhichWeWouldLikeTheFullName-20200806-1521.xlsx")
+				
 		# lets select the 'complete' cases: where these is sufficient knowledge on the number of men and women
 			
 			nrow(ELLIBU)
@@ -1429,13 +1463,13 @@
 			# some further fixing up and cleanup of the national party ids?
 
 			table(ELLIBU$nat_party_id) # inspection suggests that the empty values left here are due to regional party ids that do not occur in PART?
-			table(is.na(ELLIBU$nat_party_id)) # still 2500 missings here.. --- I should inspect again how big this issue is once the quota info is in?!
-			table(ELLIBU$party_id_nat_equiv) # still about 1838 empty
+			table(is.na(ELLIBU$nat_party_id)) # current 468 missings here.. --- I should inspect again how big this issue is once the quota info is in?!
+			table(ELLIBU$party_id_nat_equiv) # currently no more empty values here... 
 			
 			#fixlater : what is going on here: why are there two, and which one should I use? / do I use? 
 				# party_id_nat_equiv is simply a string replace, see line 467 gsub("RE-[A-Z]{2}","NT",ELLI$party_id)
 				# nat_party_id is based on the mother party id..
-				# one question here is why we do not combine these... maybe no need because at least for the parties that have a quota we do have nat_party_ids? #fix later!
+				# one question here is why we do not combine these... maybe no need because at least for the parties that have a quota we do have nat_party_ids? #fix later maybe -- not a very big isssue I think!
 			
 			table(is.na(ELLIBU$party_id_nat_equiv)) # values for all here, for whatever its worth
 
@@ -1511,7 +1545,7 @@
 				summary(ELLIBU$leg_period_end_posoxctformat)
 		
 			names(ELLIBU)
-			table(ELLIBU$nat_party_id) # please note the one from the mother party is used here, so I can alert Elena to that. #fix later: if we add Swiss quota data - on the level of the regional parties - this will need to be fixed!
+			table(ELLIBU$nat_party_id) # please note the one from the mother party is used here, so I can alert Elena to that. #fix at some point: if we add Swiss quota data - on the level of the regional parties - this will need to be fixed!
 			
 			# dealing with NA in 'QUOT' was done above
 			
@@ -1677,6 +1711,7 @@
 					head(ELLIBU)
 					tail(ELLIBU)
 					ELLIBU[500:510,]
+					table(ELLIBU$party_id_nat_equiv)
 					
 					table(is.na(ELLIBU$ratio_on_list)) # not complete! #fixlater
 					table(is.na(ELLIBU$ratio_elected)) # complete
@@ -1785,7 +1820,7 @@
 					
 					# setting this manualy is ofcourse also possible
 					# runOMagain <- FALSE
-					# runOMagain <- TRUE
+					runOMagain <- TRUE
 					
 					if(runOMagain)
 						{
@@ -2276,6 +2311,7 @@
 				ELLIBU$selection_control <- factor(ELLIBU$selection_control, levels=c("low selection control","medium selection control","high selection control"))
 				table(ELLIBU$selection_control)
 				table(ELLIBU$selection_control,ELLIBU$selection_control_detailed_fac)
+				table(is.na(ELLIBU$selection_control))
 				
 				table(ELLIBU$selection_control_detailed_fac)
 				ELLIBU$selection_control_detailed_fac <- factor(ELLIBU$selection_control_detailed_fac, levels=c("low - DE district (aggregated at land level)","medium - DE list","medium - NL with different regional lists","high - NL with gen. homogenous regional lists"))
@@ -2331,7 +2367,14 @@
 				hist(ELLIBU$ambition_selection_gap[which(ELLIBU$country =="NL")]) 
 				
 				
-				ELLIBU$selection_control_fac <- factor(ELLIBU$selection_control, levels=c("low selection control","medium selection control","high selection control"))
+				ELLIBU$selection_control_fac <- factor(ELLIBU$selection_control, levels=c("high selection control","medium selection control","low selection control"))
+				
+				# two manual fixes for some of the scarce Dutch data-points
+				table(is.na(ELLIBU$selection_control_fac))
+				ELLIBU[which(is.na(ELLIBU$selection_control_fac)),]
+				ELLIBU$selection_control_fac[which(ELLIBU$list_id == "NL_NT-TK_2012__Bonaire__12sep2012__Christen-Democratisch-Appel")]	<- "high selection control"
+				ELLIBU$selection_control_fac[which(ELLIBU$list_id == "NL_NT-TK_1982__sHertogenbosch__08sep1982__Partij-van-de-Arbeid")]	<- "low selection control"
+				
 				table(ELLIBU$selection_control_fac)
 				boxplot(ELLIBU$ambition_selection_gap~ELLIBU$selection_control_fac, main="% of women selected onto the list - % from quota")
 				beanplot(ELLIBU$ambition_selection_gap~ELLIBU$selection_control_fac, main="abs(% of women selected onto the list - % from quota)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
@@ -2346,20 +2389,47 @@
 				
 				ELLIBU$party_id_nat_equiv_short <- gsub("_NT","",ELLIBU$party_id_nat_equiv)
 				table(ELLIBU$party_id_nat_equiv_short )
+				table(ELLIBU$party_id_nat_equiv_short,ELLIBU$selection_control_fac)
 				
-				ggplot(data=subset(ELLIBU,!is.na(ELLIBU$selection_control_fac)), aes(x=selection_control_fac, y=ambition_selection_gap)) + 
-				geom_boxplot(aes(color=party_id_nat_equiv_short),) +
-				stat_summary(fun.y = mean, geom = "errorbar",aes(ymax = ..y.., ymin = ..y.., group = factor(selection_control_fac)),width = 0.5,size=1.5, linetype = "solid") +
-				scale_color_brewer(palette = "Dark2") +
+				myquantile <- function(x)
+				{
+					quantile(x,0.75,na.rm=TRUE)
+				}
+				myquantile(ELLIBU$ambition_selection_gap)
+				
+				group_average_for_labels <- aggregate(ambition_selection_gap ~ selection_control_fac + party_id_nat_equiv_short, myquantile, data=ELLIBU)
+				colnames(group_average_for_labels) <- c("selection_control_fac","party_id_nat_equiv_short","ambition_selection_gap_75q")
+				
+				geom.text.size = 6
+				theme.size = (14/5) * geom.text.size
+				
+				ggplot(data=ELLIBU, aes(x=selection_control_fac, y=ambition_selection_gap,fill=party_id_nat_equiv_short)) + 
+				geom_boxplot(position=position_dodge(width=.9),outlier.shape = 2) +
+				stat_summary(fun.y = mean, geom = "errorbar",aes(ymax = ..y.., ymin = ..y.., group = factor(selection_control_fac)),width = 0.5,size=2.5, linetype = "solid") +
+			#	scale_color_brewer(palette = "Dark2") +
 				labs(title = "Selection ambition gap by selection control", x = "Selection control", y = "(Selection - ambition) gap electables", color = "Party\n") +
-				geom_text(aes(x=0.7,y=37.5,label="overshooting"),angle=0) + 
-				geom_text(aes(x=0.7,y=-37.5,label="undershooting"),angle=0) +
-				geom_hline(yintercept=0,linetype="dashed")				
+				geom_text(aes(x=0.5,y=37.5,label="overshooting"),angle=0,size=geom.text.size) + 
+				geom_text(aes(x=0.5,y=-37.5,label="undershooting"),angle=0,size=geom.text.size) +
+				geom_hline(yintercept=0,linetype="dashed") + 
+				geom_text(data=group_average_for_labels, aes(label=party_id_nat_equiv_short, y = 40), position=position_dodge(width=0.9),size=geom.text.size-1,color="black") +
+				theme_pubr(base_size = theme.size) +
+				ylim(c(-50,50)) +
+				guides(fill=FALSE) +
+				coord_flip() +
+				scale_fill_grey() +
+				scale_fill_manual(values=rep("#999999",7))
+				
 				
 				#geom_dotplot(binaxis='y', stackdir='center', dotsize=0.05)
 				
 				# in the high category, how large are these groups? -- maybe time controls are needed? People care less in recent years?
-				table(ELLIBU$selection_control_fac,ELLIBU$party_id_nat_equiv_short) # so we can see here that is is basically the PvdA that drives the whole effect? -- supprising as they have a zipper quota?!!
+					table(ELLIBU$selection_control_fac,ELLIBU$party_id_nat_equiv_short) # so we can see here that is is basically the PvdA that drives the whole effect? -- supprising as they have a zipper quota?!!
+					
+		
+					
+					head(ELLIBU)
+					table(ELLIBU$parliament_id, ELLIBU$party_id_nat_equiv_short)
+					table(ELLIBU$parliament_id, ELLIBU$party_id_nat_equiv_short,ELLIBU$selection_control_fac)
 				
 				
 				# variance per group
