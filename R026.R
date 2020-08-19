@@ -2388,6 +2388,9 @@
 				library(viridis)
 				
 				ELLIBU$party_id_nat_equiv_short <- gsub("_NT","",ELLIBU$party_id_nat_equiv)
+				ELLIBU$party_id_nat_equiv_short <- gsub("[A-Z]{2}_","",ELLIBU$party_id_nat_equiv_short)
+				ELLIBU$party_id_nat_equiv_short <- paste0(ELLIBU$party_id_nat_equiv_short," (",ELLIBU$country,")")
+				
 				table(ELLIBU$party_id_nat_equiv_short )
 				table(ELLIBU$party_id_nat_equiv_short,ELLIBU$selection_control_fac)
 				
@@ -2398,6 +2401,7 @@
 				myquantile(ELLIBU$ambition_selection_gap)
 				
 				group_average_for_labels <- aggregate(ambition_selection_gap ~ selection_control_fac + party_id_nat_equiv_short, myquantile, data=ELLIBU)
+				control_average <- aggregate(ambition_selection_gap ~ selection_control_fac, mean, data=ELLIBU)
 				colnames(group_average_for_labels) <- c("selection_control_fac","party_id_nat_equiv_short","ambition_selection_gap_75q")
 				
 				geom.text.size = 6
@@ -2406,8 +2410,9 @@
 				ggplot(data=ELLIBU, aes(x=selection_control_fac, y=ambition_selection_gap,fill=party_id_nat_equiv_short)) + 
 				geom_boxplot(position=position_dodge(width=.9),outlier.shape = 2) +
 				stat_summary(fun.y = mean, geom = "errorbar",aes(ymax = ..y.., ymin = ..y.., group = factor(selection_control_fac)),width = 0.5,size=2.5, linetype = "solid") +
+				stat_summary(aes(ymax = ..y.., ymin = ..y.., group = factor(selection_control_fac),label=round(..y..,2)), fun.y=mean, geom="label", size=8) +
 			#	scale_color_brewer(palette = "Dark2") +
-				labs(title = "Selection ambition gap by selection control", x = "Selection control", y = "(Selection - ambition) gap electables", color = "Party\n") +
+				labs(title = "List level selection ambition gap * selection control", x = "Selection control", y = "(Selection - ambition) gap electable positions", color = "Party\n") +
 				geom_text(aes(x=0.5,y=37.5,label="overshooting"),angle=0,size=geom.text.size) + 
 				geom_text(aes(x=0.5,y=-37.5,label="undershooting"),angle=0,size=geom.text.size) +
 				geom_hline(yintercept=0,linetype="dashed") + 
@@ -2416,9 +2421,10 @@
 				ylim(c(-50,50)) +
 				guides(fill=FALSE) +
 				coord_flip() +
-				scale_fill_grey() +
 				scale_fill_manual(values=rep("#999999",7))
 				
+			# reorder for the models
+				ELLIBU$selection_control_fac <- factor(ELLIBU$selection_control_fac, levels=c("low selection control","medium selection control","high selection control"))
 				
 				#geom_dotplot(binaxis='y', stackdir='center', dotsize=0.05)
 				
@@ -2454,6 +2460,7 @@
 					table(ELLIBU$selection_control_fac,ELLIBU$country)
 				
 					me <- lmer(ambition_selection_gap~1+
+								(1 | year_cent) +
 								(1 | country),
 								,data=ELLIBU)
 					summary(me)
@@ -2649,25 +2656,46 @@
 		# new model buildup! - general controls first, then time controls, only then the selecgtion control stuff
 
 			m1 <- lmer(	ambition_selection_gap~
+								selection_control_fac + # new
 								district_magnitude +
-			#					type +
-								quota_percentage_cent +
-								quota_soft_fact +
-								quota_zipper +
-								party_size_country_stan +
 								(1 | year_cent) +
 								(1 | country),
 								data=ELLIBU)
 					summary(m1)
 					stargazer(me,m1,type="text")
+
+		# some reordering of the quota variables still?
+		table(ELLIBU$quota_percentage)
+		table(ELLIBU$quota_percentage_cent)
+		ELLIBU$quota_percentage_lessthen50 <-  (50 - ELLIBU$quota_percentage)/10
+		table(ELLIBU$quota_percentage_lessthen50)
+		
+		table(ELLIBU$quota_soft_fact)
+		ELLIBU$quota_soft_fact <- factor(ELLIBU$quota_soft_fact,levels=c("hard","soft"))
+		
+		table(ELLIBU$quota_zipper)
+
+			m1a <- lmer(	ambition_selection_gap~
+								selection_control_fac + # new
+								district_magnitude +
+			#					type +
+								quota_percentage_lessthen50 +
+								quota_soft_fact +
+							#	quota_zipper +
+								# party_size_country_stan +
+								(1 | year_cent) +
+								(1 | country),
+								data=ELLIBU)
+					summary(m1a)
+					stargazer(me,m1a,type="text")
 					
 			m2 <- lmer(	ambition_selection_gap~
 								district_magnitude +
 			#					type +
-								quota_percentage_cent +
+								quota_percentage_lessthen50 +
 								quota_soft_fact +
 								quota_zipper
-								party_size_country_stan +
+							#	party_size_country_stan +
 							#	I(year_cent^2) +
 								country * year_cent +
 								(1 | year_cent) +
@@ -2680,27 +2708,45 @@
 			ELLIBU$timeNL <- ifelse(ELLIBU$country == "DE",0,ELLIBU$year_cent)
 			table(ELLIBU$timeNL,ELLIBU$country)
 			
+			# using party size versus vote_share?
+			
+				ELLIBU$vote_share
+				ELLIBU$party_size_country_stan
+				cor(ELLIBU$vote_share,ELLIBU$party_size_country_stan) # ok, so really basically the same thing
+				table(is.na(ELLIBU$vote_share))
+				
+				ggplot(data=ELLIBU, aes(y=vote_share, fill=country)) +
+				geom_boxplot()
+				aggregate(vote_share~country, mean, data=ELLIBU)
+				
+				ELLIBU$vote_share_cent <- scale(ELLIBU$vote_share,center=TRUE,scale=FALSE)
+				hist(ELLIBU$vote_share)
+				hist(ELLIBU$vote_share_cent)
+				ELLIBU$vote_share_cent <- ELLIBU$vote_share_cent/10
+			
 			m3 <- lmer(	ambition_selection_gap~
+								selection_control_fac + # new
 								district_magnitude +
 			#					type +
-								quota_percentage_cent +
+								quota_percentage_lessthen50 +
 								quota_soft_fact +
-								quota_zipper +
-								party_size_country_stan +
-								timeNL + # replaces the interaction
+							#	quota_zipper +
+								vote_share_cent +
+							#	year_cent + #was timeNL + # used to replace the interaction
+								country +
 							#	I(timeNL^2) +
 								(1 | year_cent) +
 								(1 | country),
 								data=ELLIBU)
 					summary(m3)
-					stargazer(me,m1,m2,m3,type="text",intercept.bottom=FALSE)
+					stargazer(m3,type="text",intercept.bottom=FALSE)
 			# key check here: model 'as good'?!
 			anova(m3,m2) # yes it is!
 			
 			m4 <- lmer(	ambition_selection_gap~
 								district_magnitude +
 			#					type +
-								quota_percentage_cent +
+								quota_percentage_lessthen50 +
 								quota_soft_fact +
 								quota_zipper +
 								party_size_country_stan +
@@ -2711,11 +2757,11 @@
 								(1 | country),
 								data=ELLIBU)
 					summary(m4)
-					stargazer(me,m1,m3,m4,type="text",intercept.bottom=FALSE) # and then the effect of selection control seems to disappear... good question now is: how 'fair' is this model?!
+					stargazer(me,m1,m3,m4,type="text",intercept.bottom=FALSE) 
 		
 			m5 <- lmer(	ambition_selection_gap~
 								district_magnitude +
-								quota_percentage_cent +
+								quota_percentage_lessthen50 +
 								quota_soft_fact +
 								party_size_country_stan +
 								timeNL + 
@@ -2731,7 +2777,7 @@
 			
 			m6 <- lmer(	ambition_selection_gap~
 								district_magnitude +
-								quota_percentage_cent +
+								quota_percentage_lessthen50 +
 								quota_soft_fact +
 							#	quota_zipper +
 								party_size_country_stan +
@@ -2745,7 +2791,11 @@
 								data=ELLIBU)
 					summary(m6)
 					stargazer(me,m1,m3,m4,m6,type="text",intercept.bottom=FALSE)				
-		
+	
+	
+	### older 'final' stargazer model
+	
+				
 					stargazer(
 								caption = "Regression model predicting selection - ambition gap with selection control",
 								me,
@@ -2767,6 +2817,195 @@
 							)
 					
 					
+	
+	
+		
+	##### working towards a nice regression output
+	
+	
+	m2 <- m1
+	m1 <- me
+	
+	m4 <- m3
+	m3 <- m1a
+	
+	
+	
+	
+	
+	summary(m1)
+	summary(m2)
+	summary(m3)
+	summary(m4)
+
+# name replacements
+
+	specificnamecleaning <- function(dirtynamesloc)	
+			{
+				cleanernames <- gsub("(Intercept)","Constant",dirtynamesloc,fixed=TRUE)
+				cleanernames <- gsub("district_magnitude","district magnitude",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("quota_percentage_lessthen50","quota",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("quota_soft_factsoft","soft quota",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("quota_zipper","zipper quota",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("vote_share_cent","vote share",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("year_cent","election year",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("selection_control_facmedium selection control","medium selection control",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("selection_control_fachigh selection control","high selection control",cleanernames,fixed=TRUE)
+				
+				return(cleanernames)
+			}
+			
+			dirtynames <- names(fixef(m4))
+			
+			specificnamecleaning(dirtynames)
+
+
+# use bootstrapping to get a standard error for the variance estimates.
+		runconfints <- TRUE
+		
+	# list level
+				listlvar <- format(round(c(
+							as.data.frame(VarCorr(m1))$vcov[3],
+							as.data.frame(VarCorr(m2))$vcov[3],
+							as.data.frame(VarCorr(m3))$vcov[3],
+							as.data.frame(VarCorr(m4))$vcov[3]
+											),digits=3),nsmall=3)
+		
+		if (runconfints)
+		{
+				simulations <- 100
+				am1 <- confint(m1,method="boot",nsim=simulations)
+				am2 <- confint(m2,method="boot",nsim=simulations)
+				am3 <- confint(m3,method="boot",nsim=simulations)
+				am4 <- confint(m4,method="boot",nsim=simulations)
+
+				listlvarse <- format(round(c(
+					((am1[3,2] - am1[3,1]) / 1.98),
+					((am2[3,2] - am2[3,1]) / 1.98),
+					((am3[3,2] - am3[3,1]) / 1.98),
+					((am4[3,2] - am4[3,1]) / 1.98)
+					),digits=3),nsmall=3)
+		} else {
+			listlvarse <- rep("NE",4)
+		}								
+	
+	# country level
+				countryvar <- format(round(c(
+							as.data.frame(VarCorr(m1))$vcov[2],
+							as.data.frame(VarCorr(m2))$vcov[2],
+							as.data.frame(VarCorr(m3))$vcov[2],
+							as.data.frame(VarCorr(m4))$vcov[2]
+											),digits=3),nsmall=3)
+		if (runconfints)
+		{					
+				countryvarse <- format(round(c(
+					((am1[2,2] - am1[2,1]) / 1.98),
+					((am2[2,2] - am2[2,1]) / 1.98),
+					((am3[2,2] - am3[2,1]) / 1.98),
+					((am4[2,2] - am4[2,1]) / 1.98)
+					),digits=3),nsmall=3)
+		} else {
+			countryvarse <- rep("NE",4)
+		}	
+		
+		
+	# election year level
+		
+				elecyearvar <- format(round(c(
+							as.data.frame(VarCorr(m1))$vcov[1],
+							as.data.frame(VarCorr(m2))$vcov[1],
+							as.data.frame(VarCorr(m3))$vcov[1],
+							as.data.frame(VarCorr(m4))$vcov[1]
+											),digits=3),nsmall=3)
+		
+		
+		if (runconfints)
+		{					
+				elecyearvarse <- format(round(c(
+					((am1[1,2] - am1[1,1]) / 1.98),
+					((am2[1,2] - am2[1,1]) / 1.98),
+					((am3[1,2] - am3[1,1]) / 1.98),
+					((am4[1,2] - am4[1,1]) / 1.98)
+					),digits=3),nsmall=3)
+		} else {
+			elecyearvarse <- rep("NE",4)
+		}
+
+	nobsc <-  c(nobs(m1),
+				nobs(m2),
+				nobs(m3),
+				nobs(m4))
+						
+	nrofcountries <- c(		nrow(ranef(m1)$country),
+							nrow(ranef(m2)$country),
+							nrow(ranef(m3)$country),
+							nrow(ranef(m4)$country))
+							
+	nrofelectionyears <- c(	nrow(ranef(m1)$year_cent),
+							nrow(ranef(m2)$year_cent),
+							nrow(ranef(m3)$year_cent),
+							nrow(ranef(m4)$year_cent))
+
+			GiveBrackets <- function(vector1)
+				{
+					resultvec <- vector()
+					for(i in 1:length(vector1))
+					{
+						resultvec[i] <- paste("(",vector1[i],")",sep="")
+					}
+					return(resultvec)
+				}
+
+
+	varlabels <- specificnamecleaning(names(fixef(m4)))
+
+	stargazer(
+		m1,
+		m2,
+		m3,
+		m4,
+		type="text",
+		intercept.bottom=FALSE,
+		no.space=FALSE,
+		column.labels=(c("Empty","Control","Quota char.","Context char.")),
+		star.char = c(".", "*", "**", "***"),
+		star.cutoffs = c(0.1, 0.05, 0.01, 0.001),
+		keep.stat=c("ll"),
+		omit.stat=c("aic","bic"),
+		font.size = "small",
+		label = "RegTab",
+		caption = "Regression model predicting selection - ambition gap with selection control",
+		dep.var.labels = c("(Ratio on list - ambition)"),
+		covariate.labels = varlabels,
+			add.lines = list(	
+							c("Random effects"),
+							c("--------------------------"),
+							c("NR of (semi) lists",nobsc),
+							c("list-level var",listlvar),
+							c("",GiveBrackets(listlvarse)),
+							c("NR of countries",nrofcountries),
+							c("country-level var",countryvar),
+							c("",GiveBrackets(countryvarse)),
+							c("NR of election years",nrofelectionyears),
+							c("election-level var",elecyearvar),
+							c("",GiveBrackets(elecyearvarse))
+							)
+		  )	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
 					stargazer(me,m0,m1,m3,m4,intercept.bottom=FALSE)
 					
 			# to answer the question if small parties are still excluded?
