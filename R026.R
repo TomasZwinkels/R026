@@ -2080,6 +2080,7 @@
 			
 			ELLIBU$vote_share_change <- ELLIBU$vote_share - ELLIBU$vote_share_previous
 			hist(ELLIBU$vote_share_change)
+			hist(ELLIBUTEMP$vote_share_change)
 			
 			# lets inspecting missing cases quickly
 			table(is.na(ELLIBU$vote_share_change))
@@ -3302,7 +3303,9 @@
 					theme_pubr(base_size=20) +
 					scale_x_continuous(trans='log2') +
 				#	scale_y_continuous(trans=reverselog_trans(10)) +
-					ylim(c(-75,75))
+					ylim(c(-75,75)) +
+					geom_text(aes(x=2.5,y=50,label="more women than expected"),angle=0,size=geom.text.size,color="black") + 
+					geom_text(aes(x=2.5,y=-50,label="less women than expected"),angle=0,size=geom.text.size,color="black") 
 					
 					# some data inspection: a gap of -100, how?! -- answer is: we only look at lists from which somebody got elected, is a big reductio, CDU only ran one candidate on this 'semi-list' environment that was successfull, 
 					ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap == -100),]
@@ -3359,7 +3362,11 @@
 					geom_jitter()
 					
 					ELLIBUTEMP$vote_share_change_ten <- ELLIBUTEMP$vote_share_change / 10
+					hist(ELLIBUTEMP$vote_share_change)
 					hist(ELLIBUTEMP$vote_share_change_ten)
+					
+					ELLIBUTEMP$vote_share_change
+					head(ELLIBUTEMP)
 					
 					
 					
@@ -3371,7 +3378,7 @@
 					
 					# we probably need to drop the vote share increase larger then 1 cases, outliers
 					nrow(ELLIBUTEMP)
-					ELLIBUTEMP <- ELLIBUTEMP[which(ELLIBUTEMP$vote_share_increase < 1),]
+				#	ELLIBUTEMP <- ELLIBUTEMP[which(ELLIBUTEMP$vote_share_increase < 1),]
 					nrow(ELLIBUTEMP)
 					
 					# other graphic to include
@@ -3514,7 +3521,28 @@
 								(1 | country),
 								,data=ELLIBUTEMP)
 					summary(me)
+					stargazer(mee,ma,md,me,type="text",intercept.bottom=FALSE)
 					
+					table(ELLIBUTEMP$country_and_type)
+					ELLIBUTEMP$country_and_type <- factor(ELLIBUTEMP$country_and_type, levels=c("DE:list","DE:district","NL:list"))
+					
+					me2 <- lmer(selection_election_gap~
+								district_magnitude*country_and_type +
+						#		type +
+						#		country +
+								vote_share_cent + #party_size_country_stan +
+								vote_share_change_ten +
+						#		vote_share_lost +
+								year_cent+
+						#		I(year_cent^2)+
+							#	nat_party_id +
+								vote_share_change_ten*linkedlist +
+						#		vote_share_lost*linkedlist +
+								(1 | year_cent) +
+								(1 | country),
+								,data=ELLIBUTEMP)
+					summary(mee)
+					stargazer(mee,ma,md,me2,type="text",intercept.bottom=FALSE)
 					# variance estimates e.t.c? < later!
 					
 					stargazer(mee,ma,md,me,type="text",intercept.bottom=FALSE)
@@ -3690,10 +3718,10 @@
 		m2,
 		m3,
 		m4,
-		type="text",
+		type="latex",
 		intercept.bottom=FALSE,
 		no.space=FALSE,
-		column.labels=(c("Empty","Control","Quota char.","Context char.")),
+		column.labels=(c("Empty","Elect.","Context","Linked")),
 		star.char = c(".", "*", "**", "***"),
 		star.cutoffs = c(0.1, 0.05, 0.01, 0.001),
 		keep.stat=c("ll"),
