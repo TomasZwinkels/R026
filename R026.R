@@ -1825,7 +1825,7 @@
 					
 					# setting this manualy is ofcourse also possible
 					# runOMagain <- FALSE
-					runOMagain <- TRUE
+					# runOMagain <- TRUE
 					
 					if(runOMagain)
 						{
@@ -3125,7 +3125,11 @@
 				hist(ELLIBU$ratio_on_list)
 				
 				nrow(ELLIBU)
-				
+
+############################
+# \/  \/  \/  \/  \/  \/  \/  
+############################
+	
 				ELLIBU$selection_election_gap <- ELLIBU$ratio_elected - ELLIBU$ratio_on_list # negative numbers indicate that less women where elected then selected
 				ELLIBU$selection_election_gap <- ELLIBU$selection_election_gap * 100
 				
@@ -3151,12 +3155,13 @@
 					geom_histogram() +  
 					facet_grid(country ~ .)
 					
-				
-				
+#################				
+#################			
 				# and the absolute version as suggested
-			#	ELLIBU$selection_election_gap <- abs(ELLIBU$selection_election_gap) # here we select absolute values or 
-				ELLIBU$selection_election_gap_abs <- abs(ELLIBU$selection_election_gap) # here we select absolute values or 
-				
+				ELLIBU$selection_election_gap <- abs(ELLIBU$selection_election_gap) # here we select absolute values or not!
+				ELLIBU$selection_election_gap_abs <- abs(ELLIBU$selection_election_gap) 
+#################
+#################				
 				# inspection
 				table(is.na(ELLIBU$selection_election_gap)) # very large number of NA here is the result of many election lists just not leading to anybody being elected
 				table(is.na(ELLIBU$ratio_elected)) # by far most cases are lost here
@@ -3297,9 +3302,9 @@
 					theme_pubr(base_size=20) +
 					scale_x_continuous(trans='log2') +
 				#	scale_y_continuous(trans=reverselog_trans(10)) +
-					ylim()
+					ylim(c(-75,75))
 					
-					# some data inspection: a gap of -100, how?!
+					# some data inspection: a gap of -100, how?! -- answer is: we only look at lists from which somebody got elected, is a big reductio, CDU only ran one candidate on this 'semi-list' environment that was successfull, 
 					ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap == -100),]
 					ELLIBUTEMP[which(grepl("DE_NT-BT_2009__district-seats-HB",ELLIBUTEMP$list_id,fixed=TRUE)),] # are the other cases dropped because they are considered not electable?
 					ELLIBUCOMP[which(grepl("DE_NT-BT_2009__district-seats-HB",ELLIBUCOMP$list_id,fixed=TRUE)),] # it actually seems the CDU only ran one candidate in the 'semi-list' only for Bremen-II-Bremerhaven 
@@ -3395,23 +3400,64 @@
 					
 					
 				    mee <- lmer(selection_election_gap~1+ # selection_election_gap
-								(1 | country) + (1|nat_party_id),
+								(1 | year_cent) +
+								(1 | country),
 								,data=ELLIBUTEMP)
 					summary(mee)
 				
+					# lets model this differently,
+					
+						# we want type
+						# we want country
+						# and then only for German lists the district magitude matters
+						
+						table(ELLIBU$type,ELLIBU$country)
+						table(ELLIBUTEMP$type,ELLIBUTEMP$country)
+						
+						# district magnitude, make it country centered
+						hist(ELLIBUTEMP$district_magnitude)
+					
+						dedismagavg <- mean(ELLIBUTEMP$district_magnitude[which(ELLIBUTEMP$country == "DE")])
+						dedismagsd <-  sd(ELLIBUTEMP$district_magnitude[which(ELLIBUTEMP$country == "DE")])
+						
+						delistdismagavg <- mean(ELLIBUTEMP$district_magnitude[which(ELLIBUTEMP$country == "DE" & ELLIBUTEMP$type == "list")])
+						delistdismagsd <-  sd(ELLIBUTEMP$district_magnitude[which(ELLIBUTEMP$country == "DE" & ELLIBUTEMP$type == "list")])
+						
+						nldismagavg <- mean(ELLIBUTEMP$district_magnitude[which(ELLIBUTEMP$country == "NL")])
+						nldismagsd <-  sd(ELLIBUTEMP$district_magnitude[which(ELLIBUTEMP$country == "NL")])
+						
+						
+						ELLIBUTEMP$district_magnitude_country_and_type_cent <- ifelse(ELLIBUTEMP$country == "DE" & ELLIBUTEMP$type == "list", (ELLIBUTEMP$district_magnitude-delistdismagavg), 0)
+						
+						# and do the same for german districts
+						
+						ggplot(data=ELLIBUTEMP, aes(y=district_magnitude_country_and_type_cent, fill=country_and_type)) +
+						geom_boxplot()
+			
+			table(is.na(ELLIBU$district_magnitude_country_cent))
+				
+				
+					# to remind us again of the type we are doing
+					summary(ELLIBUTEMP$selection_election_gap)
+
 					ma <- lmer(selection_election_gap~
-								district_magnitude +
-								(1 | country) + (1|nat_party_id),
+								district_magnitude_country_and_type_cent +
+								type +
+								country +
+								(1 | year_cent) +
+								(1 | country),
 								,data=ELLIBUTEMP)
 					summary(ma)
+					stargazer(mee,ma,type="text",intercept.bottom=FALSE)
 				
 					ELLIBUTEMP$type <- factor(ELLIBUTEMP$type, levels = c("list","district")) 
-					ELLIBUTEMP$type <- ifelse(ELLIBUTEMP$type == "list", "list", "quasi-list")
+				#	ELLIBUTEMP$type <- ifelse(ELLIBUTEMP$type == "list", "list", "quasi-list")
 				
 					mb <- lmer(selection_election_gap~
-								district_magnitude + # district_magnitude_country_stan
+								district_magnitude_country_and_type_cent + # district_magnitude_country_stan
 							#	type +
-								(1 | country) + (1|nat_party_id),
+								(1 | year_cent) +
+								(1 | country),
 								,data=ELLIBUTEMP)
 					summary(mb)
 					
@@ -3425,24 +3471,27 @@
 					
 					
 					mc <- lmer(selection_election_gap~
-								district_magnitude +
-							#	type +
+								district_magnitude_country_and_type_cent +
+								type +
+								country +
 								vote_share_cent +# party_size_country_stan +
-								(1 | country) + (1|nat_party_id),
+								(1 | year_cent) +
+								(1 | country),
 								,data=ELLIBUTEMP)
 					summary(mc)
 
 					md <- lmer(selection_election_gap~
-								district_magnitude +
-						#		type +
-								vote_share_cent +# party_size_country_stan +
+								district_magnitude_country_and_type_cent +
+								type +
+								country +
+								vote_share_cent +
 								vote_share_change_ten +
 						#		vote_share_lost +
 								year_cent +
 						#		I(year_cent^2)+
-								country +
 						#		nat_party_id +
-								(1 | country) + (1|nat_party_id),
+								(1 | year_cent) +
+								(1 | country),
 								,data=ELLIBUTEMP)
 					summary(md)
 
@@ -3450,18 +3499,19 @@
 
 
 					me <- lmer(selection_election_gap~
-								district_magnitude +
-						#		type +
+								district_magnitude_country_and_type_cent +
+								type +
+								country +
 								vote_share_cent + #party_size_country_stan +
 								vote_share_change_ten +
 						#		vote_share_lost +
 								year_cent+
 						#		I(year_cent^2)+
-								country +
 							#	nat_party_id +
 								vote_share_change_ten*linkedlist +
 						#		vote_share_lost*linkedlist +
-								(1 | country) + (1|nat_party_id),
+								(1 | year_cent) +
+								(1 | country),
 								,data=ELLIBUTEMP)
 					summary(me)
 					
@@ -3494,12 +3544,200 @@
 							#	omit.stat=c("aic","bic"),
 								font.size = "small",
 								label = "SelecElecRegTab",
-								dep.var.labels = c("(ratio elected - ratio on list)")
+								dep.var.labels = c("abs(ratio elected - ratio on list)")
 							)
 					
+		# properly layouted version
+			
+	m1 <- mee
+	m2 <- ma
+	m3 <- md
+	m4 <- me
+	
+	summary(m1)
+	summary(m2)
+	summary(m3)
+	summary(m4)
+	
+# to make sure that we are reminded of what version we are doing
+	hist(ELLIBUTEMP$selection_election_gap)
+	summary(ELLIBUTEMP$selection_election_gap)
+
+# name replacements
+
+	specificnamecleaning <- function(dirtynamesloc)	
+			{
+				cleanernames <- gsub("(Intercept)","Constant",dirtynamesloc,fixed=TRUE)
+				cleanernames <- gsub("district_magnitude_country_and_type_cent","district magnitude",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("vote_share_cent","vote share",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("vote_share_change_ten","vote share change",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("year_cent","election year",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("election_year","election year",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("linkedlistlinked","linked list",cleanernames,fixed=TRUE)	
+				return(cleanernames)
+			}
+			
+			dirtynames <- names(fixef(m4))
+			
+			specificnamecleaning(dirtynames)
+
+
+# use bootstrapping to get a standard error for the variance estimates.
+		runconfints <- TRUE
+		
+	# list level
+				listlvar <- format(round(c(
+							as.data.frame(VarCorr(m1))$vcov[3],
+							as.data.frame(VarCorr(m2))$vcov[3],
+							as.data.frame(VarCorr(m3))$vcov[3],
+							as.data.frame(VarCorr(m4))$vcov[3]
+											),digits=3),nsmall=3)
+		
+		if (runconfints)
+		{
+				simulations <- 100
+				am1 <- confint(m1,method="boot",nsim=simulations)
+				am2 <- confint(m2,method="boot",nsim=simulations)
+				am3 <- confint(m3,method="boot",nsim=simulations)
+				am4 <- confint(m4,method="boot",nsim=simulations)
+
+				listlvarse <- format(round(c(
+					((am1[3,2] - am1[3,1]) / 1.98),
+					((am2[3,2] - am2[3,1]) / 1.98),
+					((am3[3,2] - am3[3,1]) / 1.98),
+					((am4[3,2] - am4[3,1]) / 1.98)
+					),digits=3),nsmall=3)
+		} else {
+			listlvarse <- rep("NE",4)
+		}								
+	
+	# country level
+				countryvar <- format(round(c(
+							as.data.frame(VarCorr(m1))$vcov[2],
+							as.data.frame(VarCorr(m2))$vcov[2],
+							as.data.frame(VarCorr(m3))$vcov[2],
+							as.data.frame(VarCorr(m4))$vcov[2]
+											),digits=3),nsmall=3)
+		if (runconfints)
+		{					
+				countryvarse <- format(round(c(
+					((am1[2,2] - am1[2,1]) / 1.98),
+					((am2[2,2] - am2[2,1]) / 1.98),
+					((am3[2,2] - am3[2,1]) / 1.98),
+					((am4[2,2] - am4[2,1]) / 1.98)
+					),digits=3),nsmall=3)
+		} else {
+			countryvarse <- rep("NE",4)
+		}	
+		
+		
+	# election year level
+		
+				elecyearvar <- format(round(c(
+							as.data.frame(VarCorr(m1))$vcov[1],
+							as.data.frame(VarCorr(m2))$vcov[1],
+							as.data.frame(VarCorr(m3))$vcov[1],
+							as.data.frame(VarCorr(m4))$vcov[1]
+											),digits=3),nsmall=3)
+		
+		
+		if (runconfints)
+		{					
+				elecyearvarse <- format(round(c(
+					((am1[1,2] - am1[1,1]) / 1.98),
+					((am2[1,2] - am2[1,1]) / 1.98),
+					((am3[1,2] - am3[1,1]) / 1.98),
+					((am4[1,2] - am4[1,1]) / 1.98)
+					),digits=3),nsmall=3)
+		} else {
+			elecyearvarse <- rep("NE",4)
+		}
+
+	nobsc <-  c(nobs(m1),
+				nobs(m2),
+				nobs(m3),
+				nobs(m4))
+						
+	nrofcountries <- c(		nrow(ranef(m1)$country),
+							nrow(ranef(m2)$country),
+							nrow(ranef(m3)$country),
+							nrow(ranef(m4)$country))
+							
+	nrofelectionyears <- c(	nrow(ranef(m1)$year_cent),
+							nrow(ranef(m2)$year_cent),
+							nrow(ranef(m3)$year_cent),
+							nrow(ranef(m4)$year_cent))
+
+			GiveBrackets <- function(vector1)
+				{
+					resultvec <- vector()
+					for(i in 1:length(vector1))
+					{
+						resultvec[i] <- paste("(",vector1[i],")",sep="")
+					}
+					return(resultvec)
+				}
+
+
+	varlabels <- specificnamecleaning(names(fixef(m4)))
+
+	# to make sure that we are reminded of what version we are doing
+	hist(ELLIBUTEMP$selection_election_gap)
+	summary(ELLIBUTEMP$selection_election_gap)
+
+	stargazer(
+		m1,
+		m2,
+		m3,
+		m4,
+		type="text",
+		intercept.bottom=FALSE,
+		no.space=FALSE,
+		column.labels=(c("Empty","Control","Quota char.","Context char.")),
+		star.char = c(".", "*", "**", "***"),
+		star.cutoffs = c(0.1, 0.05, 0.01, 0.001),
+		keep.stat=c("ll"),
+		omit.stat=c("aic","bic"),
+		font.size = "small",
+		label = "RegTab",
+		caption = "Regression model predicting selection election gap with district magnitude, linked lists and controls",
+		dep.var.labels = c("abs(ratio elected - ratio on list)"),
+		covariate.labels = varlabels,
+			add.lines = list(	
+							c("Random effects"),
+							c("--------------------------"),
+							c("NR of (semi) lists",nobsc),
+							c("list-level var",listlvar),
+							c("",GiveBrackets(listlvarse)),
+							c("NR of countries",nrofcountries),
+							c("country-level var",countryvar),
+							c("",GiveBrackets(countryvarse)),
+							c("NR of election years",nrofelectionyears),
+							c("election-level var",elecyearvar),
+							c("",GiveBrackets(elecyearvarse))
+							)
+		  )		
 					
-					
-					
+		
+
+	stargazer(
+								caption = "Regression model predicting selection election gap with district magnitude, linked lists and controls",
+								mee,
+								ma,
+								md,
+								me,
+								type="text",
+								intercept.bottom=FALSE,
+								no.space=FALSE,
+								column.labels=(c("Empty","Dist.mag. ","Controls","Linked lists")),
+								star.char = c(".", "*", "**", "***"),
+								star.cutoffs = c(0.1, 0.05, 0.01, 0.001),
+							#	keep.stat=c("ll"),
+							#	omit.stat=c("aic","bic"),
+								font.size = "small",
+								label = "SelecElecRegTab",
+								dep.var.labels = c("(ratio elected - ratio on list)")
+							)		
 					
 					
 					
