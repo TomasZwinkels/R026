@@ -35,6 +35,7 @@
 	#	install.packages("lme4")
 	#	install.packages("car")
 	#	install.packages("ggpubr")
+	# 	install.packages("xlsx")
 	
 	# packages
 		library(sqldf)
@@ -1154,7 +1155,6 @@
 						table(is.na(ELENBU$electable))
 						
 						head(ELENBU)
-						install.packages("xlsx")
 						library("xlsx")
 						write_xlsx(ELENBU,"./ELENBU_20200804-1724.xlsx")
 						
@@ -1490,6 +1490,11 @@
 	# DATA 10: ELLIBU gets ratio of women elected on the list level, please note that we calculate the ratio of men/women for each list that lead to anybody being elected - we do use reduced list here, because we only want those people that where there at the start!
 	##############################################
 	
+	
+			# so we loose some lists here, for example 'DE_NT-BT_2009__district-seats-HB' -- why?!
+			table(is.na(ELENBURED$list_id),is.na(ELENBURED$genderwithguesses)) # it is not missingness
+			ELENBURED[which(grepl("DE_NT-BT_2009__district-seats-HB",ELENBURED$list_id,fixed=TRUE)),] # only 5 cases as well.. I guess if nobody got elected from the list, we don't get a ratio (makes a lot of sense). I think we are OK with that.
+			
 			GCPARE <- as.data.frame.matrix(table(ELENBURED$list_id,ELENBURED$genderwithguesses)) 
 			GCPARE$list_id <- rownames(GCPARE)
 			head(GCPARE)
@@ -2653,11 +2658,27 @@
 		
 		# how about Germany only checking?!
 
+
+			# district magnitude, make it country centered
+			hist(ELLIBU$district_magnitude)
+		
+			dedismagavg <- mean(ELLIBU$district_magnitude[which(ELLIBU$country == "DE")])
+			nldismagavg <- mean(ELLIBU$district_magnitude[which(ELLIBU$country == "NL")])
+			dedismagsd <-  sd(ELLIBU$district_magnitude[which(ELLIBU$country == "DE")])
+			nldismagsd <-  sd(ELLIBU$district_magnitude[which(ELLIBU$country == "NL")])
+							
+			ELLIBU$district_magnitude_country_cent <- ifelse(ELLIBU$country == "DE", (ELLIBU$district_magnitude-dedismagavg), 0)
+			
+			ggplot(data=ELLIBU, aes(y=district_magnitude_country_cent, fill=country)) +
+			geom_boxplot()
+			
+			table(is.na(ELLIBU$district_magnitude_country_cent))
+
 		# new model buildup! - general controls first, then time controls, only then the selecgtion control stuff
 
 			m1 <- lmer(	ambition_selection_gap~
 								selection_control_fac + # new
-								district_magnitude +
+								district_magnitude_country_cent +
 								(1 | year_cent) +
 								(1 | country),
 								data=ELLIBU)
@@ -2675,9 +2696,11 @@
 		
 		table(ELLIBU$quota_zipper)
 
+	
+			
 			m1a <- lmer(	ambition_selection_gap~
 								selection_control_fac + # new
-								district_magnitude +
+								district_magnitude_country_cent +
 			#					type +
 								quota_percentage_lessthen50 +
 								quota_soft_fact +
@@ -2690,7 +2713,7 @@
 					stargazer(me,m1a,type="text")
 					
 			m2 <- lmer(	ambition_selection_gap~
-								district_magnitude +
+								district_magnitude_country_cent +
 			#					type +
 								quota_percentage_lessthen50 +
 								quota_soft_fact +
@@ -2726,7 +2749,7 @@
 			
 			m3 <- lmer(	ambition_selection_gap~
 								selection_control_fac + # new
-								district_magnitude +
+								district_magnitude_country_cent +
 			#					type +
 								quota_percentage_lessthen50 +
 								quota_soft_fact +
@@ -2744,7 +2767,7 @@
 			anova(m3,m2) # yes it is!
 			
 			m4 <- lmer(	ambition_selection_gap~
-								district_magnitude +
+								district_magnitude_country_cent +
 			#					type +
 								quota_percentage_lessthen50 +
 								quota_soft_fact +
@@ -2760,7 +2783,7 @@
 					stargazer(me,m1,m3,m4,type="text",intercept.bottom=FALSE) 
 		
 			m5 <- lmer(	ambition_selection_gap~
-								district_magnitude +
+								district_magnitude_country_cent +
 								quota_percentage_lessthen50 +
 								quota_soft_fact +
 								party_size_country_stan +
@@ -2776,7 +2799,7 @@
 			# some additional attemps to see what is going on whith the high control condition...  how about party dummies?
 			
 			m6 <- lmer(	ambition_selection_gap~
-								district_magnitude +
+								district_magnitude_country_cent +
 								quota_percentage_lessthen50 +
 								quota_soft_fact +
 							#	quota_zipper +
@@ -2843,7 +2866,7 @@
 	specificnamecleaning <- function(dirtynamesloc)	
 			{
 				cleanernames <- gsub("(Intercept)","Constant",dirtynamesloc,fixed=TRUE)
-				cleanernames <- gsub("district_magnitude","district magnitude",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("district_magnitude_country_cent","district magnitude",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("quota_percentage_lessthen50","quota",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("quota_soft_factsoft","soft quota",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("quota_zipper","zipper quota",cleanernames,fixed=TRUE)
@@ -2964,7 +2987,7 @@
 		m2,
 		m3,
 		m4,
-		type="text",
+		type="latex",
 		intercept.bottom=FALSE,
 		no.space=FALSE,
 		column.labels=(c("Empty","Control","Quota char.","Context char.")),
@@ -2992,7 +3015,8 @@
 							)
 		  )	
 		
-		
+		# some interpretation things
+		aggregate(data=ELLIBU, vote_share_cent~quota_percentage_lessthen50, mean) # it is typically the bigger parties that have quotas that are not 50%!
 		
 		
 		
@@ -3119,9 +3143,18 @@
 					 geom_boxplot()  +
 					 geom_smooth(method = "lm", se=TRUE, aes(group=1))
 				
+				# other country differences - so yes: relatively speaking a bigger gap in NL in general. - but not 12 points?!
+					ggplot(data=ELLIBU, aes(y=selection_election_gap,fill=country)) +
+					geom_boxplot()
+					
+					ggplot(data=ELLIBU, aes(selection_election_gap)) +
+					geom_histogram() +  
+					facet_grid(country ~ .)
+					
+				
 				
 				# and the absolute version as suggested
-				ELLIBU$selection_election_gap <- abs(ELLIBU$selection_election_gap) # here we select absolute values or 
+			#	ELLIBU$selection_election_gap <- abs(ELLIBU$selection_election_gap) # here we select absolute values or 
 				ELLIBU$selection_election_gap_abs <- abs(ELLIBU$selection_election_gap) # here we select absolute values or 
 				
 				# inspection
@@ -3206,6 +3239,11 @@
 					geom_smooth(method = lm, se = FALSE) +
 					geom_jitter()
 					
+					ggplot(ELLIBUTEMP, aes(x=district_magnitude_country_stan, y=selection_election_gap,color=party_id_nat_equiv)) +
+					geom_point() + 
+					geom_smooth(method = lm, se = FALSE) +
+					geom_jitter()
+					
 					ggplot(ELLIBUTEMP, aes(x=district_magnitude_country_stan)) + geom_histogram()
 					
 					ggplot(data=subset(ELLIBUTEMP,ELLIBUTEMP$district_magnitude_country_stan < 2), aes(x=district_magnitude_country_stan, y=selection_election_gap,color=party_id_nat_equiv)) +
@@ -3232,6 +3270,51 @@
 					
 					
 					# graphic to include!
+					# \/ this one probably works the best?
+					
+					ELLIBUTEMP$country_and_type <- paste0(ELLIBUTEMP$country,":",ELLIBUTEMP$type)
+					countrytypagg <- as.data.frame(aggregate(data=ELLIBUTEMP, selection_election_gap~country_and_type,mean))
+					countrytypagg$x <- c(1,mean(ELLIBUTEMP$district_magnitude[which(ELLIBUTEMP$country_and_type == "DE:list")]),150)
+					countrytypagg
+					
+					library("scales")
+					reverselog_trans <- function(base = exp(1)) {
+						trans <- function(x) -log(x, base)
+						inv <- function(x) base^(-x)
+						trans_new(paste0("reverselog-", format(base)), trans, inv, 
+								  log_breaks(base = base), 
+								  domain = c(1e-100, Inf))
+					}
+					
+					ggplot(data=ELLIBUTEMP, aes(x=district_magnitude, y=selection_election_gap,shape=country_and_type,color=country_and_type)) +
+					geom_point(size=3) + 
+					scale_color_grey() +
+					geom_smooth(method = "loess",color="black") +
+					geom_label(data=countrytypagg,aes(x=x,y=5,label=round(selection_election_gap,2)),size=7,shape=3,color="black") +
+					labs(title = "election selection gap VS district magnitude, observed values", 
+					x = "District magnitude", 
+					y = "(Election-selection) gap whole list") +
+					theme_pubr(base_size=20) +
+					scale_x_continuous(trans='log2') +
+				#	scale_y_continuous(trans=reverselog_trans(10)) +
+					ylim()
+					
+					# some data inspection: a gap of -100, how?!
+					ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap == -100),]
+					ELLIBUTEMP[which(grepl("DE_NT-BT_2009__district-seats-HB",ELLIBUTEMP$list_id,fixed=TRUE)),] # are the other cases dropped because they are considered not electable?
+					ELLIBUCOMP[which(grepl("DE_NT-BT_2009__district-seats-HB",ELLIBUCOMP$list_id,fixed=TRUE)),] # it actually seems the CDU only ran one candidate in the 'semi-list' only for Bremen-II-Bremerhaven 
+
+					head(GCPARE)
+					D1 <- as.data.frame (GCPARE)
+					D1$list_id <- rownames(D1)
+					head(D1)
+					D1[which(grepl("DE_NT-BT_2009__district-seats-HB",D1$list_id,fixed=TRUE)),] # so four indeed... so this the step where we loose the gender counts ...
+
+
+
+					# why is the f and m count missing for for example 'DE_NT-BT_2009__Bremen-II-Bremerhaven' and  'DE_Moellenstaedt_Oliver_1978' - does this have to do with the redistricting e.t.c. again?
+					
+					
 					ggplot(data=ELLIBUTEMP, aes(x=district_magnitude, y=selection_election_gap,color=country)) +
 					geom_point() + 
 					geom_smooth(method = loess, se = FALSE) +
