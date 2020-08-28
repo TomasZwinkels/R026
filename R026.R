@@ -820,9 +820,9 @@
 					# function to match previous parliament
 						
 						# some variable values that can be used for debugging
-                        local_list_id = "NL_NT-TK_1994__Nijmegen__03may1994__Christen-Democratisch-Appel" #fixlater, check after data update if this goes alright with in the new version of the data the district id only being in their once!
-                        local_list_position = 70
-                        howfarback = 1
+                        local_list_id = "NL_NT-TK_2012__Groningen__12sep2012__Christen-Democratisch-Appel" #fixlater, check after data update if this goes alright with in the new version of the data the district id only being in their once!
+                        local_list_position = 45
+                        howfarback = 2
                         local_natparty_id = "NL_CDA_NT"
 						
 						local_list_id = ELENBU$list_id_old[22373]
@@ -1718,10 +1718,17 @@
 					ELLIBU[500:510,]
 					table(ELLIBU$party_id_nat_equiv)
 					
-					table(is.na(ELLIBU$ratio_on_list)) # not complete! #fixlater
+					table(is.na(ELLIBU$ratio_on_list)) # not complete! #fixlater one missing
+					ELLIBU[which(is.na(ELLIBU$ratio_on_list)),]
+					
 					table(is.na(ELLIBU$ratio_elected)) # complete
 					table(is.na(ELLIBU$quota_percentage)) # complete
-
+					
+					
+				# and the 'table 1' for the publication
+				
+					table(ELLIBU$parliament_id,ELLIBU$country)
+					
 	###########################
 	# RED A2: is OM etc to get Dutch election lists that are 100% simular so only the ones that actually vary are included 
 	###########################
@@ -2087,7 +2094,7 @@
 			ELLIBU[which(is.na(ELLIBU$vote_share_change)),]
 			
 			
-	## NEW! selection and election control variables ###!
+	## Selection and election control variables ###!
 
 			## selection control
 				ELLIBU$selection_control <- NA
@@ -2419,15 +2426,29 @@
 				stat_summary(aes(ymax = ..y.., ymin = ..y.., group = factor(selection_control_fac),label=round(..y..,2)), fun.y=mean, geom="label", size=8) +
 			#	scale_color_brewer(palette = "Dark2") +
 				labs(title = "List level selection ambition gap * selection control", x = "Selection control", y = "(Selection - ambition) gap electable positions", color = "Party\n") +
-				geom_text(aes(x=0.5,y=37.5,label="overshooting"),angle=0,size=geom.text.size) + 
-				geom_text(aes(x=0.5,y=-37.5,label="undershooting"),angle=0,size=geom.text.size) +
+				geom_text(aes(x=0.6,y=49.5,label="overshooting"),angle=0,size=geom.text.size) + 
+				geom_text(aes(x=0.6,y=-48.5,label="undershooting"),angle=0,size=geom.text.size) +
 				geom_hline(yintercept=0,linetype="dashed") + 
-				geom_text(data=group_average_for_labels, aes(label=party_id_nat_equiv_short, y = 40), position=position_dodge(width=0.9),size=geom.text.size-1,color="black") +
+				geom_text(data=group_average_for_labels, aes(label=party_id_nat_equiv_short, y = 35), position=position_dodge(width=0.9),size=geom.text.size-1,color="black",angle=90) +
 				theme_pubr(base_size = theme.size) +
 				ylim(c(-50,50)) +
 				guides(fill=FALSE) +
-				coord_flip() +
-				scale_fill_manual(values=rep("#999999",7))
+			#	coord_flip() +
+				scale_fill_manual(values=rep("#999999",7)) +
+				geom_vline(xintercept=1.5,linetype="solid") +
+				geom_vline(xintercept=2.5,linetype="solid")
+		
+			# why the low numbers for the CDA in the Netherlands?
+			
+				head(ELLIBU)
+				
+				#e.g.
+				ELENBU[which(ELENBU$list_id == "NL_NT-TK_2012__Groningen__12sep2012__Christen-Democratisch-Appel"),]
+			
+				# elena ask: which PvdA lists are undershooting
+				 NLPvdA <- ELLIBU[which(ELLIBU$party_id_nat_equiv == "NL_PvdA_NT"),]
+			
+			
 				
 			# reorder for the models
 				ELLIBU$selection_control_fac <- factor(ELLIBU$selection_control_fac, levels=c("low selection control","medium selection control","high selection control"))
@@ -3020,8 +3041,20 @@
 		aggregate(data=ELLIBU, vote_share_cent~quota_percentage_lessthen50, mean) # it is typically the bigger parties that have quotas that are not 50%!
 		
 		
+		# and delta method
 		
+		fixef(m4)
+		seq(from=1,to=length(fixef(m4)),by=1)
+		cbind(fixef(m4),seq(from=1,to=length(fixef(m4)),by=1))
 		
+		# low
+		deltaMethod(m4,"x1", parameterNames= paste("x", 1:length(fixef(m4)), sep=""))
+
+		# med
+		deltaMethod(m4,"x1+x2", parameterNames= paste("x", 1:length(fixef(m4)), sep=""))
+		
+		# high
+		deltaMethod(m4,"x1+x3", parameterNames= paste("x", 1:length(fixef(m4)), sep=""))
 		
 		
 		
@@ -3155,12 +3188,44 @@
 					ggplot(data=ELLIBU, aes(selection_election_gap)) +
 					geom_histogram() +  
 					facet_grid(country ~ .)
+				
+				####### so' what is up with these cases where parties 'overshoot'
+
+					head(ELLIBU[,c("selection_election_gap","ratio_elected","ratio_on_list")])
+
+					# is it country?
+					ggplot(data=ELLIBU, aes(y=selection_election_gap,fill=country)) +
+					geom_boxplot()
 					
+					# is it list type?
+					ggplot(data=ELLIBU, aes(y=selection_election_gap,fill=type)) +
+					geom_boxplot()
+					
+					# both?
+					ELLIBU$country_type <- paste0(ELLIBU$country,ELLIBU$type)
+					table(ELLIBU$country_type)
+					
+						ggplot(data=ELLIBU, aes(y=selection_election_gap,fill=country_type)) +
+						geom_boxplot()
+					
+					# for specific parties?
+					ggplot(data=ELLIBU, aes(y=selection_election_gap,fill=party_id_nat_equiv)) +
+					geom_boxplot()
+					
+					
+
+				
 #################				
 #################			
 				# and the absolute version as suggested
-				ELLIBU$selection_election_gap <- abs(ELLIBU$selection_election_gap) # here we select absolute values or not!
+			#	ELLIBU$selection_election_gap <- abs(ELLIBU$selection_election_gap) # here we select absolute values or not!
 				ELLIBU$selection_election_gap_abs <- abs(ELLIBU$selection_election_gap) 
+				
+				# and the more radical just not looking at selecting to many women
+				nrow(ELLIBU)
+			#	ELLIBU <- ELLIBU[which(ELLIBU$selection_election_gap <= 0),]
+				nrow(ELLIBU)
+				
 #################
 #################				
 				# inspection
@@ -3785,6 +3850,74 @@
 ############ some info that was requested as input for some of our additional decisions
 
 	table(ELLIBUTEMP$district_magnitude,ELLIBUTEMP$type)
+	
+	
+	
+
+	
+
+
+
+
+######################################################################################
+################### suggestion from Philip to 'predict' soft quotas ##################
+######################################################################################		
+
+names(ELLIBU)
+
+	# if there is no relation the relative percentage of quota soft parties should not differ accross to columns
+	
+	table(ELLIBU$quota_soft,ELLIBU$selection_control_fac)
+	prop.table(table(ELLIBU$quota_soft,ELLIBU$selection_control_fac),2)
+	
+	
+	
+	
+	# and for district magnitude
+	
+		ELLIBU$district_magnitude_bins <- as.character(ELLIBU$district_magnitude)
+		
+		ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude_bins == "1")] <- "dm_1"
+		
+		ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude > 1 & ELLIBU$district_magnitude <= 20)] <- "dm_2-10"
+		ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude > 10 & ELLIBU$district_magnitude <= 20)] <- "dm_11-20"
+		ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude > 20 & ELLIBU$district_magnitude <= 30)] <- "dm_21-30"
+		ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude > 30 & ELLIBU$district_magnitude <= 50)] <- "dm_31-50"
+		ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude > 50 & ELLIBU$district_magnitude <= 80)] <- "dm_51-80"
+		ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude > 80 & ELLIBU$district_magnitude < 150)] <- "dm_81-149"
+		
+		ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude == 150)] <- "dm_150"
+		
+		ELLIBU$district_magnitude_bins <- factor(ELLIBU$district_magnitude_bins,levels=c("dm_1","dm_2-10","dm_11-20","dm_21-30","dm_31-50","dm_51-80","dm_81-149","dm_150"))
+		
+		table(ELLIBU$district_magnitude_bin)
+		
+	table(ELLIBU$quota_soft,ELLIBU$district_magnitude_bin)
+	prop.table(table(ELLIBU$quota_soft,ELLIBU$district_magnitude_bin),2)
+	
+	table(ELLIBU$quota_soft,ELLIBU$country)
+
+	
+	# and both in simple model
+	
+	mod_qe <- glm(quota_soft ~ 1, data = ELLIBU, family = binomial)
+	
+	mod_q1 <- glm(quota_soft ~ selection_control_fac, data = ELLIBU, family = binomial)
+	
+	mod_q2 <- glm(quota_soft ~ selection_control_fac + district_magnitude_bins, data = ELLIBU, family = binomial)
+
+	
+	stargazer(mod_qe,mod_q1,mod_q2,type="text",intercept.bottom=FALSE)
+
+
+
+
+
+
+
+
+
+
 
 ######################################################################################
 ############################ OLD DESCRIPTIVE RESULTS #################################
