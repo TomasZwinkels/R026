@@ -1176,7 +1176,7 @@
 				
 				table(ELENBUTEMP$parliament_id,ELENBUTEMP$party_id_from_elli_nat_equiv)
 				
-				ELENBU <- ELENBUTEMP # Here you can switch of the reduction to only electable!
+				ELENBU <- ELENBUTEMP # Here you can switch of the reduction to only electable! --- this might be an issue I think, we use ELENBU below on multiple occasions as if it is not reduced.
 				nrow(ELENBU)
 				
 			# analyse the remaining size of the issue, mainly by filtering on the relevant parties
@@ -1735,7 +1735,7 @@
 		
 		## step 1: make a function that generates an - ';' separated - list position ordered - array of all pers_ids occurring on a certain list (takes a list id as input)
 		
-			head(ELENBU)
+			head(ELENBUTOT)
 			
 			# testing what goes wrong we DE Bundestag
 			local_list_id = "DE_NT-BT_2017__Baden-Wuerttemberg__Christlich-Demokratische-Union-Deutschlands-in-Niedersachsen" # so, does not occur in ELENBU apparently?!
@@ -1743,7 +1743,7 @@
 			getpersidarrayforlistid <- function(local_list_id)
 			{
 			# select 
-				ELENBUME <- ELENBU[which(ELENBU$list_id == local_list_id),]
+				ELENBUME <- ELENBUTOT[which(ELENBUTOT$list_id == local_list_id),]
 				return(paste(ELENBUME$pers_id,collapse=";"))
 			}
 	
@@ -1813,7 +1813,7 @@
 					# so this takes - a lot - of time to run, so it only does when you explicity tell it to and suggests you to when the dataversion has changed
 					
 					# by default we are not running this!
-						runOMagain <- FALSE
+						runOMagain <- TRUE
 				
 					# manual overwrite is possible (should be of by default!)
 					manualoverwrite <- ""
@@ -2489,7 +2489,7 @@
 					me <- lmer(ambition_selection_gap~1+
 								(1 | year_cent) +
 								(1 | country),
-								,data=ELLIBU)
+								data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#data=ELLIBU)#
 					summary(me)
 				
 					
@@ -2703,7 +2703,7 @@
 								district_magnitude_country_cent +
 								(1 | year_cent) +
 								(1 | country),
-								data=ELLIBU)
+								data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#data=ELLIBU)
 					summary(m1)
 					stargazer(me,m1,type="text")
 
@@ -2730,7 +2730,7 @@
 								# party_size_country_stan +
 								(1 | year_cent) +
 								(1 | country),
-								data=ELLIBU)
+								data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#data=ELLIBU)#
 					summary(m1a)
 					stargazer(me,m1a,type="text")
 					
@@ -2745,7 +2745,7 @@
 								country * year_cent +
 								(1 | year_cent) +
 								(1 | country),
-								data=ELLIBU)
+								data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#data=ELLIBU)#
 					summary(m2)
 					stargazer(me,m1,m2,type="text",intercept.bottom=FALSE)
 			
@@ -2782,7 +2782,7 @@
 							#	I(timeNL^2) +
 								(1 | year_cent) +
 								(1 | country),
-								data=ELLIBU)
+								data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0 & ELLIBU$ambition_selection_gap > -40),])
 					summary(m3)
 					stargazer(m3,type="text",intercept.bottom=FALSE)
 			# key check here: model 'as good'?!
@@ -2800,7 +2800,7 @@
 								selection_control_fac +
 								(1 | year_cent) +
 								(1 | country),
-								data=ELLIBU)
+								data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
 					summary(m4)
 					stargazer(me,m1,m3,m4,type="text",intercept.bottom=FALSE) 
 		
@@ -2814,7 +2814,7 @@
 								type +
 								(1 | year_cent) +
 								(1 | country),
-								data=ELLIBU)
+								data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#data=ELLIBU)
 					summary(m5)
 					stargazer(me,m1,m3,m5,type="text",intercept.bottom=FALSE)
 					
@@ -2833,7 +2833,7 @@
 							# (1 | parliament_id) +
 							#	(1 | country),
 							#	(1 | party_id_nat_equiv_short), # this model suggests that a random effect for party is quite a good idea?!
-								data=ELLIBU)
+								data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#data=ELLIBU)#
 					summary(m6)
 					stargazer(me,m1,m3,m4,m6,type="text",intercept.bottom=FALSE)				
 	
@@ -3009,7 +3009,7 @@
 		m2,
 		m3,
 		m4,
-		type="latex",
+		type="text",
 		intercept.bottom=FALSE,
 		no.space=FALSE,
 		column.labels=(c("Empty","Control","Quota char.","Context char.")),
@@ -3040,6 +3040,18 @@
 		# some interpretation things
 		aggregate(data=ELLIBU, vote_share_cent~quota_percentage_lessthen50, mean) # it is typically the bigger parties that have quotas that are not 50%!
 		
+		
+		# so there is this suggestion to select only undershooting cases now?
+			summary(ELLIBU$ambition_selection_gap)
+			hist(ELLIBU$ambition_selection_gap)
+			
+			plot(m4)
+			
+			par(mfrow=c(1,2))
+			hist(ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),]$ambition_selection_gap,xlim=c(-50,50),breaks=20)
+			#hist(ELLIBU$ambition_selection_gap,xlim=c(-50,50),breaks=20)
+			hist(predict(m4),xlim=c(-50,50),breaks=10)
+			par(mfrow=c(1,1))
 		
 		# and delta method
 		
@@ -3474,7 +3486,7 @@
 				    mee <- lmer(selection_election_gap~1+ # selection_election_gap
 								(1 | year_cent) +
 								(1 | country),
-								,data=ELLIBUTEMP)
+								data=ELLIBUTEMP)#data=ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap <= 0),])
 					summary(mee)
 				
 					# lets model this differently,
@@ -3518,7 +3530,7 @@
 								country +
 								(1 | year_cent) +
 								(1 | country),
-								,data=ELLIBUTEMP)
+								data=ELLIBUTEMP)#data=ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap <= 0),])
 					summary(ma)
 					stargazer(mee,ma,type="text",intercept.bottom=FALSE)
 				
@@ -3530,7 +3542,7 @@
 							#	type +
 								(1 | year_cent) +
 								(1 | country),
-								,data=ELLIBUTEMP)
+								data=ELLIBUTEMP)#data=ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap <= 0),])
 					summary(mb)
 					
 					hist(ELLIBUTEMP$party_size_country_stan)
@@ -3549,7 +3561,7 @@
 								vote_share_cent +# party_size_country_stan +
 								(1 | year_cent) +
 								(1 | country),
-								,data=ELLIBUTEMP)
+								data=ELLIBUTEMP)#data=ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap <= 0),])
 					summary(mc)
 
 					md <- lmer(selection_election_gap~
@@ -3564,7 +3576,7 @@
 						#		nat_party_id +
 								(1 | year_cent) +
 								(1 | country),
-								,data=ELLIBUTEMP)
+								data=ELLIBUTEMP)#data=ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap <= 0),])
 					summary(md)
 
 					table(ELLIBUTEMP$nat_party_id,ELLIBUTEMP$linkedlist)
@@ -3584,7 +3596,7 @@
 						#		vote_share_lost*linkedlist +
 								(1 | year_cent) +
 								(1 | country),
-								,data=ELLIBUTEMP)
+								data=ELLIBUTEMP)#data=ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap <= 0),])#data=ELLIBUTEMP)#data=ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap <= 0 & ELLIBUTEMP$selection_election_gap > -30),])
 					summary(me)
 					stargazer(mee,ma,md,me,type="text",intercept.bottom=FALSE)
 					
@@ -3605,7 +3617,7 @@
 						#		vote_share_lost*linkedlist +
 								(1 | year_cent) +
 								(1 | country),
-								,data=ELLIBUTEMP)
+								data=ELLIBUTEMP)#data=ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap <= 0),])
 					summary(mee)
 					stargazer(mee,ma,md,me2,type="text",intercept.bottom=FALSE)
 					# variance estimates e.t.c? < later!
@@ -3783,7 +3795,7 @@
 		m2,
 		m3,
 		m4,
-		type="latex",
+		type="text",
 		intercept.bottom=FALSE,
 		no.space=FALSE,
 		column.labels=(c("Empty","Elect.","Context","Linked")),
@@ -3794,7 +3806,7 @@
 		font.size = "small",
 		label = "RegTab",
 		caption = "Regression model predicting selection election gap with district magnitude, linked lists and controls",
-		dep.var.labels = c("abs(ratio elected - ratio on list)"),
+		dep.var.labels = c("ratio elected - ratio on list"),
 		covariate.labels = varlabels,
 			add.lines = list(	
 							c("Random effects"),
@@ -3809,28 +3821,7 @@
 							c("election-level var",elecyearvar),
 							c("",GiveBrackets(elecyearvarse))
 							)
-		  )		
-					
-		
-
-	stargazer(
-								caption = "Regression model predicting selection election gap with district magnitude, linked lists and controls",
-								mee,
-								ma,
-								md,
-								me,
-								type="text",
-								intercept.bottom=FALSE,
-								no.space=FALSE,
-								column.labels=(c("Empty","Dist.mag. ","Controls","Linked lists")),
-								star.char = c(".", "*", "**", "***"),
-								star.cutoffs = c(0.1, 0.05, 0.01, 0.001),
-							#	keep.stat=c("ll"),
-							#	omit.stat=c("aic","bic"),
-								font.size = "small",
-								label = "SelecElecRegTab",
-								dep.var.labels = c("(ratio elected - ratio on list)")
-							)		
+		  )			
 					
 					
 					
@@ -3844,7 +3835,19 @@
 					boxplot(ELLIBUDE$selection_election_gap~ELLIBUDE$year)
 					boxplot(ELLIBUNL$selection_election_gap~ELLIBUNL$year)
 
-
+		
+		# and some diagnostics here
+			
+			summary(ELLIBU$selection_election_gap)
+			hist(ELLIBU$selection_election_gap)
+			
+			plot(m4)
+			
+			par(mfrow=c(1,2))
+			hist(ELLIBU[which(ELLIBU$selection_election_gap <= 0),]$selection_election_gap,xlim=c(-50,50),breaks=40)
+			#hist(ELLIBU$selection_election_gap,xlim=c(-50,50),breaks=20)
+			hist(predict(m4),xlim=c(-50,50),breaks=5)
+			par(mfrow=c(1,1))
 
 
 ############ some info that was requested as input for some of our additional decisions
