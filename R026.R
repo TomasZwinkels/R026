@@ -333,6 +333,7 @@
 			ELENBU <- sqldf("SELECT elec_entry_id, list_id, pers_id, listplace, country
 							FROM ELENBU
 							")
+			nrow(ELENBU)
 		
 		# then we merge a couple of POLI level things to inspect
 			ELENBU <- sqldf("SELECT ELENBU.*, POLI.last_name, POLI.first_name, POLI.gender, POLI.birth_date
@@ -1750,6 +1751,14 @@
 			getpersidarrayforlistid(ELLIBU$list_id[4000]) # inspections seems promissing
 			tail(ELLIBU)
 			
+			# old incorrect version! (remove comments first if you want to run it)
+	#		getpersidarrayforlistid <- function(local_list_id)
+	#		{
+	#		# select 
+	#			ELENBUME <- ELENBU[which(ELENBU$list_id == local_list_id),]
+	#			return(paste(ELENBUME$pers_id,collapse=";"))
+	#		}1
+			
 		## step 2:
 
 			# split the arrays to use into a vector again
@@ -1930,6 +1939,14 @@
 
 		ELLIBU$meanpersdifferent <- meanpersdifferentresvec
 		ELLIBU$percentage95simular <- percentage95simularresvec
+		
+		# check, run manual if you like: increase in cases (from 653 in the paper to 726 now) happens here?
+		# meanpersdifferentresvec <- read.csv("INDA/OM/20200818_2142_meanpersdifferentresvec.csv",sep="")[,2]
+		# percentage95simularresvec <- read.csv("INDA/OM/20200818_2142_percentage95simularresvec.csv",sep="")[,2]
+		
+		ELLIBU$meanpersdifferent <- meanpersdifferentresvec
+		ELLIBU$percentage95simular <- percentage95simularresvec
+		
 		nrow(ELLIBU)
 		
 		ELLIBUNL <- ELLIBU[which(ELLIBU$country == "NL" & !ELLIBU$parliament_id == "NL_NT-TK_1981"),]
@@ -2534,7 +2551,7 @@
 					me <- lmer(ambition_selection_gap~1+
 								(1 | year_cent) +
 								(1 | country),
-								data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#data=ELLIBU)#
+								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
 					summary(me)
 				
 					
@@ -2748,7 +2765,7 @@
 								district_magnitude_country_cent +
 								(1 | year_cent) +
 								(1 | country),
-								data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#data=ELLIBU)
+								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
 					summary(m1)
 					stargazer(me,m1,type="text")
 
@@ -2775,7 +2792,7 @@
 								# party_size_country_stan +
 								(1 | year_cent) +
 								(1 | country),
-								data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#data=ELLIBU)#
+								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
 					summary(m1a)
 					stargazer(me,m1a,type="text")
 					
@@ -2790,7 +2807,7 @@
 								country * year_cent +
 								(1 | year_cent) +
 								(1 | country),
-								data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#data=ELLIBU)#
+								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
 					summary(m2)
 					stargazer(me,m1,m2,type="text",intercept.bottom=FALSE)
 			
@@ -2827,7 +2844,7 @@
 							#	I(timeNL^2) +
 								(1 | year_cent) +
 								(1 | country),
-								data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0 & ELLIBU$ambition_selection_gap > -40),])
+								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
 					summary(m3)
 					stargazer(m3,type="text",intercept.bottom=FALSE)
 			# key check here: model 'as good'?!
@@ -2845,7 +2862,7 @@
 								selection_control_fac +
 								(1 | year_cent) +
 								(1 | country),
-								data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
+								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
 					summary(m4)
 					stargazer(me,m1,m3,m4,type="text",intercept.bottom=FALSE) 
 		
@@ -2859,7 +2876,7 @@
 								type +
 								(1 | year_cent) +
 								(1 | country),
-								data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#data=ELLIBU)
+								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
 					summary(m5)
 					stargazer(me,m1,m3,m5,type="text",intercept.bottom=FALSE)
 					
@@ -2878,7 +2895,7 @@
 							# (1 | parliament_id) +
 							#	(1 | country),
 							#	(1 | party_id_nat_equiv_short), # this model suggests that a random effect for party is quite a good idea?!
-								data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#data=ELLIBU)#
+								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
 					summary(m6)
 					stargazer(me,m1,m3,m4,m6,type="text",intercept.bottom=FALSE)				
 	
@@ -3113,14 +3130,6 @@
 		# high
 		deltaMethod(m4,"x1+x3", parameterNames= paste("x", 1:length(fixef(m4)), sep=""))
 		
-		
-		
-		
-		
-		
-		
-		
-
 					stargazer(me,m0,m1,m3,m4,intercept.bottom=FALSE)
 					
 			# to answer the question if small parties are still excluded?
@@ -3275,7 +3284,7 @@
 #################				
 #################			
 				# and the absolute version as suggested
-			#	ELLIBU$selection_election_gap <- abs(ELLIBU$selection_election_gap) # here we select absolute values or not!
+				ELLIBU$selection_election_gap <- abs(ELLIBU$selection_election_gap) # here we select absolute values or not!
 				ELLIBU$selection_election_gap_abs <- abs(ELLIBU$selection_election_gap) 
 				
 				# and the more radical just not looking at selecting to many women
@@ -3884,8 +3893,9 @@
 		  )			
 					
 					
-					
-					
+	# the requested data export from Elena
+		# 
+		
 					
 					# probaly some effect visualisations would be good here
 					
