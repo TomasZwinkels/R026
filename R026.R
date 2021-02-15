@@ -1813,7 +1813,7 @@
 					# so this takes - a lot - of time to run, so it only does when you explicity tell it to and suggests you to when the dataversion has changed
 					
 					# by default we are not running this!
-						runOMagain <- TRUE
+						runOMagain <- FALSE
 				
 					# manual overwrite is possible (should be of by default!)
 					manualoverwrite <- ""
@@ -1932,12 +1932,30 @@
 		ELLIBU$percentage95simular <- percentage95simularresvec
 		nrow(ELLIBU)
 		
-		ELLIBUNL <- ELLIBU[which(ELLIBU$country == "NL"),]
+		ELLIBUNL <- ELLIBU[which(ELLIBU$country == "NL" & !ELLIBU$parliament_id == "NL_NT-TK_1981"),]
 		boxplot(ELLIBUNL$meanpersdifferent~ELLIBUNL$parliament_id)
 		hist(ELLIBUNL$meanpersdifferent)
 		table(ELLIBUNL$party_id)
 		table(ELLIBUNL$party_id,ELLIBUNL$parliament_id)
-		boxplot(ELLIBUNL$meanpersdifferent~ELLIBUNL$parliament_id)
+		
+		# development over time
+		boxplot(ELLIBUNL$meanpersdifferent~ELLIBUNL$parliament_id,ylab="average percentage of unique politicians accross districts")
+		
+		ggplot(ELLIBUNL, aes(x=parliament_id, y=meanpersdifferent)) + 
+		  geom_boxplot() + ylab("average percentage of unique politicians accross districts")		
+
+		
+		# development over time per party
+		ggplot(ELLIBUNL, aes(x=parliament_id, y=meanpersdifferent,color=party_id)) + 
+		  geom_boxplot() + ylab("average percentage of unique politicians accross districts")			
+		
+		
+		#  requested graph: similarity of the list on the x axis and each gap on the y axis
+			# please note that this is done below because here we do not yet have the crucial gap size calculations. 
+			# see around line 2458 for ambition-selection gap
+			# see around line 3443 for the selection-election gap
+		
+		# lets add a box plot broken down per party here as well.
 		
 		aggregate(ELLIBUNL$meanpersdifferent, by=list(ELLIBUNL$parliament_id), meannarm)
 		
@@ -2393,7 +2411,7 @@
 				beanplot(ELLIBU$ambition_selection_gap~ELLIBU$selection_control_fac, main="abs(% of women selected onto the list - % from quota)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
 				beanplot(ELLIBU$ambition_selection_gap~ELLIBU$selection_control_detailed_fac, main="abs(% of women selected onto the list - % from quota)",maxstripline=0.1, col = c("#CAB2D6", "#33A02C", "#B2DF8A"))
 				
-				# boxplot with dots, like in the paper, and maybe color per party?
+			# boxplot with dots, like in the paper, and maybe color per party?
 				
 				is.na(ELLIBU$selection_control_fac)
 				ELLIBU[which(is.na(ELLIBU$selection_control_fac)),]
@@ -2437,6 +2455,33 @@
 				scale_fill_manual(values=rep("#999999",7)) +
 				geom_vline(xintercept=1.5,linetype="solid") +
 				geom_vline(xintercept=2.5,linetype="solid")
+		
+	##  requested graphs: similarity of the list on the x axis and each gap on the y axis
+		
+			# only ambition_selection_gap here, see below for election selection gap
+				ELLIBUNL2 <- ELLIBU[which(ELLIBU$country == "NL" & !ELLIBU$parliament_id == "NL_NT-TK_1981"),]
+				table(ELLIBU$country)
+				nrow(ELLIBUNL2)
+		
+				ELLIBUNL2$parliament_id <- as.factor(ELLIBUNL2$parliament_id)
+		
+				ggplot(ELLIBUNL2, aes(x=meanpersdifferent, y=ambition_selection_gap,color=party_id,shape=parliament_id)) + 
+				  geom_point() + 
+				  ylab("ambition selection gap") + 
+				  xlab("average percentage of unique politicians accross districts") + 
+				  scale_shape_manual(values=1:nlevels(ELLIBUNL2$parliament_id)) + 
+				  geom_text(aes(x=0.6,y=12.5,label="overshooting"),angle=0,color="black") + 
+				  geom_text(aes(x=0.6,y=-48.5,label="undershooting"),angle=0,color="black") 
+		
+			# why is this gap the same for all the GL lists? ? makes sense, only bottom of list varies? so gap the same in all elections?
+				ELLIBUNLGL <- ELLIBUNL2[which(ELLIBUNL2$party_id == "NL_GL_NT"),]
+				table(ELLIBU$NL_GL_NT)
+				nrow(ELLIBUNLGL)
+				
+				table(ELLIBUNLGL$parliament_id) # so, please do note we are using the reduced sample here! I think that is indeed the best to do, but just saying :)
+				
+				ggplot(ELLIBUNLGL, aes(x=meanpersdifferent, y=ambition_selection_gap,color=parliament_id)) + 
+				  geom_point() + ylab("ambition selection gap") + xlab("average percentage of unique politicians accross districts") # indeed confirms this, all the same elections!
 		
 			# why the low numbers for the CDA in the Netherlands?
 			
@@ -3395,8 +3440,23 @@
 					head(D1)
 					D1[which(grepl("DE_NT-BT_2009__district-seats-HB",D1$list_id,fixed=TRUE)),] # so four indeed... so this the step where we loose the gender counts ...
 
-
-
+	##  requested graphs: similarity of the list on the x axis and each gap on the y axis
+		
+			# only selection_election_gap here, see upwards for election selection gap
+				ELLIBUNL3 <- ELLIBU[which(ELLIBU$country == "NL" & !ELLIBU$parliament_id == "NL_NT-TK_1981"),]
+				table(ELLIBU$country)
+				nrow(ELLIBUNL3)
+		
+				ELLIBUNL3$parliament_id <- as.factor(ELLIBUNL3$parliament_id)
+		
+				ggplot(ELLIBUNL3, aes(x=meanpersdifferent, y=selection_election_gap,color=party_id,shape=parliament_id)) + 
+				  geom_point() + 
+				  ylab("(Election-selection) gap whole list") + 
+				  xlab("average percentage of unique politicians accross districts") + 
+				  scale_shape_manual(values=1:nlevels(ELLIBUNL2$parliament_id)) +
+				  geom_text(aes(x=0.5,y=30,label="more women than expected"),angle=0,color="black") + 
+				  geom_text(aes(x=0.5,y=-30,label="less women than expected"),angle=0,color="black") 
+		
 					# why is the f and m count missing for for example 'DE_NT-BT_2009__Bremen-II-Bremerhaven' and  'DE_Moellenstaedt_Oliver_1978' - does this have to do with the redistricting e.t.c. again?
 					
 					
