@@ -35,7 +35,7 @@
 	#	install.packages("lme4")
 	#	install.packages("car")
 	#	install.packages("ggpubr")
-	# 	install.packages("xlsx")
+	#	install.packages("xlsx")
 	
 	# packages
 		library(sqldf)
@@ -349,7 +349,7 @@
 		#	ELLI[which(duplicated(ELLI$list_id)),]
 			
 		# merge in some ELLI characteristics
-			ELENBU <- sqldf("SELECT ELENBU.*, ELLI.list_name, ELLI.parliament_id, ELLI.district_id, ELLI.list_length, ELLI.district_id, ELLI.party_id as 'party_id_from_elli'
+			ELENBU <- sqldf("SELECT ELENBU.*, ELLI.list_name, ELLI.parliament_id, ELLI.district_id, ELLI.list_length, ELLI.party_id as 'party_id_from_elli'
 							FROM ELENBU LEFT JOIN ELLI
 							ON
 							ELENBU.list_id = ELLI.list_id
@@ -1156,7 +1156,7 @@
 						table(is.na(ELENBU$electable))
 						
 						head(ELENBU)
-						library("xlsx")
+						library("writexl")
 						write_xlsx(ELENBU,"./ELENBU_20200804-1724.xlsx")
 						
 						tail(ELENBU)
@@ -3895,6 +3895,17 @@
 					
 	# the requested data export from Elena
 		# 
+		table(is.na(ELLIBU$selection_election_gap)) # please note that with the now extended selection that are more cases for which the selection_election gap is missing! #fixlater!
+		nrow(ELLIBU)
+		ELLIBU[which(is.na(ELLIBU$selection_election_gap)),]
+		head(ELLIBU[which(is.na(ELLIBU$selection_election_gap)),]) # issue seems to be the 'ratio_on_list', which is NA --- I think I narrowed this issue down again .. 
+																   # ..I think these are new districs, so they get kicked out from the selection when the 'electable' decisions is made.
+		
+		ELLIBUEXP <- ELLIBU[which(!is.na(ELLIBU$selection_election_gap)),]
+		nrow(ELLIBUEXP)
+		
+		library("writexl")
+		write_xlsx(ELLIBUEXP,"./ELLIBU_Export_Control_Paper.xlsx")
 		
 					
 					# probaly some effect visualisations would be good here
