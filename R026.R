@@ -2548,7 +2548,16 @@
 				
 					table(ELLIBU$selection_control_fac,ELLIBU$country)
 				
+					# I think we should use the model with party fixed effects
+					
+						# preparing this with CDU as the reference category
+							table(ELLIBU$party_id_nat_equiv_short)
+			
+							ELLIBU$party_id_nat_equiv_short <- factor(ELLIBU$party_id_nat_equiv_short, levels=c("CDU (DE)","SPD (DE)","B90|Gru (DE)","Li|PDS (DE)","CDA (NL)","GL (NL)","PvdA (NL)"))
+							table(ELLIBU$party_id_nat_equiv_short)
+				
 					me <- lmer(ambition_selection_gap~1+
+								party_id_nat_equiv_short + # added this here on 19/10/2021
 								(1 | year_cent) +
 								(1 | country),
 								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
@@ -2594,6 +2603,7 @@
 					
 					
 					m1 <- lmer(ambition_selection_gap~
+								party_id_nat_equiv_short + # added this here on 19/10/2021
 								district_magnitude + # is country mean centered and country standard deviation scaled
 							#	type +
 								selection_control_fac+
@@ -2758,9 +2768,10 @@
 			
 			table(is.na(ELLIBU$district_magnitude_country_cent))
 
-		# new model buildup! - general controls first, then time controls, only then the selecgtion control stuff
+		# new model buildup! - general controls first, then time controls, only then the selection control stuff
 
 			m1 <- lmer(	ambition_selection_gap~
+								party_id_nat_equiv_short + # added this here on 19/10/2021
 								selection_control_fac + # new
 								district_magnitude_country_cent +
 								(1 | year_cent) +
@@ -2772,7 +2783,7 @@
 		# some reordering of the quota variables still?
 		table(ELLIBU$quota_percentage)
 		table(ELLIBU$quota_percentage_cent)
-		ELLIBU$quota_percentage_lessthen50 <-  (50 - ELLIBU$quota_percentage)/10
+		ELLIBU$quota_percentage_lessthen50 <-  (50 - ELLIBU$quota_percentage)
 		table(ELLIBU$quota_percentage_lessthen50)
 		
 		table(ELLIBU$quota_soft_fact)
@@ -2783,6 +2794,7 @@
 	
 			
 			m1a <- lmer(	ambition_selection_gap~
+								party_id_nat_equiv_short + # added this here on 19/10/2021
 								selection_control_fac + # new
 								district_magnitude_country_cent +
 			#					type +
@@ -2797,6 +2809,7 @@
 					stargazer(me,m1a,type="text")
 					
 			m2 <- lmer(	ambition_selection_gap~
+								party_id_nat_equiv_short + # added this here on 19/10/2021
 								district_magnitude_country_cent +
 			#					type +
 								quota_percentage_lessthen50 +
@@ -2831,7 +2844,10 @@
 				hist(ELLIBU$vote_share_cent)
 				ELLIBU$vote_share_cent <- ELLIBU$vote_share_cent/10
 			
+				
+			
 			m3 <- lmer(	ambition_selection_gap~
+								party_id_nat_equiv_short + # added this here on 19/10/2021
 								selection_control_fac + # new
 								district_magnitude_country_cent +
 			#					type +
@@ -2840,33 +2856,58 @@
 							#	quota_zipper +
 								vote_share_cent +
 							#	year_cent + #was timeNL + # used to replace the interaction
-								country +
+							#	country +
 							#	I(timeNL^2) +
-								(1 | year_cent) +
+								(1 | year_cent)+
 								(1 | country),
+							#	(1 | party_id_nat_equiv_short),
 								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
 					summary(m3)
 					stargazer(m3,type="text",intercept.bottom=FALSE)
 			# key check here: model 'as good'?!
 			anova(m3,m2) # yes it is!
 			
+			
 			m4 <- lmer(	ambition_selection_gap~
+								party_id_nat_equiv_short + # added this here on 19/10/2021
+								selection_control_fac +
 								district_magnitude_country_cent +
 			#					type +
 								quota_percentage_lessthen50 +
 								quota_soft_fact +
-								quota_zipper +
-								party_size_country_stan +
-								timeNL + 
-							#	I(timeNL^2) +
-								selection_control_fac +
+							#	quota_zipper +
+								vote_share_cent +
+							#	party_size_country_stan +
+								year_cent + #was timeNL + # used to replace the interaction
+							#	I(year_cent^2) +
+								
 								(1 | year_cent) +
 								(1 | country),
 								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
 					summary(m4)
-					stargazer(me,m1,m3,m4,type="text",intercept.bottom=FALSE) 
+					stargazer(m1,m3,m4,type="text",intercept.bottom=FALSE) 
+					
+			m4a <- lmer(	ambition_selection_gap~
+								party_id_nat_equiv_short + # added this here on 19/10/2021
+								selection_control_fac +
+								district_magnitude_country_cent +
+			#					type +
+							#	quota_percentage_lessthen50 +
+								quota_soft_fact +
+							#	quota_zipper +
+								vote_share_cent +
+							#	party_size_country_stan +
+								year_cent + #was timeNL + # used to replace the interaction
+							#	I(year_cent^2) +
+								
+								(1 | year_cent) +
+								(1 | country),
+								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
+					summary(m4a)
+					stargazer(m1,m3,m4,m4a,type="text",intercept.bottom=FALSE) 
 		
 			m5 <- lmer(	ambition_selection_gap~
+								party_id_nat_equiv_short + # added this here on 19/10/2021
 								district_magnitude_country_cent +
 								quota_percentage_lessthen50 +
 								quota_soft_fact +
@@ -2883,6 +2924,7 @@
 			# some additional attemps to see what is going on whith the high control condition...  how about party dummies?
 			
 			m6 <- lmer(	ambition_selection_gap~
+								party_id_nat_equiv_short + # added this here on 19/10/2021
 								district_magnitude_country_cent +
 								quota_percentage_lessthen50 +
 								quota_soft_fact +
@@ -2933,7 +2975,7 @@
 	m2 <- m1
 	m1 <- me
 	
-	m4 <- m3
+	m4 <- m4
 	m3 <- m1a
 	
 	
@@ -2951,13 +2993,19 @@
 			{
 				cleanernames <- gsub("(Intercept)","Constant",dirtynamesloc,fixed=TRUE)
 				cleanernames <- gsub("district_magnitude_country_cent","district magnitude",cleanernames,fixed=TRUE)
-				cleanernames <- gsub("quota_percentage_lessthen50","quota",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("quota_percentage_lessthen50","quota percentage deviation",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("quota_soft_factsoft","soft quota",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("quota_zipper","zipper quota",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("vote_share_cent","vote share",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("year_cent","election year",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("selection_control_facmedium selection control","medium selection control",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("selection_control_fachigh selection control","high selection control",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("party_id_nat_equiv_shortSPD (DE)","SPD(DE)",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("party_id_nat_equiv_shortB90|Gru (DE)","B90|Gru(DE)",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("party_id_nat_equiv_shortLi|PDS (DE)","PDS(DE)",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("party_id_nat_equiv_shortCDA (NL)","CDA(NL)",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("party_id_nat_equiv_shortGL (NL)","GL(NL)",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("party_id_nat_equiv_shortPvdA (NL)","PvdA(NL)",cleanernames,fixed=TRUE)
 				
 				return(cleanernames)
 			}
@@ -3101,7 +3149,12 @@
 		
 		# some interpretation things
 		aggregate(data=ELLIBU, vote_share_cent~quota_percentage_lessthen50, mean) # it is typically the bigger parties that have quotas that are not 50%!
+		table(ELLIBU$quota_percentage_lessthen50,ELLIBU$party_id_nat_equiv_short)
 		
+		table(ELLIBU$selection_control_fac,ELLIBU$party_id_nat_equiv_short)
+		summary(ELLIBU$quota_percentage_lessthen50)
+		
+		table(ELLIBU$year,ELLIBU$year_cent)
 		
 		# so there is this suggestion to select only undershooting cases now?
 			summary(ELLIBU$ambition_selection_gap)
@@ -3551,8 +3604,12 @@
 					# some other graphics for Philip
 					table(ELLIBUTEMP$linkedlist,droplevels(as.factor(ELLIBUTEMP$nat_party_id)))
 					
+					table(ELLIBUTEMP$nat_party_id)
+					ELLIBUTEMP$nat_party_id <- factor(ELLIBUTEMP$nat_party_id,levels=c("DE_CDU_NT","DE_B90|Gru_NT","DE_SPD_NT","DE_Li|PDS_NT","NL_CDA_NT","NL_GL_NT","NL_PvdA_NT"))
+					table(ELLIBUTEMP$nat_party_id)
 					
 				    mee <- lmer(selection_election_gap~1+ # selection_election_gap
+								nat_party_id + # added on 2021/10/19
 								(1 | year_cent) +
 								(1 | country),
 								data=ELLIBUTEMP)#data=ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap <= 0),])
@@ -3594,6 +3651,7 @@
 					summary(ELLIBUTEMP$selection_election_gap)
 
 					ma <- lmer(selection_election_gap~
+								nat_party_id + # added on 2021/10/19
 								district_magnitude_country_and_type_cent +
 								type +
 								country +
@@ -3607,6 +3665,7 @@
 				#	ELLIBUTEMP$type <- ifelse(ELLIBUTEMP$type == "list", "list", "quasi-list")
 				
 					mb <- lmer(selection_election_gap~
+								nat_party_id + # added on 2021/10/19
 								district_magnitude_country_and_type_cent + # district_magnitude_country_stan
 							#	type +
 								(1 | year_cent) +
@@ -3624,6 +3683,7 @@
 					
 					
 					mc <- lmer(selection_election_gap~
+								nat_party_id + # added on 2021/10/19
 								district_magnitude_country_and_type_cent +
 								type +
 								country +
@@ -3634,6 +3694,7 @@
 					summary(mc)
 
 					md <- lmer(selection_election_gap~
+								nat_party_id + # added on 2021/10/19
 								district_magnitude_country_and_type_cent +
 								type +
 								country +
@@ -3652,6 +3713,7 @@
 
 
 					me <- lmer(selection_election_gap~
+								nat_party_id + # added on 2021/10/19
 								district_magnitude_country_and_type_cent +
 								type +
 								country +
@@ -3673,6 +3735,7 @@
 					ELLIBUTEMP$country_and_type <- factor(ELLIBUTEMP$country_and_type, levels=c("DE:list","DE:district","NL:list"))
 					
 					me2 <- lmer(selection_election_gap~
+								nat_party_id + # added on 2021/10/19
 								district_magnitude*country_and_type +
 						#		type +
 						#		country +
@@ -3739,22 +3802,31 @@
 
 # name replacements
 
+	table(ELLIBUTEMP$nat_party_id)
+
 	specificnamecleaning <- function(dirtynamesloc)	
 			{
 				cleanernames <- gsub("(Intercept)","Constant",dirtynamesloc,fixed=TRUE)
 				cleanernames <- gsub("district_magnitude_country_and_type_cent","district magnitude",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("typedistrict","type:district (quasi-list)",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("vote_share_cent","vote share",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("vote_share_change_ten","vote share change",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("year_cent","election year",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("election_year","election year",cleanernames,fixed=TRUE)
-				cleanernames <- gsub("linkedlistlinked","linked list",cleanernames,fixed=TRUE)	
+				cleanernames <- gsub("linkedlistlinked","linked list",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("nat_party_idDE_CDU_NT","CDU(DE)",cleanernames,fixed=TRUE)	
+				cleanernames <- gsub("nat_party_idDE_SPD_NT","SPD(DE)",cleanernames,fixed=TRUE)	
+				cleanernames <- gsub("nat_party_idDE_B90|Gru_NT","B90|GRu(DE)",cleanernames,fixed=TRUE)	
+				cleanernames <- gsub("nat_party_idDE_Li|PDS_NT","Li|PDS(DE)",cleanernames,fixed=TRUE)	
+				cleanernames <- gsub("nat_party_idNL_CDA_NT","CDA(NL)",cleanernames,fixed=TRUE)	
+				cleanernames <- gsub("nat_party_idNL_GL_NT","GL(NL)",cleanernames,fixed=TRUE)	
+				cleanernames <- gsub("nat_party_idNL_PvdA_NT","PvdA(NL)",cleanernames,fixed=TRUE)	
 				return(cleanernames)
 			}
 			
 			dirtynames <- names(fixef(m4))
 			
 			specificnamecleaning(dirtynames)
-
 
 # use bootstrapping to get a standard error for the variance estimates.
 		runconfints <- TRUE
@@ -3892,7 +3964,21 @@
 							)
 		  )			
 					
-					
+	
+	# some interpreation things
+		
+		summary(ELLIBUTEMP$district_magnitude_country_and_type_cent)
+		table(ELLIBUTEMP$district_magnitude_country_and_type_cent,ELLIBUTEMP$country) 
+		table(ELLIBUTEMP$district_magnitude_country_and_type_cent,ELLIBUTEMP$type) 
+		
+		table(ELLIBUTEMP$district_magnitude_country_and_type_cent,ELLIBUTEMP$district_magnitude)
+		
+		# so, do I agree that this is a small effect?
+		summary(ELLIBUTEMP$district_magnitude_country_and_type_cent) # it ranges from roughly -20 to 55, so that is 75 steps.
+		75*-0.091 # = 6.8%, that is indeed a relatively small effect 
+	
+		table(ELLIBUTEMP$nat_party_id,ELLIBUTEMP$linkedlist)
+	
 	# the requested data export from Elena
 		# 
 		table(is.na(ELLIBU$selection_election_gap)) # please note that with the now extended selection that are more cases for which the selection_election gap is missing! #fixlater!
