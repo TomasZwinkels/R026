@@ -2806,7 +2806,7 @@
 								(1 | country),
 								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
 					summary(m1a)
-					stargazer(me,m1a,type="text")
+					stargazer(m1a,type="text")
 					
 			m2 <- lmer(	ambition_selection_gap~
 								party_id_nat_equiv_short + # added this here on 19/10/2021
