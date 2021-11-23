@@ -3609,7 +3609,7 @@
 					table(ELLIBUTEMP$nat_party_id)
 					
 				    mee <- lmer(selection_election_gap~1+ # selection_election_gap
-								nat_party_id + # added on 2021/10/19
+							#	nat_party_id + # added on 2021/10/19
 								(1 | year_cent) +
 								(1 | country),
 								data=ELLIBUTEMP)#data=ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap <= 0),])
@@ -3646,14 +3646,22 @@
 			
 			table(is.na(ELLIBU$district_magnitude_country_cent))
 				
+					# adding just a model with the one one key variable of interest here
+					mkey <- lmer(selection_election_gap~1+ # selection_election_gap
+								district_magnitude_country_and_type_cent +
+								(1 | year_cent) +
+								(1 | country),
+								data=ELLIBUTEMP)
+					summary(mkey)
+					stargazer(mkey,type="text")
 				
 					# to remind us again of the type we are doing
 					summary(ELLIBUTEMP$selection_election_gap)
 
 					ma <- lmer(selection_election_gap~
-								nat_party_id + # added on 2021/10/19
 								district_magnitude_country_and_type_cent +
-								type +
+								nat_party_id + # added on 2021/10/19
+					#			type +
 								country +
 								(1 | year_cent) +
 								(1 | country),
@@ -3665,8 +3673,8 @@
 				#	ELLIBUTEMP$type <- ifelse(ELLIBUTEMP$type == "list", "list", "quasi-list")
 				
 					mb <- lmer(selection_election_gap~
-								nat_party_id + # added on 2021/10/19
 								district_magnitude_country_and_type_cent + # district_magnitude_country_stan
+								nat_party_id + # added on 2021/10/19
 							#	type +
 								(1 | year_cent) +
 								(1 | country),
@@ -3683,8 +3691,8 @@
 					
 					
 					mc <- lmer(selection_election_gap~
-								nat_party_id + # added on 2021/10/19
 								district_magnitude_country_and_type_cent +
+								nat_party_id + # added on 2021/10/19
 								type +
 								country +
 								vote_share_cent +# party_size_country_stan +
@@ -3694,8 +3702,8 @@
 					summary(mc)
 
 					md <- lmer(selection_election_gap~
-								nat_party_id + # added on 2021/10/19
 								district_magnitude_country_and_type_cent +
+								nat_party_id + # added on 2021/10/19
 								type +
 								country +
 								vote_share_cent +
@@ -3713,8 +3721,8 @@
 
 
 					me <- lmer(selection_election_gap~
-								nat_party_id + # added on 2021/10/19
 								district_magnitude_country_and_type_cent +
+								nat_party_id + # added on 2021/10/19
 								type +
 								country +
 								vote_share_cent + #party_size_country_stan +
@@ -3735,8 +3743,8 @@
 					ELLIBUTEMP$country_and_type <- factor(ELLIBUTEMP$country_and_type, levels=c("DE:list","DE:district","NL:list"))
 					
 					me2 <- lmer(selection_election_gap~
-								nat_party_id + # added on 2021/10/19
 								district_magnitude*country_and_type +
+								nat_party_id + # added on 2021/10/19
 						#		type +
 						#		country +
 								vote_share_cent + #party_size_country_stan +
@@ -3787,9 +3795,9 @@
 		# properly layouted version
 			
 	m1 <- mee
-	m2 <- ma
-	m3 <- md
-	m4 <- me
+	m2 <- mkey
+	m3 <- ma
+	m4 <- md
 	
 	summary(m1)
 	summary(m2)
@@ -3939,7 +3947,7 @@
 		type="text",
 		intercept.bottom=FALSE,
 		no.space=FALSE,
-		column.labels=(c("Empty","Elect.","Context","Linked")),
+		column.labels=(c("Empty","DiMa only","Party fix.ef.","Context")),
 		star.char = c(".", "*", "**", "***"),
 		star.cutoffs = c(0.1, 0.05, 0.01, 0.001),
 		keep.stat=c("ll"),
@@ -3947,7 +3955,7 @@
 		font.size = "small",
 		label = "RegTab",
 		caption = "Regression model predicting selection election gap with district magnitude, linked lists and controls",
-		dep.var.labels = c("ratio elected - ratio on list"),
+		dep.var.labels = c("abs(ratio elected - ratio on list)"),
 		covariate.labels = varlabels,
 			add.lines = list(	
 							c("Random effects"),
