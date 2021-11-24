@@ -3659,11 +3659,17 @@
 						delistdismagavg <- mean(ELLIBUTEMP$district_magnitude[which(ELLIBUTEMP$country == "DE" & ELLIBUTEMP$type == "list")])
 						delistdismagsd <-  sd(ELLIBUTEMP$district_magnitude[which(ELLIBUTEMP$country == "DE" & ELLIBUTEMP$type == "list")])
 						
+						dedistrictdismagavg <- mean(ELLIBUTEMP$district_magnitude[which(ELLIBUTEMP$country == "DE" & ELLIBUTEMP$type == "district")])
+						dedistrictdismagsd <-  sd(ELLIBUTEMP$district_magnitude[which(ELLIBUTEMP$country == "DE" & ELLIBUTEMP$type == "district")])
+						
 						nldismagavg <- mean(ELLIBUTEMP$district_magnitude[which(ELLIBUTEMP$country == "NL")])
 						nldismagsd <-  sd(ELLIBUTEMP$district_magnitude[which(ELLIBUTEMP$country == "NL")])
 						
-						
-						ELLIBUTEMP$district_magnitude_country_and_type_cent <- ifelse(ELLIBUTEMP$country == "DE" & ELLIBUTEMP$type == "list", (ELLIBUTEMP$district_magnitude-delistdismagavg), 0)
+						# (please note that this indeed both country and type centered, because when type = district all values are also zero.
+						ELLIBUTEMP$district_magnitude_country_and_type_cent <- ifelse(
+																					 ELLIBUTEMP$country == "DE" & ELLIBUTEMP$type == "list", 
+																					 (ELLIBUTEMP$district_magnitude-delistdismagavg), 
+																					 0) # this is actually all centered for the lists!
 						
 						# and do the same for german districts
 						
@@ -4005,13 +4011,34 @@
 		table(ELLIBUTEMP$district_magnitude_country_and_type_cent,ELLIBUTEMP$country) 
 		table(ELLIBUTEMP$district_magnitude_country_and_type_cent,ELLIBUTEMP$type) 
 		
+		hist(ELLIBUTEMP[which(ELLIBUTEMP$type=="list" & ELLIBUTEMP$country=="DE"),]$district_magnitude)
+		hist(ELLIBUTEMP[which(ELLIBUTEMP$type=="list" & ELLIBUTEMP$country=="DE"),]$district_magnitude_country_and_type_cent)
+		
+		summary(ELLIBUTEMP[which(ELLIBUTEMP$type=="list" & ELLIBUTEMP$country=="DE"),]$district_magnitude)
+		summary(ELLIBUTEMP[which(ELLIBUTEMP$type=="list" & ELLIBUTEMP$country=="DE"),]$district_magnitude_country_and_type_cent)
+		
 		table(ELLIBUTEMP$district_magnitude_country_and_type_cent,ELLIBUTEMP$district_magnitude)
 		
 		# so, do I agree that this is a small effect?
 		summary(ELLIBUTEMP$district_magnitude_country_and_type_cent) # it ranges from roughly -20 to 55, so that is 75 steps.
-		75*-0.091 # = 6.8%, that is indeed a relatively small effect 
+		75*-0.091 # = 6.8%, that is indeed a relatively small effect, but given the small effect size in general: not to bad.
 	
 		table(ELLIBUTEMP$nat_party_id,ELLIBUTEMP$linkedlist)
+		
+	# in a marginal effect plot
+		set_theme(base = theme_minimal())
+		plot_model(m4,
+					type = "emm",
+					terms="district_magnitude_country_and_type_cent",
+					title ="Estimated marginal effects: predicted election-selection gap given district magnitude"
+					) + 
+				#	ylim(-25,20) +
+					scale_x_continuous(name="district magnitude (centered values)",limits=c(-20,55),breaks=c(-20,0,20,40,55),label=c("2 (-20)","22* (0)","42 (20)","62 (40)","77 (55)")) +
+					scale_y_continuous(name="abs(selection-election) gap") +
+					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
+		
+		delistdismagavg
+		
 	
 	# the requested data export from Elena
 		# 
