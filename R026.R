@@ -36,6 +36,8 @@
 	#	install.packages("car")
 	#	install.packages("ggpubr")
 	#	install.packages("xlsx")
+	#	install.packages("sjPlot")
+	#	install.packages("effects")
 	
 	# packages
 		library(sqldf)
@@ -54,6 +56,8 @@
 		library(lme4)
 		library(car)
 		library(ggpubr)
+		library(sjPlot)
+		library(effects)
 		
 		
 	substrRight <- function(x, n)
@@ -1172,7 +1176,8 @@
 				ELENBUTOT <- ELENBU
 				
 				nrow(ELENBU)
-				ELENBUTEMP <- ELENBU[which(ELENBU$electable == "electable"),] # switched to all positions now, because working second analysis
+				ELENBUTEMP <- ELENBU[which(ELENBU$electable == "electable"),] # switched to all positions when working on second analysis? (not sure anymore about what flavour we finally decided on here : conclusion from looking at manuscript now > I have been asked to focus on electable positions indeed, so this is correct.
+				
 				nrow(ELENBUTEMP)
 				
 				table(ELENBUTEMP$parliament_id,ELENBUTEMP$party_id_from_elli_nat_equiv)
@@ -2557,7 +2562,7 @@
 							table(ELLIBU$party_id_nat_equiv_short)
 				
 					me <- lmer(ambition_selection_gap~1+
-								party_id_nat_equiv_short + # added this here on 19/10/2021
+							#	party_id_nat_equiv_short + # added this here on 19/10/2021
 								(1 | year_cent) +
 								(1 | country),
 								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
@@ -2604,7 +2609,7 @@
 					
 					m1 <- lmer(ambition_selection_gap~
 								party_id_nat_equiv_short + # added this here on 19/10/2021
-								district_magnitude + # is country mean centered and country standard deviation scaled
+							#	district_magnitude + # is country mean centered and country standard deviation scaled
 							#	type +
 								selection_control_fac+
 								(1 | country),
@@ -2771,9 +2776,9 @@
 		# new model buildup! - general controls first, then time controls, only then the selection control stuff
 
 			m1 <- lmer(	ambition_selection_gap~
-								party_id_nat_equiv_short + # added this here on 19/10/2021
 								selection_control_fac + # new
-								district_magnitude_country_cent +
+						#		party_id_nat_equiv_short + # added this here on 19/10/2021
+						#		district_magnitude_country_cent +
 								(1 | year_cent) +
 								(1 | country),
 								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
@@ -2794,12 +2799,12 @@
 	
 			
 			m1a <- lmer(	ambition_selection_gap~
-								party_id_nat_equiv_short + # added this here on 19/10/2021
 								selection_control_fac + # new
-								district_magnitude_country_cent +
+								party_id_nat_equiv_short + # added this here on 19/10/2021
+							#	district_magnitude_country_cent +
 			#					type +
-								quota_percentage_lessthen50 +
-								quota_soft_fact +
+							#	quota_percentage_lessthen50 +
+							#	quota_soft_fact +
 							#	quota_zipper +
 								# party_size_country_stan +
 								(1 | year_cent) +
@@ -2847,8 +2852,8 @@
 				
 			
 			m3 <- lmer(	ambition_selection_gap~
-								party_id_nat_equiv_short + # added this here on 19/10/2021
 								selection_control_fac + # new
+								party_id_nat_equiv_short + # added this here on 19/10/2021
 								district_magnitude_country_cent +
 			#					type +
 								quota_percentage_lessthen50 +
@@ -2869,8 +2874,8 @@
 			
 			
 			m4 <- lmer(	ambition_selection_gap~
-								party_id_nat_equiv_short + # added this here on 19/10/2021
 								selection_control_fac +
+								party_id_nat_equiv_short + # added this here on 19/10/2021
 								district_magnitude_country_cent +
 			#					type +
 								quota_percentage_lessthen50 +
@@ -2888,8 +2893,8 @@
 					stargazer(m1,m3,m4,type="text",intercept.bottom=FALSE) 
 					
 			m4a <- lmer(	ambition_selection_gap~
-								party_id_nat_equiv_short + # added this here on 19/10/2021
 								selection_control_fac +
+								party_id_nat_equiv_short + # added this here on 19/10/2021
 								district_magnitude_country_cent +
 			#					type +
 							#	quota_percentage_lessthen50 +
@@ -2907,13 +2912,13 @@
 					stargazer(m1,m3,m4,m4a,type="text",intercept.bottom=FALSE) 
 		
 			m5 <- lmer(	ambition_selection_gap~
+								selection_control_fac +
 								party_id_nat_equiv_short + # added this here on 19/10/2021
 								district_magnitude_country_cent +
 								quota_percentage_lessthen50 +
 								quota_soft_fact +
 								party_size_country_stan +
 								timeNL + 
-								selection_control_fac +
 								type +
 								(1 | year_cent) +
 								(1 | country),
@@ -2924,6 +2929,7 @@
 			# some additional attemps to see what is going on whith the high control condition...  how about party dummies?
 			
 			m6 <- lmer(	ambition_selection_gap~
+								selection_control_fac +
 								party_id_nat_equiv_short + # added this here on 19/10/2021
 								district_magnitude_country_cent +
 								quota_percentage_lessthen50 +
@@ -2931,7 +2937,6 @@
 							#	quota_zipper +
 								party_size_country_stan +
 							#	timeNL + 
-								selection_control_fac +
 							#	party_id_nat_equiv_short + # should be consider the inclusion of a party fixed effect?!
 							 	parliament_id, # parliament fixed effects do seem to 'solve?!' issue... big estimate for high control now... model not reliable, but intersing massive negative etiamtes for ealy years in NL.. timeNL does not yet capture the time-trend properly?!
 							# (1 | parliament_id) +
@@ -3122,7 +3127,7 @@
 		type="text",
 		intercept.bottom=FALSE,
 		no.space=FALSE,
-		column.labels=(c("Empty","Control","Quota char.","Context char.")),
+		column.labels=(c("Empty","Control only","Party fix.ef.","Quota + context")),
 		star.char = c(".", "*", "**", "***"),
 		star.cutoffs = c(0.1, 0.05, 0.01, 0.001),
 		keep.stat=c("ll"),
@@ -3170,18 +3175,39 @@
 		
 		# and delta method
 		
-		fixef(m4)
-		seq(from=1,to=length(fixef(m4)),by=1)
-		cbind(fixef(m4),seq(from=1,to=length(fixef(m4)),by=1))
+		dmm <- m4
+		
+		fixef(dmm)
+		seq(from=1,to=length(fixef(dmm)),by=1)
+		cbind(fixef(dmm),seq(from=1,to=length(fixef(dmm)),by=1))
 		
 		# low
-		deltaMethod(m4,"x1", parameterNames= paste("x", 1:length(fixef(m4)), sep=""))
+		deltaMethod(dmm,"x1", parameterNames= paste("x", 1:length(fixef(dmm)), sep=""))
 
 		# med
-		deltaMethod(m4,"x1+x2", parameterNames= paste("x", 1:length(fixef(m4)), sep=""))
+		deltaMethod(dmm,"x1+x2", parameterNames= paste("x", 1:length(fixef(dmm)), sep=""))
 		
 		# high
-		deltaMethod(m4,"x1+x3", parameterNames= paste("x", 1:length(fixef(m4)), sep=""))
+		deltaMethod(dmm,"x1+x3", parameterNames= paste("x", 1:length(fixef(dmm)), sep=""))
+		
+		# in a marginal effect plot
+		set_theme(base = theme_minimal())
+		plot_model(m4,
+					type = "emm",
+					terms="selection_control_fac",
+					title ="Estimated marginal effects: predicted ambition-selection gap given level of control"
+					) + 
+				#	ylim(-25,20) +
+					scale_x_continuous(name="selection control",breaks=c(1,2,3),labels=c("low","medium","high")) +
+					scale_y_continuous(name="ambition selection gap") +
+					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1) +
+					geom_text(aes(x=1.6,y=-22,label="less women on electable list position than specified ambition"),angle=0,size=3) +
+					geom_text(aes(x=1.6,y=12,label="more women on electable list position than specified ambition"),angle=0,size=3) 
+					
+					# I think this is what is being used here: https://rdrr.io/cran/emmeans/man/emmeans.html # I would like to understand this fully! 
+	
+		# do I indeed have unbalanced cases?
+		table(ELLIBU$selection_control_fac) # yes for sure! Right, so it does make sense. Lets just use this one!
 		
 					stargazer(me,m0,m1,m3,m4,intercept.bottom=FALSE)
 					
