@@ -3161,6 +3161,13 @@
 		
 		table(ELLIBU$year,ELLIBU$year_cent)
 		
+		# some basic descriptives for the final sample that is being used
+		nrow(ELLIBU)
+		table(is.na(ELLIBU$ambition_selection_gap))
+		
+		
+		
+		
 		# so there is this suggestion to select only undershooting cases now?
 			summary(ELLIBU$ambition_selection_gap)
 			hist(ELLIBU$ambition_selection_gap)
@@ -4042,7 +4049,9 @@
 	
 	# the requested data export from Elena
 		# 
-		table(is.na(ELLIBU$selection_election_gap)) # please note that with the now extended selection that are more cases for which the selection_election gap is missing! #fixlater!
+		table(is.na(ELLIBU$selection_election_gap)) # please note that with the now extended selection that are more cases for which the selection_election gap is missing!
+		table(is.na(ELLIBU$ambition_selection_gap)) # same number here? > yes > same issue probably (see below).
+		
 		nrow(ELLIBU)
 		ELLIBU[which(is.na(ELLIBU$selection_election_gap)),]
 		head(ELLIBU[which(is.na(ELLIBU$selection_election_gap)),]) # issue seems to be the 'ratio_on_list', which is NA --- I think I narrowed this issue down again .. 
@@ -4062,6 +4071,12 @@
 					ELLIBUNL <- ELLIBU[which(ELLIBU$country == "NL"),]
 					boxplot(ELLIBUDE$selection_election_gap~ELLIBUDE$year)
 					boxplot(ELLIBUNL$selection_election_gap~ELLIBUNL$year)
+		
+		# descriptives for the paper
+		
+			table(ELLIBUEXP$country, ELLIBUEXP$year)
+
+
 
 		
 		# and some diagnostics here
