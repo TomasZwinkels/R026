@@ -1,5 +1,5 @@
 ######################################################################################
-#################################### SETUP ###########################################
+#################################### SETUP ########################################### test
 ######################################################################################
 
 	###
@@ -32,10 +32,8 @@
 	#	install.packages("stringr")
 	#	install.packages("foreach")
 	#	install.packages("doParallel")
-	#	install.packages("lme4")
 	#	install.packages("car")
 	#	install.packages("ggpubr")
-	#	install.packages("xlsx")
 	#	install.packages("sjPlot")
 	#	install.packages("effects")
 	
@@ -1969,7 +1967,10 @@
 		
 		# development over time per party
 		ggplot(ELLIBUNL, aes(x=parliament_id, y=meanpersdifferent,color=party_id)) + 
-		  geom_boxplot() + ylab("average percentage of unique politicians accross districts")			
+		  geom_boxplot() + ylab("average percentage of unique politicians accross districts") + 
+		  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+		head(ELLIBUNL)
 		
 		
 		#  requested graph: similarity of the list on the x axis and each gap on the y axis
