@@ -3199,18 +3199,18 @@
 		deltaMethod(dmm,"x1+x3", parameterNames= paste("x", 1:length(fixef(dmm)), sep=""))
 		
 		# in a marginal effect plot
-		set_theme(base = theme_minimal())
+		set_theme(base = theme_minimal(base_size=20))
 		plot_model(m4,
 					type = "emm",
 					terms="selection_control_fac",
-					title ="Estimated marginal effects: predicted ambition-selection gap given level of control"
+					title ="Estimated marginal effects: predicted ambition-selection gap given level of centralization"
 					) + 
 				#	ylim(-25,20) +
-					scale_x_continuous(name="selection control",breaks=c(1,2,3),labels=c("low","medium","high")) +
+					scale_x_continuous(name="level of centralization",breaks=c(1,2,3),labels=c("low","medium","high")) +
 					scale_y_continuous(name="ambition selection gap") +
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1) +
-					geom_text(aes(x=1.6,y=-22,label="less women on electable list position than specified ambition"),angle=0,size=3) +
-					geom_text(aes(x=1.6,y=12,label="more women on electable list position than specified ambition"),angle=0,size=3) 
+					geom_text(aes(x=1.6,y=-22,label="less women on electable list position than specified ambition"),angle=0,size=6) +
+					geom_text(aes(x=1.6,y=12,label="more women on electable list position than specified ambition"),angle=0,size=6) 
 					
 					# I think this is what is being used here: https://rdrr.io/cran/emmeans/man/emmeans.html # I would like to understand this fully! 
 	
@@ -4073,10 +4073,17 @@
 					boxplot(ELLIBUDE$selection_election_gap~ELLIBUDE$year)
 					boxplot(ELLIBUNL$selection_election_gap~ELLIBUNL$year)
 		
-		# descriptives for the paper
+		# descriptives for the appendix of the paper
 		
-			table(ELLIBUEXP$country, ELLIBUEXP$year)
-
+			names(ELLIBU)
+		
+			varstogetdescriptivefor <- c("country","year","ratio_on_list","quota_percentage","ambition_selection_gap",
+										 "selection_control_fac","nat_party_id","district_magnitude","quota_percentage_lessthen50",
+										 "quota_soft","vote_share","ratio_elected","selection_election_gap","type","vote_share_change")
+										 
+			varstogetdescriptivefor %in% names(ELLIBU)					 
+			
+			ELLIDIS <- ELLIBU[,varstogetdescriptivefor]
 
 
 		
