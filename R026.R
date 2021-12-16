@@ -2746,6 +2746,13 @@
 					summary(m4)
 					stargazer(me,m1,m2,m3,m4,type="text",intercept.bottom=FALSE)			
 				
+					# so a little bit of model diagnostics
+					
+						# range of the prediced value reasonable
+						hist(predict(m4)) # yes
+						
+						# residuals
+						plot(m4) # no obvious heteroscedasticity issue
 				
 	##### working towards a nice regression output
 	
