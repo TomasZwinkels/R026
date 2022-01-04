@@ -36,6 +36,7 @@
 	#	install.packages("ggpubr")
 	#	install.packages("sjPlot")
 	#	install.packages("effects")
+	#   install.packages("writexl")
 	
 	# packages
 		library(sqldf)
@@ -2467,12 +2468,12 @@
 				stat_summary(aes(ymax = ..y.., ymin = ..y.., group = factor(selection_control_fac),label=round(..y..,2)), fun.y=mean, geom="label", size=8) +
 			#	scale_color_brewer(palette = "Dark2") +
 				labs(title = "List level selection ambition gap * selection control", x = "Selection control", y = "(Selection - ambition) gap electable positions", color = "Party\n") +
-				geom_text(aes(x=0.6,y=49.5,label="overshooting"),angle=0,size=geom.text.size) + 
-				geom_text(aes(x=0.6,y=-48.5,label="undershooting"),angle=0,size=geom.text.size) +
+				geom_text(aes(x=0.8,y=49.5,label="more selected than required"),angle=0,size=geom.text.size) + 
+				geom_text(aes(x=0.8,y=-48.5,label="less selected than required"),angle=0,size=geom.text.size) +
 				geom_hline(yintercept=0,linetype="dashed") + 
 				geom_text(data=group_average_for_labels, aes(label=party_id_nat_equiv_short, y = 35), position=position_dodge(width=0.9),size=geom.text.size-1,color="black",angle=90) +
 				theme_pubr(base_size = theme.size) +
-				ylim(c(-50,50)) +
+				ylim(c(-50,49.9)) +
 				guides(fill=FALSE) +
 			#	coord_flip() +
 				scale_fill_manual(values=rep("#999999",7)) +
@@ -2774,7 +2775,7 @@
 	specificnamecleaning <- function(dirtynamesloc)	
 			{
 				cleanernames <- gsub("(Intercept)","Constant",dirtynamesloc,fixed=TRUE)
-				cleanernames <- gsub("district_magnitude_country_cent","district magnitude",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("district_magnitude_gmcent","district magnitude",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("quota_percentage_lessthen50","quota percentage deviation",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("quota_soft_factsoft","soft quota",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("quota_zipper","zipper quota",cleanernames,fixed=TRUE)
@@ -2802,6 +2803,7 @@
 		
 	# list level
 				listlvar <- format(round(c(
+							as.data.frame(VarCorr(me))$vcov[3],
 							as.data.frame(VarCorr(m1))$vcov[3],
 							as.data.frame(VarCorr(m2))$vcov[3],
 							as.data.frame(VarCorr(m3))$vcov[3],
@@ -2811,23 +2813,26 @@
 		if (runconfints)
 		{
 				simulations <- 100
+				ame <- confint(me,method="boot",nsim=simulations)
 				am1 <- confint(m1,method="boot",nsim=simulations)
 				am2 <- confint(m2,method="boot",nsim=simulations)
 				am3 <- confint(m3,method="boot",nsim=simulations)
 				am4 <- confint(m4,method="boot",nsim=simulations)
 
 				listlvarse <- format(round(c(
+					((ame[3,2] - ame[3,1]) / 1.98),
 					((am1[3,2] - am1[3,1]) / 1.98),
 					((am2[3,2] - am2[3,1]) / 1.98),
 					((am3[3,2] - am3[3,1]) / 1.98),
 					((am4[3,2] - am4[3,1]) / 1.98)
 					),digits=3),nsmall=3)
 		} else {
-			listlvarse <- rep("NE",4)
+			listlvarse <- rep("NE",5)
 		}								
 	
 	# country level
 				countryvar <- format(round(c(
+							as.data.frame(VarCorr(me))$vcov[2],
 							as.data.frame(VarCorr(m1))$vcov[2],
 							as.data.frame(VarCorr(m2))$vcov[2],
 							as.data.frame(VarCorr(m3))$vcov[2],
@@ -2836,19 +2841,21 @@
 		if (runconfints)
 		{					
 				countryvarse <- format(round(c(
+					((ame[2,2] - ame[2,1]) / 1.98),
 					((am1[2,2] - am1[2,1]) / 1.98),
 					((am2[2,2] - am2[2,1]) / 1.98),
 					((am3[2,2] - am3[2,1]) / 1.98),
 					((am4[2,2] - am4[2,1]) / 1.98)
 					),digits=3),nsmall=3)
 		} else {
-			countryvarse <- rep("NE",4)
+			countryvarse <- rep("NE",5)
 		}	
 		
 		
 	# election year level
 		
 				elecyearvar <- format(round(c(
+							as.data.frame(VarCorr(me))$vcov[1],
 							as.data.frame(VarCorr(m1))$vcov[1],
 							as.data.frame(VarCorr(m2))$vcov[1],
 							as.data.frame(VarCorr(m3))$vcov[1],
@@ -2859,6 +2866,7 @@
 		if (runconfints)
 		{					
 				elecyearvarse <- format(round(c(
+					((ame[1,2] - ame[1,1]) / 1.98),
 					((am1[1,2] - am1[1,1]) / 1.98),
 					((am2[1,2] - am2[1,1]) / 1.98),
 					((am3[1,2] - am3[1,1]) / 1.98),
@@ -2868,17 +2876,20 @@
 			elecyearvarse <- rep("NE",4)
 		}
 
-	nobsc <-  c(nobs(m1),
+	nobsc <-  c(nobs(me),
+				nobs(m1),
 				nobs(m2),
 				nobs(m3),
 				nobs(m4))
 						
-	nrofcountries <- c(		nrow(ranef(m1)$country),
+	nrofcountries <- c(		nrow(ranef(me)$country),
+							nrow(ranef(m1)$country),
 							nrow(ranef(m2)$country),
 							nrow(ranef(m3)$country),
 							nrow(ranef(m4)$country))
 							
-	nrofelectionyears <- c(	nrow(ranef(m1)$year_cent),
+	nrofelectionyears <- c(	nrow(ranef(me)$year_cent),
+							nrow(ranef(m1)$year_cent),
 							nrow(ranef(m2)$year_cent),
 							nrow(ranef(m3)$year_cent),
 							nrow(ranef(m4)$year_cent))
@@ -2897,6 +2908,7 @@
 	varlabels <- specificnamecleaning(names(fixef(m4)))
 
 	stargazer(
+		me,
 		m1,
 		m2,
 		m3,
@@ -2904,7 +2916,7 @@
 		type="latex",
 		intercept.bottom=FALSE,
 		no.space=FALSE,
-		column.labels=(c("Empty","Control only","Party fix.ef.","Quota + context")),
+		column.labels=(c("Empty","Control only","Dist. mag.","Party fix.ef.","Quota + context")),
 		star.char = c(".", "*", "**", "***"),
 		star.cutoffs = c(0.1, 0.05, 0.01, 0.001),
 		keep.stat=c("ll"),
@@ -3464,7 +3476,7 @@
 				
 					# adding just a model with the one one key variable of interest here
 					mkey <- lmer(selection_election_gap~1+ # selection_election_gap
-								district_magnitude_country_and_type_cent +
+								district_magnitude_minusone +
 								(1 | year_cent) +
 								(1 | country),
 								data=ELLIBUTEMP)
@@ -3475,7 +3487,7 @@
 					summary(ELLIBUTEMP$selection_election_gap)
 
 					ma <- lmer(selection_election_gap~
-								district_magnitude_country_and_type_cent +
+								district_magnitude_minusone +
 								nat_party_id + # added on 2021/10/19
 					#			type +
 								country +
@@ -3489,7 +3501,7 @@
 				#	ELLIBUTEMP$type <- ifelse(ELLIBUTEMP$type == "list", "list", "quasi-list")
 				
 					mb <- lmer(selection_election_gap~
-								district_magnitude_country_and_type_cent + # district_magnitude_country_stan
+								district_magnitude_minusone + 
 								nat_party_id + # added on 2021/10/19
 							#	type +
 								(1 | year_cent) +
@@ -3507,10 +3519,10 @@
 					
 					
 					mc <- lmer(selection_election_gap~
-								district_magnitude_country_and_type_cent +
+								district_magnitude_minusone +
 								nat_party_id + # added on 2021/10/19
-								type +
-								country +
+						#		type +
+						#		country +
 								vote_share_cent +# party_size_country_stan +
 								(1 | year_cent) +
 								(1 | country),
@@ -3518,15 +3530,16 @@
 					summary(mc)
 
 					md <- lmer(selection_election_gap~
-								# district_magnitude_country_and_type_cent +
-								district_magnitude +
+								# district_magnitude +
+								district_magnitude_minusone +
 								nat_party_id + # added on 2021/10/19
 						#		type +
-								country +
+						#		country +
 								vote_share_cent +
 								vote_share_change_ten +
 						#		vote_share_lost +
 								year_cent +
+						#		country +
 						#		I(year_cent^2)+
 						#		nat_party_id +
 								(1 | year_cent) +
@@ -3535,13 +3548,30 @@
 					summary(md)
 
 					table(ELLIBUTEMP$nat_party_id,ELLIBUTEMP$linkedlist)
+					
+						# do, does the decomposed - and much harder to interpret - model that I have been using so far actually fit the data better?
+						mda <- lmer(selection_election_gap~
+								district_magnitude_country_and_type_cent +
+								nat_party_id + 
+								type +
+						#		country +
+								vote_share_cent +
+								vote_share_change_ten +
+								year_cent +
+								(1 | year_cent) +
+								(1 | country),
+								data=ELLIBUTEMP)#data=ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap <= 0),])
+						summary(mda)
+						anova(mee,md) 
+						anova(md,mda) # not it does not, I see that as an extra motivation to go for the more simple model
+						
 
 
 					me <- lmer(selection_election_gap~
-								district_magnitude_country_and_type_cent +
+								district_magnitude_minusone +
 								nat_party_id + # added on 2021/10/19
-								type +
-								country +
+						#		type +
+						#		country +
 								vote_share_cent + #party_size_country_stan +
 								vote_share_change_ten +
 						#		vote_share_lost +
@@ -3560,7 +3590,7 @@
 					ELLIBUTEMP$country_and_type <- factor(ELLIBUTEMP$country_and_type, levels=c("DE:list","DE:district","NL:list"))
 					
 					me2 <- lmer(selection_election_gap~
-								district_magnitude*country_and_type +
+								district_magnitude_minusone*country_and_type +
 								nat_party_id + # added on 2021/10/19
 						#		type +
 						#		country +
@@ -3633,7 +3663,7 @@
 			{
 				cleanernames <- gsub("(Intercept)","Constant",dirtynamesloc,fixed=TRUE)
 				cleanernames <- gsub("district_magnitude_country_and_type_cent","district magnitude",cleanernames,fixed=TRUE)
-				cleanernames <- gsub("district_magnitude","district magnitude",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("district_magnitude_minusone","district magnitude",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("typedistrict","type:district (quasi-list)",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("vote_share_cent","vote share",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("vote_share_change_ten","vote share change",cleanernames,fixed=TRUE)
@@ -3815,11 +3845,11 @@
 		set_theme(base = theme_minimal())
 		plot_model(md,
 					type = "emm",
-					terms="district_magnitude",
+					terms="district_magnitude_minusone",
 					title ="Estimated marginal effects: predicted election-selection gap given district magnitude"
 					) + 
 				#	ylim(-25,20) +
-				#	scale_x_continuous(name="district magnitude (centered values)",limits=c(-20,55),breaks=c(-20,0,20,40,55),label=c("2 (-20)","22* (0)","42 (20)","62 (40)","77 (55)")) +
+					scale_x_continuous(name="district magnitude",) +
 					scale_y_continuous(name="abs(selection-election) gap") +
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
 		
@@ -3863,7 +3893,28 @@
 			
 			ELLIDIS <- ELLIBU[,varstogetdescriptivefor]
 
+			# focus on the 726 cases in the core analysis
+			ELLIDIS <- ELLIDIS[which(!is.na(ELLIDIS$ratio_on_list)),]
+			nrow(ELLIDIS)
+	
+			# print the descriptives table for the countinous one
+			stargazer(ELLIDIS, type = "text", title="Descriptive statistics", digits=1)
+			stargazer(ELLIDIS, type = "text", title="Descriptive statistics", digits=2)
 
+			# for the categorical varstogetdescriptivefor
+			
+				# country
+				table(ELLIDIS$country)
+				round(prop.table(table(ELLIDIS$country)),3)
+			
+				# selection control
+				table(ELLIDIS$selection_control_fac)
+				round(prop.table(table(ELLIDIS$selection_control_fac)),4)
+				
+				# party
+				table(ELLIDIS$nat_party_id)
+				round(prop.table(table(ELLIDIS$nat_party_id)),4)
+		
 		
 		# and some diagnostics here
 			
