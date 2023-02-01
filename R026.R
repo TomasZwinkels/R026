@@ -58,7 +58,6 @@
 		library(sjPlot)
 		library(effects)
 	
-	
 
 		
 	substrRight <- function(x, n)
@@ -2053,7 +2052,7 @@
 			# script below requires
 			
 				# the parlgov id of a party
-				summary(droplevels(ELLIBU$party_parlgov_id)) # implemented this above now
+				summary(droplevels(as.factor(ELLIBU$party_parlgov_id))) # implemented this above now
 				
 				# an election year variable
 				ELLIBU$year <- as.numeric(substrRight(ELLIBU$parliament_id,4))
@@ -2069,15 +2068,17 @@
 				# and only use the national elections
 				PG_ELEC <- PG_ELEC[which(PG_ELEC$election_type == "parliament"),]
 				nrow(PG_ELEC)
+				head(PG_ELEC)
 				
 			# lets get share for one case
 			
 				head(ELLIBU)
 				myyear <-  ELLIBU$year[1]
 				myparlgovid <- ELLIBU$party_parlgov_id[1]
+				myyear
+				myparlgovid 
+				ELLIBU[1,] 
 				PG_ELEC$vote_share[which(PG_ELEC$party_parlgov_id == myparlgovid & PG_ELEC$election_year == myyear)]
-			
-			# only nati
 			
 			# merge in with query
 			TEMPY <- sqldf("SELECT ELLIBU.*, PG_ELEC.vote_share
@@ -2089,16 +2090,16 @@
 						   ")
 			head(TEMPY)
 			nrow(TEMPY)
-			nrow(ELLIBU)
-			
+			nrow(ELLIBU) # same amounts
+			table(is.na(TEMPY$vote_share))
 			TEMPY[which(is.na(TEMPY$vote_share)),]
 			
 			unique(ELLIBU[which(ELLIBU$parliament_id == "DE_NT-BT_2013"),]$nat_party_id)
-			unique(ELLIBU[which(ELLIBU$parliament_id == "DE_NT-BT_2017"),]$nat_party_id) # why is CDU missing in 2017?!
+			unique(ELLIBU[which(ELLIBU$parliament_id == "DE_NT-BT_2017"),]$nat_party_id) # same list, just other order
 			
 			ELLIBU <- TEMPY 
 			
-			# so lets so him much vote share the national party last compared to the previous election
+			# so lets so merge in how much vote share the national party last compared to the previous election
 
 				# first, lets get the previous parliament in and get the year that comes with it
 				TEMPXX <- sqldf("SELECT ELLIBU.*, PARL.previous_parliament
@@ -2113,8 +2114,7 @@
 
 				ELLIBU$previous_election_year <- as.numeric(substrRight(as.character(ELLIBU$previous_parliament),4))
 			
-			# then, do the exact same thing, but with the number from the previous election
-
+			# then, do the exact same merge as above, but with the number from the previous election
 			TEMPYY <- sqldf("SELECT ELLIBU.*, PG_ELEC.vote_share as 'vote_share_previous'
 							FROM ELLIBU LEFT JOIN PG_ELEC
 							ON
@@ -2127,15 +2127,24 @@
 			nrow(ELLIBU)
 			ELLIBU <- TEMPYY 
 		
-			# now, calculate the 'drop'  (note for later: if you look up you see this is based on the voteshare according to parlgov.
-			
+			# see inspection below, adding some manual values for Partei des Demokratischen Sozialismus whom started in 1989
+	
+				# or actually lets do this a little more proper (still manual, but not list by list)
+				ELLIBU[which(grepl("02dec1990__Die-Linke-Partei-des-Demokratischen-Sozialismus",ELLIBU$list_id)),]
+				ELLIBU$vote_share_previous[which(grepl("02dec1990__Die-Linke-Partei-des-Demokratischen-Sozialismus",ELLIBU$list_id))] <-- 0
+		
+			# now, calculate the 'drop'  (note for later: if you look up /\ you see this is based on the voteshare according to parlgov!) # lets do a manual check for two parties.			
 			ELLIBU$vote_share_change <- ELLIBU$vote_share - ELLIBU$vote_share_previous
 			hist(ELLIBU$vote_share_change)
 			hist(ELLIBUTEMP$vote_share_change)
 			
 			# lets inspecting missing cases quickly
 			table(is.na(ELLIBU$vote_share_change))
-			ELLIBU[which(is.na(ELLIBU$vote_share_change)),]
+			ELLIBU[which(is.na(ELLIBU$vote_share_change)),] # OK, for these 7 cases we do not have vote_share_previous! Did they not run at all or something like that? -- indeed started in 1989. Let's add these above manually.
+			
+			# OK, and an absolute version
+			ELLIBU$vote_share_change_abs <- abs(ELLIBU$vote_share_change)
+			hist(ELLIBU$vote_share_change_abs)
 			
 			
 	## Selection and election control variables ###!
