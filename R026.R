@@ -16,27 +16,27 @@
 		
 		#setwd("C:/Users/turnerzw/Basel Powi Dropbox/R/R026_temp")
 		setwd("F:/PolCa/Analysis/R/ProjectR026_control")
-		setwd("C:/Users/turnerzw/Basel Powi Dropbox/Remote GW17PC05/PCP_Quotas_Paper/Analysis/ProjectR026_control")
+		#setwd("C:/Users/turnerzw/Basel Powi Dropbox/Remote GW17PC05/PCP_Quotas_Paper/Analysis/ProjectR026_control")
 		getwd()
 	
-	#	install.packages("sqldf")
-	#	install.packages("stringr")
-	#	install.packages("lubridate")
-	#	install.packages("ggplot2")
-	#	install.packages("stargazer")
-	#	install.packages("dplyr")
-	#	install.packages("reshape")
-	#	install.packages("TraMineR")
-	#	install.packages("lawstat")
-	#	install.packages("beanplot")
-	#	install.packages("stringr")
-	#	install.packages("foreach")
-	#	install.packages("doParallel")
-	#	install.packages("car")
-	#	install.packages("ggpubr")
-	#	install.packages("sjPlot")
-	#	install.packages("effects")
-	#   install.packages("writexl")
+		install.packages("sqldf")
+		install.packages("stringr")
+		install.packages("lubridate")
+		install.packages("ggplot2")
+		install.packages("stargazer")
+		install.packages("dplyr")
+		install.packages("reshape")
+		install.packages("TraMineR")
+		install.packages("lawstat")
+		install.packages("beanplot")
+		install.packages("stringr")
+		install.packages("foreach")
+		install.packages("doParallel")
+		install.packages("car")
+		install.packages("ggpubr")
+		install.packages("sjPlot")
+		install.packages("effects")
+	    install.packages("writexl")
 	
 	# packages
 		library(sqldf)
@@ -57,7 +57,9 @@
 		library(ggpubr)
 		library(sjPlot)
 		library(effects)
-		
+	
+	
+
 		
 	substrRight <- function(x, n)
 	{
