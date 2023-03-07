@@ -37,6 +37,7 @@
 	#	install.packages("sjPlot")
 	#	install.packages("effects")
 	#   install.packages("writexl")
+	#    install.packages("jtools")
 	
 	# packages
 		library(sqldf)
@@ -57,6 +58,7 @@
 		library(ggpubr)
 		library(sjPlot)
 		library(effects)
+		library(jtools)
 	
 
 		
@@ -2776,7 +2778,7 @@
 			# model with selection control, district magnitude and electoral volatility only
 					m2 <- lmer(ambition_selection_gap~
 								selection_control_fac + 
-								district_magnitude_gmcent + # district_magnitude_country_cent
+							#	district_magnitude_gmcent + # district_magnitude_country_cent
 								party_level_electoral_volatility_log_abs_stan +
 								(1 | year_cent) +
 								(1 | country),
@@ -2814,7 +2816,7 @@
 			# adding party fixed effects
 					m3 <- lmer(ambition_selection_gap~
 								selection_control_fac +
-								district_magnitude_gmcent + # district_magnitude_country_cent
+							#	district_magnitude_gmcent + # district_magnitude_country_cent
 								party_level_electoral_volatility_log_abs_stan +
 								party_id_nat_equiv_short +
 								(1 | year_cent) +
@@ -2826,7 +2828,7 @@
 			# adding the quota characteristics and the other control variables
 					m4 <- lmer(ambition_selection_gap~
 								selection_control_fac + 
-								district_magnitude_gmcent + # district_magnitude_country_cent
+							#	district_magnitude_gmcent + # district_magnitude_country_cent
 								party_level_electoral_volatility_log_abs_stan +
 								party_id_nat_equiv_short +
 								quota_percentage_lessthen50 +
@@ -3024,7 +3026,7 @@
 		m2,
 		m3,
 		m4,
-		type="text",
+		type="latex",
 		intercept.bottom=FALSE,
 		no.space=FALSE,
 		column.labels=(c("Empty","Contr.only","D.mag. + El.Vol.","Party fix.ef.","Quota + context")),
@@ -3834,8 +3836,14 @@
 					anova(mecs,me)
 					
 					stargazer(mee,ma,mb,md,me,intercept.bottom=FALSE)
-					
-					
+	
+
+		# we agreed to also add a version of the model where all the beta's are standardised
+		library(jtools)
+			
+			stanmod <- scale_mod(md)
+			summary(stanmod)
+	
 					
 		# the big regression model in which everything in life comes together?
 		
@@ -3864,13 +3872,15 @@
 	m2 <- mkey
 	m3 <- ma
 	m4 <- md
+	m5 <- stanmod
 	
 	summary(m1)
 	summary(m2)
 	summary(m3)
 	summary(m4)
+	summary(m5)
 	
-	stargazer(m1,m2,m3,m4,intercept.bottom=FALSE,type="text")
+	stargazer(m1,m2,m3,m4,m5,intercept.bottom=FALSE,type="text")
 	
 # to make sure that we are reminded of what version we are doing
 	hist(ELLIBUTEMP$selection_election_gap)
@@ -3913,7 +3923,8 @@
 							as.data.frame(VarCorr(m1))$vcov[3],
 							as.data.frame(VarCorr(m2))$vcov[3],
 							as.data.frame(VarCorr(m3))$vcov[3],
-							as.data.frame(VarCorr(m4))$vcov[3]
+							as.data.frame(VarCorr(m4))$vcov[3],
+							as.data.frame(VarCorr(m5))$vcov[3]
 											),digits=3),nsmall=3)
 		
 		if (runconfints)
@@ -3923,12 +3934,14 @@
 				am2 <- confint(m2,method="boot",nsim=simulations)
 				am3 <- confint(m3,method="boot",nsim=simulations)
 				am4 <- confint(m4,method="boot",nsim=simulations)
+				am5 <- confint(m5,method="boot",nsim=simulations)
 
 				listlvarse <- format(round(c(
 					((am1[3,2] - am1[3,1]) / 1.98),
 					((am2[3,2] - am2[3,1]) / 1.98),
 					((am3[3,2] - am3[3,1]) / 1.98),
-					((am4[3,2] - am4[3,1]) / 1.98)
+					((am4[3,2] - am4[3,1]) / 1.98),
+					((am5[3,2] - am5[3,1]) / 1.98)
 					),digits=3),nsmall=3)
 		} else {
 			listlvarse <- rep("NE",4)
@@ -3939,7 +3952,8 @@
 							as.data.frame(VarCorr(m1))$vcov[2],
 							as.data.frame(VarCorr(m2))$vcov[2],
 							as.data.frame(VarCorr(m3))$vcov[2],
-							as.data.frame(VarCorr(m4))$vcov[2]
+							as.data.frame(VarCorr(m4))$vcov[2],
+							as.data.frame(VarCorr(m5))$vcov[2]
 											),digits=3),nsmall=3)
 		if (runconfints)
 		{					
@@ -3947,7 +3961,8 @@
 					((am1[2,2] - am1[2,1]) / 1.98),
 					((am2[2,2] - am2[2,1]) / 1.98),
 					((am3[2,2] - am3[2,1]) / 1.98),
-					((am4[2,2] - am4[2,1]) / 1.98)
+					((am4[2,2] - am4[2,1]) / 1.98),
+					((am5[2,2] - am5[2,1]) / 1.98)
 					),digits=3),nsmall=3)
 		} else {
 			countryvarse <- rep("NE",4)
@@ -3960,7 +3975,8 @@
 							as.data.frame(VarCorr(m1))$vcov[1],
 							as.data.frame(VarCorr(m2))$vcov[1],
 							as.data.frame(VarCorr(m3))$vcov[1],
-							as.data.frame(VarCorr(m4))$vcov[1]
+							as.data.frame(VarCorr(m4))$vcov[1],
+							as.data.frame(VarCorr(m5))$vcov[1]
 											),digits=3),nsmall=3)
 		
 		
@@ -3970,7 +3986,8 @@
 					((am1[1,2] - am1[1,1]) / 1.98),
 					((am2[1,2] - am2[1,1]) / 1.98),
 					((am3[1,2] - am3[1,1]) / 1.98),
-					((am4[1,2] - am4[1,1]) / 1.98)
+					((am4[1,2] - am4[1,1]) / 1.98),
+					((am5[1,2] - am5[1,1]) / 1.98)
 					),digits=3),nsmall=3)
 		} else {
 			elecyearvarse <- rep("NE",4)
@@ -3979,17 +3996,23 @@
 	nobsc <-  c(nobs(m1),
 				nobs(m2),
 				nobs(m3),
-				nobs(m4))
+				nobs(m4),
+				nobs(m5)
+				)
 						
 	nrofcountries <- c(		nrow(ranef(m1)$country),
 							nrow(ranef(m2)$country),
 							nrow(ranef(m3)$country),
-							nrow(ranef(m4)$country))
+							nrow(ranef(m4)$country),
+							nrow(ranef(m5)$country)
+							)
 							
 	nrofelectionyears <- c(	nrow(ranef(m1)$year_cent),
 							nrow(ranef(m2)$year_cent),
 							nrow(ranef(m3)$year_cent),
-							nrow(ranef(m4)$year_cent))
+							nrow(ranef(m4)$year_cent),
+							nrow(ranef(m5)$year_cent)
+							)
 
 			GiveBrackets <- function(vector1)
 				{
@@ -4013,10 +4036,11 @@
 		m2,
 		m3,
 		m4,
+		m5,
 		type="text",
 		intercept.bottom=FALSE,
 		no.space=FALSE,
-		column.labels=(c("Empty","DiMa + El.Vol.","Party fix.ef.","Context")),
+		column.labels=(c("Empty","DiMa + El.Vol.","Party fix.ef.","Context","Stand.Betas.")),
 		star.char = c(".", "*", "**", "***"),
 		star.cutoffs = c(0.1, 0.05, 0.01, 0.001),
 		keep.stat=c("ll"),
