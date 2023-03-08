@@ -2151,6 +2151,11 @@
 			table(is.na(ELLIBU$vote_share_change))
 			ELLIBU[which(is.na(ELLIBU$vote_share_change)),] # OK, for these 7 cases we do not have vote_share_previous! Did they not run at all or something like that? -- indeed started in 1989. Let's add these above manually.
 			
+			ggplot(ELLIBU, aes(x = vote_share_change, y = vote_share)) +
+			geom_point() +
+			geom_smooth(method = "loess")
+			cor(ELLIBU$vote_share,ELLIBU$vote_share_change) # no obvious correlation.
+			
 			# OK, and an absolute version
 			ELLIBU$vote_share_change_abs <- abs(ELLIBU$vote_share_change)
 			hist(ELLIBU$vote_share_change_abs)
@@ -2180,6 +2185,21 @@
 			log(10/25)
 			log(25/10)
 			
+			ELLIBU$party_level_electoral_volatility <- ELLIBU$vote_share/ELLIBU$vote_share_previous #so the issue here is that if the party is new, we devide by zero. Ofcourse the absolute measure also avoids this.
+			
+			ggplot(ELLIBU, aes(x = party_level_electoral_volatility, y = vote_share)) +
+			geom_point() +
+			geom_smooth(method = "loess")
+			
+			cor(ELLIBU$vote_share,ELLIBU$party_level_electoral_volatility, use="pairwise.complete.obs")
+			table(is.na(ELLIBU$vote_share),is.na(ELLIBU$party_level_electoral_volatility))
+			
+			var(ELLIBU$vote_share)
+			var(ELLIBU$party_level_electoral_volatility)
+			
+			ELLIBU[which(!is.finite(ELLIBU$party_level_electoral_volatility)),]
+
+			
 			ELLIBU$party_level_electoral_volatility_log <- log(ELLIBU$vote_share/ELLIBU$vote_share_previous)
 			hist(ELLIBU$party_level_electoral_volatility_log) 
 			
@@ -2197,6 +2217,24 @@
 			
 			# and for interpretation purposes, lets standardise it
 			ELLIBU$party_level_electoral_volatility_log_abs_stan <- scale(ELLIBU$party_level_electoral_volatility_log_abs,center = TRUE, scale = TRUE)
+			nrow(ELLIBU)
+			
+			# OK, I am adding a bunch of things here to learn more about the relation between the party_level_electoral_volatility and party-size / voteshare
+			plot(ELLIBU$party_level_electoral_volatility_log_abs,ELLIBU$vote_share)
+			
+			ggplot(ELLIBU, aes(x = party_level_electoral_volatility_log_abs, y = vote_share)) +
+			geom_point() +
+			geom_smooth(method = "loess")
+			cor(ELLIBU$vote_share,ELLIBU$party_level_electoral_volatility_log_abs) # OK, so indeed a massive relation. I don't understand this. Did I not correct for this?
+			
+			ggplot(ELLIBU, aes(x = party_level_electoral_volatility_log, y = vote_share)) +
+			geom_point() +
+			geom_smooth(method = "loess")
+			
+			ggplot(ELLIBU, aes(x = party_level_electoral_volatility, y = vote_share)) +
+			geom_point() +
+			geom_smooth(method = "loess")
+			
 			
 	## Selection and election control variables ###!
 
@@ -2751,7 +2789,7 @@
 					ELLIBU$vote_share_cent <- scale(ELLIBU$vote_share,center=TRUE,scale=FALSE)
 					hist(ELLIBU$vote_share)
 					hist(ELLIBU$vote_share_cent)
-					ELLIBU$vote_share_cent <- ELLIBU$vote_share_cent/10
+					ELLIBU$vote_share_cent <- ELLIBU$vote_share_cent
 
 				# for email to the others, quick graph on the relation between party_level_electoral_volatility and the selection-ambition gap.
 				
@@ -2779,45 +2817,31 @@
 					m2 <- lmer(ambition_selection_gap~
 								selection_control_fac + 
 							#	district_magnitude_gmcent + # district_magnitude_country_cent
-								party_level_electoral_volatility_log_abs_stan +
+								vote_share_change_abs +
 								(1 | year_cent) +
 								(1 | country),
 								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
 					summary(m2)
 					stargazer(me,m1,m2,type="text",intercept.bottom=FALSE)
 	
-					# so, there is also a better fitting(?) but much harder to interpret model:
+					# so, model with the same interaction as in the 2nd analysis
 						m2a <- lmer(ambition_selection_gap~
 									selection_control_fac + 
-									district_magnitude_country_cent + # district_magnitude_country_cent
-									party_level_electoral_volatility_log_abs_stan +
-									type +
+									district_magnitude_minusone + #	district_magnitude_country_cent + # district_magnitude_country_cent
+									vote_share_change_abs*vote_share_cent +
+								#	type +
 									(1 | year_cent) +
 									(1 | country),
 									data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
 						summary(m2a)
-						stargazer(m2,m2a,type="text",intercept.bottom=FALSE) # OK, so at least here my conscinous is put to ease: this model is not significant better fitting here.
-						anova(me,m2)
-						anova(m2,m2a)
-						
-					# and how about a non-lineair effect for party_level_electoral_volatility_log_abs_stan? - this model is much harder to interpret
-					mb2 <- lmer(ambition_selection_gap~
-								selection_control_fac + 
-								district_magnitude_gmcent + # district_magnitude_country_cent
-								party_level_electoral_volatility_log_abs_stan +
-								I(party_level_electoral_volatility_log_abs_stan^2) +
-								(1 | year_cent) +
-								(1 | country),
-								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
-					summary(mb2)
-					stargazer(me,m1,m2,mb2,type="text",intercept.bottom=FALSE)
-					anova(m2,mb2) # yes, this model does fit the data significantly better - interpretation becomes a lot harder however...
+						stargazer(m2,m2a,type="text",intercept.bottom=FALSE) 
+						anova(m2,m2a) # indeed, also here fits the data a lot better.
 
 			# adding party fixed effects
 					m3 <- lmer(ambition_selection_gap~
 								selection_control_fac +
-							#	district_magnitude_gmcent + # district_magnitude_country_cent
-								party_level_electoral_volatility_log_abs_stan +
+								district_magnitude_minusone +#	district_magnitude_gmcent + # district_magnitude_country_cent
+								vote_share_change_abs*vote_share_cent +
 								party_id_nat_equiv_short +
 								(1 | year_cent) +
 								(1 | country),
@@ -2828,12 +2852,11 @@
 			# adding the quota characteristics and the other control variables
 					m4 <- lmer(ambition_selection_gap~
 								selection_control_fac + 
-							#	district_magnitude_gmcent + # district_magnitude_country_cent
-								party_level_electoral_volatility_log_abs_stan +
+								district_magnitude_minusone + #	district_magnitude_gmcent + # district_magnitude_country_cent
+								vote_share_change_abs*vote_share_cent +
 								party_id_nat_equiv_short +
 								quota_percentage_lessthen50 +
 								quota_soft_fact +
-								vote_share_cent +
 								year_cent + 
 								(1 | year_cent) +
 								(1 | country),
@@ -2848,30 +2871,12 @@
 						
 						# residuals
 						plot(m4) # no obvious heteroscedasticity issue
-						
-			# how about a non-lineair effect of electoral volatilty here, does this fit the data better?
-					m4a <- lmer(ambition_selection_gap~
-								selection_control_fac + 
-								district_magnitude_gmcent + # district_magnitude_country_cent
-								party_level_electoral_volatility_log_abs_stan +
-								I(party_level_electoral_volatility_log_abs_stan^2) +
-								party_id_nat_equiv_short +
-								quota_percentage_lessthen50 +
-								quota_soft_fact +
-								vote_share_cent +
-								year_cent + 
-								(1 | year_cent) +
-								(1 | country),
-								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
-					summary(m4a)
-					stargazer(m4,m4a,type="text",intercept.bottom=FALSE)		
-					anova(m4,m4a)
 				
 	##### working towards a nice regression output
 	
 	me <- me
 	m1 <- m1
-	m2 <- m2
+	m2 <- m2a
 	m3 <- m3
 	m4 <- m4
 	
@@ -2887,13 +2892,13 @@
 	specificnamecleaning <- function(dirtynamesloc)	
 			{
 				cleanernames <- gsub("(Intercept)","Constant",dirtynamesloc,fixed=TRUE)
-				cleanernames <- gsub("district_magnitude_gmcent","district magnitude",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("district_magnitude_minusone","district magnitude",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("quota_percentage_lessthen50","quota percentage deviation",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("quota_soft_factsoft","soft quota",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("quota_zipper","zipper quota",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("vote_share_cent","vote share",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("year_cent","election year",cleanernames,fixed=TRUE)
-				cleanernames <- gsub("party_level_electoral_volatility_log_abs_stan","party level electoral volatility",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("vote_share_change_abs","party level change in voteshare",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("selection_control_facmedium selection control","medium selection control",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("selection_control_fachigh selection control","high selection control",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("party_id_nat_equiv_shortSPD (DE)","SPD(DE)",cleanernames,fixed=TRUE)
@@ -3026,7 +3031,7 @@
 		m2,
 		m3,
 		m4,
-		type="latex",
+		type="text",
 		intercept.bottom=FALSE,
 		no.space=FALSE,
 		column.labels=(c("Empty","Contr.only","D.mag. + El.Vol.","Party fix.ef.","Quota + context")),
@@ -3051,9 +3056,8 @@
 							c("NR of election years",nrofelectionyears),
 							c("election-level var",elecyearvar),
 							c("",GiveBrackets(elecyearvarse))
-							))
+							)
 		  )	
-		# note to self for this GIT version: this regression output is indeed the one currently reported in the paper. Still on 2023-02-06-13:57
 		
 		# some interpretation things
 		aggregate(data=ELLIBU, vote_share_cent~quota_percentage_lessthen50, mean) # it is typically the bigger parties that have quotas that are not 50%!
@@ -3111,15 +3115,14 @@
 					scale_x_continuous(name="level of centralization",breaks=c(1,2,3),labels=c("low","medium","high")) +
 					scale_y_continuous(name="ambition selection gap") +
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1) +
-					geom_text(aes(x=1.6,y=-18,label="less women on electable list position than specified ambition"),angle=0,size=6) +
+					geom_text(aes(x=1.6,y=-25,label="less women on electable list position than specified ambition"),angle=0,size=6) +
 					geom_text(aes(x=1.6,y=15,label="more women on electable list position than specified ambition"),angle=0,size=6) 
-					
-					# I think this is what is being used here: https://rdrr.io/cran/emmeans/man/emmeans.html # I would like to understand this fully! 
 	
 		# and electoral volatility here
+			# without the interaction
 			plot_model(m4,
 					type = "emm",
-					terms="party_level_electoral_volatility_log_abs_stan",
+					terms="vote_share_change_abs",
 					title ="Estimated marginal effects: predicted ambition-selection gap given party level electoral volatility"
 					) + 
 				#	ylim(-25,20) +
@@ -3127,6 +3130,17 @@
 					scale_y_continuous(name="ambition selection gap") +
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
 	
+			# with the interaction
+				plot_model(m4,
+					type = "int",
+					mdrt.values = "meansd",
+					terms="vote_share_change_abs",
+					title ="Estimated marginal effects: predicted ambition-selection gap given party level change in voteshare"
+					) + 
+				#	ylim(-25,20) +
+					scale_x_continuous(name="party level change in voteshare",) +
+					scale_y_continuous(name="ambition selection gap") +
+					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
 	
 		# do I indeed have unbalanced cases?
 		table(ELLIBU$selection_control_fac) # yes for sure! Right, so it does make sense. Lets just use this one!
@@ -3235,6 +3249,12 @@
 				ELLIBU$selection_election_gap <- ELLIBU$selection_election_gap * 100
 				
 				mean(ELLIBU$selection_election_gap)
+				
+				hist(ELLIBU$selection_election_gap)
+				
+				plot(ELLIBU$vote_share,ELLIBU$party_level_electoral_volatility_log_abs)
+				plot(ELLIBU$vote_share,ELLIBU$party_level_electoral_volatility_log_abs_stan)
+				
 				
 				DATDE <- ELLIBU[which(ELLIBU$country == "DE"),]
 				boxplot(DATDE$ratio_elected~DATDE$year)
@@ -3690,19 +3710,33 @@
 					# adding just a model with the two key variables of interest here
 					mkey <- lmer(selection_election_gap~1+ # selection_election_gap
 								district_magnitude_minusone +
-								party_level_electoral_volatility_log_abs_stan +
+								vote_share_change_abs +
+								vote_share_cent +
 								(1 | year_cent) +
 								(1 | country),
 								data=ELLIBUTEMP)
 					summary(mkey)
 					stargazer(mkey,type="text")
+					
+					# with the interaction with vote share
+					mkeyint <- lmer(selection_election_gap~1+ # selection_election_gap
+								district_magnitude_minusone +
+								vote_share_change_abs *
+								vote_share_cent +
+								(1 | year_cent) +
+								(1 | country),
+								data=ELLIBUTEMP)
+					summary(mkeyint)
+					stargazer(mkey,mkeyint,type="text")
+					anova(mkey,mkeyint) # does indeed fit the data much better.
 				
 					# to remind us again of the type we are doing
 					summary(ELLIBUTEMP$selection_election_gap)
 
 					ma <- lmer(selection_election_gap~
 								district_magnitude_minusone +
-								party_level_electoral_volatility_log_abs_stan +
+								vote_share_change_abs *
+								vote_share_cent +
 								nat_party_id + # added on 2021/10/19
 					#			type +
 								country +
@@ -3717,7 +3751,8 @@
 				
 					mb <- lmer(selection_election_gap~
 								district_magnitude_minusone + 
-								party_level_electoral_volatility_log_abs_stan +
+								vote_share_change_abs *
+								vote_share_cent +
 								nat_party_id + # added on 2021/10/19
 							#	type +
 								(1 | year_cent) +
@@ -3728,6 +3763,7 @@
 					hist(ELLIBUTEMP$party_size_country_stan)
 					hist(ELLIBUTEMP$vote_share)
 					
+					# note that is recalculated here! -- so not in 'tents' anymore?
 					ELLIBUTEMP$vote_share_cent <- ELLIBUTEMP$vote_share - mean(ELLIBUTEMP$vote_share)
 					hist(ELLIBUTEMP$vote_share_cent)
 					
@@ -3736,26 +3772,28 @@
 					
 					mc <- lmer(selection_election_gap~
 								district_magnitude_minusone +
-								party_level_electoral_volatility_log_abs_stan +
+								vote_share_change_abs *
+								vote_share_cent +
 								nat_party_id + # added on 2021/10/19
 						#		type +
 						#		country +
-								vote_share_cent +# party_size_country_stan +
 								(1 | year_cent) +
 								(1 | country),
 								data=ELLIBUTEMP)#data=ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap <= 0),])
 					summary(mc)
+
+				table(ELLIBUTEMP$linkedlist,ELLIBUTEMP$country)
 
 				
 				# OK, so this model 4 now, lets replace vote share change with the new variable I worked on above.
 					md <- lmer(selection_election_gap~
 								# district_magnitude +
 								district_magnitude_minusone +
-								party_level_electoral_volatility_log_abs_stan +
+								vote_share_change_abs *
+								vote_share_cent + # vote_share_change_abs*vote_share_cent +
 								nat_party_id + # added on 2021/10/19
 						#		type +
 						#		country +
-								vote_share_cent +
 						#       vote_share_change_abs +
 						#		vote_share_change_ten +
 						#		vote_share_lost +
@@ -3763,6 +3801,7 @@
 						#		country +
 						#		I(year_cent^2)+
 						#		nat_party_id +
+								linkedlist +
 								(1 | year_cent) +
 								(1 | country),
 								data=ELLIBUTEMP)#data=ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap <= 0),])
@@ -3841,7 +3880,7 @@
 		# we agreed to also add a version of the model where all the beta's are standardised
 		library(jtools)
 			
-			stanmod <- scale_mod(md)
+			stanmod <- scale_mod(md,data=ELLIBUTEMP)
 			summary(stanmod)
 	
 					
@@ -3870,9 +3909,9 @@
 			
 	m1 <- mee
 	m2 <- mkey
-	m3 <- ma
-	m4 <- md
-	m5 <- stanmod
+	m3 <- mkeyint
+	m4 <- ma
+	m5 <- md # stanmod
 	
 	summary(m1)
 	summary(m2)
@@ -3897,7 +3936,7 @@
 				cleanernames <- gsub("district_magnitude_minusone","district magnitude",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("typedistrict","type:district (quasi-list)",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("vote_share_cent","vote share",cleanernames,fixed=TRUE)
-				cleanernames <- gsub("party_level_electoral_volatility_log_abs_stan","party level electoral volatility",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("vote_share_change_abs","party level electoral volatility",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("year_cent","election year",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("election_year","election year",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("linkedlistlinked","linked list",cleanernames,fixed=TRUE)
@@ -4063,7 +4102,7 @@
 							c("election-level var",elecyearvar),
 							c("",GiveBrackets(elecyearvarse))
 							)
-		  )			
+		 ) 
 		# also here: was indeed the version in the paper!	-- now (2023-02-06-13:57 > version with new way of measuring electoral volatilty)	
 	
 	# some interpreation things
@@ -4087,7 +4126,7 @@
 		table(ELLIBUTEMP$nat_party_id,ELLIBUTEMP$linkedlist)
 		
 	# in a marginal effect plot
-		set_theme(base = theme_minimal())
+		set_theme(base = theme_minimal(base_size=20))
 		plot_model(md,
 					type = "emm",
 					terms="district_magnitude_minusone",
@@ -4101,9 +4140,11 @@
 		delistdismagavg
 	
 	# and electoral volatility
+	
+		# version without the interactions
 		plot_model(md,
 					type = "emm",
-					terms="party_level_electoral_volatility_log_abs_stan",
+					terms="vote_share_change_abs",
 					title ="Estimated marginal effects: predicted election-selection gap given party level electoral volatility"
 					) + 
 				#	ylim(-25,20) +
@@ -4113,8 +4154,19 @@
 		
 		hist(ELLIBUTEMP$party_level_electoral_volatility_log_abs_stan)
 		
+		# version with party size interactions
+		plot_model(md,
+					type = "int",
+					mdrt.values = "meansd",
+					terms="vote_share_change_abs",
+					title ="Estimated marginal effects: predicted election-selection gap given party level electoral volatility"
+					) + 
+				#	ylim(-25,20) +
+					scale_x_continuous(name="party level electoral volatility",) +
+					scale_y_continuous(name="abs(selection-election) gap") +
+					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
 	
-	# the requested data export from Elena
+	# the requested data export for Elena
 		# 
 		table(is.na(ELLIBU$selection_election_gap)) # please note that with the now extended selection that are more cases for which the selection_election gap is missing!
 		table(is.na(ELLIBU$ambition_selection_gap)) # same number here? > yes > same issue probably (see below).
@@ -4139,9 +4191,26 @@
 					boxplot(ELLIBUDE$selection_election_gap~ELLIBUDE$year)
 					boxplot(ELLIBUNL$selection_election_gap~ELLIBUNL$year)
 		
+		
+		# some other descriptives for the paper
+		
+			table(is.na(ELLIBUTEMP$selection_election_gap))
+		
+			table(ELLIBUTEMP$nat_party_id,ELLIBUTEMP$election_year)
+			
+			# so, what was the actual analytical sample used?
+			ELLIBUANSA <- ELLIBUTEMP[which(!is.na(ELLIBUTEMP$selection_election_gap)),]
+			nrow(ELLIBUANSA)
+			
+			table(ELLIBUANSA$party_id_nat_equiv)
+			table(ELLIBUANSA$party_id_nat_equiv,ELLIBUANSA$year)
+			
+			table(ELLIBUANSA$country,ELLIBUANSA$year)
+		
 		# descriptives for the appendix of the paper
 		
 			names(ELLIBU)
+			nrow(ELLIBU)
 		
 			varstogetdescriptivefor <- c("country","year","ratio_on_list","quota_percentage","ambition_selection_gap",
 										 "selection_control_fac","nat_party_id","district_magnitude","quota_percentage_lessthen50",
