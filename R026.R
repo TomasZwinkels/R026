@@ -2523,6 +2523,15 @@
 				ELLIBUINSPE <- ELLIBU[c("ambition_selection_gap","ratio_on_list","quota_percentage")]
 				head(ELLIBUINSPE)
 				
+	## Crucially! Note that I am now adding a filter here as well that reduces to the final analytical sample so that some of the standaridisation of variables that follows in the 
+	#                  upcomming part of the script is really done on the final analytical sample
+
+				table(is.na(ELLIBU$ambition_selection_gap))
+				
+				nrow(ELLIBU)
+				ELLIBU <- ELLIBU[which(!is.na(ELLIBU$ambition_selection_gap)),]
+				nrow(ELLIBU)
+				
 				# and the absolute version as suggested
 #				ELLIBU$ambition_selection_gap <- abs(ELLIBU$ambition_selection_gap) # decision is real numbers indeed
 				
@@ -2792,8 +2801,7 @@
 					ELLIBU$vote_share_cent <- ELLIBU$vote_share_cent
 
 				# for email to the others, quick graph on the relation between party_level_electoral_volatility and the selection-ambition gap.
-				
-				
+	
 
 	## so I am going to do some proper cleaning of the model building section here! ##
 				
@@ -2817,7 +2825,7 @@
 					m2 <- lmer(ambition_selection_gap~
 								selection_control_fac + 
 							#	district_magnitude_gmcent + # district_magnitude_country_cent
-								vote_share_change_abs +
+							#	vote_share_change_abs +
 								(1 | year_cent) +
 								(1 | country),
 								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
@@ -2828,7 +2836,7 @@
 						m2a <- lmer(ambition_selection_gap~
 									selection_control_fac + 
 									district_magnitude_minusone + #	district_magnitude_country_cent + # district_magnitude_country_cent
-									vote_share_change_abs*vote_share_cent +
+								#	vote_share_change_abs*vote_share_cent +
 								#	type +
 									(1 | year_cent) +
 									(1 | country),
@@ -2841,7 +2849,7 @@
 					m3 <- lmer(ambition_selection_gap~
 								selection_control_fac +
 								district_magnitude_minusone +#	district_magnitude_gmcent + # district_magnitude_country_cent
-								vote_share_change_abs*vote_share_cent +
+							#	vote_share_change_abs*vote_share_cent +
 								party_id_nat_equiv_short +
 								(1 | year_cent) +
 								(1 | country),
@@ -2853,14 +2861,15 @@
 					m4 <- lmer(ambition_selection_gap~
 								selection_control_fac + 
 								district_magnitude_minusone + #	district_magnitude_gmcent + # district_magnitude_country_cent
-								vote_share_change_abs*vote_share_cent +
+							#	vote_share_change_abs*vote_share_cent +
 								party_id_nat_equiv_short +
 								quota_percentage_lessthen50 +
 								quota_soft_fact +
+								vote_share_cent +
 								year_cent + 
 								(1 | year_cent) +
 								(1 | country),
-								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
+								data=ELLIBU)#data=ELLIBU[which(ELLIBU$country == "NL"),])#data=ELLIBU)#data=ELLIBU[which(ELLIBU$country == "DE"),])#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
 					summary(m4)
 					stargazer(me,m1,m2,m3,m4,type="text",intercept.bottom=FALSE)			
 				
@@ -3031,7 +3040,7 @@
 		m2,
 		m3,
 		m4,
-		type="text",
+		type="latex",
 		intercept.bottom=FALSE,
 		no.space=FALSE,
 		column.labels=(c("Empty","Contr.only","D.mag. + El.Vol.","Party fix.ef.","Quota + context")),
@@ -3109,25 +3118,36 @@
 		plot_model(m4,
 					type = "emm",
 					terms="selection_control_fac",
-					title ="Estimated marginal effects: predicted ambition-selection gap given level of centralization"
+					title ="Estimated marginal effects: predicted goal-selection gap given level of centralization"
 					) + 
 				#	ylim(-25,20) +
 					scale_x_continuous(name="level of centralization",breaks=c(1,2,3),labels=c("low","medium","high")) +
-					scale_y_continuous(name="ambition selection gap") +
+					scale_y_continuous(name="goal-selection gap") +
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1) +
-					geom_text(aes(x=1.6,y=-25,label="less women on electable list position than specified ambition"),angle=0,size=6) +
-					geom_text(aes(x=1.6,y=15,label="more women on electable list position than specified ambition"),angle=0,size=6) 
+					geom_text(aes(x=1.6,y=-25,label="less women on electable list position than specified goal"),angle=0,size=6) +
+					geom_text(aes(x=1.6,y=15,label="more women on electable list position than specified goal"),angle=0,size=6) 
+	
+		# and district magnitude
+			plot_model(m4,
+					type = "emm",
+					terms="district_magnitude_minusone",
+					title ="Estimated marginal effects: predicted goal-selection gap given district magnitude"
+					) + 
+				#	ylim(-25,20) +
+					scale_x_continuous(name="district magnitude",) +
+					scale_y_continuous(name="goal selection gap") +
+					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
 	
 		# and electoral volatility here
 			# without the interaction
 			plot_model(m4,
 					type = "emm",
 					terms="vote_share_change_abs",
-					title ="Estimated marginal effects: predicted ambition-selection gap given party level electoral volatility"
+					title ="Estimated marginal effects: predicted goal-selection gap given party level electoral volatility"
 					) + 
 				#	ylim(-25,20) +
 					scale_x_continuous(name="party level electoral volatility",) +
-					scale_y_continuous(name="ambition selection gap") +
+					scale_y_continuous(name="goal selection gap") +
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
 	
 			# with the interaction
@@ -3135,12 +3155,30 @@
 					type = "int",
 					mdrt.values = "meansd",
 					terms="vote_share_change_abs",
-					title ="Estimated marginal effects: predicted ambition-selection gap given party level change in voteshare"
+					title ="Estimated marginal effects: predicted goal-selection gap given party level change in voteshare"
 					) + 
 				#	ylim(-25,20) +
 					scale_x_continuous(name="party level change in voteshare",) +
-					scale_y_continuous(name="ambition selection gap") +
+					scale_y_continuous(name="goal selection gap") +
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
+					
+			# and a version that works in black and white
+			
+				plot_model(m4,
+					  type = "int",
+					  mdrt.values = "meansd",
+					  terms="vote_share_change_abs",
+					  title ="Estimated marginal effects: predicted goal-selection gap given party level change in voteshare",
+					#  colors = c("black", "gray","grey"),
+					  line.size=1.15,
+					  ci.lvl = 0.68,
+					  legend.title="Party size"
+					) + 
+					# ylim(-25,20) +
+					scale_linetype_manual(values = c("solid", "dashed","dotted")) +
+					scale_x_continuous(name="party level change in voteshare",) +
+					scale_y_continuous(name="goal selection gap") +
+					geom_hline(yintercept=0, linetype="dashed", color = "black", size=1.1)
 	
 		# do I indeed have unbalanced cases?
 		table(ELLIBU$selection_control_fac) # yes for sure! Right, so it does make sense. Lets just use this one!
@@ -3365,7 +3403,7 @@
 					nrow(ELLIBU)
 				##	ELLIBUTEMP <- ELLIBU[which(ELLIBU$type == "district"),]
 					ELLIBUTEMP <- ELLIBU
-					nrow(ELLIBUTEMP)
+					nrow(ELLIBUTEMP)				
 				
 					mb1 <- lm(selection_election_gap~election_uncertainty
 								,data=ELLIBUTEMP)
@@ -3804,7 +3842,7 @@
 								linkedlist +
 								(1 | year_cent) +
 								(1 | country),
-								data=ELLIBUTEMP)#data=ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap <= 0),])
+								data=ELLIBUTEMP)#data=ELLIBUTEMP[which(ELLIBUTEMP$country == "DE"),])#data=ELLIBUTEMP)#data=ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap <= 0),])
 					summary(md)
 
 					table(ELLIBUTEMP$nat_party_id,ELLIBUTEMP$linkedlist)
@@ -3820,7 +3858,7 @@
 								year_cent +
 								(1 | year_cent) +
 								(1 | country),
-								data=ELLIBUTEMP)#data=ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap <= 0),])
+								data=ELLIBUTEMP[which(ELLIBUTEMP$country == "DE"),])#data=ELLIBUTEMP)#data=ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap <= 0),])
 						summary(mda)
 						anova(mee,md) 
 						anova(md,mda) # not it does not, I see that as an extra motivation to go for the more simple model
@@ -3876,6 +3914,9 @@
 					
 					stargazer(mee,ma,mb,md,me,intercept.bottom=FALSE)
 	
+				summary(ELLIBUTEMP$vote_share_cent)
+				summary(ELLIBUTEMP$vote_share_change_ten)
+
 
 		# we agreed to also add a version of the model where all the beta's are standardised
 		library(jtools)
@@ -3908,10 +3949,10 @@
 		# properly layouted version
 			
 	m1 <- mee
-	m2 <- mkey
-	m3 <- mkeyint
-	m4 <- ma
-	m5 <- md # stanmod
+	m2 <- mkeyint
+	m3 <- ma
+	m4 <- md
+	m5 <- stanmod
 	
 	summary(m1)
 	summary(m2)
@@ -4103,7 +4144,6 @@
 							c("",GiveBrackets(elecyearvarse))
 							)
 		 ) 
-		# also here: was indeed the version in the paper!	-- now (2023-02-06-13:57 > version with new way of measuring electoral volatilty)	
 	
 	# some interpreation things
 		
@@ -4152,17 +4192,18 @@
 					scale_y_continuous(name="abs(selection-election) gap") +
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
 		
-		hist(ELLIBUTEMP$party_level_electoral_volatility_log_abs_stan)
-		
 		# version with party size interactions
 		plot_model(md,
 					type = "int",
 					mdrt.values = "meansd",
 					terms="vote_share_change_abs",
-					title ="Estimated marginal effects: predicted election-selection gap given party level electoral volatility"
+					title ="Estimated marginal effects: predicted election-selection gap given party level electoral volatility",
+					line.size=1.15,
+					ci.lvl = 0.68,
+					legend.title="Party size"
 					) + 
 				#	ylim(-25,20) +
-					scale_x_continuous(name="party level electoral volatility",) +
+					scale_x_continuous(name="party level change in voteshare",) +
 					scale_y_continuous(name="abs(selection-election) gap") +
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
 	
