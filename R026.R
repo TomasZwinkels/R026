@@ -37,7 +37,9 @@
 	#	install.packages("sjPlot")
 	#	install.packages("effects")
 	#   install.packages("writexl")
-	#    install.packages("jtools")
+	#   install.packages("jtools")
+	#   install.packages("openxlsx")
+	# 	install.packages("dplyr")
 	
 	# packages
 		library(sqldf)
@@ -59,6 +61,8 @@
 		library(sjPlot)
 		library(effects)
 		library(jtools)
+		library(openxlsx)
+		library(dplyr)
 	
 
 		
@@ -153,7 +157,25 @@
 					
 					QUOT$quot_ep_startdate_posoxctformat <- as.POSIXct(as.character(QUOT$quot_ep_startdate),format=c("%d%b%Y"))
 					QUOT$quot_ep_enddate_posoxctformat <- as.POSIXct(as.character(QUOT$quot_ep_enddate),format=c("%d%b%Y"))
-				
+
+	# import the Political Party Database Round 2 v4 (first public version) data, taken from https://doi.org/10.7910/DVN/0JVUM8
+	
+		PPDB <- read.xlsx("F:\\PolCa\\Analysis\\R\\ProjectR026_control\\PPDB_Round2_v4.xlsx", sheet = 1)
+		head(PPDB)
+		
+		# filter on relevant countries and parties
+			nrow(PPDB)
+			PPDB <- PPDB[which(	(PPDB$PTYNAME == "Christian Democratic Union" & PPDB$COUNTRY == "Germany") | 
+								(PPDB$PTYNAME == "Social Democratic Party" & PPDB$COUNTRY == "Germany") | 
+								(PPDB$PTYNAME == "The Left" & PPDB$COUNTRY == "Germany") |
+								(PPDB$PTYNAME == "Alliance '90/The Greens" & PPDB$COUNTRY == "Germany") |
+								(PPDB$PTYNAME == "Christian Democratic Appeal" & PPDB$COUNTRY == "Netherlands") |
+								(PPDB$PTYNAME == "Green Left" & PPDB$COUNTRY == "Netherlands") |
+								(PPDB$PTYNAME == "Labour Party" & PPDB$COUNTRY == "Netherlands") # |
+								#(PPDB$PTYNAME == "Conservative Party" & PPDB$COUNTRY == "United Kingdom") |
+								#(PPDB$PTYNAME == "Fine Gael" & PPDB$COUNTRY == "Ireland") 
+							),]
+			nrow(PPDB)
 				
 ######################################################################################
 #################################### DATA BUILDING ###################################
@@ -1642,6 +1664,187 @@
 			
 			head(ELLIBU[which(ELLIBU$party_size == 0 & ELLIBU$country == "CH"),])
 			tail(ELLIBU[which(ELLIBU$party_size == 0 & ELLIBU$country == "CH"),])
+
+
+	##############################################
+	# DATA 12: create an inclusiveness measure 
+	##############################################
+
+		#
+		# based on: Tuttnauer, O., & Rahat, G. (2023). Servants of two (or more) masters: Accounting for the complexity of intraparty candidate selection methods. Party Politics, 29(1), 185–192. https://doi.org/10.1177/13540688211060658
+		# https://doi.org/10.1177/13540688211060658
+		# 
+
+		# recode all the relevant variables
+		
+			head(PPDB)
+		
+			# Create a vector with the variable names
+			variable_names <- c("B22CANSELA", "B22CANSELB", "B22CANSELC", "B22CANSELD",
+								"B23CANSELA", "B23CANSELB", "B23CANSELC", "B23CANSELD",
+								"B24CANSELA", "B24CANSELB", "B24CANSELC", "B24CANSELD",
+								"B25ACANSELA", "B25ACANSELB", "B25ACANSELC", "B25ACANSELD",
+								"B25BCANSELA", "B25BCANSELB", "B25BCANSELC", "B25BCANSELD")
+
+			# Recode the variables
+			TEST <- PPDB %>%
+			mutate(across(all_of(variable_names),
+                list(recode = ~case_when(
+                  . == 1   ~ 1,
+                  . == 2   ~ 0,
+                  . == -888 ~ 0,
+				  . == -999 ~ 0,
+                  TRUE     ~ .
+                )),
+                .names = "{col}"))
+
+			head(TEST)
+			PPDB[,variable_names]
+			TEST[,variable_names]
+			
+			PPDB <- TEST
+		
+	#	A. Suggesting/proposing candidates for internal consideration # our weight = 0.5
+	#	B. Screening/filtering (prior to decisions by other parts of the party). # our weight = 0.5
+	#	C. Selecting/deciding (de facto decision, even if another party body needs to rubber-stamp it) = 1
+	#	D. Vetoing (after decisions by other parts of the party.) # our weight = 0.5
+		
+		# getting total numbers of roles per type of selectorate
+			# number of roles individual members play
+			PPDB$indv_nrrole <-
+				PPDB$B22CANSELA +
+				PPDB$B22CANSELB +
+				PPDB$B22CANSELC +
+				PPDB$B22CANSELD 
+			PPDB$indv_nrrole
+				# please note that in the current version for German parties, the info on 'screening/filtering' is missing, 
+				# this code here assumes that all selectorate involved do NOT have a role (same applies below)
+				
+			# number of roles local level organisations plays
+			PPDB$loc_nrrole <-
+				PPDB$B23CANSELA +
+				PPDB$B23CANSELB +
+				PPDB$B23CANSELC +
+				PPDB$B23CANSELD
+			PPDB$loc_nrrole	
+			
+			# number of roles regional/state organizations plays
+			PPDB$reg_nrrole <-
+				PPDB$B24CANSELA +
+				PPDB$B24CANSELB +
+				PPDB$B24CANSELC +
+				PPDB$B24CANSELD
+			PPDB$reg_nrrole	
+				
+			# number of roles national party collective body plays
+			PPDB$npcb_nrrole <-
+				PPDB$B25ACANSELA +
+				PPDB$B25ACANSELB +
+				PPDB$B25ACANSELC +
+				PPDB$B25ACANSELD
+			PPDB$npcb_nrrole	
+				
+			# number of roles the national party leader(s) play
+			PPDB$pl_nrrole <-
+				PPDB$B25BCANSELA +
+				PPDB$B25BCANSELB +
+				PPDB$B25BCANSELC +
+				PPDB$B25BCANSELD
+			PPDB$pl_nrrole	
+			
+			# Do affiliated or other organizations (trade unions, religious organizations, etc.) play a role 
+				# see paper 'Since only three parties used the last type of selectorate and gave it a marginal role, we excluded it from our analyses.'
+
+		# number of roles played buy all selectorates
+			
+			# for the decentralisation calculation
+			PPDB$totalnrrolesdec <- PPDB$loc_nrrole  + PPDB$reg_nrrole + PPDB$npcb_nrrole + PPDB$pl_nrrole
+			PPDB$totalnrrolesdec
+			
+			# for the inclusiveness calculation
+			PPDB$totalnrrolesincl <- PPDB$indv_nrrole + PPDB$loc_nrrole  + PPDB$reg_nrrole + PPDB$npcb_nrrole + PPDB$pl_nrrole
+			PPDB$totalnrrolesincl
+		
+		# first, their (party level) decentralisation measure (0 = all national, 1=all local).
+			PPDB$pldecentralisation <- (PPDB$loc_nrrole*1 + PPDB$reg_nrrole*0.5 + PPDB$npcb_nrrole*0 + PPDB$pl_nrrole*0) / PPDB$totalnrrolesdec
+			cbind(PPDB$pldecentralisation,PPDB$PTYNAME)
+		
+		# and their inclusiveness measure
+			
+			# set the weights for each selectorate
+			weight_individuals <- 1
+			weight_local <- 0.5
+			weight_regional <- 0.5
+			weight_genass <- 0.5
+			weight_partl <- 0
+		
+			PPDB$plinclusiveness <- (PPDB$indv_nrrole*weight_individuals +
+										PPDB$loc_nrrole*weight_local +
+										PPDB$reg_nrrole*weight_regional +
+										PPDB$npcb_nrrole*weight_genass +
+										PPDB$pl_nrrole*weight_partl
+										)/PPDB$totalnrrolesincl
+			
+			
+			cbind(PPDB$PTYNAME,PPDB$pldecentralisation,PPDB$plinclusiveness)
+			
+			PPDB[,c(variable_names,"totalnrrolesdec","totalnrrolesincl","pldecentralisation","plinclusiveness")]
+			
+		# checking this with the examples in appendix C of their paper can be done by adding the British Conservative Party and the Irish Fine Gael 
+		# in the data import part and checking the resulting calcuted values
+		
+			# see above, just uncomment the relevant lines, this calculcate indeed passes that check!
+
+	
+		# getting our party_ids in.
+		PPDB <- PPDB %>%
+		  mutate(our_party_id = case_when(
+			PTYNAME == "Christian Democratic Union" ~ "DE_CDU_NT",
+			PTYNAME == "Social Democratic Party" ~ "DE_SPD_NT",
+			PTYNAME == "The Left" ~ "DE_Li|PDS_NT",
+			PTYNAME == "Alliance '90/The Greens" ~ "DE_B90|Gru_NT",
+			PTYNAME == "Christian Democratic Appeal" ~ "NL_CDA_NT",
+			PTYNAME == "Green Left" ~ "NL_GL_NT",
+			PTYNAME == "Labour Party" ~ "NL_PvdA_NT",
+			TRUE ~ PTYNAME
+		  ))
+		  PPDB
+		  
+		# and their effective number of selectorates measures (taken straight from the appendix)
+		
+		PPDB$ENS <- NA
+		PPDB$ENS <- ifelse(PPDB$our_party_id == "DE_CDU_NT",3.60,PPDB$ENS)
+		PPDB$ENS <- ifelse(PPDB$our_party_id == "DE_SPD_NT",3.60,PPDB$ENS)
+		PPDB$ENS <- ifelse(PPDB$our_party_id == "DE_Li|PDS_NT",3.00,PPDB$ENS)
+		PPDB$ENS <- ifelse(PPDB$our_party_id == "DE_B90|Gru_NT",3.00,PPDB$ENS)
+		PPDB$ENS <- ifelse(PPDB$our_party_id == "NL_CDA_NT",2.78,PPDB$ENS)
+		PPDB$ENS <- ifelse(PPDB$our_party_id == "NL_GL_NT",2.00,PPDB$ENS)
+		PPDB$ENS <- ifelse(PPDB$our_party_id == "NL_PvdA_NT",2.27,PPDB$ENS)
+		table(PPDB$ENS)
+		# 
+		PPDB
+
+		# merge into ELLIBU
+			
+		nrow(ELLIBU)
+		head(ELLIBU)
+		tail(ELLIBU)
+		
+		AAAA <- sqldf("SELECT ELLIBU.*, PPDB.plinclusiveness, PPDB.pldecentralisation, PPDB.ENS
+                       FROM ELLIBU LEFT JOIN PPDB 
+                       ON ELLIBU.nat_party_id = PPDB.our_party_id
+				      ")
+	
+		nrow(AAAA)
+		head(AAAA)
+		tail(AAAA)
+		
+		# data for the relevant parties?
+		head(AAAA[which(AAAA$nat_party_id %in% c("DE_CDU_NT", "DE_SPD_NT", "DE_Li|PDS_NT", "DE_B90|Gru_NT", "NL_CDA_NT", "NL_GL_NT", "NL_PvdA_NT")),])
+		tail(AAAA[which(AAAA$nat_party_id %in% c("DE_CDU_NT", "DE_SPD_NT", "DE_Li|PDS_NT", "DE_B90|Gru_NT", "NL_CDA_NT", "NL_GL_NT", "NL_PvdA_NT")),])
+		table(is.na(AAAA[which(AAAA$nat_party_id %in% c("DE_CDU_NT", "DE_SPD_NT", "DE_Li|PDS_NT", "DE_B90|Gru_NT", "NL_CDA_NT", "NL_GL_NT", "NL_PvdA_NT")),]$plinclusiveness))
+		table(is.na(AAAA[which(AAAA$nat_party_id %in% c("DE_CDU_NT", "DE_SPD_NT", "DE_Li|PDS_NT", "DE_B90|Gru_NT", "NL_CDA_NT", "NL_GL_NT", "NL_PvdA_NT")),]$pldecentralisation))
+		table(is.na(AAAA[which(AAAA$nat_party_id %in% c("DE_CDU_NT", "DE_SPD_NT", "DE_Li|PDS_NT", "DE_B90|Gru_NT", "NL_CDA_NT", "NL_GL_NT", "NL_PvdA_NT")),]$ENS))
 
 ######################################################################################
 #################################### RED A: REDUCTION TO ANALYTICAL SAMPLE ##################
