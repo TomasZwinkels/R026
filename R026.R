@@ -1830,21 +1830,21 @@
 		head(ELLIBU)
 		tail(ELLIBU)
 		
-		AAAA <- sqldf("SELECT ELLIBU.*, PPDB.plinclusiveness, PPDB.pldecentralisation, PPDB.ENS
+		ELLIBU <- sqldf("SELECT ELLIBU.*, PPDB.plinclusiveness, PPDB.pldecentralisation, PPDB.ENS
                        FROM ELLIBU LEFT JOIN PPDB 
                        ON ELLIBU.nat_party_id = PPDB.our_party_id
 				      ")
 	
-		nrow(AAAA)
-		head(AAAA)
-		tail(AAAA)
+		nrow(ELLIBU)
+		head(ELLIBU)
+		tail(ELLIBU)
 		
 		# data for the relevant parties?
-		head(AAAA[which(AAAA$nat_party_id %in% c("DE_CDU_NT", "DE_SPD_NT", "DE_Li|PDS_NT", "DE_B90|Gru_NT", "NL_CDA_NT", "NL_GL_NT", "NL_PvdA_NT")),])
-		tail(AAAA[which(AAAA$nat_party_id %in% c("DE_CDU_NT", "DE_SPD_NT", "DE_Li|PDS_NT", "DE_B90|Gru_NT", "NL_CDA_NT", "NL_GL_NT", "NL_PvdA_NT")),])
-		table(is.na(AAAA[which(AAAA$nat_party_id %in% c("DE_CDU_NT", "DE_SPD_NT", "DE_Li|PDS_NT", "DE_B90|Gru_NT", "NL_CDA_NT", "NL_GL_NT", "NL_PvdA_NT")),]$plinclusiveness))
-		table(is.na(AAAA[which(AAAA$nat_party_id %in% c("DE_CDU_NT", "DE_SPD_NT", "DE_Li|PDS_NT", "DE_B90|Gru_NT", "NL_CDA_NT", "NL_GL_NT", "NL_PvdA_NT")),]$pldecentralisation))
-		table(is.na(AAAA[which(AAAA$nat_party_id %in% c("DE_CDU_NT", "DE_SPD_NT", "DE_Li|PDS_NT", "DE_B90|Gru_NT", "NL_CDA_NT", "NL_GL_NT", "NL_PvdA_NT")),]$ENS))
+		head(ELLIBU[which(ELLIBU$nat_party_id %in% c("DE_CDU_NT", "DE_SPD_NT", "DE_Li|PDS_NT", "DE_B90|Gru_NT", "NL_CDA_NT", "NL_GL_NT", "NL_PvdA_NT")),])
+		tail(ELLIBU[which(ELLIBU$nat_party_id %in% c("DE_CDU_NT", "DE_SPD_NT", "DE_Li|PDS_NT", "DE_B90|Gru_NT", "NL_CDA_NT", "NL_GL_NT", "NL_PvdA_NT")),])
+		table(is.na(ELLIBU[which(ELLIBU$nat_party_id %in% c("DE_CDU_NT", "DE_SPD_NT", "DE_Li|PDS_NT", "DE_B90|Gru_NT", "NL_CDA_NT", "NL_GL_NT", "NL_PvdA_NT")),]$plinclusiveness))
+		table(is.na(ELLIBU[which(ELLIBU$nat_party_id %in% c("DE_CDU_NT", "DE_SPD_NT", "DE_Li|PDS_NT", "DE_B90|Gru_NT", "NL_CDA_NT", "NL_GL_NT", "NL_PvdA_NT")),]$pldecentralisation))
+		table(is.na(ELLIBU[which(ELLIBU$nat_party_id %in% c("DE_CDU_NT", "DE_SPD_NT", "DE_Li|PDS_NT", "DE_B90|Gru_NT", "NL_CDA_NT", "NL_GL_NT", "NL_PvdA_NT")),]$ENS))
 
 ######################################################################################
 #################################### RED A: REDUCTION TO ANALYTICAL SAMPLE ##################
@@ -3035,7 +3035,7 @@
 					summary(m2)
 					stargazer(me,m1,m2,type="text",intercept.bottom=FALSE)
 	
-					# so, model with the same interaction as in the 2nd analysis
+					# so, model with district magnitude as well
 						m2a <- lmer(ambition_selection_gap~
 									selection_control_fac + 
 									district_magnitude_minusone + #	district_magnitude_country_cent + # district_magnitude_country_cent
@@ -3046,7 +3046,45 @@
 									data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
 						summary(m2a)
 						stargazer(m2,m2a,type="text",intercept.bottom=FALSE) 
-						anova(m2,m2a) # indeed, also here fits the data a lot better.
+						anova(m2,m2a) 
+						
+						
+					# lets center these things
+						mean(ELLIBU$plinclusiveness)
+						ELLIBU$plinclusiveness_stan <- scale(ELLIBU$plinclusiveness,center=TRUE,scale=TRUE)
+						mean(ELLIBU$plinclusiveness_stan)
+						
+						mean(ELLIBU$pldecentralisation)
+						ELLIBU$pldecentralisation_stan <- scale(ELLIBU$pldecentralisation,center=TRUE,scale=TRUE)
+						mean(ELLIBU$pldecentralisation_stan)
+						
+						hist(ELLIBU$ENS)
+						ggplot(ELLIBU, aes(x = ENS, fill = nat_party_id)) +
+						  geom_histogram(binwidth = 0.1, position = "identity", alpha = 0.5) +
+						  scale_fill_discrete(name = "Party") +
+						  labs(x = "ENS") +
+						  ggtitle("Histogram of ENS by Party")
+						
+						
+						mean(ELLIBU$ENS)
+						ELLIBU$ENS_cent <- scale(ELLIBU$ENS,center=TRUE,scale=FALSE)
+						mean(ELLIBU$ENS_cent)
+						
+						
+					# adding some party level stuff
+						m2b <- lmer(ambition_selection_gap~
+									selection_control_fac + 
+									district_magnitude_minusone + #	district_magnitude_country_cent + # district_magnitude_country_cent
+									plinclusiveness_stan +
+									pldecentralisation_stan +
+									ENS_cent +
+									(1 | year_cent) +
+									(1 | country),
+									data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
+						summary(m2b)
+						stargazer(m2,m2a,m2b,type="text",intercept.bottom=FALSE) 
+						anova(m2a,m2b) 
+						
 
 			# adding party fixed effects
 					m3 <- lmer(ambition_selection_gap~
@@ -3059,6 +3097,20 @@
 								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
 					summary(m3)
 					stargazer(me,m1,m2,m3,type="text",intercept.bottom=FALSE) 
+					
+					# and a version with the party level vars
+					m3b <- lmer(ambition_selection_gap~
+								selection_control_fac +
+								district_magnitude_minusone +#	district_magnitude_gmcent + # district_magnitude_country_cent
+								plinclusiveness_stan +
+								pldecentralisation_stan +
+								ENS_cent +
+								party_id_nat_equiv_short +
+								(1 | year_cent) +
+								(1 | country),
+								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
+					summary(m3b)
+					stargazer(me,m1,m2,m3,m3b,type="text",intercept.bottom=FALSE) 
 			
 			# adding the quota characteristics and the other control variables
 					m4 <- lmer(ambition_selection_gap~
@@ -3076,21 +3128,39 @@
 					summary(m4)
 					stargazer(me,m1,m2,m3,m4,type="text",intercept.bottom=FALSE)			
 				
+					# and a version with party level vars
+					m4b <- lmer(ambition_selection_gap~
+								selection_control_fac + 
+								district_magnitude_minusone + #	district_magnitude_gmcent + # district_magnitude_country_cent
+								plinclusiveness_stan +
+								pldecentralisation_stan +
+								ENS_cent +
+								party_id_nat_equiv_short +
+								quota_percentage_lessthen50 +
+								quota_soft_fact +
+								vote_share_cent +
+								year_cent + 
+								(1 | year_cent) +
+								(1 | country),
+								data=ELLIBU)#data=ELLIBU[which(ELLIBU$country == "NL"),])#data=ELLIBU)#data=ELLIBU[which(ELLIBU$country == "DE"),])#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
+					summary(m4)
+					stargazer(me,m1,m2,m3,m4,m4b,type="text",intercept.bottom=FALSE)
+				
 					# so a little bit of model diagnostics
 					
 						# range of the prediced value reasonable
 						hist(predict(m4)) # yes
 						
 						# residuals
-						plot(m4) # no obvious heteroscedasticity issue
+						plot(m4) 
 				
 	##### working towards a nice regression output
 	
 	me <- me
 	m1 <- m1
-	m2 <- m2a
-	m3 <- m3
-	m4 <- m4
+	m2 <- m2b # m2b # m2a
+	m3 <- m3b # m3b # m3
+	m4 <- m4b # m4b # m4
 	
 	
 	summary(me)
@@ -3098,6 +3168,10 @@
 	summary(m2)
 	summary(m3)
 	summary(m4)
+
+
+table(ELLIBU$quota_soft_fact,ELLIBU$party_id_nat_equiv_short)
+hist(ELLIBU$vote_share_cent)
 
 # name replacements
 
@@ -3119,6 +3193,9 @@
 				cleanernames <- gsub("party_id_nat_equiv_shortCDA (NL)","CDA(NL)",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("party_id_nat_equiv_shortGL (NL)","GL(NL)",cleanernames,fixed=TRUE)
 				cleanernames <- gsub("party_id_nat_equiv_shortPvdA (NL)","PvdA(NL)",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("plinclusiveness_stan","Party level inclusiveness",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("ENS_cent","Effective number of selectorates",cleanernames,fixed=TRUE)
+				cleanernames <- gsub("pldecentralisation_stan","Party level decentralisation",cleanernames,fixed=TRUE)
 				
 				return(cleanernames)
 			}
@@ -3271,6 +3348,8 @@
 							)
 		  )	
 		
+		
+		
 		# some interpretation things
 		aggregate(data=ELLIBU, vote_share_cent~quota_percentage_lessthen50, mean) # it is typically the bigger parties that have quotas that are not 50%!
 		table(ELLIBU$quota_percentage_lessthen50,ELLIBU$party_id_nat_equiv_short)
@@ -3341,6 +3420,34 @@
 					scale_y_continuous(name="goal selection gap") +
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
 	
+		# and for inclusiveness
+		
+			plot_model(m2b,
+					type = "emm",
+					terms="plinclusiveness_stan",
+					title ="Estimated marginal effects: predicted goal-selection gap given party level inclusiveness"
+					) + 
+				#	ylim(-25,20) +
+					scale_x_continuous(name="party level inclusiveness (standardised)",) +
+					scale_y_continuous(name="goal selection gap") +
+					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
+		
+		
+		
+		# and for ENS
+		
+				plot_model(m2b,
+					type = "emm",
+					terms="ENS_cent",
+					title ="Estimated marginal effects: predicted goal-selection gap given ENS"
+					) + 
+				#	ylim(-25,20) +
+					scale_x_continuous(name="ENS (centered)",) +
+					scale_y_continuous(name="goal selection gap") +
+					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
+		
+		
+		
 		# and electoral volatility here
 			# without the interaction
 			plot_model(m4,
@@ -4408,7 +4515,10 @@
 				#	ylim(-25,20) +
 					scale_x_continuous(name="party level change in voteshare",) +
 					scale_y_continuous(name="abs(selection-election) gap") +
-					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
+					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1) 
+			#		scale_color_manual(name='Party size',
+            #        breaks=c('Small (-1SD)', 'Medium (mean)', 'Large(+1SD)'),
+            #         values=c('Small (-1SD)'='pink', 'Medium (mean)'='blue', 'Large(+1SD)'='purple'))
 	
 	# the requested data export for Elena
 		# 
