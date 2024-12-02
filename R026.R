@@ -11,8 +11,14 @@
 		# instructions
 		# - the file can simply be ran top to bottom towards the parts specified
 		
+		# please note that around line 1129 there is boolean called runDGagain, that is set to FALSE by default, this runs the detection of 'double gangers' to   
+		#  find out later what list positions are electable. It is set to FALSE because this part of the script takes long to run. 
+		#  the results of this part of the script are pulled from a file called '20200818_2020' in the folder INDA/DG/
+		#  this file is included in the replication files to speed things along, one can switch runDGagain to TRUE to also run this part of the script of desired.
+		
 		# please note that around line 2027 here is boolean called, 'runOMagain' that is set to FALSE by detault as running the Optimal Matching algoritms 
-		#  in this part of the script takes a long time, when switched to FALSE, the results of this part of the script are pulled from a file called '20210212_1433' 
+		#  as this part of the script takes a long time, when switched to FALSE, the results of this part of the script are pulled from a file called '20210212_1433'
+		#  in the folder INDA/OM/
 		#  which is included in the replication files, you can switch runOMagain to TRUE if you also want this part of the script to run again.
 		
 		# where to find what?
@@ -2198,7 +2204,7 @@
 		ELLIBU$meanpersdifferent <- meanpersdifferentresvec
 		ELLIBU$percentage95simular <- percentage95simularresvec
 		
-		# check, run manual if you like: increase in cases (from 653 in the paper to 726 now) happens here?
+		# check, run manual if you like: increase in cases (from 653 in the paper to 726 now) happens here
 		# meanpersdifferentresvec <- read.csv("INDA/OM/20200818_2142_meanpersdifferentresvec.csv",sep="")[,2]
 		# percentage95simularresvec <- read.csv("INDA/OM/20200818_2142_percentage95simularresvec.csv",sep="")[,2]
 		
