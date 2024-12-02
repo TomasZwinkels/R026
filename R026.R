@@ -2,9 +2,49 @@
 #################################### SETUP ########################################### test
 ######################################################################################
 
-	###
+	### notes for replication
 	
-		# !!at a later stage please search for '#fixlater' in the document, that are some data issues indentified that are currently left unfixed!!
+		# this version of this file is also the one that can be used to replicate the results as published in the manuscript:
+			#  "How (not) to Keep a Promise in Two Stages: The Context-Dependent Gaps Between Parties' Representational Goals 
+			#  and Outcomes Through Nomination and Election" soon to be published in the the Journal of Politics
+	
+		# instructions
+		# - the file can simply be ran top to bottom towards the parts specified
+		
+		# please note that around line 2027 here is boolean called, 'runOMagain' that is set to FALSE by detault as running the Optimal Matching algoritms 
+		#  in this part of the script takes a long time, when switched to FALSE, the results of this part of the script are pulled from a file called '20210212_1433' 
+		#  which is included in the replication files, you can switch runOMagain to TRUE if you also want this part of the script to run again.
+		
+		# where to find what?
+		
+			# table 3 in the manuscript
+			# title: 'Multi-level regression model predicting the size of the goal-selection gap with selection control, 
+			#         district magnitude and several control variables')
+			# look for ##~TABLE 3 HERE~##
+			
+								# table 4 in the manuscript
+								# title: 'level regression model predicting the size of the absolute selection election gap with electoral 
+								#         uncertainty measures and several control variables')
+								# look for ##~TABLE 4 HERE~##
+			
+			# figure 2 in the manuscript
+			# title: 'Estimated marginal mean effect of selection control on the goal-selection gap')
+			# look for ##~FIGURE 2 HERE~##
+			
+			# figure 3 in the manuscript
+			# title: 'estimated marginal mean effect of district magnitude on the goal-selection gap')
+			# look for ##~FIGURE 3 HERE~##
+			
+			# figure 4 in the manuscript
+			# title: 'estimated marginal mean effect of district magnitude on the selection-election gap')
+			# look for ##~FIGURE 4 HERE~##
+			
+			# figure 5 in the manuscript
+			# title: 'estimated marginal mean effect of party level electoral volatility on the selection-election gap depending on party size')
+			# look for ##~FIGURE 5 HERE~##
+			
+			
+		
 	
 	###
 
@@ -40,6 +80,7 @@
 	#   install.packages("jtools")
 	#   install.packages("openxlsx")
 	# 	install.packages("dplyr")
+	# 	install.packages("emmeans")
 	
 	# packages
 		library(sqldf)
@@ -160,7 +201,7 @@
 
 	# import the Political Party Database Round 2 v4 (first public version) data, taken from https://doi.org/10.7910/DVN/0JVUM8
 	
-		PPDB <- read.xlsx("F:\\PolCa\\Analysis\\R\\ProjectR026_control\\PPDB_Round2_v4.xlsx", sheet = 1)
+		PPDB <- read.xlsx("PPDB_Round2_v4.xlsx", sheet = 1)
 		head(PPDB)
 		
 		# filter on relevant countries and parties
@@ -2039,7 +2080,7 @@
 					# so this takes - a lot - of time to run, so it only does when you explicity tell it to and suggests you to when the dataversion has changed
 					
 					# by default we are not running this!
-						runOMagain <- FALSE
+					runOMagain <- FALSE
 				
 					# manual overwrite is possible (should be of by default!)
 					manualoverwrite <- ""
@@ -3087,7 +3128,7 @@
 						
 
 			# adding party fixed effects
-					m3 <- lmer(ambition_selection_gap~
+					m3a <- lmer(ambition_selection_gap~
 								selection_control_fac +
 								district_magnitude_minusone +#	district_magnitude_gmcent + # district_magnitude_country_cent
 							#	vote_share_change_abs*vote_share_cent +
@@ -3095,8 +3136,8 @@
 								(1 | year_cent) +
 								(1 | country),
 								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
-					summary(m3)
-					stargazer(me,m1,m2,m3,type="text",intercept.bottom=FALSE) 
+					summary(m3a)
+					stargazer(me,m1,m2,m3a,type="text",intercept.bottom=FALSE) 
 					
 					# and a version with the party level vars
 					m3b <- lmer(ambition_selection_gap~
@@ -3110,10 +3151,10 @@
 								(1 | country),
 								data=ELLIBU)#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
 					summary(m3b)
-					stargazer(me,m1,m2,m3,m3b,type="text",intercept.bottom=FALSE) 
+					stargazer(me,m1,m2,m3a,m3b,type="text",intercept.bottom=FALSE) 
 			
 			# adding the quota characteristics and the other control variables
-					m4 <- lmer(ambition_selection_gap~
+					m4a <- lmer(ambition_selection_gap~
 								selection_control_fac + 
 								district_magnitude_minusone + #	district_magnitude_gmcent + # district_magnitude_country_cent
 							#	vote_share_change_abs*vote_share_cent +
@@ -3125,8 +3166,8 @@
 								(1 | year_cent) +
 								(1 | country),
 								data=ELLIBU)#data=ELLIBU[which(ELLIBU$country == "NL"),])#data=ELLIBU)#data=ELLIBU[which(ELLIBU$country == "DE"),])#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
-					summary(m4)
-					stargazer(me,m1,m2,m3,m4,type="text",intercept.bottom=FALSE)			
+					summary(m4a)
+					stargazer(me,m1,m2,m3a,m4a,type="text",intercept.bottom=FALSE)			
 				
 					# and a version with party level vars
 					m4b <- lmer(ambition_selection_gap~
@@ -3143,24 +3184,34 @@
 								(1 | year_cent) +
 								(1 | country),
 								data=ELLIBU)#data=ELLIBU[which(ELLIBU$country == "NL"),])#data=ELLIBU)#data=ELLIBU[which(ELLIBU$country == "DE"),])#data=ELLIBU[which(ELLIBU$ambition_selection_gap <= 0),])#
-					summary(m4)
-					stargazer(me,m1,m2,m3,m4,m4b,type="text",intercept.bottom=FALSE)
+					summary(m4b)
+					stargazer(me,m1,m2,m3a,m4a,m4b,type="text",intercept.bottom=FALSE)
 				
+					names(ELLIBU)
+					table(ELLIBU$district_id)
+					
+					
+					table(ELLIBU[which(grepl("Berlin",ELLIBU$district_id)),]$district_id)
+					FILT <- ELLIBU[which(grepl("Berlin",ELLIBU$district_id)),]
+					table(FILT$year)
+					table(FILT$year,FILT$list_name)
+
+					
 					# so a little bit of model diagnostics
 					
 						# range of the prediced value reasonable
-						hist(predict(m4)) # yes
+						hist(predict(m4a)) # yes
 						
 						# residuals
-						plot(m4) 
+						plot(m4a) 
 				
 	##### working towards a nice regression output
 	
 	me <- me
 	m1 <- m1
-	m2 <- m2b # m2b # m2a
-	m3 <- m3b # m3b # m3
-	m4 <- m4b # m4b # m4
+	m2 <- m2a # m2b # m2a
+	m3 <- m3a # m3b # m3a
+	m4 <- m4a # m4b # m4
 	
 	
 	summary(me)
@@ -3314,13 +3365,15 @@ hist(ELLIBU$vote_share_cent)
 
 	varlabels <- specificnamecleaning(names(fixef(m4)))
 
+##~TABLE 3 HERE~##
+
 	stargazer(
 		me,
 		m1,
 		m2,
 		m3,
 		m4,
-		type="latex",
+		type="text",
 		intercept.bottom=FALSE,
 		no.space=FALSE,
 		column.labels=(c("Empty","Contr.only","D.mag. + El.Vol.","Party fix.ef.","Quota + context")),
@@ -3347,7 +3400,8 @@ hist(ELLIBU$vote_share_cent)
 							c("",GiveBrackets(elecyearvarse))
 							)
 		  )	
-		
+		  
+##~TABLE 3 HERE~##
 		
 		
 		# some interpretation things
@@ -3394,7 +3448,9 @@ hist(ELLIBU$vote_share_cent)
 		
 		# high
 		deltaMethod(dmm,"x1+x3", parameterNames= paste("x", 1:length(fixef(dmm)), sep=""))
-		
+	
+	
+	##~FIGURE 2 HERE~##
 		# in a marginal effect plot
 		set_theme(base = theme_minimal(base_size=20))
 		plot_model(m4,
@@ -3408,7 +3464,9 @@ hist(ELLIBU$vote_share_cent)
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1) +
 					geom_text(aes(x=1.6,y=-25,label="less women on electable list position than specified goal"),angle=0,size=6) +
 					geom_text(aes(x=1.6,y=15,label="more women on electable list position than specified goal"),angle=0,size=6) 
+	##~FIGURE 2 HERE~##
 	
+	##~FIGURE 3 HERE~##
 		# and district magnitude
 			plot_model(m4,
 					type = "emm",
@@ -3419,7 +3477,7 @@ hist(ELLIBU$vote_share_cent)
 					scale_x_continuous(name="district magnitude",) +
 					scale_y_continuous(name="goal selection gap") +
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
-	
+	##~FIGURE 3 HERE~##
 		# and for inclusiveness
 		
 			plot_model(m2b,
@@ -3431,7 +3489,6 @@ hist(ELLIBU$vote_share_cent)
 					scale_x_continuous(name="party level inclusiveness (standardised)",) +
 					scale_y_continuous(name="goal selection gap") +
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
-		
 		
 		
 		# and for ENS
@@ -3460,6 +3517,7 @@ hist(ELLIBU$vote_share_cent)
 					scale_y_continuous(name="goal selection gap") +
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
 	
+
 			# with the interaction
 				plot_model(m4,
 					type = "int",
@@ -3471,8 +3529,9 @@ hist(ELLIBU$vote_share_cent)
 					scale_x_continuous(name="party level change in voteshare",) +
 					scale_y_continuous(name="goal selection gap") +
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
-					
-			# and a version that works in black and white
+
+		
+			# and a version that works(?) in black and white
 			
 				plot_model(m4,
 					  type = "int",
@@ -4476,6 +4535,9 @@ hist(ELLIBU$vote_share_cent)
 		table(ELLIBUTEMP$nat_party_id,ELLIBUTEMP$linkedlist)
 		
 	# in a marginal effect plot
+	
+##~FIGURE 4 HERE~##
+
 		set_theme(base = theme_minimal(base_size=20))
 		plot_model(md,
 					type = "emm",
@@ -4486,7 +4548,9 @@ hist(ELLIBU$vote_share_cent)
 					scale_x_continuous(name="district magnitude",) +
 					scale_y_continuous(name="abs(selection-election) gap") +
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
-		
+					
+##~FIGURE 4 HERE~##
+	
 		delistdismagavg
 	
 	# and electoral volatility
@@ -4501,7 +4565,8 @@ hist(ELLIBU$vote_share_cent)
 					scale_x_continuous(name="party level electoral volatility",) +
 					scale_y_continuous(name="abs(selection-election) gap") +
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
-		
+
+##~FIGURE 4 HERE~##
 		# version with party size interactions
 		plot_model(md,
 					type = "int",
@@ -4519,7 +4584,8 @@ hist(ELLIBU$vote_share_cent)
 			#		scale_color_manual(name='Party size',
             #        breaks=c('Small (-1SD)', 'Medium (mean)', 'Large(+1SD)'),
             #         values=c('Small (-1SD)'='pink', 'Medium (mean)'='blue', 'Large(+1SD)'='purple'))
-	
+##~FIGURE 5 HERE~##
+
 	# the requested data export for Elena
 		# 
 		table(is.na(ELLIBU$selection_election_gap)) # please note that with the now extended selection that are more cases for which the selection_election gap is missing!
