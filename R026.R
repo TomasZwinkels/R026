@@ -4572,7 +4572,7 @@ hist(ELLIBU$vote_share_cent)
 					scale_y_continuous(name="abs(selection-election) gap") +
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
 
-##~FIGURE 4 HERE~##
+##~FIGURE 5 HERE~##
 		# version with party size interactions
 		plot_model(md,
 					type = "int",
