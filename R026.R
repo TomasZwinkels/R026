@@ -23,6 +23,7 @@
 		
 		# where to find what?
 		
+		# MAIN MANUSCRIPT
 			# table 3 in the manuscript
 			# title: 'Multi-level regression model predicting the size of the goal-selection gap with selection control, 
 			#         district magnitude and several control variables')
@@ -48,8 +49,40 @@
 			# figure 5 in the manuscript
 			# title: 'estimated marginal mean effect of party level electoral volatility on the selection-election gap depending on party size')
 			# look for ##~FIGURE 5 HERE~##
+	
+		# APPENDIX
+			# table A1 in the appendix
+			# title: 'variable summary statistics'
+			# Look for  ##~Appendix table A1 here!~##
 			
+			# table A2 in the appendix
+			# title: 'Multi-level regression model predicting the size of the ambition-selection gap with selection control and Inclusiveness of Candidate Selection'
+			# please note that for this table to show up, one needs to edit the model reference on lines 3227-3229, see instructions there!
+			# Look for  ##~TABLE A2 HERE~##
 			
+			# Figure A in the appendix
+			# title: 'Estimated marginal effects: predicted goal-selection gap given party level inclusiveness'
+			# Look for ##~APP FIGURE A HERE~##
+			
+			# Figure B1 in the appendix
+			# title: 'Estimated marginal effects: predicted goal-selection gap given party level decentralisation'
+			# Look for ##~APP FIGURE B1 HERE~##
+			
+			# Figure C in the appendix
+			# title: 'Estimated marginal effects: predicted goal-selection gap given ENS'
+			# Look for ##~APP FIGURE C HERE~##
+			
+			# Figure D in the appendix
+			# title: 'variation in candidates across electoral districts in the Netherland over time'
+			# Look for ##~APP FIGURE D HERE~##
+			
+			# Figure E in the appendix
+			# title: 'Size of the goal selection gap in relation to the level of selection control/centralization'
+			# Look for ##~APP FIGURE E HERE~##
+			
+			# Figure F in the appendix
+			# title: 'The Selection-election Gap and District Magnitude'
+			# Look for ##~APP FIGURE F HERE~##
 		
 	
 	###
@@ -2225,11 +2258,12 @@
 		ggplot(ELLIBUNL, aes(x=parliament_id, y=meanpersdifferent)) + 
 		  geom_boxplot() + ylab("average percentage of unique politicians accross districts")		
 
-		
+##~APP FIGURE D HERE~##		
 		# development over time per party
 		ggplot(ELLIBUNL, aes(x=parliament_id, y=meanpersdifferent,color=party_id)) + 
 		  geom_boxplot() + ylab("average percentage of unique politicians accross districts") + 
 		  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+##~APP FIGURE D HERE~##
 
 		head(ELLIBUNL)
 		
@@ -3215,9 +3249,9 @@
 	
 	me <- me
 	m1 <- m1
-	m2 <- m2a # m2b # m2a
-	m3 <- m3a # m3b # m3a
-	m4 <- m4a # m4b # m4
+	m2 <- m2b # m2b # m2a ## change to m2b to get table A2 in the appendix!
+	m3 <- m3b # m3b # m3a ## change to m3b to get table A2 in the appendix!
+	m4 <- m4b # m4b # m4 ## change to m4b to get table A2 in the appendix!
 	
 	
 	summary(me)
@@ -3371,7 +3405,7 @@ hist(ELLIBU$vote_share_cent)
 
 	varlabels <- specificnamecleaning(names(fixef(m4)))
 
-##~TABLE 3 HERE~##
+##~TABLE 3 HERE~## -- ##~TABLE A2 HERE~## (requires lines 3227-3229 to be edited!)
 
 	stargazer(
 		me,
@@ -3407,7 +3441,7 @@ hist(ELLIBU$vote_share_cent)
 							)
 		  )	
 		  
-##~TABLE 3 HERE~##
+##~TABLE 3 HERE~## -- ##~TABLE A2 HERE~## (requires lines 3227-3229 to be edited!)
 		
 		
 		# some interpretation things
@@ -3459,7 +3493,7 @@ hist(ELLIBU$vote_share_cent)
 	##~FIGURE 2 HERE~##
 		# in a marginal effect plot
 		set_theme(base = theme_minimal(base_size=20))
-		plot_model(m4,
+		plot_model(m4a,
 					type = "emm",
 					terms="selection_control_fac",
 					title ="Estimated marginal effects: predicted goal-selection gap given level of centralization"
@@ -3474,7 +3508,7 @@ hist(ELLIBU$vote_share_cent)
 	
 	##~FIGURE 3 HERE~##
 		# and district magnitude
-			plot_model(m4,
+			plot_model(m4a,
 					type = "emm",
 					terms="district_magnitude_minusone",
 					title ="Estimated marginal effects: predicted goal-selection gap given district magnitude"
@@ -3484,6 +3518,8 @@ hist(ELLIBU$vote_share_cent)
 					scale_y_continuous(name="goal selection gap") +
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
 	##~FIGURE 3 HERE~##
+	
+	##~APP FIGURE A HERE~##
 		# and for inclusiveness
 		
 			plot_model(m2b,
@@ -3495,8 +3531,26 @@ hist(ELLIBU$vote_share_cent)
 					scale_x_continuous(name="party level inclusiveness (standardised)",) +
 					scale_y_continuous(name="goal selection gap") +
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
+	
+	##~APP FIGURE A HERE~##	
+
+	##~APP FIGURE B1 HERE~##
+		# and for inclusiveness
 		
-		
+			plot_model(m2b,
+					type = "emm",
+					terms="pldecentralisation_stan",
+					title ="Estimated marginal effects: predicted goal-selection gap given party level decentralisation"
+					) + 
+				#	ylim(-25,20) +
+					scale_x_continuous(name="party level decentralisation (standardised)",) +
+					scale_y_continuous(name="goal selection gap") +
+					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
+	
+	##~APP FIGURE B1 HERE~##	
+
+	
+	##~APP FIGURE C HERE~##	
 		# and for ENS
 		
 				plot_model(m2b,
@@ -3508,8 +3562,7 @@ hist(ELLIBU$vote_share_cent)
 					scale_x_continuous(name="ENS (centered)",) +
 					scale_y_continuous(name="goal selection gap") +
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
-		
-		
+	##~APP FIGURE C HERE~##	
 		
 		# and electoral volatility here
 			# without the interaction
@@ -3718,6 +3771,7 @@ hist(ELLIBU$vote_share_cent)
 #################				
 #################			
 				# and the absolute version as suggested
+				ELLIBU$selection_election_gap_nonabs <- ELLIBU$selection_election_gap # here we select absolute values or not!
 				ELLIBU$selection_election_gap <- abs(ELLIBU$selection_election_gap) # here we select absolute values or not!
 				ELLIBU$selection_election_gap_abs <- abs(ELLIBU$selection_election_gap) 
 				
@@ -3857,11 +3911,13 @@ hist(ELLIBU$vote_share_cent)
 								  domain = c(1e-100, Inf))
 					}
 					
-					ggplot(data=ELLIBUTEMP, aes(x=district_magnitude, y=selection_election_gap,shape=country_and_type,color=country_and_type)) +
+	##~APP FIGURE F HERE~##	
+	
+					ggplot(data=ELLIBUTEMP, aes(x=district_magnitude, y=selection_election_gap_nonabs,shape=country_and_type,color=country_and_type)) +
 					geom_point(size=3) + 
 					scale_color_grey() +
 					geom_smooth(method = "loess",color="black") +
-					geom_label(data=countrytypagg,aes(x=x,y=5,label=round(selection_election_gap,2)),size=7,shape=3,color="black") +
+					geom_label(data=countrytypagg,aes(x=x,y=5,label=round(selection_election_gap_nonabs,2)),size=7,shape=3,color="black") +
 					labs(title = "election selection gap VS district magnitude, observed values", 
 					x = "District magnitude", 
 					y = "(Election-selection) gap whole list") +
@@ -3871,7 +3927,9 @@ hist(ELLIBU$vote_share_cent)
 					ylim(c(-75,75)) +
 					geom_text(aes(x=2.5,y=50,label="more women than expected"),angle=0,size=geom.text.size,color="black") + 
 					geom_text(aes(x=2.5,y=-50,label="less women than expected"),angle=0,size=geom.text.size,color="black") 
-					
+	
+	##~APP FIGURE F HERE~##
+	
 					# some data inspection: a gap of -100, how?! -- answer is: we only look at lists from which somebody got elected, is a big reductio, CDU only ran one candidate on this 'semi-list' environment that was successfull, 
 					ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap == -100),]
 					ELLIBUTEMP[which(grepl("DE_NT-BT_2009__district-seats-HB",ELLIBUTEMP$list_id,fixed=TRUE)),] # are the other cases dropped because they are considered not electable?
@@ -4650,6 +4708,8 @@ hist(ELLIBU$vote_share_cent)
 			ELLIDIS <- ELLIDIS[which(!is.na(ELLIDIS$ratio_on_list)),]
 			nrow(ELLIDIS)
 	
+	##~Appendix table A1 here!~## START
+	
 			# print the descriptives table for the countinous one
 			stargazer(ELLIDIS, type = "text", title="Descriptive statistics", digits=1)
 			stargazer(ELLIDIS, type = "text", title="Descriptive statistics", digits=2)
@@ -4668,6 +4728,7 @@ hist(ELLIBU$vote_share_cent)
 				table(ELLIDIS$nat_party_id)
 				round(prop.table(table(ELLIDIS$nat_party_id)),4)
 		
+	##~Appendix table A1 here!~## END
 		
 		# and some diagnostics here
 			
