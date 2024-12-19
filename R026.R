@@ -2867,6 +2867,7 @@
 				geom.text.size = 6
 				theme.size = (14/5) * geom.text.size
 				
+	##~APP FIGURE E HERE~##			
 				ggplot(data=ELLIBU, aes(x=selection_control_fac, y=ambition_selection_gap,fill=party_id_nat_equiv_short)) + 
 				geom_boxplot(position=position_dodge(width=.9),outlier.shape = 2) +
 				stat_summary(fun.y = mean, geom = "errorbar",aes(ymax = ..y.., ymin = ..y.., group = factor(selection_control_fac)),width = 0.5,size=2.5, linetype = "solid") +
@@ -2884,7 +2885,9 @@
 				scale_fill_manual(values=rep("#999999",7)) +
 				geom_vline(xintercept=1.5,linetype="solid") +
 				geom_vline(xintercept=2.5,linetype="solid")
-		
+
+	##~APP FIGURE E HERE~##
+	
 	##  requested graphs: similarity of the list on the x axis and each gap on the y axis
 		
 			# only ambition_selection_gap here, see below for election selection gap
@@ -3249,9 +3252,9 @@
 	
 	me <- me
 	m1 <- m1
-	m2 <- m2b # m2b # m2a ## change to m2b to get table A2 in the appendix!
-	m3 <- m3b # m3b # m3a ## change to m3b to get table A2 in the appendix!
-	m4 <- m4b # m4b # m4 ## change to m4b to get table A2 in the appendix!
+	m2 <- m2a # m2b # m2a ## change to m2b to get table A2 in the appendix!
+	m3 <- m3a # m3b # m3a ## change to m3b to get table A2 in the appendix!
+	m4 <- m4a # m4b # m4 ## change to m4b to get table A2 in the appendix!
 	
 	
 	summary(me)
@@ -3898,7 +3901,7 @@ hist(ELLIBU$vote_share_cent)
 					# \/ this one probably works the best?
 					
 					ELLIBUTEMP$country_and_type <- paste0(ELLIBUTEMP$country,":",ELLIBUTEMP$type)
-					countrytypagg <- as.data.frame(aggregate(data=ELLIBUTEMP, selection_election_gap~country_and_type,mean))
+					countrytypagg <- as.data.frame(aggregate(data=ELLIBUTEMP, selection_election_gap_nonabs~country_and_type,mean))
 					countrytypagg$x <- c(1,mean(ELLIBUTEMP$district_magnitude[which(ELLIBUTEMP$country_and_type == "DE:list")]),150)
 					countrytypagg
 					
