@@ -143,6 +143,7 @@
 		library(jtools)
 		library(openxlsx)
 		library(dplyr)
+		library(writexl)
 	
 
 		
@@ -423,7 +424,7 @@
 				table(FPAREBU$member_ofthisparliament_atsomepoint)
 
 		head(FPAREBU)
-		table(FPAREBU$parliament_id[which(FPAREBU$parliament_id %in% unique(POPABU$parliament_id))]) # so, these are not exacty the same... Do I understand why?
+	##	table(FPAREBU$parliament_id[which(FPAREBU$parliament_id %in% unique(POPABU$parliament_id))]) # so, these are not exacty the same... Do I understand why? # just for debugging
 
 	##############################################
 	# DATA 3: the buildup of the ELEN data-frame
@@ -434,7 +435,7 @@
 		table(ELEN$country)
 		
 		# do a country reduction, to make sure that we are not trowing energy and fixing and calculating things that are not important for later.
-			ELENBU <- ELEN[which(ELEN$country == "DE" | ELEN$country == "NL"),]
+			ELENBU <- ELEN[which(ELEN$country == "DE" | ELEN$country == "NL"),] # this is where we filter to country
 			table(ELENBU$country)
 		
 		# first selection of variables of interest
@@ -682,8 +683,6 @@
 	##############################################
 	
 		ELENBU$gender[which(ELENBU$gender == "")] <- NA
-		
-		ifelse(ELENBU$gender == "")
 	
 		table(is.na(ELENBU$gender))
 		table(is.na(ELENBU$gender),ELENBU$country)
@@ -791,7 +790,7 @@
 			ELENBU$fictional_parl_episode_id <- paste(ELENBU$pers_id,ELENBU$parliament_id,sep="__")
 			head(ELENBU)
 			
-			ELENBU$in_parliament <- ifelse(ELENBU$fictional_parl_episode_id %in% FPAREBU$parl_episode_id,"yes","no") 
+			ELENBU$in_parliament <- ifelse(ELENBU$fictional_parl_episode_id %in% FPAREBU$fake_parl_episode_id,"yes","no") # label 'fake' was added here later, but code here was not updated.
 			table(ELENBU$in_parliament) 
 			table(ELENBU$in_parliament)[2] / (table(ELENBU$in_parliament)[2]+table(ELENBU$in_parliament)[1]) # is roughly one third of the people on the election list that made it into parliament, that seems like a lot?
 			
@@ -844,7 +843,8 @@
 										)
 										")
 				nrow(ELENBURED)
-				table(ELENBURED$in_parliament) # should be 100?% 
+				table(ELENBURED$in_parliament) # should be 100% yes? 
+				
 				# seem to be not the case because above fictional_parl_episode_id are not created for everybody because some ELEN entries do not match with ELLI, I have asked Adrian to check this #fixlater / check when the data has been updated
 				
 				# who are these cases?
@@ -855,7 +855,7 @@
 				table(is.na((ELENBURED$fictional_parl_episode_id)))
 	
 	
-				ELENBURED[which(ELENBURED$in_parliament == "no"),] #fixlater > so if there are still cases here even with the updated data..
+			#	ELENBURED[which(ELENBURED$in_parliament == "no"),] #fixlater > so if there are still cases here even with the updated data.. # just data debugging here
 	
 				# good place to check how complete the candidate vote information is!
 	
@@ -865,43 +865,50 @@
 	##############################################
 	
 			## ELEN integrity work
-			ELEN[which(ELEN$list_id == "NL_NT-TK_1982__NL_NT-TK_1982__Nijmegen__Partij-van-de-Arbeid"),]
-			ELENBU[which(ELENBU$list_id == "NL_NT-TK_1982__NL_NT-TK_1982__Nijmegen__Partij-van-de-Arbeid"),] # ok, here he is double?!
-	
-			# my suggested approach to this is to find your 'double ganger' in the last two elections, to see how (s)he did
 			
-			# find everybody there double gangers, you are a double ganger when
-				# you ran for the same party
-				# in the same district / on the same list /\ i.e. the same list id, but just with a different year
+			# head(ELEN)
+			# tail(ELEN) # yes, there are also scots in here :P, we are looking at ELEN as a whole here, but the script just runs on ELENBU, which has been filtered down to DE and NL
+			# table(ELEN$country)
+			
+			# ELEN[which(ELEN$list_id == "NL_NT-TK_1982__Nijmegen__08sep1982__Partij-van-de-Arbeid"),]
+			# ELENBU[which(ELENBU$list_id == "NL_NT-TK_1982__Nijmegen__08sep1982__Partij-van-de-Arbeid"),] # ok, here he is double?!
+	
+			# # my suggested approach to this is to find your 'double ganger' in the last two elections, to see how (s)he did
+			
+			# # find everybody there double gangers, you are a double ganger when
+				# # you ran for the same party
+				# # in the same district / on the same list /\ i.e. the same list id, but just with a different year
 				
-				# on the same list position (please note that for German districts listplace is always NA now in the data, as there is only 1!)
+				# # on the same list position (please note that for German districts listplace is always NA now in the data, as there is only 1!)
 				
-				# e.g. DE_Achilles_Matthias_1991 ran on list DE_NT-BT_2017__DE_NT-BT_2017__Aachen-I__district-Pi
-				# his doubleganger from 2012 was? 
-				TEMPE <- ELEN[which(ELEN$list_id == "DE_NT-BT_2013__DE_NT-BT_2013__Aachen-I__district-Pi"),]
-				TEMPE
+				# # e.g. DE_Achilles_Matthias_1991 ran on list DE_NT-BT_2013__Aachen-I__22sep2013__district-Pi
 				
-				ELLI[which(ELLI$list_id == "DE_NT-BT_2013__DE_NT-BT_2013__Aachen-I__district-Pi"),]
+				# # his doubleganger from 2012 was? 
+				# TEMPE <- ELEN[which(ELEN$list_id == "DE_NT-BT_2013__Aachen-I__22sep2013__district-Pi"),]
+				# TEMPE
 				
-				TEMPE <- sqldf("SELECT TEMPE.*, ELLI.parliament_id 
-								FROM TEMPE LEFT JOIN ELLI
-								ON
-								TEMPE.list_id = ELLI.list_id_old
-								")
+				# ELLI[which(ELLI$list_id_old == "DE_NT-BT_2013__Aachen-I__22sep2013__district-Pi"),]
 				
-				# we can now also check if he got elected or not (if this returns a row, he did)
-				FPAREBU[which(FPAREBU$pers_id == TEMPE$pers_id & FPAREBU$parliament_id == TEMPE$parliament_id),] # no hits, so no luck this year, how about the year before?
+				# TEMPE <- sqldf("SELECT TEMPE.*, ELLI.parliament_id 
+								# FROM TEMPE LEFT JOIN ELLI
+								# ON
+								# TEMPE.list_id = ELLI.list_id_old
+								# ")
+				# TEMPE
 				
-				TEMPE <- ELEN[which(ELEN$list_id == "DE_NT-BT_2009__DE_NT-BT_2009__Aachen-I__district-Pi"),] # right, so here we see that re-districting is screwing up our measure
+				# # we can now also check if he got elected or not (if this returns a row, he did)
+				# FPAREBU[which(FPAREBU$pers_id == TEMPE$pers_id & FPAREBU$parliament_id == TEMPE$parliament_id),] # no hits, so no luck this year, how about the year before?
 				
-				TEMPE <- sqldf("SELECT TEMPE.*, ELLI.parliament_id 
-								FROM TEMPE LEFT JOIN ELLI
-								ON
-								TEMPE.list_id = ELLI.list_id_old
-								")
+				# TEMPE <- ELEN[which(ELEN$list_id == "DE_NT-BT_2009__Aachen-I__22sep2009__district-Pi"),] # right, so here we see that re-districting is screwing up our measure
 				
-				# we can now also check if he got elected or not (if this returns a row, he did)
-				FPAREBU[which(FPAREBU$pers_id == TEMPE$pers_id & FPAREBU$parliament_id == TEMPE$parliament_id),]
+				# TEMPE <- sqldf("SELECT TEMPE.*, ELLI.parliament_id 
+								# FROM TEMPE LEFT JOIN ELLI
+								# ON
+								# TEMPE.list_id = ELLI.list_id_old
+								# ")
+				
+				# # we can now also check if he got elected or not (if this returns a row, he did)
+				# FPAREBU[which(FPAREBU$pers_id == TEMPE$pers_id & FPAREBU$parliament_id == TEMPE$parliament_id),]
 				
 			### /\ bit above is just here for illustrative purposes and can be removed later/
 			
@@ -932,9 +939,9 @@
 					# function to match previous parliament
 						
 						# some variable values that can be used for debugging
-                        local_list_id = "NL_NT-TK_2012__Groningen__12sep2012__Christen-Democratisch-Appel" #fixlater, check after data update if this goes alright with in the new version of the data the district id only being in their once!
+                        local_list_id = "NL_NT-TK_2012__Groningen__12sep2012__Christen-Democratisch-Appel"
                         local_list_position = 45
-                        howfarback = 2
+                        howfarback = 1
                         local_natparty_id = "NL_CDA_NT"
 						
 						local_list_id = ELENBU$list_id_old[22373]
@@ -942,7 +949,7 @@
 						howfarback =  1
 						local_natparty_id =  ELENBU$party_id_from_elli_nat_equiv[22373]
 						
-						wasdoublegangertminxsuccesfull(local_list_id,local_list_position,howfarback,local_natparty_id)
+						# wasdoublegangertminxsuccesfull(local_list_id,local_list_position,howfarback,local_natparty_id) # I checked this manually for all last three, looks good, so this also works on the new version of the list id it seems.
 						
 						wasdoublegangertminxsuccesfull <- function(local_list_id,local_list_position,howfarback,local_natparty_id)
 						{						
@@ -1125,7 +1132,6 @@
 							return(mismatchreason)
 							}
 						}
-						# why are there FPAREBU$pers_id entries that are NA?!
 						
 						
 						# testing: proof is in the pudding!
@@ -1133,8 +1139,11 @@
 						# for some of the very last entries shown here
 						tail(ELENBU)
 						start_time <- Sys.time()
-						ELENBU[163000,]
-						wasdoublegangertminxsuccesfull(ELENBU$list_id_old[163000],ELENBU$listplace[163000],1,ELENBU$party_id_from_elli_nat_equiv[163000]) # check manually and I think this is correct
+						ELENBU[127356,]
+						
+						# manual check: double ganger not succesfull / not detectable in fact
+						
+						wasdoublegangertminxsuccesfull(ELENBU$list_id_old[127356],ELENBU$listplace[127356],1,ELENBU$party_id_from_elli_nat_equiv[127356]) # check manually and I think this is correct
 						end_time <- Sys.time()
 						end_time - start_time
 						
@@ -1234,49 +1243,48 @@
 								resvecelect <- resvecelecttemp[,2]
 						}
 						
-						table(successfulldoubleganger_tminus1_vec)
-						sum(table(successfulldoubleganger_tminus1_vec))
-						table(successfulldoubleganger_tminus1_vec) / sum(table(successfulldoubleganger_tminus1_vec))
+						# these inspections only make sense after a fresh run.
 						
-						ELENBU$firstissue <- successfulldoubleganger_tminus1_vec
-						ISSUES <- ELENBU[which(ELENBU$firstissue == "list_id: match -- district: found -- party: found -- party/district combo: found -- list position: not found for this party and district"),]
-						head(ISSUES[which(ISSUES$country == "DE"),])
-						table(ISSUES$country)
-						table(ISSUES$country,ISSUES$firstissue)
-						
-						ISSUES2 <- ELENBU[which(ELENBU$firstissue == "list_id: no match -- district: found -- party: found -- party/district combo: not found -- list position: not found for this party and district"),]
-						head(ISSUES2)
-						table(ISSUES2$country)
-						table(ISSUES2$country,ISSUES2$firstissue)
-						
-						ISSUES3 <- ELENBU[which(ELENBU$firstissue == "list_id: no match -- district: not found -- party: found -- party/district combo: not found -- list position: not found for this party and district"),]
-						head(ISSUES3)
-						table(ISSUES3$country)
-						table(ISSUES3$country,ISSUES3$firstissue)
-						
-						table(successfulldoubleganger_tminus2_vec)
-						table(successfulldoubleganger_tminus3_vec)
-						
-						ELENBU$firstissue <- successfulldoubleganger_tminus1_vec
-						ELENBU$secondissue <- successfulldoubleganger_tminus2_vec
-						ELENBU$thirdissue <- successfulldoubleganger_tminus3_vec
-						
+						if(runDGagain)
+						{
+							table(successfulldoubleganger_tminus1_vec)
+							sum(table(successfulldoubleganger_tminus1_vec))
+							table(successfulldoubleganger_tminus1_vec) / sum(table(successfulldoubleganger_tminus1_vec))
+							
+							ELENBU$firstissue <- successfulldoubleganger_tminus1_vec
+							ISSUES <- ELENBU[which(ELENBU$firstissue == "list_id: match -- district: found -- party: found -- party/district combo: found -- list position: not found for this party and district"),]
+							head(ISSUES[which(ISSUES$country == "DE"),])
+							table(ISSUES$country)
+							table(ISSUES$country,ISSUES$firstissue)
+							
+							ISSUES2 <- ELENBU[which(ELENBU$firstissue == "list_id: no match -- district: found -- party: found -- party/district combo: not found -- list position: not found for this party and district"),]
+							head(ISSUES2)
+							table(ISSUES2$country)
+							table(ISSUES2$country,ISSUES2$firstissue)
+							
+							ISSUES3 <- ELENBU[which(ELENBU$firstissue == "list_id: no match -- district: not found -- party: found -- party/district combo: not found -- list position: not found for this party and district"),]
+							head(ISSUES3)
+							table(ISSUES3$country)
+							table(ISSUES3$country,ISSUES3$firstissue)
+							
+							table(successfulldoubleganger_tminus2_vec)
+							table(successfulldoubleganger_tminus3_vec)
+							
+							ELENBU$firstissue <- successfulldoubleganger_tminus1_vec
+							ELENBU$secondissue <- successfulldoubleganger_tminus2_vec
+							ELENBU$thirdissue <- successfulldoubleganger_tminus3_vec
+						}
 						
 						ELENBU$electable <- ifelse(resvecelect,"electable","not electable")
 						table(ELENBU$electable)
 						table(is.na(ELENBU$electable))
 						
 						head(ELENBU)
-						library("writexl")
-						write_xlsx(ELENBU,"./ELENBU_20200804-1724.xlsx")
-						
-						tail(ELENBU)
-						head(ELENBU[which(ELENBU$electable == "electable"),])
-						ELENBU[38061:38100,]
+					#	library("writexl")
+					#	write_xlsx(ELENBU,"./ELENBU_20200804-1724.xlsx")
 			
 			# do the actual reduction, so that the aggregates below are based on only the 'electable' part of the election lists
 				
-				ELENBU[which(ELENBU$list_id == "DE_NT-BT_2017__Baden-Wuerttemberg__Christlich-Demokratische-Union-Deutschlands-in-Niedersachsen"),]
 				head(ELENBU)
 				tail(ELENBU)
 				
@@ -1284,7 +1292,6 @@
 				
 				nrow(ELENBU)
 				ELENBUTEMP <- ELENBU[which(ELENBU$electable == "electable"),] # switched to all positions when working on second analysis? (not sure anymore about what flavour we finally decided on here : conclusion from looking at manuscript now > I have been asked to focus on electable positions indeed, so this is correct.
-				
 				nrow(ELENBUTEMP)
 				
 				table(ELENBUTEMP$parliament_id,ELENBUTEMP$party_id_from_elli_nat_equiv)
@@ -1292,80 +1299,85 @@
 				ELENBU <- ELENBUTEMP # Here you can switch of the reduction to only electable! --- this might be an issue I think, we use ELENBU below on multiple occasions as if it is not reduced.
 				nrow(ELENBU)
 				
-			# analyse the remaining size of the issue, mainly by filtering on the relevant parties
-			
-				focuspartiesbelowvec <- c("DE_B90|Gru_NT","DE_CDU_NT","DE_CSU_NT","DE_Li|PDS_NT","DE_SPD_NT","NL_CDA_NT","NL_GL_NT","NL_PvdA_NT")
+				# analyse the remaining size of the not managing to find double gangers for everybody imperfection, mainly by filtering on the relevant parties
 				
-				table(ELENBUTOT$firstissue)
-				ELENBUTOT$nojudgementpossible <- !((ELENBUTOT$firstissue == "TRUE" | ELENBUTOT$firstissue == "FALSE") | 
-												 (ELENBUTOT$secondissue == "TRUE" | ELENBUTOT$secondissue == "FALSE") | 
-												 (ELENBUTOT$thirdissue == "TRUE" | ELENBUTOT$thirdissue == "FALSE"))
-				ELENBUTOT[0:20,]
-				table(ELENBUTOT$nojudgementpossible)
+				# again, all of these inspections only make sense when we ran the DG in this Round
 				
-				ELENBUISSUESLEFT <- ELENBUTOT[which((ELENBUTOT$party_id_from_elliandmeme %in% focuspartiesbelowvec) &
-												     ELENBUTOT$nojudgementpossible & 
-													 !(ELENBUTOT$parliament_id == "NL_NT-TK_1981") & 
-													 !(ELENBUTOT$parliament_id == "NL_NT-TK_1982") & 
-													 ! grepl("Netherlands", ELENBUTOT$district_id, ignore.case=TRUE)   # rest is temp!
-												#	 !(ELENBUTOT$district_id == "NL_NT-TK_1986__Lelystad") & 
-												#	 !(ELENBUTOT$district_id == "NL_NT-TK_2012__Bonaire") &
-												#	 ! grepl("06sep1989__GroenLinks", ELENBUTOT$elec_entry_id, ignore.case=TRUE) &
-												#	 ! grepl("05oct1980__Buendnis-90-Die-Gruenen", ELENBUTOT$elec_entry_id, ignore.case=TRUE) &
-												#	 ! grepl("05oct1980__district-B90|Gru", ELENBUTOT$elec_entry_id, ignore.case=TRUE) &
-												#	 ! grepl("Berlin__02dec1990", ELENBUTOT$elec_entry_id, ignore.case=TRUE) & 
-												#	 ! grepl("02dec1990__Die-Linke-Partei-des", ELENBUTOT$elec_entry_id, ignore.case=TRUE)
-													 ),]
-				nrow(ELENBUISSUESLEFT)
-				nrow(ELENBUTOT)
-				nrow(ELENBUISSUESLEFT) / nrow(ELENBUTOT)
+				if(runDGagain)
+				{
 				
-				# issue left distribution accross countries
-				prop.table(table(ELENBUISSUESLEFT$country))
-				
-				# kinds of issues left
-				table(ELENBUISSUESLEFT$firstissue,ELENBUISSUESLEFT$country)
-				prop.table(table(ELENBUISSUESLEFT$firstissue,ELENBUISSUESLEFT$country),2)
-
-				# inspect the most prominent issues left
-				I1 <- ELENBUISSUESLEFT[which(ELENBUISSUESLEFT$firstissue == "list_id: no match -- district: found -- party: found -- party/district combo: not found -- list position: not found for this party and district"),]
-				nrow(I1)
-				head(I1)
-				tail(I1)
-				# quite some 1981 in the Netherlands, but we do not use that year!, so lets filter it out above!
-				
-					# outline of issues
+					focuspartiesbelowvec <- c("DE_B90|Gru_NT","DE_CDU_NT","DE_CSU_NT","DE_Li|PDS_NT","DE_SPD_NT","NL_CDA_NT","NL_GL_NT","NL_PvdA_NT")
 					
-						# NL > nice, for sure, the issues below are the only issues left now! Doppelganger could be found for all(!) other cases
-							# new electoral district: Lelystad in 1986 - 60 cases
-							nrow(ELENBUISSUESLEFT[which(ELENBUISSUESLEFT$district_id == "NL_NT-TK_1986__Lelystad"),])
-							
-							# new electoral district: Bonaire in 2012 - 178 cases
-							nrow(ELENBUISSUESLEFT[which(ELENBUISSUESLEFT$district_id == "NL_NT-TK_2012__Bonaire"),])
-							
-							# new party : groenlinks in 1989
-							nrow(ELENBUISSUESLEFT[which(grepl("06sep1989__GroenLinks", ELENBUISSUESLEFT$elec_entry_id, ignore.case=TRUE)),]) # 570 cases
-				
-						# DE
-							
-							# a lot of these are issues with new districts, I think this is the list
-							unique(I1$district_id)
-							
-							# new party: Buendnis-90-Die-Gruenen in 1980
-							nrow(ELENBUISSUESLEFT[which(grepl("05oct1980__Buendnis-90-Die-Gruenen", ELENBUISSUESLEFT$elec_entry_id, ignore.case=TRUE)),]) # 166 cases
-							nrow(ELENBUISSUESLEFT[which(grepl("05oct1980__district-B90|Gru", ELENBUISSUESLEFT$elec_entry_id, ignore.case=TRUE)),]) # 646 cases
-							
-							
-							# new party: die Linke in 1990
-							nrow(ELENBUISSUESLEFT[which(grepl("02dec1990__Die-Linke-Partei-des", ELENBUISSUESLEFT$elec_entry_id, ignore.case=TRUE)),]) # 143 cases
-							
-							
-							# 1990 Berlin issue
-							nrow(ELENBUISSUESLEFT[which(grepl("Berlin__02dec1990", ELENBUISSUESLEFT$elec_entry_id, ignore.case=TRUE)),]) # 40 cases
-				
-							# 419 cases where German parties did not run any candidates in this district in the previous 3 elections
-							unique(I1$list_id)
-				
+					table(ELENBUTOT$firstissue)
+					ELENBUTOT$nojudgementpossible <- !((ELENBUTOT$firstissue == "TRUE" | ELENBUTOT$firstissue == "FALSE") | 
+													 (ELENBUTOT$secondissue == "TRUE" | ELENBUTOT$secondissue == "FALSE") | 
+													 (ELENBUTOT$thirdissue == "TRUE" | ELENBUTOT$thirdissue == "FALSE"))
+					ELENBUTOT[0:20,]
+					table(ELENBUTOT$nojudgementpossible)
+					
+					ELENBUISSUESLEFT <- ELENBUTOT[which((ELENBUTOT$party_id_from_elliandmeme %in% focuspartiesbelowvec) &
+														 ELENBUTOT$nojudgementpossible & 
+														 !(ELENBUTOT$parliament_id == "NL_NT-TK_1981") & 
+														 !(ELENBUTOT$parliament_id == "NL_NT-TK_1982") & 
+														 ! grepl("Netherlands", ELENBUTOT$district_id, ignore.case=TRUE)   # rest is temp!
+													#	 !(ELENBUTOT$district_id == "NL_NT-TK_1986__Lelystad") & 
+													#	 !(ELENBUTOT$district_id == "NL_NT-TK_2012__Bonaire") &
+													#	 ! grepl("06sep1989__GroenLinks", ELENBUTOT$elec_entry_id, ignore.case=TRUE) &
+													#	 ! grepl("05oct1980__Buendnis-90-Die-Gruenen", ELENBUTOT$elec_entry_id, ignore.case=TRUE) &
+													#	 ! grepl("05oct1980__district-B90|Gru", ELENBUTOT$elec_entry_id, ignore.case=TRUE) &
+													#	 ! grepl("Berlin__02dec1990", ELENBUTOT$elec_entry_id, ignore.case=TRUE) & 
+													#	 ! grepl("02dec1990__Die-Linke-Partei-des", ELENBUTOT$elec_entry_id, ignore.case=TRUE)
+														 ),]
+					nrow(ELENBUISSUESLEFT)
+					nrow(ELENBUTOT)
+					nrow(ELENBUISSUESLEFT) / nrow(ELENBUTOT)
+					
+					# issue left distribution accross countries
+					prop.table(table(ELENBUISSUESLEFT$country))
+					
+					# kinds of issues left
+					table(ELENBUISSUESLEFT$firstissue,ELENBUISSUESLEFT$country)
+					prop.table(table(ELENBUISSUESLEFT$firstissue,ELENBUISSUESLEFT$country),2)
+
+					# inspect the most prominent issues left
+					I1 <- ELENBUISSUESLEFT[which(ELENBUISSUESLEFT$firstissue == "list_id: no match -- district: found -- party: found -- party/district combo: not found -- list position: not found for this party and district"),]
+					nrow(I1)
+					head(I1)
+					tail(I1)
+					# quite some 1981 in the Netherlands, but we do not use that year!, so lets filter it out above!
+					
+						# outline of issues
+						
+							# NL > nice, for sure, the issues below are the only issues left now! Doppelganger could be found for all(!) other cases
+								# new electoral district: Lelystad in 1986 - 60 cases
+								nrow(ELENBUISSUESLEFT[which(ELENBUISSUESLEFT$district_id == "NL_NT-TK_1986__Lelystad"),])
+								
+								# new electoral district: Bonaire in 2012 - 178 cases
+								nrow(ELENBUISSUESLEFT[which(ELENBUISSUESLEFT$district_id == "NL_NT-TK_2012__Bonaire"),])
+								
+								# new party : groenlinks in 1989
+								nrow(ELENBUISSUESLEFT[which(grepl("06sep1989__GroenLinks", ELENBUISSUESLEFT$elec_entry_id, ignore.case=TRUE)),]) # 570 cases
+					
+							# DE
+								
+								# a lot of these are issues with new districts, I think this is the list
+								unique(I1$district_id)
+								
+								# new party: Buendnis-90-Die-Gruenen in 1980
+								nrow(ELENBUISSUESLEFT[which(grepl("05oct1980__Buendnis-90-Die-Gruenen", ELENBUISSUESLEFT$elec_entry_id, ignore.case=TRUE)),]) # 166 cases
+								nrow(ELENBUISSUESLEFT[which(grepl("05oct1980__district-B90|Gru", ELENBUISSUESLEFT$elec_entry_id, ignore.case=TRUE)),]) # 646 cases
+								
+								
+								# new party: die Linke in 1990
+								nrow(ELENBUISSUESLEFT[which(grepl("02dec1990__Die-Linke-Partei-des", ELENBUISSUESLEFT$elec_entry_id, ignore.case=TRUE)),]) # 143 cases
+								
+								
+								# 1990 Berlin issue
+								nrow(ELENBUISSUESLEFT[which(grepl("Berlin__02dec1990", ELENBUISSUESLEFT$elec_entry_id, ignore.case=TRUE)),]) # 40 cases
+					
+								# 419 cases where German parties did not run any candidates in this district in the previous 3 elections
+								unique(I1$list_id)
+				}
 				
 			# some inspections, just to make sure that things are making sense here
 			
@@ -1496,7 +1508,7 @@
 				nrow(CNSN3)
 				
 				# export
-				write_xlsx(CNSN3,"./PoliticiansForWhichWeWouldLikeTheFullName-20200806-1521.xlsx")
+			#	write_xlsx(CNSN3,"./PoliticiansForWhichWeWouldLikeTheFullName-20200806-1521.xlsx")
 				
 		# lets select the 'complete' cases: where these is sufficient knowledge on the number of men and women
 			
@@ -1505,9 +1517,11 @@
 			
 		#	ELLIBUCOMP <- ELLIBU[which(ELLIBU$sumcheck == 0),]
 		
+			table(ELLIBU$parliament_id)
+			
 			CD <- ELLIBU[which(!ELLIBU$sumcheck > -8),]
-			table(CD$parliament_id) # right, so way to many from the Dutch 2012 parliament indeed!
-			CD[which(CD$parliament_id == "NL_NT-TK_2012"),] # so inspection reveals, very many cases with only innitials, this is where this goes wrong, because no gender guesses are possible in this case.. 
+			table(CD$parliament_id)
+			CD[which(CD$parliament_id == "NL_NT-TK_1994"),] # in these cases we only have the innitials, not a full first name, there is nothing we can really do about that.
 		
 		# so... lets just remove this restriction for now
 		##	ELLIBUCOMP <- ELLIBU[which(ELLIBU$sumcheck > -8),] # arbritary decision, how big do I allow the gap to be?, right so the last year for NL is off a lot?!
@@ -1520,8 +1534,10 @@
 			ELLIBUCOMP$parliament_id <- as.factor(as.character(ELLIBUCOMP$parliament_id))
 			table(ELLIBUCOMP$parliament_id)
 		
-		boxplot(ELLIBUCOMP$ratio_on_list~ELLIBUCOMP$country,ylab="Ratio on list")
-		table(is.na(ELLIBUCOMP$ratio_on_list),ELLIBUCOMP$country)
+		# so lets have a quick look how these percentages on the list developed over time.
+		
+			boxplot(ELLIBUCOMP$ratio_on_list~ELLIBUCOMP$country,ylab="Ratio on list")
+			table(is.na(ELLIBUCOMP$ratio_on_list),ELLIBUCOMP$country)
 			
 			EDE <- ELLIBUCOMP[which(ELLIBUCOMP$country == "DE"),]
 			nrow(EDE)
@@ -1530,11 +1546,6 @@
 			ENL <- ELLIBUCOMP[which(ELLIBUCOMP$country == "NL"),]
 			nrow(ENL)
 			boxplot(ENL$ratio_on_list~droplevels(ENL$parliament_id)) 
-			
-			ECH <- ELLIBUCOMP[which(ELLIBUCOMP$country == "CH"),]
-			nrow(ECH)
-			boxplot(ECH$ratio_on_list~droplevels(ECH$parliament_id))
-	
 	
 	##################################################################################################
 	######### creation of bunch of variables before reduction to analytical sample ###################
@@ -1741,9 +1752,6 @@
 			head(ELLIBU)
 			
 			boxplot(ELLIBU$party_size~ELLIBU$country)
-			
-			head(ELLIBU[which(ELLIBU$party_size == 0 & ELLIBU$country == "CH"),])
-			tail(ELLIBU[which(ELLIBU$party_size == 0 & ELLIBU$country == "CH"),])
 
 
 	##############################################
@@ -1958,7 +1966,7 @@
 			
 			nrow(ELLIBU)
 			ELLIBU <- ELLIBU[which(ELLIBU$quota_now == 1),]
-			nrow(ELLIBU) # 1270 election lists left
+			nrow(ELLIBU) # 1244 election lists left
 			
 	###########################
 	# RED A1: dropping the district lists from small german parties.
@@ -2313,7 +2321,7 @@
 		ELLIBU <- TEMP4
 		
 		table(ELLIBU$parliament_id,ELLIBU$party_id_nat_equiv)
-		table(ELLIBU$parliament_id,ELLIBU$party_id)
+	#	table(ELLIBU$parliament_id,ELLIBU$party_id)
 		
 	##################################################################################################
 	################################# even more variable building here #########################################
@@ -2551,24 +2559,24 @@
 				ELLIBUSCNA$meanpersdifferent # this is culprit - to get this out I need to inspect where the warnings are comming from when the OM script is ran
 				ELLIBUSCNA$country
 				
-				# temporary workaround! If you have NA we take the first selection control variable from a same party in a same election that does have a value
+				# # temporary workaround! If you have NA we take the first selection control variable from a same party in a same election that does have a value
 				
-					resvec <- vector()
-					for(i in 1:nrow(ELLIBU))
-					{
-						if(is.na(ELLIBU$selection_control[i]))
-						{# only run if we do not already have a selection control variable
-							mypartyid <- ELLIBU$party_id_nat_equiv[i]
-							myelection <- ELLIBU$parliament_id[i]
-							mylistid <- ELLIBU$list_id[i]
+					# resvec <- vector()
+					# for(i in 1:nrow(ELLIBU))
+					# {
+						# if(is.na(ELLIBU$selection_control[i]))
+						# {# only run if we do not already have a selection control variable
+							# mypartyid <- ELLIBU$party_id_nat_equiv[i]
+							# myelection <- ELLIBU$parliament_id[i]
+							# mylistid <- ELLIBU$list_id[i]
 							
-							resvec[i] <- as.character(ELLIBU[which(ELLIBU$party_id_nat_equiv == mypartyid & ELLIBU$parliament_id == myelection & !ELLIBU$list_id == mylistid & !is.na(ELLIBU$selection_control)),]$selection_control[1])
-						} else {
-							resvec[i] <- NA
-						}
-					}
-					resvec
-					table(resvec) # ok, that hardly solves anything
+							# resvec[i] <- as.character(ELLIBU[which(ELLIBU$party_id_nat_equiv == mypartyid & ELLIBU$parliament_id == myelection & !ELLIBU$list_id == mylistid & !is.na(ELLIBU$selection_control)),]$selection_control[1])
+						# } else {
+							# resvec[i] <- NA
+						# }
+					# }
+					# resvec
+					# table(resvec) # ok, that hardly solves anything
 				
 			## selection control details
 				ELLIBU$selection_control_detailed <- NA
@@ -2593,8 +2601,7 @@
 			
 			## electoral uncertainty
 				ELLIBU$election_uncertainty <- NA
-				
-				ELLIBU$party_size_cat <- NA
+				ELLIBU$party_size_cat_de <- NA
 				ELLIBU$party_size_cat_de[which(ELLIBU$party_size <= 75)] <- "small party"
 				ELLIBU$party_size_cat_de[which(ELLIBU$party_size > 75)] <- "big party"
 				table(ELLIBU$party_size_cat_de)
@@ -2613,7 +2620,7 @@
 				# high uncertainty - german regional list big parties + German district seats for big parties + all swiss election lists
 				ELLIBU$election_uncertainty[which(ELLIBU$country == "DE" & ELLIBU$type == "list" & ELLIBU$party_size_cat_de == "big party")] <- "high electoral uncertainty"
 				ELLIBU$election_uncertainty[which(ELLIBU$country == "DE" & ELLIBU$type == "district" & ELLIBU$party_size_cat_de == "big party")] <- "high electoral uncertainty"
-				ELLIBU$election_uncertainty[which(ELLIBU$country == "CH")] <- "high electoral uncertainty"
+			#	ELLIBU$election_uncertainty[which(ELLIBU$country == "CH")] <- "high electoral uncertainty"
 				
 				table(ELLIBU$election_uncertainty)
 				table(ELLIBU$election_uncertainty,ELLIBU$country)
@@ -2649,8 +2656,6 @@
 				table(ELLIBU$election_uncertainty_detailed_fac)
 				
 		## so a new attempt for an electoral uncertainty variable
-		
-			
 			
 		### now also, using the information from above, move some Dutch cases away from the single-list variable, because there is actually quite some diversity!
 			table(ELLIBU$keylisttypes,ELLIBU$countryld)
@@ -2778,7 +2783,7 @@
 				var(ELLIBU[which(ELLIBU$selection_control == "high selection control"),]$ambition_realisation_gap)
 				var(ELLIBU[which(ELLIBU$selection_control == "low selection control"),]$ambition_realisation_gap)
 				var(ELLIBU[which(ELLIBU$selection_control == "medium selection control"),]$ambition_realisation_gap)
-				levene.test(ELLIBU$ambition_realisation_gap,ELLIBU$selection_control) # no significant difference in variance between the groups
+				leveneTest(ELLIBU$ambition_realisation_gap,ELLIBU$selection_control) # no significant difference in variance between the groups
 				table(ELLIBU$selection_control)
 				
 					# break down to hard and soft quotas
@@ -2868,6 +2873,23 @@
 				theme.size = (14/5) * geom.text.size
 				
 	##~APP FIGURE E HERE~##			
+		
+				# let's set the levels here explicitly, so we always get the order we want
+				
+				table(ELLIBU$selection_control_fac)
+				
+					ELLIBU$selection_control_fac <- factor(
+					  ELLIBU$selection_control_fac,
+					  levels = c(
+						"low selection control",
+						"medium selection control",
+						"high selection control"
+					  ),
+			#		  ordered = TRUE  # this was causing issue later.
+					)
+
+				table(ELLIBU$selection_control_fac)
+	
 				ggplot(data=ELLIBU, aes(x=selection_control_fac, y=ambition_selection_gap,fill=party_id_nat_equiv_short)) + 
 				geom_boxplot(position=position_dodge(width=.9),outlier.shape = 2) +
 				stat_summary(fun.y = mean, geom = "errorbar",aes(ymax = ..y.., ymin = ..y.., group = factor(selection_control_fac)),width = 0.5,size=2.5, linetype = "solid") +
@@ -2948,7 +2970,7 @@
 				var(ELLIBU[which(ELLIBU$selection_control == "low selection control"),]$ambition_selection_gap)
 				table(ELLIBU$selection_control)
 				
-				levene.test(ELLIBU$ambition_selection_gap,ELLIBU$selection_control)
+				leveneTest(ELLIBU$ambition_selection_gap,ELLIBU$selection_control)
 				
 					# break down to hard and soft quotas
 						boxplot(ELLIBU$ambition_selection_gap~ELLIBU$typeandquota, main="% of women selected onto the list - % from quota")
@@ -3426,12 +3448,12 @@ hist(ELLIBU$vote_share_cent)
 		omit.stat=c("aic","bic"),
 		font.size = "small",
 		label = "RegTab",
-		caption = "Regression model predicting selection - ambition gap with selection control",
+		title = "Regression model predicting selection - ambition gap with selection control",
 		dep.var.labels = c("(Ratio on list - ambition)"),
 		covariate.labels = varlabels,
 			add.lines = list(	
-							c("Random effects"),
-							c("--------------------------"),
+							c("Random effects",      rep("", 5)),
+							c("--------------------------", rep("", 5)),
 							c("NR of (semi) lists",nobsc),
 							c("list-level var",listlvar),
 							c("",GiveBrackets(listlvarse)),
@@ -3567,30 +3589,30 @@ hist(ELLIBU$vote_share_cent)
 					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
 	##~APP FIGURE C HERE~##	
 		
-		# and electoral volatility here
-			# without the interaction
-			plot_model(m4,
-					type = "emm",
-					terms="vote_share_change_abs",
-					title ="Estimated marginal effects: predicted goal-selection gap given party level electoral volatility"
-					) + 
-				#	ylim(-25,20) +
-					scale_x_continuous(name="party level electoral volatility",) +
-					scale_y_continuous(name="goal selection gap") +
-					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
+		# # and electoral volatility here
+			# # without the interaction
+			# plot_model(m4,
+					# type = "emm",
+					# terms="vote_share_change_abs",
+					# title ="Estimated marginal effects: predicted goal-selection gap given party level electoral volatility"
+					# ) + 
+				# #	ylim(-25,20) +
+					# scale_x_continuous(name="party level electoral volatility",) +
+					# scale_y_continuous(name="goal selection gap") +
+					# geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
 	
 
-			# with the interaction
-				plot_model(m4,
-					type = "int",
-					mdrt.values = "meansd",
-					terms="vote_share_change_abs",
-					title ="Estimated marginal effects: predicted goal-selection gap given party level change in voteshare"
-					) + 
-				#	ylim(-25,20) +
-					scale_x_continuous(name="party level change in voteshare",) +
-					scale_y_continuous(name="goal selection gap") +
-					geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
+			# # with the interaction
+				# plot_model(m4,
+					# type = "int",
+					# mdrt.values = "meansd",
+					# terms="vote_share_change_abs",
+					# title ="Estimated marginal effects: predicted goal-selection gap given party level change in voteshare"
+					# ) + 
+				# #	ylim(-25,20) +
+					# scale_x_continuous(name="party level change in voteshare",) +
+					# scale_y_continuous(name="goal selection gap") +
+					# geom_hline(yintercept=0, linetype="dashed", color = "darkgreen",size=1.1)
 
 		
 			# and a version that works(?) in black and white
@@ -3613,8 +3635,6 @@ hist(ELLIBU$vote_share_cent)
 	
 		# do I indeed have unbalanced cases?
 		table(ELLIBU$selection_control_fac) # yes for sure! Right, so it does make sense. Lets just use this one!
-		
-					stargazer(me,m0,m1,m3,m4,intercept.bottom=FALSE)
 					
 			# to answer the question if small parties are still excluded?
 			names(ELLIBU)
@@ -3806,7 +3826,7 @@ hist(ELLIBU$vote_share_cent)
 				table(ELLIBU$election_uncertainty)
 				var(ELLIBU[which(ELLIBU$election_uncertainty == "low electoral uncertainty"),]$selection_election_gap,na.rm=T)
 				var(ELLIBU[which(ELLIBU$election_uncertainty == "high electoral uncertainty"),]$selection_election_gap)
-				levene.test(ELLIBU$selection_election_gap,ELLIBU$election_uncertainty)
+				leveneTest(ELLIBU$selection_election_gap,ELLIBU$election_uncertainty)
 				table(ELLIBU$election_uncertainty)
 				
 					# break down to hard and soft quotas
@@ -3973,14 +3993,14 @@ hist(ELLIBU$vote_share_cent)
 					My_Theme
 				
 					
-					# other graphic to include
-					ggplot(data=ELLIBUTEMP, aes(x=vote_share_increase, y=selection_election_gap,color=linkedlist)) +
-					geom_point() + 
-					geom_smooth(method = loess, se = FALSE) +
-					labs(title = "Selection election gap VS vote share increases, observed values", 
-					x = "Vote share increase", 
-					y = "Selection-election gap whole list") +
-					My_Theme
+					# # other graphic to include
+					# ggplot(data=ELLIBUTEMP, aes(x=vote_share_increase, y=selection_election_gap,color=linkedlist)) +
+					# geom_point() + 
+					# geom_smooth(method = loess, se = FALSE) +
+					# labs(title = "Selection election gap VS vote share increases, observed values", 
+					# x = "Vote share increase", 
+					# y = "Selection-election gap whole list") +
+					# My_Theme
 				
 							
 					
@@ -4346,7 +4366,7 @@ hist(ELLIBU$vote_share_cent)
 					stargazer(mee,ma,md,me,type="text",intercept.bottom=FALSE)
 					
 					# mecs <- me
-					anova(mecs,me)
+					# anova(mecs,me)
 					
 					stargazer(mee,ma,mb,md,me,intercept.bottom=FALSE)
 	
@@ -4541,7 +4561,7 @@ hist(ELLIBU$vote_share_cent)
 				}
 
 
-	varlabels <- specificnamecleaning(names(fixef(m4)))
+	varlabels <- specificnamecleaning(names(fixef(m5)))
 
 	# to make sure that we are reminded of what version we are doing
 	hist(ELLIBUTEMP$selection_election_gap)
@@ -4563,7 +4583,7 @@ hist(ELLIBU$vote_share_cent)
 		omit.stat=c("aic","bic"),
 		font.size = "small",
 		label = "RegTab",
-		caption = "Regression model predicting selection election gap with district magnitude, linked lists and controls",
+		title = "Regression model predicting selection election gap with district magnitude, linked lists and controls",
 		dep.var.labels = c("abs(ratio elected - ratio on list)"),
 		covariate.labels = varlabels,
 			add.lines = list(	
@@ -4666,7 +4686,6 @@ hist(ELLIBU$vote_share_cent)
 		ELLIBUEXP <- ELLIBU[which(!is.na(ELLIBU$selection_election_gap)),]
 		nrow(ELLIBUEXP)
 		
-		library("writexl")
 		write_xlsx(ELLIBUEXP,"./ELLIBU_Export_Control_Paper.xlsx")
 		
 					
@@ -4759,55 +4778,55 @@ hist(ELLIBU$vote_share_cent)
 
 
 
-######################################################################################
-################### suggestion from Philip to 'predict' soft quotas ##################
-######################################################################################		
+# ######################################################################################
+# ################### suggestion from Philip to 'predict' soft quotas ##################
+# ######################################################################################		
 
-names(ELLIBU)
+# names(ELLIBU)
 
-	# if there is no relation the relative percentage of quota soft parties should not differ accross to columns
+	# # if there is no relation the relative percentage of quota soft parties should not differ accross to columns
 	
-	table(ELLIBU$quota_soft,ELLIBU$selection_control_fac)
-	prop.table(table(ELLIBU$quota_soft,ELLIBU$selection_control_fac),2)
-	
-	
+	# table(ELLIBU$quota_soft,ELLIBU$selection_control_fac)
+	# prop.table(table(ELLIBU$quota_soft,ELLIBU$selection_control_fac),2)
 	
 	
-	# and for district magnitude
 	
-		ELLIBU$district_magnitude_bins <- as.character(ELLIBU$district_magnitude)
+	
+	# # and for district magnitude
+	
+		# ELLIBU$district_magnitude_bins <- as.character(ELLIBU$district_magnitude)
 		
-		ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude_bins == "1")] <- "dm_1"
+		# ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude_bins == "1")] <- "dm_1"
 		
-		ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude > 1 & ELLIBU$district_magnitude <= 20)] <- "dm_2-10"
-		ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude > 10 & ELLIBU$district_magnitude <= 20)] <- "dm_11-20"
-		ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude > 20 & ELLIBU$district_magnitude <= 30)] <- "dm_21-30"
-		ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude > 30 & ELLIBU$district_magnitude <= 50)] <- "dm_31-50"
-		ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude > 50 & ELLIBU$district_magnitude <= 80)] <- "dm_51-80"
-		ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude > 80 & ELLIBU$district_magnitude < 150)] <- "dm_81-149"
+		# ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude > 1 & ELLIBU$district_magnitude <= 20)] <- "dm_2-10"
+		# ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude > 10 & ELLIBU$district_magnitude <= 20)] <- "dm_11-20"
+		# ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude > 20 & ELLIBU$district_magnitude <= 30)] <- "dm_21-30"
+		# ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude > 30 & ELLIBU$district_magnitude <= 50)] <- "dm_31-50"
+		# ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude > 50 & ELLIBU$district_magnitude <= 80)] <- "dm_51-80"
+		# ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude > 80 & ELLIBU$district_magnitude < 150)] <- "dm_81-149"
 		
-		ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude == 150)] <- "dm_150"
+		# ELLIBU$district_magnitude_bins[which(ELLIBU$district_magnitude == 150)] <- "dm_150"
 		
-		ELLIBU$district_magnitude_bins <- factor(ELLIBU$district_magnitude_bins,levels=c("dm_1","dm_2-10","dm_11-20","dm_21-30","dm_31-50","dm_51-80","dm_81-149","dm_150"))
+		# ELLIBU$district_magnitude_bins <- factor(ELLIBU$district_magnitude_bins,levels=c("dm_1","dm_2-10","dm_11-20","dm_21-30","dm_31-50","dm_51-80","dm_81-149","dm_150"))
 		
-		table(ELLIBU$district_magnitude_bin)
+		# table(ELLIBU$district_magnitude_bin)
 		
-	table(ELLIBU$quota_soft,ELLIBU$district_magnitude_bin)
-	prop.table(table(ELLIBU$quota_soft,ELLIBU$district_magnitude_bin),2)
+	# table(ELLIBU$quota_soft,ELLIBU$district_magnitude_bin)
+	# prop.table(table(ELLIBU$quota_soft,ELLIBU$district_magnitude_bin),2)
 	
-	table(ELLIBU$quota_soft,ELLIBU$country)
-
-	
-	# and both in simple model
-	
-	mod_qe <- glm(quota_soft ~ 1, data = ELLIBU, family = binomial)
-	
-	mod_q1 <- glm(quota_soft ~ selection_control_fac, data = ELLIBU, family = binomial)
-	
-	mod_q2 <- glm(quota_soft ~ selection_control_fac + district_magnitude_bins, data = ELLIBU, family = binomial)
+	# table(ELLIBU$quota_soft,ELLIBU$country)
 
 	
-	stargazer(mod_qe,mod_q1,mod_q2,type="text",intercept.bottom=FALSE)
+	# # and both in simple model
+	
+	# mod_qe <- glm(quota_soft ~ 1, data = ELLIBU, family = binomial)
+	
+	# mod_q1 <- glm(quota_soft ~ selection_control_fac, data = ELLIBU, family = binomial)
+	
+	# mod_q2 <- glm(quota_soft ~ selection_control_fac + district_magnitude_bins, data = ELLIBU, family = binomial)
+
+	
+	# stargazer(mod_qe,mod_q1,mod_q2,type="text",intercept.bottom=FALSE)
 
 
 
@@ -4819,425 +4838,425 @@ names(ELLIBU)
 
 
 
-######################################################################################
-############################ OLD DESCRIPTIVE RESULTS #################################
-######################################################################################			
+# ######################################################################################
+# ############################ OLD DESCRIPTIVE RESULTS #################################
+# ######################################################################################			
 		
 	
 		
-	# some general descriptives for the first version of the paper
+	# # some general descriptives for the first version of the paper
 	
-		table(ELLIBU$parliament_id)
-		length(table(ELLIBU$parliament_id))
+		# table(ELLIBU$parliament_id)
+		# length(table(ELLIBU$parliament_id))
 	
-		nrow(ELLIBU)
+		# nrow(ELLIBU)
 		
-		table(ELLIBU$country)
-		table(ELLIBU$type)
+		# table(ELLIBU$country)
+		# table(ELLIBU$type)
 		
-		table(ELLIBU$nat_party_id)
-		length(table(ELLIBU$nat_party_id))
-		length(table(ELLIBU$nat_party_id[which(ELLIBU$country == "NL")]))
-		length(table(ELLIBU$nat_party_id[which(ELLIBU$country == "DE")]))
-		length(table(ELLIBU$nat_party_id[which(ELLIBU$country == "CH")]))
+		# table(ELLIBU$nat_party_id)
+		# length(table(ELLIBU$nat_party_id))
+		# length(table(ELLIBU$nat_party_id[which(ELLIBU$country == "NL")]))
+		# length(table(ELLIBU$nat_party_id[which(ELLIBU$country == "DE")]))
+		# length(table(ELLIBU$nat_party_id[which(ELLIBU$country == "CH")]))
 		
-		table(ELLIBU$nat_party_id[which(ELLIBU$country == "CH")])
+		# table(ELLIBU$nat_party_id[which(ELLIBU$country == "CH")])
 		
-	# country differences
+	# # country differences
 	
-				ggplot(ELLIBU, aes(x=ratio_on_list, y=ratio_elected,color=countryld)) + 
-				geom_point() + 
-				geom_smooth(method='lm') +
-				scale_x_continuous(limits = c(0, 0.6)) +
-				geom_abline()
+				# ggplot(ELLIBU, aes(x=ratio_on_list, y=ratio_elected,color=countryld)) + 
+				# geom_point() + 
+				# geom_smooth(method='lm') +
+				# scale_x_continuous(limits = c(0, 0.6)) +
+				# geom_abline()
 		
-				ggplot(subset(ELLIBU, country == "NL"), aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
-				geom_point() + 
-				geom_smooth() +
-				scale_x_continuous(limits = c(0, 0.6)) +
-				geom_abline()
+				# ggplot(subset(ELLIBU, country == "NL"), aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
+				# geom_point() + 
+				# geom_smooth() +
+				# scale_x_continuous(limits = c(0, 0.6)) +
+				# geom_abline()
 				
-				ggplot(subset(ELLIBU, country == "CH"), aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
-				geom_point() + 
-				geom_smooth() +
-				scale_x_continuous(limits = c(0, 0.6)) +
-				geom_abline()
+				# ggplot(subset(ELLIBU, country == "CH"), aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
+				# geom_point() + 
+				# geom_smooth() +
+				# scale_x_continuous(limits = c(0, 0.6)) +
+				# geom_abline()
 			
-			# all
-				ggplot(subset(ELLIBU, country == "DE"), aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
-				geom_point() + 
-				geom_smooth() +
-				scale_x_continuous(limits = c(0, 0.6)) +
-				geom_abline()
+			# # all
+				# ggplot(subset(ELLIBU, country == "DE"), aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
+				# geom_point() + 
+				# geom_smooth() +
+				# scale_x_continuous(limits = c(0, 0.6)) +
+				# geom_abline()
 			
-				# only the lists
-				ggplot(subset(ELLIBU, countryld == "DE-L"), aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
-				geom_point() + 
-				geom_smooth() +
-				scale_x_continuous(limits = c(0, 0.6)) +
-				geom_abline()
+				# # only the lists
+				# ggplot(subset(ELLIBU, countryld == "DE-L"), aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
+				# geom_point() + 
+				# geom_smooth() +
+				# scale_x_continuous(limits = c(0, 0.6)) +
+				# geom_abline()
 			
-				# only the districts
-				ggplot(subset(ELLIBU, countryld == "DE-D"), aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
-				geom_point() + 
-				geom_smooth() +
-				scale_x_continuous(limits = c(0, 0.6)) +
-				geom_abline()
+				# # only the districts
+				# ggplot(subset(ELLIBU, countryld == "DE-D"), aes(x=ratio_on_list, y=ratio_elected,color=country)) + 
+				# geom_point() + 
+				# geom_smooth() +
+				# scale_x_continuous(limits = c(0, 0.6)) +
+				# geom_abline()
 				
-				head(ELLIBU[which(ELLIBU$countryld == "DE-D"),]) # yes, makes sense. Ratio elected is always exactly the same as ratio on list.	
+				# head(ELLIBU[which(ELLIBU$countryld == "DE-D"),]) # yes, makes sense. Ratio elected is always exactly the same as ratio on list.	
 				
-	# district size
+	# # district size
 	
-		# creating categories (country specific?)
+		# # creating categories (country specific?)
 		
 	
-			# for NL 
-				hist(ELLIBU$district_magnitude[which(ELLIBU$country == "NL")])  # (not very meaningful for later years?)
+			# # for NL 
+				# hist(ELLIBU$district_magnitude[which(ELLIBU$country == "NL")])  # (not very meaningful for later years?)
 			
-			# for DE
-				hist(ELLIBU$district_magnitude[which(ELLIBU$country == "DE")])
-				hist(ELLIBU$district_magnitude[which(ELLIBU$country == "DE" & ELLIBU$district_magnitude < 5)]) # so lots of value 2 here, which is incorrect (LD issue?)				hist(ELLIBU$district_magnitude[which(ELLIBU$country == "DE" & ELLIBU$district_magnitude < 5)]) # so lots of value 2 here, which is incorrect (LD issue?)
+			# # for DE
+				# hist(ELLIBU$district_magnitude[which(ELLIBU$country == "DE")])
+				# hist(ELLIBU$district_magnitude[which(ELLIBU$country == "DE" & ELLIBU$district_magnitude < 5)]) # so lots of value 2 here, which is incorrect (LD issue?)				hist(ELLIBU$district_magnitude[which(ELLIBU$country == "DE" & ELLIBU$district_magnitude < 5)]) # so lots of value 2 here, which is incorrect (LD issue?)
 				
 			
-			# for CH
-			hist(ELLIBU$district_magnitude[which(ELLIBU$country == "CH")]) # only country with some actual proper variation, lets for now only do this for CH!
-				ELLIBU$district_magnitude_cat <- ELLIBU$district_magnitude
-				ELLIBU$district_magnitude_cat[ELLIBU$district_magnitude > 0 & ELLIBU$district_magnitude < 11] <- "00-10"
-				ELLIBU$district_magnitude_cat[ELLIBU$district_magnitude > 10 & ELLIBU$district_magnitude < 21] <- "11-20"
-				ELLIBU$district_magnitude_cat[ELLIBU$district_magnitude > 20 & ELLIBU$district_magnitude < 31] <- "21-30"
-				ELLIBU$district_magnitude_cat[ELLIBU$district_magnitude > 30] <- "30+"
+			# # for CH
+			# hist(ELLIBU$district_magnitude[which(ELLIBU$country == "CH")]) # only country with some actual proper variation, lets for now only do this for CH!
+				# ELLIBU$district_magnitude_cat <- ELLIBU$district_magnitude
+				# ELLIBU$district_magnitude_cat[ELLIBU$district_magnitude > 0 & ELLIBU$district_magnitude < 11] <- "00-10"
+				# ELLIBU$district_magnitude_cat[ELLIBU$district_magnitude > 10 & ELLIBU$district_magnitude < 21] <- "11-20"
+				# ELLIBU$district_magnitude_cat[ELLIBU$district_magnitude > 20 & ELLIBU$district_magnitude < 31] <- "21-30"
+				# ELLIBU$district_magnitude_cat[ELLIBU$district_magnitude > 30] <- "30+"
 			
-			table(ELLIBU$district_magnitude_cat)
+			# table(ELLIBU$district_magnitude_cat)
 	
-				ggplot(ELLIBU, aes(x=ratio_on_list, y=ratio_elected,color=district_magnitude_cat)) + 
-				geom_point() + 
-				geom_smooth(method='lm',formula=y~x) +
-				scale_x_continuous(limits = c(0, 0.49)) +
-				geom_abline()
+				# ggplot(ELLIBU, aes(x=ratio_on_list, y=ratio_elected,color=district_magnitude_cat)) + 
+				# geom_point() + 
+				# geom_smooth(method='lm',formula=y~x) +
+				# scale_x_continuous(limits = c(0, 0.49)) +
+				# geom_abline()
 	
-	# party size
+	# # party size
 	
-		# creating categories
+		# # creating categories
 		
-			# for NL 
-				hist(ELLIBU$party_size[which(ELLIBU$country == "NL")]) 
-				ELLIBU$party_size_cat <- ELLIBU$party_size
+			# # for NL 
+				# hist(ELLIBU$party_size[which(ELLIBU$country == "NL")]) 
+				# ELLIBU$party_size_cat <- ELLIBU$party_size
 				
-				cut(ELLIBU$party_size[which(ELLIBU$country=="NL")], 3)
+				# cut(ELLIBU$party_size[which(ELLIBU$country=="NL")], 3)
 				
-				ELLIBU$party_size_cat[ELLIBU$country == "NL" & ELLIBU$party_size >= 0 & ELLIBU$party_size < 16] <- "small"
-				ELLIBU$party_size_cat[ELLIBU$country == "NL" &ELLIBU$party_size > 15 & ELLIBU$party_size < 33] <- "medium"
-				ELLIBU$party_size_cat[ELLIBU$country == "NL" &ELLIBU$party_size > 32] <- "large"
-				table(ELLIBU$party_size_cat)
+				# ELLIBU$party_size_cat[ELLIBU$country == "NL" & ELLIBU$party_size >= 0 & ELLIBU$party_size < 16] <- "small"
+				# ELLIBU$party_size_cat[ELLIBU$country == "NL" &ELLIBU$party_size > 15 & ELLIBU$party_size < 33] <- "medium"
+				# ELLIBU$party_size_cat[ELLIBU$country == "NL" &ELLIBU$party_size > 32] <- "large"
+				# table(ELLIBU$party_size_cat)
 				
-				table(ELLIBU$party_size_cat[which(ELLIBU$country == "NL")],ELLIBU$party_id[which(ELLIBU$country == "NL")])
+				# table(ELLIBU$party_size_cat[which(ELLIBU$country == "NL")],ELLIBU$party_id[which(ELLIBU$country == "NL")])
 			
-			# for DE 
-				hist(ELLIBU$party_size[which(ELLIBU$country == "DE")]) 
-				cut(ELLIBU$party_size[which(ELLIBU$country=="DE")], 3)
-				ELLIBU$party_size_cat[ELLIBU$country == "DE" & ELLIBU$party_size >= 0 & ELLIBU$party_size < 110] <- "small"
-				ELLIBU$party_size_cat[ELLIBU$country == "DE" &ELLIBU$party_size > 109 & ELLIBU$party_size < 156] <- "medium"
-				ELLIBU$party_size_cat[ELLIBU$country == "DE" &ELLIBU$party_size > 155] <- "large"
-				table(ELLIBU$party_size_cat)
+			# # for DE 
+				# hist(ELLIBU$party_size[which(ELLIBU$country == "DE")]) 
+				# cut(ELLIBU$party_size[which(ELLIBU$country=="DE")], 3)
+				# ELLIBU$party_size_cat[ELLIBU$country == "DE" & ELLIBU$party_size >= 0 & ELLIBU$party_size < 110] <- "small"
+				# ELLIBU$party_size_cat[ELLIBU$country == "DE" &ELLIBU$party_size > 109 & ELLIBU$party_size < 156] <- "medium"
+				# ELLIBU$party_size_cat[ELLIBU$country == "DE" &ELLIBU$party_size > 155] <- "large"
+				# table(ELLIBU$party_size_cat)
 			
-			# for CH 
-				hist(ELLIBU$party_size[which(ELLIBU$country == "CH")]) 
-				cut(ELLIBU$party_size[which(ELLIBU$country=="CH")], 3)
-				ELLIBU$party_size_cat[ELLIBU$country == "CH" & ELLIBU$party_size >= 0 & ELLIBU$party_size < 21] <- "small"
-				ELLIBU$party_size_cat[ELLIBU$country == "CH" &ELLIBU$party_size > 20 & ELLIBU$party_size < 43] <- "medium"
-				ELLIBU$party_size_cat[ELLIBU$country == "CH" &ELLIBU$party_size > 42] <- "large"
-				table(ELLIBU$party_size_cat) 
+			# # for CH 
+				# hist(ELLIBU$party_size[which(ELLIBU$country == "CH")]) 
+				# cut(ELLIBU$party_size[which(ELLIBU$country=="CH")], 3)
+				# ELLIBU$party_size_cat[ELLIBU$country == "CH" & ELLIBU$party_size >= 0 & ELLIBU$party_size < 21] <- "small"
+				# ELLIBU$party_size_cat[ELLIBU$country == "CH" &ELLIBU$party_size > 20 & ELLIBU$party_size < 43] <- "medium"
+				# ELLIBU$party_size_cat[ELLIBU$country == "CH" &ELLIBU$party_size > 42] <- "large"
+				# table(ELLIBU$party_size_cat) 
 				
-				ggplot(ELLIBU, aes(x=ratio_on_list, y=ratio_elected,color=party_size_cat)) + 
-				geom_point() + 
-				geom_smooth(method='lm',formula=y~x) +
-				scale_x_continuous(limits = c(0, 0.49)) +
-				geom_abline()
+				# ggplot(ELLIBU, aes(x=ratio_on_list, y=ratio_elected,color=party_size_cat)) + 
+				# geom_point() + 
+				# geom_smooth(method='lm',formula=y~x) +
+				# scale_x_continuous(limits = c(0, 0.49)) +
+				# geom_abline()
 				
-	# time effects
+	# # time effects
 	
-		ELLIBU$election_year <- as.numeric(substrRight(as.character(ELLIBU$parliament_id),4))
-		table(ELLIBU$election_year)
-		ELLIBU$election_year_cent <-ELLIBU$election_year - round(mean(ELLIBU$election_year,na.rm=T),0) # not that the German 2017 sample is pulling this value up still at this stage
-		table(ELLIBU$election_year_cent)
+		# ELLIBU$election_year <- as.numeric(substrRight(as.character(ELLIBU$parliament_id),4))
+		# table(ELLIBU$election_year)
+		# ELLIBU$election_year_cent <-ELLIBU$election_year - round(mean(ELLIBU$election_year,na.rm=T),0) # not that the German 2017 sample is pulling this value up still at this stage
+		# table(ELLIBU$election_year_cent)
 		
-		stargazer(ELLIBU)
+		# stargazer(ELLIBU)
 		
-	### impact of gender quotas
+	# ### impact of gender quotas
 	
-		## constructing some combined factors
+		# ## constructing some combined factors
 		
-			# quota now and percentage
+			# # quota now and percentage
 			
-				ELLIBU$qnqp <- as.character(ELLIBU$quota_now)
-				table(ELLIBU$quota_now,ELLIBU$quota_percentage)
-				ELLIBU$qnqp[which(ELLIBU$quota_now == "1" & ELLIBU$quota_percentage == "25")] <- "1_25"
-				ELLIBU$qnqp[which(ELLIBU$quota_now == "1" & ELLIBU$quota_percentage == "33")] <- "1_33"
-				ELLIBU$qnqp[which(ELLIBU$quota_now == "1" & ELLIBU$quota_percentage == "40")] <- "1_40"
-				ELLIBU$qnqp[which(ELLIBU$quota_now == "1" & ELLIBU$quota_percentage == "50")] <- "1_50"
-				table(ELLIBU$qnqp)
+				# ELLIBU$qnqp <- as.character(ELLIBU$quota_now)
+				# table(ELLIBU$quota_now,ELLIBU$quota_percentage)
+				# ELLIBU$qnqp[which(ELLIBU$quota_now == "1" & ELLIBU$quota_percentage == "25")] <- "1_25"
+				# ELLIBU$qnqp[which(ELLIBU$quota_now == "1" & ELLIBU$quota_percentage == "33")] <- "1_33"
+				# ELLIBU$qnqp[which(ELLIBU$quota_now == "1" & ELLIBU$quota_percentage == "40")] <- "1_40"
+				# ELLIBU$qnqp[which(ELLIBU$quota_now == "1" & ELLIBU$quota_percentage == "50")] <- "1_50"
+				# table(ELLIBU$qnqp)
 			
-			# + zipper
-				table(ELLIBU$qnqp,ELLIBU$quota_zipper)
-				ELLIBU$qnqpz <- ELLIBU$qnqp
-				ELLIBU$qnqpz[which(ELLIBU$qnqp == "1_40")] <- "1_40_zip"
-				ELLIBU$qnqpz[which(ELLIBU$qnqp == "1_50" & ELLIBU$quota_zipper == "1")] <- "1_50_zip"
-				ELLIBU$qnqpz[which(ELLIBU$qnqp == "1_50" & ELLIBU$quota_zipper == "0")] <- "1_50_notzip"
-				table(ELLIBU$qnqpz)
+			# # + zipper
+				# table(ELLIBU$qnqp,ELLIBU$quota_zipper)
+				# ELLIBU$qnqpz <- ELLIBU$qnqp
+				# ELLIBU$qnqpz[which(ELLIBU$qnqp == "1_40")] <- "1_40_zip"
+				# ELLIBU$qnqpz[which(ELLIBU$qnqp == "1_50" & ELLIBU$quota_zipper == "1")] <- "1_50_zip"
+				# ELLIBU$qnqpz[which(ELLIBU$qnqp == "1_50" & ELLIBU$quota_zipper == "0")] <- "1_50_notzip"
+				# table(ELLIBU$qnqpz)
 				
-		## on the percentage
+		# ## on the percentage
 			
-			# present
-			ggplot(ELLIBU, aes(x=quota_now, y=ratio_elected)) + 
-			geom_boxplot()
+			# # present
+			# ggplot(ELLIBU, aes(x=quota_now, y=ratio_elected)) + 
+			# geom_boxplot()
 
-			# present + percentage
-			ggplot(ELLIBU, aes(x=qnqp, y=ratio_elected)) + 
-			geom_boxplot()
+			# # present + percentage
+			# ggplot(ELLIBU, aes(x=qnqp, y=ratio_elected)) + 
+			# geom_boxplot()
 			
-			# present + percentage + zipper
-			ggplot(ELLIBU, aes(x=qnqpz, y=ratio_elected)) + 
-			geom_boxplot()
+			# # present + percentage + zipper
+			# ggplot(ELLIBU, aes(x=qnqpz, y=ratio_elected)) + 
+			# geom_boxplot()
 			
-			# present + percentage + zipper TEMP TEMP
-			ggplot(ELLIBU, aes(x=qnqpz, y=ratio_on_list)) + 
-			geom_boxplot()
+			# # present + percentage + zipper TEMP TEMP
+			# ggplot(ELLIBU, aes(x=qnqpz, y=ratio_on_list)) + 
+			# geom_boxplot()
 			
-			# quota times party size
-			table(ELLIBU$party_size_cat)
- 			table(ELLIBU$quota_now)
-			ELLIBU$quota_and_party_size <- ELLIBU$party_size_cat
-			ELLIBU$quota_and_party_size[which(ELLIBU$party_size_cat == "small" & ELLIBU$quota_now == 0)] <- "small - no quota"
-			ELLIBU$quota_and_party_size[which(ELLIBU$party_size_cat == "small" & ELLIBU$quota_now == 1)] <- "small - with quota"
+			# # quota times party size
+			# table(ELLIBU$party_size_cat)
+ 			# table(ELLIBU$quota_now)
+			# ELLIBU$quota_and_party_size <- ELLIBU$party_size_cat
+			# ELLIBU$quota_and_party_size[which(ELLIBU$party_size_cat == "small" & ELLIBU$quota_now == 0)] <- "small - no quota"
+			# ELLIBU$quota_and_party_size[which(ELLIBU$party_size_cat == "small" & ELLIBU$quota_now == 1)] <- "small - with quota"
 			
-			ELLIBU$quota_and_party_size[which(ELLIBU$party_size_cat == "medium" & ELLIBU$quota_now == 0)] <- "medium - no quota"
-			ELLIBU$quota_and_party_size[which(ELLIBU$party_size_cat == "medium" & ELLIBU$quota_now == 1)] <- "medium - with quota"
+			# ELLIBU$quota_and_party_size[which(ELLIBU$party_size_cat == "medium" & ELLIBU$quota_now == 0)] <- "medium - no quota"
+			# ELLIBU$quota_and_party_size[which(ELLIBU$party_size_cat == "medium" & ELLIBU$quota_now == 1)] <- "medium - with quota"
 			
-			ELLIBU$quota_and_party_size[which(ELLIBU$party_size_cat == "large" & ELLIBU$quota_now == 0)] <- "large - no quota"
-			ELLIBU$quota_and_party_size[which(ELLIBU$party_size_cat == "large" & ELLIBU$quota_now == 1)] <- "large - with quota"
+			# ELLIBU$quota_and_party_size[which(ELLIBU$party_size_cat == "large" & ELLIBU$quota_now == 0)] <- "large - no quota"
+			# ELLIBU$quota_and_party_size[which(ELLIBU$party_size_cat == "large" & ELLIBU$quota_now == 1)] <- "large - with quota"
 			
-			ELLIBU$quota_and_party_size[which(ELLIBU$quota_and_party_size == "small" | ELLIBU$quota_and_party_size == "medium" | ELLIBU$quota_and_party_size == "large")] <- NA
+			# ELLIBU$quota_and_party_size[which(ELLIBU$quota_and_party_size == "small" | ELLIBU$quota_and_party_size == "medium" | ELLIBU$quota_and_party_size == "large")] <- NA
 			
-			table(ELLIBU$quota_and_party_size)
+			# table(ELLIBU$quota_and_party_size)
 			
-			TE <- ELLIBU[which(ELLIBU$quota_and_party_size == "medium - with quota"),]
-			table(TE$parliament_id)
-			table(TE$nat_party_id)
+			# TE <- ELLIBU[which(ELLIBU$quota_and_party_size == "medium - with quota"),]
+			# table(TE$parliament_id)
+			# table(TE$nat_party_id)
 			
-			# percentage - can also try ratio elected here
-				ggplot(ELLIBU, aes(x=quota_and_party_size, y=ratio_elected, color=party_size_cat)) + 
-				geom_boxplot()
+			# # percentage - can also try ratio elected here
+				# ggplot(ELLIBU, aes(x=quota_and_party_size, y=ratio_elected, color=party_size_cat)) + 
+				# geom_boxplot()
 		
-				ggplot(ELLIBU, aes(x=quota_and_party_size, y=ratio_on_list, color=party_size_cat)) + 
-				geom_boxplot()
+				# ggplot(ELLIBU, aes(x=quota_and_party_size, y=ratio_on_list, color=party_size_cat)) + 
+				# geom_boxplot()
 		
-			# relation
+			# # relation
 			
-				table(ELLIBU$type)
-				table(ELLIBU$country)
-				table(ELLIBU$type,ELLIBU$country)
+				# table(ELLIBU$type)
+				# table(ELLIBU$country)
+				# table(ELLIBU$type,ELLIBU$country)
 				
-				ELLIBUA <- ELLIBU[which(ELLIBU$type=="list" & ELLIBU$country=="NL" & ELLIBU$ratio_on_list > 0),]
-				nrow(ELLIBUA)
+				# ELLIBUA <- ELLIBU[which(ELLIBU$type=="list" & ELLIBU$country=="NL" & ELLIBU$ratio_on_list > 0),]
+				# nrow(ELLIBUA)
 				
-				# this should say!
-				ggplot(ELLIBUA, aes(x=ratio_on_list, y=ratio_elected,color=quota_and_party_size)) + 
-				geom_point() + 
-				geom_smooth(method='lm') +
-				scale_x_continuous(limits = c(0, 0.6)) +
-				geom_abline()
+				# # this should say!
+				# ggplot(ELLIBUA, aes(x=ratio_on_list, y=ratio_elected,color=quota_and_party_size)) + 
+				# geom_point() + 
+				# geom_smooth(method='lm') +
+				# scale_x_continuous(limits = c(0, 0.6)) +
+				# geom_abline()
 
-		## on the relation
+		# ## on the relation
 		
-			# reduce the sample to not include 0,0 observations
+			# # reduce the sample to not include 0,0 observations
 		
-				table(ELLIBU$ratio_on_list)
-				nrow(ELLIBU)
-				ELLIBUR <- ELLIBU[which(!(ELLIBU$ratio_on_list == 0)),]
-				nrow(ELLIBUR)
+				# table(ELLIBU$ratio_on_list)
+				# nrow(ELLIBU)
+				# ELLIBUR <- ELLIBU[which(!(ELLIBU$ratio_on_list == 0)),]
+				# nrow(ELLIBUR)
 		
-			# present
-				# only the districts
-					ggplot(ELLIBUR, aes(x=ratio_on_list, y=ratio_elected,color=quota_now)) + 
-					geom_point() + 
-					geom_smooth(method='lm') +
-					# geom_smooth() +
-					scale_x_continuous(limits = c(0, 0.6)) +
-					geom_abline()
+			# # present
+				# # only the districts
+					# ggplot(ELLIBUR, aes(x=ratio_on_list, y=ratio_elected,color=quota_now)) + 
+					# geom_point() + 
+					# geom_smooth(method='lm') +
+					# # geom_smooth() +
+					# scale_x_continuous(limits = c(0, 0.6)) +
+					# geom_abline()
 				
-			# + percentage
+			# # + percentage
 				
-				ggplot(ELLIBUR, aes(x=ratio_on_list, y=ratio_elected,color=qnqp)) + 
-					geom_point() + 
-					geom_smooth(method='lm') +
-					scale_x_continuous(limits = c(0, 0.6)) +
-					geom_abline()
+				# ggplot(ELLIBUR, aes(x=ratio_on_list, y=ratio_elected,color=qnqp)) + 
+					# geom_point() + 
+					# geom_smooth(method='lm') +
+					# scale_x_continuous(limits = c(0, 0.6)) +
+					# geom_abline()
 			
-			# + strength / zipper
+			# # + strength / zipper
 			
-				ggplot(ELLIBUR, aes(x=ratio_on_list, y=ratio_elected,color=qnqpz)) + 
-					geom_point() + 
-					geom_smooth(method='lm') +
-					scale_x_continuous(limits = c(0, 0.6)) +
-					geom_abline()
+				# ggplot(ELLIBUR, aes(x=ratio_on_list, y=ratio_elected,color=qnqpz)) + 
+					# geom_point() + 
+					# geom_smooth(method='lm') +
+					# scale_x_continuous(limits = c(0, 0.6)) +
+					# geom_abline()
 			
 		
-######################################################################################
-###################################### MODELS ########################################
-######################################################################################
+# ######################################################################################
+# ###################################### MODELS ########################################
+# ######################################################################################
 
-	# focus on the lists
-		ELLIBU <- ELLIBUL
+	# # focus on the lists
+		# ELLIBU <- ELLIBUL
 	
-	# lets remove switserland as well for now
-		table(ELLIBU$country)
-		ELLIBU <- ELLIBU[which(!ELLIBU$country == "CH"),]
-		nrow(ELLIBU)
+	# # lets remove switserland as well for now
+		# table(ELLIBU$country)
+		# ELLIBU <- ELLIBU[which(!ELLIBU$country == "CH"),]
+		# nrow(ELLIBU)
 
-	# group mean centering district size and party size
+	# # group mean centering district size and party size
 	
-		# district magnitude
-		NLm <- mean(ELLIBU$district_magnitude[ELLIBU$country =="NL"],na.rm=TRUE)
-		NLsd <- sd(ELLIBU$district_magnitude[ELLIBU$country =="NL"],na.rm=TRUE)
+		# # district magnitude
+		# NLm <- mean(ELLIBU$district_magnitude[ELLIBU$country =="NL"],na.rm=TRUE)
+		# NLsd <- sd(ELLIBU$district_magnitude[ELLIBU$country =="NL"],na.rm=TRUE)
 		
-		DEm <- mean(ELLIBU$district_magnitude[ELLIBU$country =="DE"],na.rm=TRUE)
-		DEsd <- sd(ELLIBU$district_magnitude[ELLIBU$country =="DE"],na.rm=TRUE)
+		# DEm <- mean(ELLIBU$district_magnitude[ELLIBU$country =="DE"],na.rm=TRUE)
+		# DEsd <- sd(ELLIBU$district_magnitude[ELLIBU$country =="DE"],na.rm=TRUE)
 		
-		CHm <- mean(ELLIBU$district_magnitude[ELLIBU$country =="CH"],na.rm=TRUE)
-		CHsd <- sd(ELLIBU$district_magnitude[ELLIBU$country =="CH"],na.rm=TRUE)
+		# CHm <- mean(ELLIBU$district_magnitude[ELLIBU$country =="CH"],na.rm=TRUE)
+		# CHsd <- sd(ELLIBU$district_magnitude[ELLIBU$country =="CH"],na.rm=TRUE)
 		
-		ELLIBU$district_mag_gmcent <- ifelse(ELLIBU$country=="NL",((ELLIBU$district_magnitude - NLm)/NLsd),NA)
-		ELLIBU$district_mag_gmcent <- ifelse(ELLIBU$country=="DE",((ELLIBU$district_magnitude - DEm)/DEsd),ELLIBU$district_mag_gmcent)
-		ELLIBU$district_mag_gmcent <- ifelse(ELLIBU$country=="CH",((ELLIBU$district_magnitude - CHm)/CHsd),ELLIBU$district_mag_gmcent)
-		hist(ELLIBU$district_mag_gmcent)
-		mean(ELLIBU$district_mag_gmcent,na.rm=T)
-		sd(ELLIBU$ ,na.rm=T)
+		# ELLIBU$district_mag_gmcent <- ifelse(ELLIBU$country=="NL",((ELLIBU$district_magnitude - NLm)/NLsd),NA)
+		# ELLIBU$district_mag_gmcent <- ifelse(ELLIBU$country=="DE",((ELLIBU$district_magnitude - DEm)/DEsd),ELLIBU$district_mag_gmcent)
+		# ELLIBU$district_mag_gmcent <- ifelse(ELLIBU$country=="CH",((ELLIBU$district_magnitude - CHm)/CHsd),ELLIBU$district_mag_gmcent)
+		# hist(ELLIBU$district_mag_gmcent)
+		# mean(ELLIBU$district_mag_gmcent,na.rm=T)
+		# sd(ELLIBU$ ,na.rm=T)
 		
-	# party size
-		NLmps <- mean(ELLIBU$party_size[ELLIBU$country =="NL"],na.rm=TRUE)
-		NLsdps <- sd(ELLIBU$party_size[ELLIBU$country =="NL"],na.rm=TRUE)
+	# # party size
+		# NLmps <- mean(ELLIBU$party_size[ELLIBU$country =="NL"],na.rm=TRUE)
+		# NLsdps <- sd(ELLIBU$party_size[ELLIBU$country =="NL"],na.rm=TRUE)
 		
-		DEmps <- mean(ELLIBU$party_size[ELLIBU$country =="DE"],na.rm=TRUE)
-		DEsdps <- sd(ELLIBU$party_size[ELLIBU$country =="DE"],na.rm=TRUE)
+		# DEmps <- mean(ELLIBU$party_size[ELLIBU$country =="DE"],na.rm=TRUE)
+		# DEsdps <- sd(ELLIBU$party_size[ELLIBU$country =="DE"],na.rm=TRUE)
 		
-		CHmps <- mean(ELLIBU$party_size[ELLIBU$country =="CH"],na.rm=TRUE)
-		CHsdps <- sd(ELLIBU$party_size[ELLIBU$country =="CH"],na.rm=TRUE)
+		# CHmps <- mean(ELLIBU$party_size[ELLIBU$country =="CH"],na.rm=TRUE)
+		# CHsdps <- sd(ELLIBU$party_size[ELLIBU$country =="CH"],na.rm=TRUE)
 		
-		ELLIBU$party_size_gmcent <- ifelse(ELLIBU$country=="NL",((ELLIBU$party_size - NLmps)/NLsdps),NA)
-		ELLIBU$party_size_gmcent <- ifelse(ELLIBU$country=="DE",((ELLIBU$party_size - DEmps)/DEsdps),ELLIBU$party_size_gmcent)
-		ELLIBU$party_size_gmcent <- ifelse(ELLIBU$country=="CH",((ELLIBU$party_size - CHmps)/CHsdps),ELLIBU$party_size_gmcent)
-		hist(ELLIBU$party_size_gmcent)
-		mean(ELLIBU$party_size_gmcent,na.rm=T)
-		sd(ELLIBU$party_size_gmcent,na.rm=T)
+		# ELLIBU$party_size_gmcent <- ifelse(ELLIBU$country=="NL",((ELLIBU$party_size - NLmps)/NLsdps),NA)
+		# ELLIBU$party_size_gmcent <- ifelse(ELLIBU$country=="DE",((ELLIBU$party_size - DEmps)/DEsdps),ELLIBU$party_size_gmcent)
+		# ELLIBU$party_size_gmcent <- ifelse(ELLIBU$country=="CH",((ELLIBU$party_size - CHmps)/CHsdps),ELLIBU$party_size_gmcent)
+		# hist(ELLIBU$party_size_gmcent)
+		# mean(ELLIBU$party_size_gmcent,na.rm=T)
+		# sd(ELLIBU$party_size_gmcent,na.rm=T)
 
 		
-	# ratio on list
-		ELLIBU$ratio_on_list_cent <- scale(ELLIBU$ratio_on_list,center=TRUE,scale=FALSE)
-		hist(ELLIBU$ratio_on_list_cent)
+	# # ratio on list
+		# ELLIBU$ratio_on_list_cent <- scale(ELLIBU$ratio_on_list,center=TRUE,scale=FALSE)
+		# hist(ELLIBU$ratio_on_list_cent)
 	
-	names(ELLIBU)
-	table(ELLIBU$party_id)
+	# names(ELLIBU)
+	# table(ELLIBU$party_id)
 	
-#	mempty <- lm(ratio_elected~1,
-	mempty <- lm(ratio_on_list~1,
-				 data=ELLIBU)
-	summary(mempty)
+# #	mempty <- lm(ratio_elected~1,
+	# mempty <- lm(ratio_on_list~1,
+				 # data=ELLIBU)
+	# summary(mempty)
 
 
-#	m1 <- lm(ratio_elected~ratio_on_list_cent,
-	m1 <- lm(ratio_on_list ~
-				 data=ELLIBU)
-	summary(m1)
+# #	m1 <- lm(ratio_elected~ratio_on_list_cent,
+	# m1 <- lm(ratio_on_list ~
+				 # data=ELLIBU)
+	# summary(m1)
 	
-#	m1a <- lm(ratio_elected~ratio_on_list_cent +
-	m1a <- lm(ratio_on_list ~
-				 election_year_cent
-				 ,data=ELLIBU)
-	summary(m1a)
+# #	m1a <- lm(ratio_elected~ratio_on_list_cent +
+	# m1a <- lm(ratio_on_list ~
+				 # election_year_cent
+				 # ,data=ELLIBU)
+	# summary(m1a)
 	
-#	m2 <- lm(ratio_elected~ratio_on_list_cent +
-	m2 <- lm(ratio_on_list ~
-				 election_year_cent +
-				district_mag_gmcent
-				,data=ELLIBU)
-	summary(m2)
+# #	m2 <- lm(ratio_elected~ratio_on_list_cent +
+	# m2 <- lm(ratio_on_list ~
+				 # election_year_cent +
+				# district_mag_gmcent
+				# ,data=ELLIBU)
+	# summary(m2)
 	
-#	m2a <- lm(ratio_elected~ratio_on_list_cent +
-	m2a <- lm(ratio_on_list ~
-				election_year_cent +
-				district_mag_gmcent #* ratio_on_list_cent 
-				,data=ELLIBU)
-	summary(m2a)
+# #	m2a <- lm(ratio_elected~ratio_on_list_cent +
+	# m2a <- lm(ratio_on_list ~
+				# election_year_cent +
+				# district_mag_gmcent #* ratio_on_list_cent 
+				# ,data=ELLIBU)
+	# summary(m2a)
 	
-#	m3 <- lm(ratio_elected~ratio_on_list_cent +
-	m3 <- lm(ratio_on_list ~
-				election_year_cent +
-				district_mag_gmcent + #* ratio_on_list_cent +
-				party_size_gmcent
-				,data=ELLIBU)
-	summary(m3)
+# #	m3 <- lm(ratio_elected~ratio_on_list_cent +
+	# m3 <- lm(ratio_on_list ~
+				# election_year_cent +
+				# district_mag_gmcent + #* ratio_on_list_cent +
+				# party_size_gmcent
+				# ,data=ELLIBU)
+	# summary(m3)
 	
-#	m3a <- lm(ratio_elected~ratio_on_list_cent +
-	m3a <- lm(ratio_on_list ~
-				election_year_cent +
-				district_mag_gmcent + #* ratio_on_list_cent +
-				party_size_gmcent  #* ratio_on_list_cent
-				,data=ELLIBU)
-	summary(m3a)
+# #	m3a <- lm(ratio_elected~ratio_on_list_cent +
+	# m3a <- lm(ratio_on_list ~
+				# election_year_cent +
+				# district_mag_gmcent + #* ratio_on_list_cent +
+				# party_size_gmcent  #* ratio_on_list_cent
+				# ,data=ELLIBU)
+	# summary(m3a)
 	
-#	m4 <- lm(ratio_elected~ratio_on_list_cent +
-	m4 <- lm(ratio_on_list ~
-				election_year_cent +
-				district_mag_gmcent + #* ratio_on_list_cent +
-				party_size_gmcent + #* ratio_on_list_cent +
-				country
-				,data=ELLIBU)
-	summary(m4)
+# #	m4 <- lm(ratio_elected~ratio_on_list_cent +
+	# m4 <- lm(ratio_on_list ~
+				# election_year_cent +
+				# district_mag_gmcent + #* ratio_on_list_cent +
+				# party_size_gmcent + #* ratio_on_list_cent +
+				# country
+				# ,data=ELLIBU)
+	# summary(m4)
 	
-#	m4a <- lm(ratio_elected~ratio_on_list_cent +
-	m4a <- lm(ratio_on_list ~
-				election_year_cent +
-				district_mag_gmcent + #* ratio_on_list_cent +
-				party_size_gmcent + #* ratio_on_list_cent +
-				country  #* ratio_on_list_cent
-				,data=ELLIBU)
-	summary(m4a)
+# #	m4a <- lm(ratio_elected~ratio_on_list_cent +
+	# m4a <- lm(ratio_on_list ~
+				# election_year_cent +
+				# district_mag_gmcent + #* ratio_on_list_cent +
+				# party_size_gmcent + #* ratio_on_list_cent +
+				# country  #* ratio_on_list_cent
+				# ,data=ELLIBU)
+	# summary(m4a)
 	
-#	m5 <- lm(ratio_elected~ratio_on_list_cent +
-	m5 <- lm(ratio_on_list ~
-				election_year_cent +
-				district_mag_gmcent + #* ratio_on_list_cent +
-				party_size_gmcent + #* ratio_on_list_cent +
-				country + #* ratio_on_list_cent +
-				quota_now + #* ratio_on_list_cent +
-				quota_now * party_size_gmcent
-				,data=ELLIBU)
-	summary(m5)
+# #	m5 <- lm(ratio_elected~ratio_on_list_cent +
+	# m5 <- lm(ratio_on_list ~
+				# election_year_cent +
+				# district_mag_gmcent + #* ratio_on_list_cent +
+				# party_size_gmcent + #* ratio_on_list_cent +
+				# country + #* ratio_on_list_cent +
+				# quota_now + #* ratio_on_list_cent +
+				# quota_now * party_size_gmcent
+				# ,data=ELLIBU)
+	# summary(m5)
 	
 	
-		# building up the stargazer output
+		# # building up the stargazer output
 			
-			dirtynames <- names(coef(m5))
+			# dirtynames <- names(coef(m5))
 			
-			specificnamecleaning <- function(dirtynamesloc)
-			{
-				cleanernames <- gsub("ratio_on_list_cent","ratio on list",dirtynamesloc,fixed=TRUE)
-				cleanernames <- gsub("election_year_cent","election year",cleanernames,fixed=TRUE)
-				cleanernames <- gsub("district_mag_gmcent","district magnitude gmcent",cleanernames,fixed=TRUE)
-				cleanernames <- gsub("party_size_gmcent","party size gmcent",cleanernames,fixed=TRUE)
-				cleanernames <- gsub("quota_now","quota now",cleanernames,fixed=TRUE)
-				return(cleanernames)
+			# specificnamecleaning <- function(dirtynamesloc)
+			# {
+				# cleanernames <- gsub("ratio_on_list_cent","ratio on list",dirtynamesloc,fixed=TRUE)
+				# cleanernames <- gsub("election_year_cent","election year",cleanernames,fixed=TRUE)
+				# cleanernames <- gsub("district_mag_gmcent","district magnitude gmcent",cleanernames,fixed=TRUE)
+				# cleanernames <- gsub("party_size_gmcent","party size gmcent",cleanernames,fixed=TRUE)
+				# cleanernames <- gsub("quota_now","quota now",cleanernames,fixed=TRUE)
+				# return(cleanernames)
 				
-			}
-			specificnamecleaning(dirtynames)
+			# }
+			# specificnamecleaning(dirtynames)
 			
-			labelsinthisorder <- specificnamecleaning(names(coef(m5)))
+			# labelsinthisorder <- specificnamecleaning(names(coef(m5)))
 	
-	stargazer(mempty,m1a,m2a,m3,m4,m5,
-			type="latex",
-			covariate.labels = labelsinthisorder,
-			intercept.bottom=F,
-			omit.stat=c("f","ser"))
+	# stargazer(mempty,m1a,m2a,m3,m4,m5,
+			# type="latex",
+			# covariate.labels = labelsinthisorder,
+			# intercept.bottom=F,
+			# omit.stat=c("f","ser"))
 
 
 
