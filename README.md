@@ -25,16 +25,21 @@ This replication package contains all the files necessary to reproduce the resul
 │   ├── FACT.csv
 │   ├── COMM.csv
 │   ├── ELDI.csv
+│   ├── ELEC.csv
 │   ├── ELLI.csv
 │   └── ELEN.csv
 ├── INDA/
 │   ├── DG/
-│   │   └── 20200818_2020
+│   │   └── 20200818_2020_resvecelect.csv
 │   └── OM/
-│       └── 20210212_1433
+│       └── 20210212_1433_meanpersdifferentresvec.csv
+│       └── 20210212_1433_percentage95simularresvec.csv
 ├── NL_boynames.csv
 ├── NL_girlnames.csv
+├── DE_boynames.csv
+├── DE_girlnames.csv
 ├── PPDB_Round2_v4.xlsx
+├── parlgov_electiondata_20190815.csv
 └── PCC___codebook_V4_0_0.pdf
 
 
@@ -48,7 +53,7 @@ This replication package contains all the files necessary to reproduce the resul
 
     - **Double Gangers Detection**:
 
-      - Around **line 1129**, there is a boolean variable called `runDGagain` that is set to `FALSE` by default.
+      - Around **line 1192**, there is a boolean variable called `runDGagain` that is set to `FALSE` by default.
       - This controls the execution of the double ganger detection process, which determines electable list positions.
       - Setting `runDGagain` to `TRUE` will run this part of the script, but **it takes a long time to execute**.
       - To save time, when `runDGagain` is `FALSE`, the script pulls the results from the file `20200818_2020` located in the `INDA/DG/` folder.
@@ -56,7 +61,7 @@ This replication package contains all the files necessary to reproduce the resul
 
     - **Optimal Matching Algorithms**:
 
-      - Around **line 2027**, there is a boolean variable called `runOMagain` that is set to `FALSE` by default.
+      - Around **line 2148**, there is a boolean variable called `runOMagain` that is set to `FALSE` by default.
       - This controls the execution of the Optimal Matching algorithms.
       - Running the Optimal Matching algorithms is **time-consuming**.
       - When `runOMagain` is `FALSE`, the script pulls the results from the file `20210212_1433` located in the `INDA/OM/` folder.
@@ -78,20 +83,24 @@ The analysis is performed on a relational database, and the data is provided as 
 7. **`FACT.csv`**: Faction information within parliaments. Refer to page 10 in the codebook.
 8. **`COMM.csv`**: Committees data. See page 11 in the codebook.
 9. **`ELDI.csv`**: Electoral districts data. Details are on page 15 of the codebook.
-10. **`ELLI.csv`**: Electoral lists data. Refer to page 13 in the codebook.
-11. **`ELEN.csv`**: Electoral list entries. See page 14 in the codebook.
+10. **`ELEC.csv`** – Elections table Details are on page 12 of the codebook.
+11. **`ELLI.csv`**: Electoral lists data. Refer to page 13 in the codebook.
+12. **`ELEN.csv`**: Electoral list entries. See page 14 in the codebook.
 
 #### Additional Data Files
 
 - **`NL_boynames.csv`**: A list of common Dutch male first names. This file is used in the `R026.R` script to infer the gender of politicians when the PCC data does not specify it, typically for individuals who never made it to parliament and whose gender is not specified in electoral lists.
 - **`NL_girlnames.csv`**: A list of common Dutch female first names. Similar to `NL_boynames.csv`, this file helps determine the gender of politicians lacking gender information in the PCC data.
+- **`DE_boynames.csv`** – German male name list (gender imputation).
+- **`DE_girlnames.csv`** – German female name list (gender imputation).
 - **`PPDB_Round2_v4.xlsx`**: Contains data from the Political Party Database (PPDB), which provides additional information on political parties used in the analysis. For more details about the PPDB, please visit the [Political Party Database Project website](https://www.politicalpartydb.org/).
+- **`parlgov_electiondata_20190815.csv`** – ParlGov national‑election results.
 
 #### INDA Data Files
 
-- **`INDA/DG/20200818_2020`**: This file contains precomputed results from the double ganger detection process. When `runDGagain` in the `R026.R` script is set to `FALSE`, the script uses this file to load the results, saving time by not rerunning the lengthy computation.
-
-- **`INDA/OM/20210212_1433`**: This file contains precomputed results from the Optimal Matching algorithms. When `runOMagain` in the `R026.R` script is set to `FALSE`, the script uses this file to load the results, avoiding the time-consuming computation.
+- **`INDA/DG/20200818_2020_resvecelect.csv`**: This file contains precomputed results from the double ganger detection process. When `runDGagain` in the `R026.R` script is set to `FALSE`, the script uses this file to load the results, saving time by not rerunning the lengthy computation.
+- **`INDA/OM/20210212_1433_meanpersdifferentresvec.csv`**: This file contains precomputed results from the Optimal Matching algorithms. When `runOMagain` in the `R026.R` script is set to `FALSE`, the script uses this file to load the results, avoiding the time-consuming computation.
+- **`INDA/OM/20210212_1433_percentage95simularresvec.csv`**: This file contains precomputed results from the Optimal Matching algorithms.
 
 ### Documentation
 
@@ -108,13 +117,15 @@ The analysis is performed on a relational database, and the data is provided as 
 
    - Ensure the following files and folders are placed in the same directory:
 
-     - `README.md`
      - `R026.R`
-     - `PCC/` folder containing all `.csv` data files.
-     - `INDA/` folder containing subfolders `DG/` and `OM/` with their respective files.
+     - `PCC/` folder containing all `.csv` data core data files, from the Parliamentary Careers in Comparison (PCC) project.
+     - `INDA/` folder containing subfolders `DG/`(1 data file) and `OM/`(2 data files) with their respective files.
      - `NL_boynames.csv`
+	 - `DE_boynames.csv`
      - `NL_girlnames.csv`
+	 - `DE_girlnames.csv`
      - `PPDB_Round2_v4.xlsx`
+	 - `parlgov_electiondata_20190815.csv`
 
 3. **Running the Analysis**
 
@@ -125,13 +136,13 @@ The analysis is performed on a relational database, and the data is provided as 
      - **Double Gangers Detection**:
 
        - By default, `runDGagain` is set to `FALSE` to save time.
-       - If you wish to rerun the double ganger detection process, set `runDGagain` to `TRUE` around **line 1129**.
+       - If you wish to rerun the double ganger detection process, set `runDGagain` to `TRUE` around **line 1192**.
        - Be aware that this process is time-consuming.
 
      - **Optimal Matching Algorithms**:
 
        - By default, `runOMagain` is set to `FALSE`.
-       - To rerun the Optimal Matching algorithms, set `runOMagain` to `TRUE` around **line 2027**.
+       - To rerun the Optimal Matching algorithms, set `runOMagain` to `TRUE` around **line 2148**.
        - This process is also time-consuming.
 
    - Run the script to perform the data manipulation and analysis.
