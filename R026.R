@@ -2028,11 +2028,6 @@
 					table(is.na(ELLIBU$ratio_elected)) # complete
 					table(is.na(ELLIBU$quota_percentage)) # complete
 					
-					
-				# and the 'table 1' for the publication ## this is not table 1 - this is before the reductions specified below!
-				
-					table(ELLIBU$parliament_id,ELLIBU$country)
-					
 	###########################
 	# RED A2: is OM etc to get Dutch election lists that are 100% simular so only the ones that actually vary are included 
 	###########################
@@ -2252,6 +2247,8 @@
 		
 		nrow(ELLIBU)
 		
+
+		
 		ELLIBUNL <- ELLIBU[which(ELLIBU$country == "NL" & !ELLIBU$parliament_id == "NL_NT-TK_1981"),]
 		boxplot(ELLIBUNL$meanpersdifferent~ELLIBUNL$parliament_id)
 		hist(ELLIBUNL$meanpersdifferent)
@@ -2310,16 +2307,19 @@
 		ELLIBU$persidarray[2]
 		# find all cases
 		ELLIBU[which(ELLIBU$persidarray == ELLIBU$persidarray[2]),]
-		TEMP4[which(TEMP4$persidarray == ELLIBU$persidarray[2]),] # so it seems the first one is kept -- intersting! pers_id_arrays are empty!
 		
 		nrow(ELLIBU)
+		
+		## so note we are still doing reductions here, here we are dropping lists that are - although they are officially different list - have the same people on them. Not a seperate decision so not a seperate data-point.
+		
 		TEMP4 <- ELLIBU %>% distinct(persidarray, .keep_all = TRUE) ## this where the 2017 CDU Bundestag members are dropped!! -- so what do we do here, when arrays are the same?!
 		nrow(TEMP4) # so indeed, quite some overlap here between a lot of lists so it is good we exclude these?
 		length(unique(ELLIBU$persidarray))
 		ELLIBU <- TEMP4
 		
 		table(ELLIBU$parliament_id,ELLIBU$party_id_nat_equiv)
-	#	table(ELLIBU$parliament_id,ELLIBU$party_id)
+	
+	nrow(ELLIBU)
 		
 	##################################################################################################
 	################################# even more variable building here #########################################
@@ -2435,7 +2435,7 @@
 			# now, calculate the 'drop'  (note for later: if you look up /\ you see this is based on the voteshare according to parlgov!) # lets do a manual check for two parties.			
 			ELLIBU$vote_share_change <- ELLIBU$vote_share - ELLIBU$vote_share_previous
 			hist(ELLIBU$vote_share_change)
-			hist(ELLIBUTEMP$vote_share_change)
+			# hist(ELLIBUTEMP$vote_share_change)
 			
 			# lets inspecting missing cases quickly
 			table(is.na(ELLIBU$vote_share_change))
@@ -2818,6 +2818,12 @@
 				nrow(ELLIBU)
 				ELLIBU <- ELLIBU[which(!is.na(ELLIBU$ambition_selection_gap)),]
 				nrow(ELLIBU)
+				
+	##~TABLE 1 HERE~##
+		
+		table(ELLIBU$parliament_id,ELLIBU$country)
+		
+	##~TABLE 1 HERE~##
 				
 				# and the absolute version as suggested
 #				ELLIBU$ambition_selection_gap <- abs(ELLIBU$ambition_selection_gap) # decision is real numbers indeed
