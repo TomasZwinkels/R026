@@ -24,6 +24,10 @@
 		# where to find what?
 		
 		# MAIN MANUSCRIPT
+			# table 1 in the manuscript
+			# title: 'Number of observations over time and across our two country cases')
+			# look for ##~TABLE 1 HERE~##
+		
 			# table 3 in the manuscript
 			# title: 'Multi-level regression model predicting the size of the goal-selection gap with selection control, 
 			#         district magnitude and several control variables')
@@ -384,12 +388,7 @@
 		
 		# remove parliaments for which no matches exist
 			FPAREBU <- FPAREBU[which(!is.na(FPAREBU$pers_id)),]
-			nrow(FPAREBU)
-			
-			table(FPAREBU$parliament_id[which(FPAREBU$parliament_id %in% unique(POPABU$parliament_id))]) # there was a note about late entrants here, please note that this has now been fixed!
-			
-			table(FPAREBU2$parliament_id[which(FPAREBU2$parliament_id %in% unique(POPABU$parliament_id))]) # yes, not it is exactly the same! -- so, the decision is: focus on only right after the election or not?!
-		
+			nrow(FPAREBU)		
 		
 		# finally, lets merge in data from PAREWRONG if there is any for the fake parliamentary episode
 			
@@ -424,7 +423,6 @@
 				table(FPAREBU$member_ofthisparliament_atsomepoint)
 
 		head(FPAREBU)
-	##	table(FPAREBU$parliament_id[which(FPAREBU$parliament_id %in% unique(POPABU$parliament_id))]) # so, these are not exacty the same... Do I understand why? # just for debugging
 
 	##############################################
 	# DATA 3: the buildup of the ELEN data-frame
@@ -1474,7 +1472,7 @@
 			table(ELLIBU$party_id_nat_equiv)
 			table(is.na(ELLIBU$party_id_nat_equiv))
 			
-			table(ELLIBU$sumcheck[which(ELLIBU$party_id_nat_equiv %in% focuspartiesbelowvec)])
+		#	table(ELLIBU$sumcheck[which(ELLIBU$party_id_nat_equiv %in% focuspartiesbelowvec)]) # line is just here for debugging.
 			ELLIBU[which(ELLIBU$sumcheck < -10),] # a lot of NL 2012... does that make sense? : yes it does, a lot entries with only innitials.. this is pulling NL CDA down very probably! - I do think we should maybe still invest time into this!
 			
 			# lets make a todolist here! - pers_ids for which I need a full first name
@@ -2031,7 +2029,7 @@
 					table(is.na(ELLIBU$quota_percentage)) # complete
 					
 					
-				# and the 'table 1' for the publication
+				# and the 'table 1' for the publication ## this is not table 1 - this is before the reductions specified below!
 				
 					table(ELLIBU$parliament_id,ELLIBU$country)
 					
