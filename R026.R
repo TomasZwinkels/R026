@@ -3280,7 +3280,7 @@
 	m1 <- m1
 	m2 <- m2a # m2b # m2a ## change to m2b to get table A2 in the appendix!
 	m3 <- m3a # m3b # m3a ## change to m3b to get table A2 in the appendix!
-	m4 <- m4 # m4b # m4 ## change to m4b to get table A2 in the appendix!
+	m4 <- m4a # m4b # m4a ## change to m4b to get table A2 in the appendix!
 	
 	
 	summary(me)
@@ -3327,7 +3327,7 @@ hist(ELLIBU$vote_share_cent)
 
 # use bootstrapping to get a standard error for the variance estimates.
 		runconfints <- TRUE
-		seedvalue <- 23423
+		seedvalue <- 234239
 		
 	# list level
 				listlvar <- format(round(c(
@@ -3341,11 +3341,11 @@ hist(ELLIBU$vote_share_cent)
 		if (runconfints)
 		{
 				simulations <- 10000
-				ame <- confint(me,method="boot",nsim=simulations,seed=234239)
-				am1 <- confint(m1,method="boot",nsim=simulations,seed=234239)
-				am2 <- confint(m2,method="boot",nsim=simulations,seed=234239)
-				am3 <- confint(m3,method="boot",nsim=simulations,seed=234239)
-				am4 <- confint(m4,method="boot",nsim=simulations,seed=234239)
+				ame <- confint(me,method="boot",nsim=simulations,seed=seedvalue)
+				am1 <- confint(m1,method="boot",nsim=simulations,seed=seedvalue)
+				am2 <- confint(m2,method="boot",nsim=simulations,seed=seedvalue)
+				am3 <- confint(m3,method="boot",nsim=simulations,seed=seedvalue)
+				am4 <- confint(m4,method="boot",nsim=simulations,seed=seedvalue)
 
 				listlvarse <- format(round(c(
 					((ame[3,2] - ame[3,1]) / 1.98),
