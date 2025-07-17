@@ -33,10 +33,10 @@
 			#         district magnitude and several control variables')
 			# look for ##~TABLE 3 HERE~##
 			
-								# table 4 in the manuscript
-								# title: 'level regression model predicting the size of the absolute selection election gap with electoral 
-								#         uncertainty measures and several control variables')
-								# look for ##~TABLE 4 HERE~##
+			# table 4 in the manuscript
+			# title: 'level regression model predicting the size of the absolute selection election gap with electoral 
+			#         uncertainty measures and several control variables')
+			# look for ##~TABLE 4 HERE~##
 			
 			# figure 2 in the manuscript
 			# title: 'Estimated marginal mean effect of selection control on the goal-selection gap')
@@ -4390,7 +4390,7 @@ hist(ELLIBU$vote_share_cent)
 		# the big regression model in which everything in life comes together?
 		
 					stargazer(
-								caption = "Regression model predicting selection election gap with district magnitude, linked lists and controls",
+								title = "Regression model predicting selection election gap with district magnitude, linked lists and controls",
 								mee,
 								ma,
 								md,
@@ -4574,6 +4574,8 @@ hist(ELLIBU$vote_share_cent)
 	hist(ELLIBUTEMP$selection_election_gap)
 	summary(ELLIBUTEMP$selection_election_gap)
 
+##~TABLE 4 HERE~##
+
 	stargazer(
 		m1,
 		m2,
@@ -4607,7 +4609,9 @@ hist(ELLIBU$vote_share_cent)
 							c("",GiveBrackets(elecyearvarse))
 							)
 		 ) 
-	
+		 
+##~TABLE 4 HERE~##
+		 
 	# some interpreation things
 		
 		summary(ELLIBUTEMP$district_magnitude_country_and_type_cent)
