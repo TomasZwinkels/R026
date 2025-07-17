@@ -2545,7 +2545,6 @@
 				# checking the distribution so I can pick a good cutoff for NL
 				hist(ELLIBU$meanpersdifferent[which(ELLIBU$country == "NL")],breaks=20)
 				hist(ELLIBU$meanpersdifferent[which(ELLIBU$country == "DE")]) # lets think about why the big values here!
-				hist(ELLIBU$meanpersdifferent[which(ELLIBU$country == "CH")],breaks=20)
 				head(ELLIBU)
 				
 				table(ELLIBU$selection_control)
@@ -2668,14 +2667,14 @@
 	### for all the list seats, get a variable as well that indicates what the percentage of women was on the district seats in this list its region << BROKEN now, fix later or DROP
 	
 		# for all the districts, get the region and district magnitude from ELDI
-			nrow(ELLIBU)
-			ELLIBU <- sqldf("SELECT ELLIBU.*, ELDI.region_abb, ELDI.dist_magnitude
-					       FROM ELLIBU LEFT JOIN ELDI 
-					       ON ELLIBU.district_id = ELDI.district_id	
-						   ")
-			nrow(ELLIBU)
-			ncol(ELLIBU)
-			head(ELLIBU)
+		#	nrow(ELLIBU)
+		#	ELLIBU <- sqldf("SELECT ELLIBU.*, ELDI.region_abb, ELDI.dist_magnitude
+		#			       FROM ELLIBU LEFT JOIN ELDI 
+		#			       ON ELLIBU.district_id = ELDI.district_id	
+		#				   ")
+		#	nrow(ELLIBU)
+		#	ncol(ELLIBU)
+		#	head(ELLIBU)
 			
 			# OK, so the one above is being a pain in the but (you tried to remove substring matches for about 2h and still did not get it to work), so lets use another method
 			TEMPHERE <- merge(x=ELLIBU,y=ELDI, by="district_id", all.x=TRUE)
@@ -2689,9 +2688,10 @@
 			nrow(TEMPHERE)
 			
 			table(ELLIBU$country)
-			table(ELLIBU$country,is.na(ELLIBU$dist_magnitude))
 			
 			ELLIBU <- TEMPHERE
+			
+			table(ELLIBU$country,is.na(ELLIBU$dist_magnitude))
 
 		# get a list of all district candidates in this region to get an image of the percentage of MPS of this list that also have district seats.
 			
@@ -3280,7 +3280,7 @@
 	m1 <- m1
 	m2 <- m2a # m2b # m2a ## change to m2b to get table A2 in the appendix!
 	m3 <- m3a # m3b # m3a ## change to m3b to get table A2 in the appendix!
-	m4 <- m4a # m4b # m4 ## change to m4b to get table A2 in the appendix!
+	m4 <- m4 # m4b # m4 ## change to m4b to get table A2 in the appendix!
 	
 	
 	summary(me)
@@ -3327,6 +3327,7 @@ hist(ELLIBU$vote_share_cent)
 
 # use bootstrapping to get a standard error for the variance estimates.
 		runconfints <- TRUE
+		seedvalue <- 23423
 		
 	# list level
 				listlvar <- format(round(c(
@@ -3339,12 +3340,12 @@ hist(ELLIBU$vote_share_cent)
 		
 		if (runconfints)
 		{
-				simulations <- 100
-				ame <- confint(me,method="boot",nsim=simulations)
-				am1 <- confint(m1,method="boot",nsim=simulations)
-				am2 <- confint(m2,method="boot",nsim=simulations)
-				am3 <- confint(m3,method="boot",nsim=simulations)
-				am4 <- confint(m4,method="boot",nsim=simulations)
+				simulations <- 10000
+				ame <- confint(me,method="boot",nsim=simulations,seed=234239)
+				am1 <- confint(m1,method="boot",nsim=simulations,seed=234239)
+				am2 <- confint(m2,method="boot",nsim=simulations,seed=234239)
+				am3 <- confint(m3,method="boot",nsim=simulations,seed=234239)
+				am4 <- confint(m4,method="boot",nsim=simulations,seed=234239)
 
 				listlvarse <- format(round(c(
 					((ame[3,2] - ame[3,1]) / 1.98),
@@ -3356,6 +3357,7 @@ hist(ELLIBU$vote_share_cent)
 		} else {
 			listlvarse <- rep("NE",5)
 		}								
+		listlvarse
 	
 	# country level
 				countryvar <- format(round(c(
@@ -3434,7 +3436,7 @@ hist(ELLIBU$vote_share_cent)
 
 	varlabels <- specificnamecleaning(names(fixef(m4)))
 
-##~TABLE 3 HERE~## -- ##~TABLE A2 HERE~## (requires lines 3227-3229 to be edited!)
+##~TABLE 3 HERE~## -- ##~TABLE A2 HERE~## (requires lines 3281-3283 to be edited!)
 
 	stargazer(
 		me,
@@ -3621,22 +3623,22 @@ hist(ELLIBU$vote_share_cent)
 		
 			# and a version that works(?) in black and white
 			
-				plot_model(m4,
-					  type = "int",
-					  mdrt.values = "meansd",
-					  terms="vote_share_change_abs",
-					  title ="Estimated marginal effects: predicted goal-selection gap given party level change in voteshare",
-					#  colors = c("black", "gray","grey"),
-					  line.size=1.15,
-					  ci.lvl = 0.68,
-					  legend.title="Party size"
-					) + 
-					# ylim(-25,20) +
-					scale_linetype_manual(values = c("solid", "dashed","dotted")) +
-					scale_x_continuous(name="party level change in voteshare",) +
-					scale_y_continuous(name="goal selection gap") +
-					geom_hline(yintercept=0, linetype="dashed", color = "black", size=1.1)
-	
+			#	plot_model(m4,
+			#		  type = "int",
+			#		  mdrt.values = "meansd",
+			#		  terms="vote_share_change_abs",
+			#		  title ="Estimated marginal effects: predicted goal-selection gap given party level change in voteshare",
+			#		#  colors = c("black", "gray","grey"),
+			#		  line.size=1.15,
+			#		  ci.lvl = 0.68,
+			#		  legend.title="Party size"
+			#		) + 
+			#		# ylim(-25,20) +
+			#		scale_linetype_manual(values = c("solid", "dashed","dotted")) +
+			#		scale_x_continuous(name="party level change in voteshare",) +
+			#		scale_y_continuous(name="goal selection gap") +
+			#		geom_hline(yintercept=0, linetype="dashed", color = "black", size=1.1)
+
 		# do I indeed have unbalanced cases?
 		table(ELLIBU$selection_control_fac) # yes for sure! Right, so it does make sense. Lets just use this one!
 					
@@ -3816,7 +3818,7 @@ hist(ELLIBU$vote_share_cent)
 				
 				hist(ELLIBU$selection_election_gap) # not a lot is happening here?
 				boxplot(ELLIBU$selection_election_gap~ELLIBU$country,main="abs(% women elected  into parliament - % women selected onto list)") 
-				hist(ELLIBU$selection_election_gap[which(ELLIBU$country =="CH")])
+				#	hist(ELLIBU$selection_election_gap[which(ELLIBU$country =="CH")]) # legacy code, CH is not in the data anymore!
 				hist(ELLIBU$selection_election_gap[which(ELLIBU$country =="DE")])
 				hist(ELLIBU$selection_election_gap[which(ELLIBU$country =="NL")]) 
 				
@@ -4318,7 +4320,7 @@ hist(ELLIBU$vote_share_cent)
 								year_cent +
 								(1 | year_cent) +
 								(1 | country),
-								data=ELLIBUTEMP[which(ELLIBUTEMP$country == "DE"),])#data=ELLIBUTEMP)#data=ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap <= 0),])
+								data=ELLIBUTEMP)#data=ELLIBUTEMP[which(ELLIBUTEMP$selection_election_gap <= 0),])
 						summary(mda)
 						anova(mee,md) 
 						anova(md,mda) # not it does not, I see that as an extra motivation to go for the more simple model
@@ -4457,6 +4459,7 @@ hist(ELLIBU$vote_share_cent)
 
 # use bootstrapping to get a standard error for the variance estimates.
 		runconfints <- TRUE
+		seedvalue <- 23423
 		
 	# list level
 				listlvar <- format(round(c(
@@ -4469,12 +4472,12 @@ hist(ELLIBU$vote_share_cent)
 		
 		if (runconfints)
 		{
-				simulations <- 100
-				am1 <- confint(m1,method="boot",nsim=simulations)
-				am2 <- confint(m2,method="boot",nsim=simulations)
-				am3 <- confint(m3,method="boot",nsim=simulations)
-				am4 <- confint(m4,method="boot",nsim=simulations)
-				am5 <- confint(m5,method="boot",nsim=simulations)
+				simulations <- 10000
+				am1 <- confint(m1,method="boot",nsim=simulations,seed=seedvalue)
+				am2 <- confint(m2,method="boot",nsim=simulations,seed=seedvalue)
+				am3 <- confint(m3,method="boot",nsim=simulations,seed=seedvalue)
+				am4 <- confint(m4,method="boot",nsim=simulations,seed=seedvalue)
+				am5 <- confint(m5,method="boot",nsim=simulations,seed=seedvalue)
 
 				listlvarse <- format(round(c(
 					((am1[3,2] - am1[3,1]) / 1.98),
@@ -4706,7 +4709,7 @@ hist(ELLIBU$vote_share_cent)
 		
 			table(is.na(ELLIBUTEMP$selection_election_gap))
 		
-			table(ELLIBUTEMP$nat_party_id,ELLIBUTEMP$election_year)
+			# table(ELLIBUTEMP$nat_party_id,ELLIBUTEMP$election_year)
 			
 			# so, what was the actual analytical sample used?
 			ELLIBUANSA <- ELLIBUTEMP[which(!is.na(ELLIBUTEMP$selection_election_gap)),]
